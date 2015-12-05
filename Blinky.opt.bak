@@ -1,0 +1,124 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.a*; *.src)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt)
+ pExt (*.plm)
+ CppX (*.cpp)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (Simulator), 0x0000 // Tools: 'MCS-51'
+Target (MCB900 - Run), 0x0000 // Tools: 'MCS-51'
+Target (EPM900 - Emulator), 0x0000 // Tools: 'MCS-51'
+GRPOPT 1,(Source Group 1),1,0,0
+GRPOPT 2,(Startup Code),1,0,0
+GRPOPT 3,(Documentation),1,0,0
+GRPOPT 4,(test),1,0,0
+
+OPTFFF 1,1,1,603979777,0,1,6,0,<.\Blinky.c><Blinky.c> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,231,255,255,255,43,0,0,0,96,0,0,0,217,2,0,0,168,1,0,0 }
+OPTFFF 2,2,2,0,0,0,0,0,<.\START900.A51><START900.A51> 
+OPTFFF 3,3,5,419430400,0,0,0,0,<.\ABSTRACT.TXT><ABSTRACT.TXT> { 44,0,0,0,0,0,0,0,1,0,0,0,255,255,255,255,255,255,255,255,252,255,255,255,231,255,255,255,72,0,0,0,72,0,0,0,135,2,0,0,144,1,0,0 }
+OPTFFF 4,4,1,0,0,0,0,0,<.\test\adc.c><adc.c> 
+OPTFFF 4,5,1,0,0,0,0,0,<.\test\comparators.c><comparators.c> 
+OPTFFF 4,6,1,0,0,0,0,0,<.\test\osc.c><osc.c> 
+OPTFFF 4,7,1,0,0,0,0,0,<.\test\power.c><power.c> 
+
+ExtF <C:\windows\profiles\deadbear\Desktop\eXiTrip\Blinky\TEST\adc.h> 43,43,0,{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+
+TARGOPT 1, (Simulator)
+ CLK51=12000000
+  OPTTT 1,1,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,0
+  OPTAX 0
+  OPTBL 0,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 1,(80C51 Family Programmer's Guide)<DATASHTS\PHILIPS\P51_PG.PDF>
+  OPTBL 2,(Data Sheet)<DATASHTS\PHILIPS\P89LPC932_DS.PDF>
+  OPTBL 3,(User's Manual)<DATASHTS\PHILIPS\P89LPC932_UM.PDF>
+  OPTDL (S8051.DLL)()(DLPC.DLL)(-pLPC932)(S8051.DLL)()(TLPC.DLL)(-pLPC932)
+  OPTDBG 180221,8,()()()()()()()()()() (BIN\LPC2EMP.DLL)()()()
+  OPTKEY 0,(ASmxMon)()
+  OPTKEY 0,(LPC2EMP)(-O1855 -C66191364 -S0 -T0)
+  OPTKEY 0,(DLGDLPC)((98=-1,-1,-1,-1,0)(3003=661,363,943,577,0)(3004=324,246,537,395,0)(3006=735,415,948,580,1)(5019=616,354,823,519,0)(5028=1750,124,1957,579,0)(91=475,293,675,554,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=-1,-1,-1,-1,0)(5015=510,374,1092,796,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=-1,-1,-1,-1,0)(2003=-1,-1,-1,-1,0)(5006=-1,-1,-1,-1,0)(5004=803,271,1024,467,0))
+  OPTMM 1,0,(c:0xc)
+  OPTMM 2,0,(d:0x80)
+  OPTMM 3,0,(x:0)
+  OPTMM 4,0,(&save_record)
+  OPTDF 0x82
+  OPTLE <>
+  OPTLC <>
+EndOpt
+
+TARGOPT 2, (MCB900 - Run)
+ CLK51=12000000
+  OPTTT 1,1,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,0
+  OPTAX 0
+  OPTBL 0,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 1,(80C51 Family Programmer's Guide)<DATASHTS\PHILIPS\P51_PG.PDF>
+  OPTBL 2,(Data Sheet)<DATASHTS\PHILIPS\P89LPC932_DS.PDF>
+  OPTBL 3,(User's Manual)<DATASHTS\PHILIPS\P89LPC932_UM.PDF>
+  OPTDL (S8051.DLL)()(DLPC.DLL)(-pLPC932)(S8051.DLL)()(TLPC.DLL)(-pLPC932)
+  OPTDBG 49141,-1,()()()()()()()()()() (BIN\LPC2EMP.DLL)()()()
+  OPTKEY 0,(DLGDP51)((98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(80=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0))
+  OPTKEY 0,(ASmxMon)()
+  OPTKEY 0,(LPC2EMP)(-O1855 -C66191364 -S0 -T0)
+  OPTKEY 0,(DLGDLPC)((98=-1,-1,-1,-1,0)(3003=661,363,943,577,0)(3004=324,246,537,395,0)(3006=828,150,1110,308,0)(5019=616,354,823,483,0)(5028=-1,-1,-1,-1,0)(91=475,293,675,554,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=-1,-1,-1,-1,0)(5015=510,374,1092,796,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=-1,-1,-1,-1,0)(2003=-1,-1,-1,-1,0)(5006=-1,-1,-1,-1,0)(5004=803,271,1024,467,0))
+  OPTMM 1,0,(c:0xc)
+  OPTMM 2,0,(d:0x80)
+  OPTMM 3,0,(x:0)
+  OPTMM 4,0,(&save_record)
+  OPTDF 0x82
+  OPTLE <>
+  OPTLC <>
+EndOpt
+
+TARGOPT 3, (EPM900 - Emulator)
+ CLK51=12000000
+  OPTTT 1,1,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\lst\>
+  OPTOX 16
+  OPTLT 1,1,1,1,1,1,0,1,1,1,1,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,1
+  OPTAX 1
+  OPTBL 0,(80C51 Family Programmer's Guide)<DATASHTS\PHILIPS\P51_PG.PDF>
+  OPTBL 1,(Data Sheet)<DATASHTS\PHILIPS\p89lpc933_934_935_936.pdf>
+  OPTBL 2,(User's Manual)<DATASHTS\PHILIPS\user_manual_P89LPC933_934_935_936.PDF>
+  OPTDL (S8051.DLL)()(DLPC.DLL)(-pLPC935)(S8051.DLL)()(TLPC.DLL)(-pLPC935)
+  OPTDBG 49142,3,()()()()()()()()()() (BIN\LPC2EMP.DLL)()()()
+  OPTKEY 0,(DLGDP51)((98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(80=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0))
+  OPTKEY 0,(ASmxMon)()
+  OPTKEY 0,(LPC2EMP)(-O8349503 -C50544385 -S0 -T6 -D25)
+  OPTKEY 0,(DLGDLPC)((98=-1,-1,-1,-1,0)(3003=805,531,1018,711,0)(3004=742,252,1024,434,0)(3006=217,531,430,665,0)(5019=616,354,823,483,0)(5028=-1,-1,-1,-1,0)(91=475,293,675,554,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=527,221,869,597,0)(5015=442,346,1024,768,0)(5094=180,119,528,416,0)(5095=-1,-1,-1,-1,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=-1,-1,-1,-1,0)(2003=714,505,1024,705,0)(5006=-1,-1,-1,-1,0)(5004=732,271,1024,507,0))
+  OPTBB 0,0,95,1,0,0,0,0,0,0,<Blinky.c>()()
+  OPTBB 1,0,18,1,0,0,0,0,0,0,<Blinky.c>()()
+  OPTWA 0,1,(txState,0x10)
+  OPTWA 1,1,(txData)
+  OPTWA 2,1,(txClk)
+  OPTWA 3,1,(CE)
+  OPTWA 0,2,(txState)
+  OPTWA 1,2,(temp)
+  OPTWA 2,2,(i)
+  OPTMM 1,0,(V:0)
+  OPTMM 2,0,(d:0x9E)
+  OPTMM 3,0,(x:0)
+  OPTMM 4,0,(&save_record)
+  OPTDF 0x84
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

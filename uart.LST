@@ -1,0 +1,758 @@
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE uart.c OMF2 ROM(COMPACT) OPTIMIZE(7,SPEED) BROWSE MODP2 DEBUG
+
+line level    source
+
+   1          #include <REG936.H>
+   2          #include <LIMITS.H>
+   3          #include <MATH.H>
+   4          #include "itrip.h"
+   5          #include "uart.h"
+   6          #include "midi_spec.h"
+   7          #include "LUTFreq.h"
+   8          #include "intrins.h"
+   9          
+  10          // flag that indicates if the UART is busy transmitting or not
+  11          static bit mtxbusy;
+  12          static volatile bit LnotV; //local flag of which channel to touch
+  13          static volatile m_in_t midiMsg; 
+  14          
+  15          volatile word LPeriod;
+  16          volatile word VPeriod;
+  17          
+  18          void uart_init (void) {
+  19   1        // configure UART
+  20   1        // clear SMOD0
+  21   1        PCON &= ~0x40;
+  22   1        SCON = 0x50;
+  23   1        // set or clear SMOD1
+  24   1        PCON &= 0x7f;
+  25   1        PCON |= (0 << 8);
+  26   1        SSTAT = 0xA0;
+  27   1      
+  28   1        // configure baud rate generator
+  29   1        BRGCON = 0x00;
+  30   1        BRGR0 = 0x30;
+  31   1        BRGR1 = 0x00;
+  32   1        BRGCON = 0x03;
+  33   1      
+  34   1        // TxD = push-pull, RxD = input
+  35   1        P1M1 &= ~0x01;
+  36   1        P1M2 |= 0x01;
+  37   1        P1M1 |= 0x02;
+  38   1        P1M2 &= ~0x02;
+  39   1      
+  40   1        // initially not busy
+  41   1        mtxbusy = 0;
+  42   1        
+  43   1        // set receive isr priority to 0
+  44   1        IP0 &= ~(0x10);
+  45   1        IP0H &= ~(0x10);
+  46   1        // enable uart receive interrupt
+  47   1        ESR = 1;
+  48   1       
+  49   1      #ifdef COORD
+                // set transmit isr priority to 3
+                IP1 |= 0x40;
+                IP1H |= 0x40;
+              #else
+  54   1        // set transmit isr priority to 0 
+  55   1        IP1 &= 0xBF;
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 2   
+
+  56   1        IP1H &= 0xBF;
+  57   1      #endif
+  58   1        // enable uart transmit interrupt
+  59   1        EST = 1;
+  60   1      } // uart_init
+  61          
+  62          void uart_rx_isr (void) interrupt 4 using 0 {
+  63   1              //variables for scanning !!!
+  64   1              word riffClks = 0;
+  65   1              bit riffCntGotReset = 0;
+  66   1      #ifdef DEBUG_SIM
+                      volatile byte temp = SBUF;
+              #endif
+  69   1        if (_testbit_(RI)) {
+  70   2      #ifdef DEBUG_SIM
+                      volatile byte dataByte = temp; //volatile for debug!!!
+              #else
+  73   2              byte dataByte = SBUF;
+  74   2      #endif
+  75   2              if (dataByte & 0x80) {   //status byte
+  76   3                      if (dataByte < 0xf0) {  //voice mesg
+  77   4                              if (OMNI == 1) {
+  78   5                                      midiMsg.typeChan = (byte)(dataByte & 0xf0) + MY_V_CHAN; //trigger note commands in OMNI mode 
+  79   5                              } else if ((byte)(dataByte & 0x0f) == MY_L_CHAN || (byte)(dataByte & 0x0f) == MY_V_CHAN) {
+  80   5                                      midiMsg.typeChan = dataByte; 
+  81   5                              } else {
+  82   5                                      midiMsg.typeChan = 0; //clear midiMsg
+  83   5                                      goto IGNORE_MIDI;
+  84   5                              }
+  85   4                              switch (midiMsg.typeChan & 0xf0) {
+  86   5                              case NOTE_OFF:
+  87   5                              case NOTE_ON:
+  88   5                              case CONTROL:
+  89   5                                midiMsg.count = 2;
+  90   5                                break;
+  91   5                              case PROGRAM:
+  92   5                                midiMsg.count = 1;
+  93   5                                break;
+  94   5                                      case PITCH_WHEEL: //todo
+  95   5                                      case CHAN_PRESSURE:
+  96   5                                      case KEY_PRESSURE:                                                                                                                                      
+  97   5                                      default:
+  98   5                                        goto IGNORE_MIDI;
+  99   5                                    break;
+ 100   5                              }
+ 101   4                      } else {
+ 102   4                            // system messages
+ 103   4                      switch (dataByte) {
+ 104   5                                      case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
+ 105   5                                              sysIx = 0;
+ 106   5                                      break;
+ 107   5              
+ 108   5                              case SONG_POSITION:
+ 109   5                                              midiMsg.typeChan = dataByte;
+ 110   5                                              midiMsg.count = 2;
+ 111   5                                      break;
+ 112   5              
+ 113   5                              case SONG_SELECT:
+ 114   5                                              midiMsg.typeChan = dataByte;
+ 115   5                                              midiMsg.count = 1;
+ 116   5                                      break;
+ 117   5              
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 3   
+
+ 118   5                              case TUNE_REQUEST:
+ 119   5                              break;
+ 120   5              
+ 121   5                              case EOX: // system exclusive terminator 
+ 122   5                                              //do stuff
+ 123   5                              break;
+ 124   5              
+ 125   5                              case TIMING_CLOCK:
+ 126   5                                              //if (PLAYING) {
+ 127   5                                              #ifdef COORD
+              //                                              midiClk++;
+              //                                              if (deltaPos > 0) {
+              //                                                      deltaPos--; 
+              //                                              }
+                                                      #else
+ 133   5                                                      midiClk++;
+ 134   5                                                      if (PLAYING) {
+ 135   6                                                              if (deltaPos == 0) {
+ 136   7                                                                      updateNote();
+ 137   7                                                                      LED^=1;  
+ 138   7                                                              } else {
+ 139   7                                                                      --deltaPos;
+ 140   7                                                              }
+ 141   6                                                      }
+ 142   5                                                      //pitch up/down...
+ 143   5                                                      
+ 144   5                                                      if (lDelta != 0) {
+ 145   6                                                              word tempDelta = (UINT_MAX - LPeriod) >> lDelta;
+ 146   6                                                              if (tempDelta < 11 - lDelta) { //Delta is currently 6-10
+ 147   7                                                                      tempDelta = 11 - lDelta;
+ 148   7                                                              }
+ 149   6                                                              if (deltaLUp) {
+ 150   7                                                                      if ((LPeriod + tempDelta) <= UINT_MAX) {
+ 151   8                                                                              LPeriod += tempDelta;
+ 152   8                                                                      }
+ 153   7                                                              } else {
+ 154   7                                                                      if (LPeriod > tempDelta) {
+ 155   8                                                                              LPeriod -= tempDelta;
+ 156   8                                                                      }
+ 157   7                                                              }
+ 158   6                                                              periodH1 = ((byte)(LPeriod >> 8));
+ 159   6                                                              periodL1 = (0xff & LPeriod);
+ 160   6                                                      }
+ 161   5                                                      if (txDelta != 0) {
+ 162   6                                                              word tempDelta = (UINT_MAX - VPeriod) >> txDelta;
+ 163   6                                                              if (tempDelta < 11 - txDelta) { //Delta is currently 6-10
+ 164   7                                                                      tempDelta = 11 - txDelta;
+ 165   7                                                              }
+ 166   6                                                              if (deltaTxUp) {
+ 167   7                                                                      if ((VPeriod + tempDelta) <= UINT_MAX) {
+ 168   8                                                                              VPeriod += tempDelta;
+ 169   8                                                                      }
+ 170   7                                                              } else {
+ 171   7                                                                      if (VPeriod > tempDelta) {
+ 172   8                                                                              VPeriod -= tempDelta;
+ 173   8                                                                      }
+ 174   7                                                              }
+ 175   6                                                              periodH0 = ((byte)(VPeriod >> 8));
+ 176   6                                                              periodL0 = (0xff & VPeriod);                                                    
+ 177   6                                                      }
+ 178   5                                              #endif
+ 179   5                                              //}
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 4   
+
+ 180   5                              break;
+ 181   5              
+ 182   5                              case START:      //from the beginning
+ 183   5                                              midiClk = 0;
+ 184   5                                              deltaPos = 0;
+ 185   5                                              nextRiff = 0;
+ 186   5                                              numRiffs = (curSong[nextRiff]).rAddy;
+ 187   5                                              curRiffCnt = 0;
+ 188   5                                              numNotes = 0;
+ 189   5                                              nextNote = 0;
+ 190   5                                              PLAYING = 1;
+ 191   5                                              updateNote();
+ 192   5                              break;
+ 193   5              
+ 194   5                              case STOP:
+ 195   5                                              PLAYING = 0;
+ 196   5                              break;
+ 197   5              
+ 198   5                              case CONTINUE:
+ 199   5                                              PLAYING = 1;
+ 200   5                                      break;
+ 201   5              
+ 202   5                              case ACTIVE_SENSING:
+ 203   5                              break;
+ 204   5               
+ 205   5                              case SYSTEM_RESET:
+ 206   5                                              //Goodbye, See you!
+ 207   5                                              AUXR1 |= 0x08; //soft reset
+ 208   5      //                                      midiFlags = 0;
+ 209   5      //                                      midiClk = 0;
+ 210   5      //                                      deltaPos = 0;
+ 211   5      //                                      numRiffs = (curSong[nextRiff]).rAddy;
+ 212   5      //                                      curRiffCnt = 0;
+ 213   5      //                                      numNotes = 0;
+ 214   5      //                                      nextNote = 0;
+ 215   5      //                                      PLAYING = 0;
+ 216   5      //                                      BUTT_EN = 1;
+ 217   5                              break;
+ 218   5                              
+ 219   5                                      default:
+ 220   5                                      break;
+ 221   5                              }
+ 222   4                      } 
+ 223   3              } else { //databyte
+ 224   3              switch (midiMsg.typeChan) {
+ 225   4      
+ 226   4                      case SYSTEM_EXCLUSIVE:
+ 227   4                              if(sysIx < SYS_LEN) {// discard data if the buffer is full
+ 228   5                                      sysEx[sysIx++] = dataByte;
+ 229   5                                      } else { //buffer full!!!
+ 230   5                                      }
+ 231   4                      break;
+ 232   4      
+ 233   4                      
+ 234   4                              case SONG_SELECT:
+ 235   4                              //midiMsg.song = dataByte;
+ 236   4                                      songNum = dataByte;
+ 237   4                                      midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
+ 238   4                      break;
+ 239   4      
+ 240   4                      
+ 241   4                              case SONG_POSITION: 
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 5   
+
+ 242   4                                      if(midiMsg.count == 2) { //LSB
+ 243   5                                              midiMsg.position = dataByte;
+ 244   5                                      } else {
+ 245   5                                              bit tempBit = PLAYING;
+ 246   5                                              PLAYING = 0;
+ 247   5                                              if (dataByte) {
+ 248   6                                                      midiMsg.position += (word) (dataByte << 7);
+ 249   6                                              }
+ 250   5                                              //This algorithm's worst case is ~20ms per 140 beats, with completely
+ 251   5                                              //non repetitive storage...  1.5ms per 5040 beats with uniformly repetitive test song 
+ 252   5                                              //todo good enough to just scan forward for every search!
+ 253   5                                              if (midiClk > midiMsg.position || midiMsg.position == 0) {
+ 254   6                                                      midiClk = 0;
+ 255   6                                                      deltaPos = 0;
+ 256   6                                                      nextRiff = 0;
+ 257   6                                                      numRiffs = (curSong[nextRiff]).rAddy;
+ 258   6                                                      curRiffCnt = 0;
+ 259   6                                                      numNotes = 0;
+ 260   6                                                      nextNote = 0;
+ 261   6                                              }
+ 262   5                                              //midiClk is gauranteed to be less than position
+ 263   5                                              if (midiClk == 0) {                                                                                                                     
+ 264   6                                                      updateNote(); //grab first note if we are uninit'd
+ 265   6                                                      riffClks += deltaPos;
+ 266   6                                                      riffCntGotReset = 1; //we know we are at the beginning of a riff
+ 267   6                                              }
+ 268   5                                              while (!SONG_DONE && midiClk != midiMsg.position) {
+ 269   6                                                      ++midiClk;
+ 270   6                                                      if (--deltaPos == 0) { //scan up to edge of note
+ 271   7                                                              updateNote();
+ 272   7                                                              while (!SONG_DONE && midiClk + deltaPos < midiMsg.position) { //loop through notes until we get clo
+             -se
+ 273   8                                                                      riffClks += deltaPos; //accumulate!
+ 274   8                                                                      midiClk += deltaPos;  //skip forward past this note
+ 275   8                                                                      updateNote();
+ 276   8                                                                      if (nextNote == 3) { //are we at the start of a riff?
+ 277   9                                                                              if (riffCntGotReset == 0) {     //for the very first time?
+ 278  10                                                                                      riffCntGotReset = 1;
+ 279  10                                                                              } else {  //then i know how many clks are in this whole riff!!!
+ 280  10                                                                                      while (midiClk + riffClks < midiMsg.position && curRiffCnt != 0) {
+ 281  11                                                                                              midiClk += riffClks; //and how many times it repeats!!!
+ 282  11                                                                                              --curRiffCnt;
+ 283  11                                                                                      }
+ 284  10                                                                                      //skip to next riff
+ 285  10                                                                                      numNotes = 0;
+ 286  10                                                                                      nextNote = 0;
+ 287  10                                                                                      updateNote();
+ 288  10                                                                              }
+ 289   9                                                                              riffClks = 0; //we are out of that riffLoop
+ 290   9                                                                      }
+ 291   8                                                              } 
+ 292   7                                                      }               
+ 293   6                                              }  // todo Q: maybe i should just maintain riffClks through normal opssss......
+ 294   5                                              //A: only when scanning in reverse is important does it even matter much....
+ 295   5                                              if (!SONG_DONE) {
+ 296   6                                                      PLAYING = tempBit;
+ 297   6                                              }
+ 298   5                                      }
+ 299   4                      break;
+ 300   4      
+ 301   4      
+ 302   4                      case (NOTE_OFF + MY_L_CHAN):
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 6   
+
+ 303   4                                      LnotV = 1;
+ 304   4                              case (NOTE_OFF + MY_V_CHAN):
+ 305   4                                      #ifdef COORD
+                                              #else
+ 307   4                                      if(midiMsg.count == 2) {// pitch
+ 308   5                                              //commentint this out to keep noteOff from fiddling with up/down!!!
+ 309   5      //                                              if (dataByte >= LUT_NUM_NOTES || dataByte <     LUT_MIDI_NOTE_SHIFT) {  //treat as a special CMD
+ 310   5      //                                                      //do nothing for now.... 
+ 311   5      //                                              } else {
+ 312   5      //                                                      dataByte -= LUT_MIDI_NOTE_SHIFT;
+ 313   5      //                                                      if (OMNI == 1) {
+ 314   5      //                                                              VPeriod = LUTFreq[dataByte];
+ 315   5      //                                                              LPeriod = VPeriod; //LUTFreq[dataByte];
+ 316   5      //                                                      } else {
+ 317   5      //                                                              if (LnotV == 0) {          //why not???  
+ 318   5      //                                                                      VPeriod = LUTFreq[dataByte];
+ 319   5      //                                                              } else {
+ 320   5      //                                                                      LPeriod = LUTFreq[dataByte];
+ 321   5      //                                                              }
+ 322   5      //                                                      }
+ 323   5      //                                              }
+ 324   5                                      } else {// velocity 
+ 325   5                                                      LED = 0;
+ 326   5                                                      if (OMNI == 1) {
+ 327   6                                                        //midiFlags &= ~(TX_VCC_ON + AUDIO_L_ON);
+ 328   6                                                              TX_VCC_ON = 0;
+ 329   6                                                              AUDIO_L_ON = 0;
+ 330   6                                                      } else {
+ 331   6                                                              if (LnotV == 0) {
+ 332   7                                                                      //turn off txVCC
+ 333   7                                                                      TX_VCC_ON = 0;
+ 334   7                                                              } else {
+ 335   7                                                                      //turn off Left channel
+ 336   7                                                                      AUDIO_L_ON = 0;
+ 337   7                                                              }
+ 338   6                                                      }
+ 339   5                                              }
+ 340   4                                      #endif
+ 341   4                              break;
+ 342   4      
+ 343   4            
+ 344   4                              case (NOTE_ON + MY_L_CHAN):
+ 345   4                                      LnotV = 1;
+ 346   4                              case (NOTE_ON + MY_V_CHAN):
+ 347   4                                      #ifdef COORD
+                                              #else
+ 349   4                                      if(midiMsg.count == 2) {// pitch                 //todo test
+ 350   5                                                      word thisDelta = 0;
+ 351   5                                                      bit thisUp = 0;
+ 352   5                                                      midiMsg.pitch = dataByte;
+ 353   5                                                      switch (dataByte) {
+ 354   6      
+ 355   6                                                              case TX_OFF:
+ 356   6                                                                      LED = 0;
+ 357   6                                                                      txOffSwitch = 1;        //      TX off
+ 358   6                                                              break;
+ 359   6                                                              
+ 360   6                                                              case TX_ON:
+ 361   6                                                                      LED = 1;
+ 362   6                                                                      txOffSwitch = 0;        //      TX on
+ 363   6                                                              break;
+ 364   6                                                              
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 7   
+
+ 365   6                                                              case UP1:
+ 366   6                                                                      thisUp = 1;
+ 367   6                                                              case DOWN1:
+ 368   6                                                                      thisDelta = 10;
+ 369   6                                                              break;
+ 370   6                                                              
+ 371   6                                                              case UP2:
+ 372   6                                                                      thisUp = 1;
+ 373   6                                                              case DOWN2:
+ 374   6                                                                      thisDelta = 9;
+ 375   6                                                              break;
+ 376   6                                                              
+ 377   6                                                              case UP3:
+ 378   6                                                                      thisUp = 1;
+ 379   6                                                              case DOWN3:
+ 380   6                                                                      thisDelta = 8;
+ 381   6                                                              break;
+ 382   6                                                              
+ 383   6                                                              case UP4:
+ 384   6                                                                      thisUp = 1;
+ 385   6                                                              case DOWN4:
+ 386   6                                                                      thisDelta = 7;
+ 387   6                                                              break;
+ 388   6                                                              
+ 389   6                                                              case UP5:
+ 390   6                                                                      thisUp = 1;
+ 391   6                                                              case DOWN5:
+ 392   6                                                                      thisDelta = 6;
+ 393   6                                                              break;
+ 394   6                                                              
+ 395   6                                                              case UPDOWN_OFF: //redundant?  only if we make it leave the pitch detuned
+ 396   6                                                                      thisDelta = 0;
+ 397   6                                                              break;
+ 398   6                                                              
+ 399   6                                                              case STATION_UP6:
+ 400   6                                                                      ++station;
+ 401   6                                                              case STATION_UP5:
+ 402   6                                                                      ++station;
+ 403   6                                                              case STATION_UP4:
+ 404   6                                                                      ++station;
+ 405   6                                                              case STATION_UP3:
+ 406   6                                                                      ++station;
+ 407   6                                                              case STATION_UP2:
+ 408   6                                                                      ++station;
+ 409   6                                                              case STATION_UP:
+ 410   6                                                                      setFreq(++station);
+ 411   6                                                              break;
+ 412   6                                                              
+ 413   6                                                              case STATION_DOWN6:
+ 414   6                                                                      --station;
+ 415   6                                                              case STATION_DOWN5:
+ 416   6                                                                      --station;
+ 417   6                                                              case STATION_DOWN4:
+ 418   6                                                                      --station;
+ 419   6                                                              case STATION_DOWN3:
+ 420   6                                                                      --station;
+ 421   6                                                              case STATION_DOWN2:
+ 422   6                                                                      --station;
+ 423   6                                                              case STATION_DOWN:
+ 424   6                                                                      setFreq(--station);
+ 425   6                                                              break;
+ 426   6                                                              
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 8   
+
+ 427   6                                                              case HOLD0:
+ 428   6                                                              case HOLD1:
+ 429   6                                                              case HOLD2:
+ 430   6                                                              break;
+ 431   6                                                                                              
+ 432   6                                                              default:
+ 433   6                                                                      dataByte -= LUT_MIDI_NOTE_SHIFT;
+ 434   6                                                                      if (OMNI == 1) {
+ 435   7                                                                              VPeriod = LUTFreq[dataByte];
+ 436   7                                                                              LPeriod = VPeriod;
+ 437   7                                                                      } else {
+ 438   7                                                                              if (LnotV == 0) {          //why not???  
+ 439   8                                                                                      VPeriod = LUTFreq[dataByte];
+ 440   8      //                                                                              thisDelta = txDelta;
+ 441   8      //                                                                              thisUp = deltaTxUp;
+ 442   8                                                                              } else {
+ 443   8                                                                                      LPeriod = LUTFreq[dataByte];
+ 444   8      //                                                                              thisDelta = lDelta;
+ 445   8      //                                                                              thisUp = deltaLUp;
+ 446   8                                                                              }
+ 447   7                                                                      }
+ 448   6                                                              break;
+ 449   6                                                      }
+ 450   5                                                      if (thisDelta) {
+ 451   6                                                              if (LnotV == 0) {        //not OMNIfied!!!! todo
+ 452   7                                                                      txDelta = thisDelta;
+ 453   7                                                                      deltaTxUp = thisUp;
+ 454   7                                                              } else {
+ 455   7                                                                      lDelta = thisDelta;
+ 456   7                                                                      deltaLUp = thisUp;
+ 457   7                                                              }
+ 458   6                                                      }
+ 459   5                                              } else if (midiMsg.pitch >= LUT_MIDI_NOTE_SHIFT && midiMsg.pitch < LUT_NOTE_LIMIT) {   //glitchy!!!!
+ 460   5                                                      if(dataByte != 0) {
+ 461   6                                                              LED = 1;
+ 462   6                                                              if (OMNI) {     
+ 463   7                                                                      AUDIO_L_ON = 1;
+ 464   7                                                                      TX_VCC_ON = 1;
+ 465   7                                                                      //why this didnt work??? i dont remember why i didnt do this?
+ 466   7      //                                                              periodH0 = ((byte)(VPeriod >> 8));   todo
+ 467   7      //                                                              periodL0 = ((byte) VPeriod);
+ 468   7                                                                      periodH0 = (0xff & (VPeriod >> 8));
+ 469   7                                                                      periodL0 = (0xff & VPeriod);
+ 470   7                                                                      periodH1 = periodH0;
+ 471   7                                                                      periodL1 = periodL0;
+ 472   7                                                              } else {
+ 473   7                                                                      if (LnotV == 0) {
+ 474   8                                                                              TX_VCC_ON = 1;
+ 475   8                                                                              periodH0 = (0xff & (VPeriod >> 8));
+ 476   8                                                                              periodL0 = (0xff & VPeriod);
+ 477   8                                                                      } else {
+ 478   8                                                                              AUDIO_L_ON = 1;
+ 479   8                                                                              periodH1 = (0xff & (LPeriod >> 8));
+ 480   8                                                                              periodL1 = (0xff & LPeriod);
+ 481   8                                                                      }
+ 482   7                                                              }
+ 483   6                                                      } else {   //turn off cause Velocity = 0
+ 484   6                                                              if (LnotV == 0) {
+ 485   7                                                                      TX_VCC_ON = 0;
+ 486   7                                                              } else {        
+ 487   7                                                                      AUDIO_L_ON = 0;
+ 488   7                                                              }
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 9   
+
+ 489   6                                                      }
+ 490   5                                              }
+ 491   4                                      #endif
+ 492   4                      break;
+ 493   4      
+ 494   4      
+ 495   4                      case KEY_PRESSURE:
+ 496   4                      break;
+ 497   4      
+ 498   4                      case CONTROL + MY_L_CHAN:
+ 499   4                                      LnotV = 1;
+ 500   4                              case CONTROL + MY_V_CHAN:
+ 501   4                              if(midiMsg.count == 2) {
+ 502   5                                midiMsg.controller = dataByte; // controller number
+ 503   5                              } else {// setting 
+ 504   5                                      switch (midiMsg.controller) {
+ 505   6       //todo maybe COORD listens to station!!!
+ 506   6                                                      case GENERAL_SLIDER_1_hi:
+ 507   6                                                              if (((station - MIN_FREQ) >> 2) != dataByte) {
+ 508   7                                                                      station &= ~(0xFFFC);
+ 509   7                                                                      station += (word) (dataByte << 2) + MIN_FREQ;
+ 510   7                                                                      setFreq(station);
+ 511   7                                                              }
+ 512   6                                                      break;
+ 513   6      
+ 514   6                                                      case GENERAL_SLIDER_1_lo:
+ 515   6                                                              if ((station & 0x03) != (dataByte >> 5)) {
+ 516   7                                                                      station &= ~(0x0003);
+ 517   7                                                                      station += (dataByte >> 5);
+ 518   7                                                                      setFreq(station);
+ 519   7                                                              }
+ 520   6                                                      break;
+ 521   6      
+ 522   6      //                                              case SOUND_RELEASE_TIME: //todo a sustain structure!
+ 523   6      //                                              break;
+ 524   6      
+ 525   6                                                      case GENERAL_BUTTON_1_on:
+ 526   6                                                              if (dataByte >= 64) {
+ 527   7                                                                      LED = 1;
+ 528   7                                                                      txOffSwitch = 0;
+ 529   7                                                              } else {
+ 530   7                                                                      LED = 0;
+ 531   7                                                                      txOffSwitch = 1; //tx off
+ 532   7                                                              }
+ 533   6                                                      break;
+ 534   6      
+ 535   6      //            case BANK_hi: break;
+ 536   6      
+ 537   6      //            case BANK_lo: bank_lo = dataByte; break;
+ 538   6      
+ 539   6      //                case MOD_WHEEL_hi: load_14bit_value(&c->mod_wheel, dataByte, MSB); break;
+ 540   6      
+ 541   6      //            case MOD_WHEEL_lo: load_14bit_value(&c->mod_wheel, dataByte, LSB); break;
+ 542   6      
+ 543   6      //            case VOLUME_hi: load_14bit_value(&c->volume, dataByte, MSB); break;
+ 544   6      
+ 545   6      //            case VOLUME_lo: load_14bit_value(&c->volume, dataByte, LSB); break;
+ 546   6      
+ 547   6      //            case BALANCE_hi: load_14bit_value(&c->balance, dataByte, MSB); break;
+ 548   6      
+ 549   6      //            case BALANCE_lo: load_14bit_value(&c->balance, dataByte, LSB); break;
+ 550   6      
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 10  
+
+ 551   6      //            case PAN_POSN_hi: load_14bit_value(&c->pan_posn, dataByte, MSB); break;
+ 552   6      
+ 553   6      //            case PAN_POSN_lo: load_14bit_value(&c->pan_posn, dataByte, LSB); break;
+ 554   6      
+ 555   6      //            case EXPRESSION_hi: break;
+ 556   6      
+ 557   6      //            case EXPRESSION_lo: break;
+ 558   6      
+ 559   6      //            case DATA_ENTRY_hi: load_14bit_value(c->param_ptr, dataByte, MSB); break;
+ 560   6      
+ 561   6      //            case DATA_ENTRY_lo: load_14bit_value(c->param_ptr, dataByte, LSB); break;
+ 562   6      
+ 563   6      //            case DATA_BUTTON_INC: break;
+ 564   6      
+ 565   6      //            case DATA_BUTTON_DEC: break;
+ 566   6      
+ 567   6      //            case REG_PARM_hi: load_14bit_value(&c->reg_param, dataByte, MSB); break;
+ 568   6      
+ 569   6      //            case REG_PARM_lo: load_14bit_value(&c->reg_param, dataByte, LSB); break;
+ 570   6      
+ 571   6      //            case HOLD_PEDAL_on:
+ 572   6      
+ 573   6      //              break;
+ 574   6      
+ 575   6                                          case ALL_SOUND_OFF:
+ 576   6                                                              AUDIO_L_ON = 0;
+ 577   6                                                              TX_VCC_ON = 0;
+ 578   6                                          break;
+ 579   6      
+ 580   6                                          
+ 581   6                                                      case ALL_CONTROLLERS_OFF:
+ 582   6                                          break;
+ 583   6      
+ 584   6      
+ 585   6                                          case LOCAL_KEYBOARD_on: //most useful with a saved state...  maybe just a choas source.. to
+             -do
+ 586   6                                                              if (dataByte & 0x7f) {
+ 587   7                                                                      BUTT_EN = 1;
+ 588   7                                                              } else {
+ 589   7                                                              BUTT_EN = 0;
+ 590   7                                                              }
+ 591   6                                          break;
+ 592   6      //COORD does not care about voicing/channel states, but never touches the pins...
+ 593   6      
+ 594   6                                          case ALL_NOTES_OFF:
+ 595   6      //                                          midiFlags &= (BUTT_EN + PLAYING + STEREO);
+ 596   6                                                              TX_VCC_ON = 0;
+ 597   6                                                              AUDIO_L_ON = 0;
+ 598   6                                                      break;
+ 599   6      
+ 600   6                                          
+ 601   6                                                      case OMNI_MODE_OFF:
+ 602   6                                                              //midiFlags &= (BUTT_EN + PLAYING + STEREO);
+ 603   6                                                              OMNI = 0;
+ 604   6                                          break;
+ 605   6      
+ 606   6                                          
+ 607   6                                                      case OMNI_MODE_ON:
+ 608   6      //                                                      midiFlags &= (BUTT_EN + PLAYING + STEREO);
+ 609   6                                                              OMNI = 1;
+ 610   6                                          break;
+ 611   6                                                      
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 11  
+
+ 612   6                                                      case MONO_OPERATION:
+ 613   6                                                              PLAYING = 0;
+ 614   6                                                              #ifdef COORD
+                                                                      #else
+ 616   6              //                                                      midiFlags &= (BUTT_EN + PLAYING + STEREO);
+ 617   6                                                                      if(dataByte >= MY_L_CHAN) {
+ 618   7                                                                              TR1 = 1;
+ 619   7                                                                              periodH1 = 0x10;
+ 620   7                                                                              if(dataByte >= MY_V_CHAN) {
+ 621   8                                                                                      TR0 = 1;
+ 622   8                                                                                      periodH0 = 0x10;
+ 623   8                                                                              } else {
+ 624   8                                                                                      TR0 = 0; //turn off this channel
+ 625   8                                                                              }       
+ 626   7                                                                      } else {
+ 627   7                                                                              TR1 = 0;  //turn off this channel too.
+ 628   7                                                                      }
+ 629   6                                                              #endif
+ 630   6                                          break;
+ 631   6                                          
+ 632   6                                                      case POLY_OPERATION:
+ 633   6      //                                                      midiFlags &= (BUTT_EN + PLAYING + STEREO);
+ 634   6                                                              //do nothing always mono!!!
+ 635   6                                          break;
+ 636   6                                                      default:
+ 637   6                                                      break;
+ 638   6                                      }
+ 639   5                                      }
+ 640   4                      break;
+ 641   4      
+ 642   4                      case PROGRAM:
+ 643   4                                      //c->program = dataByte;  //todo
+ 644   4                                      #ifdef COORD
+                                              #else
+ 646   4                                      #endif 
+ 647   4                              break;
+ 648   4      
+ 649   4                              default:
+ 650   4                              break;
+ 651   4              }
+ 652   3          midiMsg.count ^= 3; // toggle between 1 and 2 (MSB and LSB for 14 bit values)
+ 653   3              }
+ 654   2      IGNORE_MIDI:
+ 655   2        // clear interrupt flag
+ 656   2        //RI = 0;
+ 657   2        LnotV = 0;            
+ 658   2        } // uart_rx_isr
+ 659   1      }
+ 660          void uart_tx_isr (void) interrupt 13 using 1 {
+ 661   1        if (_testbit_(TI)) {
+ 662   2          // clear interrupt flag
+ 663   2      //    TI = 0;
+ 664   2          // no longer busy
+ 665   2          mtxbusy = 0;
+ 666   2        } // if
+ 667   1      } // uart_tx_isr
+ 668          
+ 669          void uart_transmit (unsigned char value) {
+ 670   1        while(mtxbusy);
+ 671   1        mtxbusy = 1;
+ 672   1        SBUF = value;
+ 673   1      } // uart_transmit
+C51 COMPILER V8.12   UART                                                                  08/19/2015 06:51:02 PAGE 12  
+
+ 674          
+ 675          unsigned char uart_get (void) {
+ 676   1        return SBUF;
+ 677   1      } // uart_get
+ 678          
+ 679          unsigned char ascii_to_hex(unsigned char ch) {
+ 680   1        if (ch & 0x40)                                                                // convert ASCII character
+ 681   1        {     
+ 682   2          ch += 0x09;
+ 683   2        }
+ 684   1        ch &= 0x0F;                                                                   // into 2 digit Hex
+ 685   1        return ch;
+ 686   1      }
+ 687          
+ 688          void print_hex_to_ascii(unsigned char ch) {
+ 689   1        char temp_character;
+ 690   1        temp_character = ch;
+ 691   1        temp_character >>= 4;                                                 // get highest nible
+ 692   1        temp_character &= 0x0F;                                               // save lower nibble
+ 693   1        if (temp_character >= 10)                                             // check if A-F
+ 694   1        {
+ 695   2          temp_character += 7;                                                // offset for A-F
+ 696   2        }
+ 697   1        temp_character += 0x30;                                               // add '0' to get ascii
+ 698   1        uart_transmit(temp_character);                                        // print upper nible
+ 699   1        temp_character = ch;
+ 700   1        temp_character &= 0x0F;                                               // save lower nibble
+ 701   1        if (temp_character >= 10)                                             // check if A-F
+ 702   1        {
+ 703   2          temp_character += 7;                                                // offset for A-F
+ 704   2        }
+ 705   1        temp_character += 0x30;                                               // add '0' to get ascii
+ 706   1        uart_transmit(temp_character);                                        // print lower nible
+ 707   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1903    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2       2
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

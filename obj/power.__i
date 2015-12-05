@@ -1,0 +1,1 @@
+"test\power.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\power.lst) PREPRINT(.\lst\power.i) OBJECT(.\obj\power.obj)

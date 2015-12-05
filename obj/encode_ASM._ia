@@ -1,0 +1,1 @@
+"encode_ASM.a51" SET (SMALL) DEBUG PRINT(.\lst\encode_ASM.lst) OBJECT(.\obj\encode_ASM.obj) EP

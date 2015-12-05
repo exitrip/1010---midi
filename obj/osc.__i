@@ -1,0 +1,1 @@
+"test\osc.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\osc.lst) PREPRINT(.\lst\osc.i) OBJECT(.\obj\osc.obj)

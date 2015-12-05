@@ -1,0 +1,1 @@
+"song.c" OMF2 ROM(COMPACT) BROWSE MODP2 DEBUG CODE LISTINCLUDE SYMBOLS PRINT(.\lst\song.lst) PREPRINT(.\lst\song.i) OBJECT(.\obj\song.obj)

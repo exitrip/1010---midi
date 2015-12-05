@@ -1,0 +1,282 @@
+C51 COMPILER V8.12   SONG                                                                  08/19/2015 06:51:02 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE SONG
+OBJECT MODULE PLACED IN song.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE song.c OMF2 ROM(COMPACT) OPTIMIZE(7,SPEED) BROWSE MODP2 DEBUG
+
+line level    source
+
+   1          #include "itrip.h"
+   2          #include "song.h"
+   3          #include "riff.h"
+   4          
+   5          //maybe not use these switches.. maybe they will be bery useful....
+   6          
+   7          ///silence for song 0
+   8          #ifdef COORD
+                      RIFF_T code silentSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+  14                  RIFF_T code silentSong[2] = {
+  15                          {2, 0},
+  16                          {wRest, 255}
+  17                  };
+  18          #endif
+  19          
+  20          //heavy Beats!!!
+  21          //byte code 
+  22          #ifdef COORD
+                      RIFF_T code beatSong[10] = {
+                              {10,0},
+                              {beatCoord2, 20-1},  //1.5833 min
+                              {beatCoord1, 10-1},  //1.5833 min
+                              {beatCoord2, 10-1},
+                              {wRestCoord, 9-1},       //38 more beats droning  {31.66 sec}
+                              {hRestCoord, 1-1},
+                              {beatCoord2, 20-1},  //1.5833 min
+                              {beatCoord1, 10-1},  //1.5833 min
+                              {wRestCoord, 9-1},       //38 more beats droning  {31.66 sec}
+                              {hRestCoord, 1-1}
+                      };
+              #else
+  36                  RIFF_T code beatSong[4] = {
+  37                          {4,0},
+  38                          {beat1, 255},
+  39                          {beat1, 255},
+  40                          {beat1, 255}
+  41                  };
+  42          #endif
+  43          
+  44          //Our body
+  45          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+              #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+  54          #endif
+  55          
+C51 COMPILER V8.12   SONG                                                                  08/19/2015 06:51:02 PAGE 2   
+
+  56          //droneStrike
+  57          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+              #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+  66          #endif
+  67          
+  68          //omes
+  69          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+              #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+  78          #endif
+  79          
+  80          //whole tone and minor scale songs
+  81          #ifdef COORD
+                      //just use silent song
+                      RIFF_T code wholeToneSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+  88                  RIFF_T code wholeToneSong[2] = {
+  89                          {2, 0},
+  90                          {wholeDrone, 255}
+  91                  };
+  92          #endif
+  93          
+  94          #ifdef COORD
+                      //just use silent song
+                      RIFF_T code minorSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+ 101                  RIFF_T code minorSong[2] = {
+ 102                          {2, 0},
+ 103                          {minorDrone, 255}
+ 104                  };
+ 105          #endif
+ 106          
+ 107          //driving me backwards!!!!!
+ 108          //timing is basically 1 Root = 4 bars
+ 109          //8 Vamps first verse, 5 Root solo, 8 Root second verse, then freak to fade out...
+ 110          //Bass per bar @ 2 Root then to 2 per bar befor solo....
+ 111          //bring in Vamps around second verse....
+ 112          //bring in more dissonance towards end....
+ 113          #ifdef COORD
+                      RIFF_T code dmbSong[13] = { //255 bars @ 70 bpm is more than 14 minutes
+                              {13, 0},
+                              {dmbInit, 1-1}, //pick up beat ?
+                              {wRestCoord, 4-1}, //one root
+C51 COMPILER V8.12   SONG                                                                  08/19/2015 06:51:02 PAGE 3   
+
+                              {on10Tx, 1-1},  //1-5    BDwhole
+                              {wRestCoord, 16-1}, 
+                              {on12Tx, 1-1},  //5-11  BDhalf
+                              {wRestCoord, 24-1}, 
+                              {on2Tx, 1-1},   //12 evil vamp
+                              {wRestCoord, 4-1}, 
+                              {on0Tx, 1-1},   //13-20 more pedal
+                              {wRestCoord, 28-1}, 
+                              {on4Tx, 1-1},   //20 onwards nice in crunchy
+                              {wRestCoord, 255-1}
+                      };
+              #elif (MY_L_CHAN == 0)
+                      RIFF_T code dmbSong[2] = {
+                              {2, 0},
+              //              {qRest, 1-1},
+                              {dmbVamp0, 255}
+                      };
+              #elif (MY_L_CHAN == 2)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {qRest, 1-1},
+                              {dmbVamp1, 255}
+                      };
+              #elif (MY_L_CHAN == 4)
+                      RIFF_T code dmbSong[2] = {
+                              {2, 0},
+                              //{qRest, 1-1},
+                              {dmbRoot0, 255}
+                      };
+              #elif (MY_L_CHAN == 6) /***************MAIN LINE*******************/
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {dmbVamp0, 1-1},
+                              {dmbRoot1, 255}
+                      };
+              #elif (MY_L_CHAN == 8)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {wRest, 255}
+              //              {qRest, 1-1},
+              //              {dmbChord15, 255}
+                      };
+              #elif (MY_L_CHAN == 10)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {qRest, 1-1}, //pickup
+              //              {wRest, 16-1},
+                              {dmbBDWh, 255},  //one root
+              //              {dmbBDHa, 255-1} //five roots deep
+              //              {qRest, 1-1},
+              
+                      };
+              #elif (MY_L_CHAN == 12)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+              //              {wRest, 255}
+                              {qRest, 1-1},
+                              {dmbBDHa, 255}
+                      };
+              #elif (MY_L_CHAN == 14)
+ 178                  RIFF_T code dmbSong[2] = {
+ 179                          {2, 0},
+C51 COMPILER V8.12   SONG                                                                  08/19/2015 06:51:02 PAGE 4   
+
+ 180                          {wRest, 255}
+ 181          //              {qRest, 1-1},
+ 182          //              {dmbChord53, 255}
+ 183                  };
+ 184          #endif
+ 185          
+ 186          //eunice waymond
+ 187          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+              #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+ 196          #endif
+ 197          
+ 198          //AamilneBallad
+ 199          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+              #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+ 208          #endif
+ 209          
+ 210          
+ 211          //#define TEST_SS1 6+1
+ 212          RIFF_T code testS1[TEST_SS1] = {
+ 213                  {TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+ 214                  {testR3, 8-1},
+ 215                  {testR2, 8-1},
+ 216                  {testR1, 8-1},
+ 217                  {testR2, 8-1},
+ 218                  {testR3, 8-1},
+ 219                  {testR1, 8-1}
+ 220          };
+ 221          
+ 222          //#define TEST_SS2 6+1
+ 223          RIFF_T code testS2[TEST_SS2] = {
+ 224                  {TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+ 225                  {testR3, 2-1},
+ 226                  {testR2, 2-1},
+ 227                  {testR1, 2-1},
+ 228                  {testR2, 2-1},
+ 229                  {testR3, 2-1},
+ 230                  {testR1, 2-1}
+ 231          };
+ 232          
+ 233          RIFF_T code testSCo1[7] = {
+ 234                  {7, 0},
+ 235                  {testCo3, 1-1},
+ 236                  {testCo1, 15-1},
+ 237                  {testCo3b, 1-1},
+ 238                  {testCo1, 15-1},
+ 239                  {testCo3c, 1-1},
+ 240                  {testCo1, 15-1}
+ 241          };
+C51 COMPILER V8.12   SONG                                                                  08/19/2015 06:51:02 PAGE 5   
+
+ 242          
+ 243          RIFF_T code testSCo2[3] = {
+ 244                  {3, 0},
+ 245                  {testCo4, 3-1},
+ 246                  {testCo2, 3-1}
+ 247          };
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =    108    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

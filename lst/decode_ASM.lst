@@ -1,0 +1,197 @@
+A51 MACRO ASSEMBLER  DECODE_ASM                                                           12/20/2010 04:27:53 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN .\obj\decode_ASM.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE decode_ASM.a51 SET(SMALL) DEBUG PRINT(.\lst\decode_ASM.lst) OBJECT(.\obj\d
+                      ecode_ASM.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     NAME    DECODE_MODULE
+                       2     
+                       3     ?PR?decode_ASM?DECODE_MODULE                SEGMENT CODE INBLOCK 
+                       4             EXTRN   DATA (interBuf)
+                       5             ;EXTRN  BIT (badError)
+                       6             EXTRN   BIT (interENC)
+                       7             PUBLIC  decode_ASM
+                       8     
+----                   9             RSEG  ?PR?decode_ASM?DECODE_MODULE
+                      10     
+0000                  11     decode_ASM:
+                      12             USING   1
+                      13             ;MOV            R0, #LOW (interBuf)
+0000 7900     F       14             MOV             R1, #LOW (interBuf)
+                      15             ;LOAD AND ROTATE PARITYBitS
+0002 C3               16             CLR             C
+0003 E7               17             MOV             A, @R1
+0004 35E0             18             ADDC    A, ACC  ;ROTATE LEFT
+0006 FD               19             MOV             R5, A
+0007 09               20             INC             R1
+0008 E7               21             MOV             A, @R1
+0009 35E0             22             ADDC    A, ACC  ;ROTATE LEFT
+000B FE               23             MOV             R6, A
+000C 09               24             INC             R1
+000D E7               25             MOV             A, @R1
+000E 35E0             26             ADDC    A, ACC  ;ROTATE LEFT
+0010 FF               27             MOV             R7, A   ;R5-7 HAVE PARITYBITS << 1
+0011 5003             28             JNC             GEN_Q
+0013 0D               29             INC             R5
+0014 92D5             30             MOV             PSW.5, C        ;SAVE P23 IN F0
+                      31             ;;ROTATE LEFT AND XOR WITH OLD VALUE AND SHIFTED PARITY WHILE LOADING DATA IN REGIS
+                             TERS 5-7
+0016                  32     GEN_Q:
+0016 09               33             INC             R1
+0017 C3               34             CLR     C        ;CLEAR CARRY TO KEEP LSB CLEAN
+0018 E9               35             MOV             A, R1    ;LOOK AHEAD TO BIT 23!!!!!
+0019 2402             36             ADD             A, #0x02
+001B F8               37             MOV             R0, A
+001C E6               38             MOV             A, @R0
+001D 35E0             39             ADDC    A, ACC  ;GRAB BIT 23 IN CARRY
+001F 92D1             40             MOV             PSW.1, C        ;SAVE BIT 23
+0021 E7               41             MOV             A, @R1
+0022 35E0             42             ADDC    A, ACC  ;ROTATE LEFT
+0024 67               43         XRL         A, @R1  ;XOR WITH OLD VALUE
+0025 6D               44             XRL             A, R5   ;XOR WITH SHIFTED PARITY
+0026 C0E0             45             PUSH    ACC   ;STORE NEW LSBYTE IN STACK AND RBANK1
+0028 F50D             46             MOV             AR5, A
+002A 09               47             INC             R1              ;REPEAT TO MSB
+002B E7               48             MOV             A, @R1
+002C 35E0             49             ADDC    A, ACC
+002E 67               50         XRL         A, @R1
+002F 6E               51             XRL             A, R6
+0030 C0E0             52             PUSH    ACC
+0032 F50E             53             MOV             AR6, A
+0034 09               54             INC             R1
+0035 E7               55             MOV             A, @R1
+0036 35E0             56             ADDC    A, ACC
+A51 MACRO ASSEMBLER  DECODE_ASM                                                           12/20/2010 04:27:53 PAGE     2
+
+0038 67               57         XRL         A, @R1
+0039 6F               58             XRL             A, R7
+003A C0E0             59             PUSH    ACC
+003C F50F             60             MOV     AR7, A  
+                      61             ;STACK AND RBANK1[4-7] HAS ((DATABITS << 1) ^ DATABITS) ^ (PARITYbITS << 1) LSB IS 
+                             LOWEST
+                      62             ;CALCULATE SYNDROME FEEDBACK ERROR VECTOR
+003E E50D             63             MOV             A, AR5          ;CARRY HAS E23/Q23
+0040 13               64             RRC             A
+0041 E4               65             CLR             A
+0042 FF               66             MOV             R7, A           ;ERROR[2]
+0043 FE               67             MOV             R6, A           ;ERROR[1]
+0044 FD               68             MOV             R5, A           ;ERROR[0]
+0045 7B07             69             MOV             R3, #0x07
+                      70     
+0047                  71     E23_16:
+0047 EF               72             MOV             A,      R7
+0048 33               73             RLC             A
+0049 FF               74             MOV             R7, A
+004A A2E0             75             MOV             C, ACC.0
+004C D0E0             76             POP             ACC                             ;WORKING ON Q[23-16]
+004E 82E7             77             ANL             C, ACC.7        
+0050 30E701           78             JNB             ACC.7, NO_TOGGLE_16     ;C HAS E
+0053 B3               79             CPL             C                       
+0054                  80     NO_TOGGLE_16:
+0054 23               81             RL              A               ;queue next bits
+0055 C0E0             82             PUSH    ACC             ;store rotated Q vector
+0057 DBEE             83             DJNZ    R3, E23_16
+                      84     
+0059 EF               85             MOV             A, R7           ;LOAD ERROR VECTOR
+005A 33               86             RLC             A                       ;ACC.O HAS E16
+005B FF               87             MOV     R7, A           ;R7.0 HAS E16
+005C A2E0             88             MOV             C, ACC.0        ;SAVE E16 FOR E15
+005E D0E0             89             POP             ACC
+0060 7B07             90             MOV             R3, #0x07
+0062 30E701           91             JNB             ACC.7, E14_8    ;C HAS E15 
+0065 B3               92             CPL             C
+0066                  93     E14_8:
+0066 EE               94             MOV             A,      R6
+0067 33               95             RLC             A
+0068 FE               96             MOV             R6, A
+0069 A2E0             97             MOV             C, ACC.0
+006B D0E0             98             POP             ACC             ;WORKING ON Q[14-8]
+006D 82E7             99             ANL             C, ACC.7        
+006F 30E701          100             JNB             ACC.7, NO_TOGGLE_8      ;C HAS E
+0072 B3              101             CPL             C                       
+0073                 102     NO_TOGGLE_8:
+0073 23              103             RL              A               ;queue next bits
+0074 C0E0            104             PUSH    ACC             ;store rotated Q vector
+0076 DBEE            105             DJNZ    R3, E14_8
+                     106     
+0078 EE              107             MOV             A, R6           ;LOAD ERROR VECTOR
+0079 33              108             RLC             A                       ;ACC.O HAS E8
+007A FE              109             MOV     R6, A           ;R6.0 HAS E8
+007B A2E0            110             MOV             C, ACC.0        ;SAVE E8 FOR E7
+007D D0E0            111             POP             ACC
+007F 7B07            112             MOV             R3, #0x07
+0081 30E701          113             JNB             ACC.7, E6_0     ;C HAS E7 
+0084 B3              114             CPL             C
+0085                 115     E6_0:
+0085 ED              116             MOV             A,      R5
+0086 33              117             RLC             A
+0087 FD              118             MOV             R5, A
+0088 A2E0            119             MOV             C, ACC.0
+008A D0E0            120             POP             ACC             ;WORKING ON Q[6-0]
+008C 82E7            121             ANL             C, ACC.7        
+A51 MACRO ASSEMBLER  DECODE_ASM                                                           12/20/2010 04:27:53 PAGE     3
+
+008E 30E701          122             JNB             ACC.7, NO_TOGGLE_0      ;C HAS E
+0091 B3              123             CPL             C                       
+0092                 124     NO_TOGGLE_0:
+0092 23              125             RL              A               ;queue next bits
+0093 C0E0            126             PUSH    ACC             ;store rotated Q vector
+0095 DBEE            127             DJNZ    R3, E6_0
+0097 FD              128             MOV             R5, A
+0098 D0E0            129             POP             ACC             ;trash
+                     130             ;ERROR VECTOR IS NOW IN R5-7 LSB-MSB
+                     131             ;SYNDROME CALCULATION / ERROR CORRECTION
+009A E4              132             CLR             A
+009B F8              133             MOV             R0, A
+009C FC              134             MOV             R4, A
+009D E50F            135             MOV             A, AR7
+009F 5F              136             ANL             A, R7
+00A0 67              137             XRL             A, @R1 
+00A1 F7              138             MOV             @R1, A
+00A2 19              139             DEC     R1
+00A3 E50E            140             MOV             A, AR6
+00A5 5E              141             ANL             A, R6
+00A6 67              142             XRL             A, @R1 
+00A7 F7              143             MOV             @R1, A
+00A8 19              144             DEC             R1
+00A9 E50D            145             MOV             A, AR5
+00AB 5D              146             ANL             A, R5
+00AC 67              147             XRL             A, @R1 
+00AD F7              148             MOV             @R1, A
+00AE 22              149             RET
+                     150             END
+A51 MACRO ASSEMBLER  DECODE_ASM                                                           12/20/2010 04:27:53 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                       T Y P E  V A L U E   ATTRIBUTES
+
+?PR?DECODE_ASM?DECODE_MODULE  C SEG    00AFH       REL=INBLOCK
+ACC. . . . . . . . . . . . .  D ADDR   00E0H   A   
+AR5. . . . . . . . . . . . .  D ADDR   000DH   A   
+AR6. . . . . . . . . . . . .  D ADDR   000EH   A   
+AR7. . . . . . . . . . . . .  D ADDR   000FH   A   
+DECODE_ASM . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+DECODE_MODULE. . . . . . . .  N NUMB   -----       
+E14_8. . . . . . . . . . . .  C ADDR   0066H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+E23_16 . . . . . . . . . . .  C ADDR   0047H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+E6_0 . . . . . . . . . . . .  C ADDR   0085H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+GEN_Q. . . . . . . . . . . .  C ADDR   0016H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+INTERBUF . . . . . . . . . .  D ADDR   -----       EXT
+INTERENC . . . . . . . . . .  B ADDR   -----       EXT
+NO_TOGGLE_0. . . . . . . . .  C ADDR   0092H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+NO_TOGGLE_16 . . . . . . . .  C ADDR   0054H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+NO_TOGGLE_8. . . . . . . . .  C ADDR   0073H   R   SEG=?PR?DECODE_ASM?DECODE_MODULE
+PSW. . . . . . . . . . . . .  D ADDR   00D0H   A   
+
+
+REGISTER BANK(S) USED: 0 1 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

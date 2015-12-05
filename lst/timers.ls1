@@ -1,0 +1,1138 @@
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN .\obj\timers.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE .\obj\timers.src PR(.\lst\timers.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; .\obj\timers.SRC generated from: test\timers.c
+                       2     ; COMPILER INVOKED BY:
+                       3     ;        C:\Keil\C51\BIN\C51.EXE test\timers.c ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE 
+                             LISTINCLUDE SYMBOLS PRINT(.\lst\timers.lst) PREPRINT(.\lst\timers.i) SRC(.\obj\timers.SRC)
+                       4     
+                       5     $nomod51 
+                       6     
+                       7     NAME    TIMERS
+                       8     
+  0084                 9     P0M1    DATA    084H
+  0091                10     P1M1    DATA    091H
+  0085                11     P0M2    DATA    085H
+  0080                12     P0      DATA    080H
+  00A4                13     P2M1    DATA    0A4H
+  0092                14     P1M2    DATA    092H
+  0090                15     P1      DATA    090H
+  00DA                16     AA      BIT     0D8H.2
+  00B1                17     P3M1    DATA    0B1H
+  00A5                18     P2M2    DATA    0A5H
+  00A0                19     P2      DATA    0A0H
+  00B2                20     P3M2    DATA    0B2H
+  00B0                21     P3      DATA    0B0H
+  0092                22     T0      BIT     090H.2
+  00E8                23     EI2C    BIT     0E8H.0
+  00D6                24     AC      BIT     0D0H.6
+  0087                25     T1      BIT     080H.7
+  00AF                26     EA      BIT     0A8H.7
+  00A4                27     CE      BIT     0A0H.4
+  00EA                28     EC      BIT     0E8H.2
+  00AE                29     EWDRT   BIT     0A8H.6
+  00E2                30     SPCTL   DATA    0E2H
+  00A3                31     txClk   BIT     0A0H.3
+  00C1                32     SCC0    BIT     0C0H.1
+  00CE                33     HLTRN   BIT     0C8H.6
+  00A7                34     txVcc   BIT     0A0H.7
+  00C5                35     SCC1    BIT     0C0H.5
+  009F                36     FE      BIT     098H.7
+  00A8                37     IEN0    DATA    0A8H
+  00E8                38     IEN1    DATA    0E8H
+  0091                39     RxD     BIT     090H.1
+  00DE                40     I2EN    BIT     0D8H.6
+  00F8                41     PI2C    BIT     0F8H.0
+  0090                42     TxD     BIT     090H.0
+  00BA                43     SSTAT   DATA    0BAH
+  00B7                44     IP0H    DATA    0B7H
+  00AC                45     CMP1    DATA    0ACH
+  00BE                46     PWDRT   BIT     0B8H.6
+  00F7                47     IP1H    DATA    0F7H
+  00AD                48     CMP2    DATA    0ADH
+  008E                49     ADCON0  DATA    08EH
+  00C8                50     TMOD20  BIT     0C8H.0
+  00AC                51     ES      BIT     0A8H.4
+  0097                52     ADCON1  DATA    097H
+  00C9                53     TMOD21  BIT     0C8H.1
+  00EF                54     EIEE    BIT     0E8H.7
+  0098                55     RI      BIT     098H.0
+  0093                56     INT0    BIT     090H.3
+  00DB                57     SI      BIT     0D8H.3
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     2
+
+  00E9                58     EKBI    BIT     0E8H.1
+  00D7                59     CY      BIT     0D0H.7
+  0094                60     INT1    BIT     090H.4
+  0099                61     TI      BIT     098H.1
+  00C2                62     WFEED1  DATA    0C2H
+  00C3                63     WFEED2  DATA    0C3H
+  00EC                64     ECCU    BIT     0E8H.4
+  00BC                65     PS      BIT     0B8H.4
+  0081                66     SP      DATA    081H
+  00FF                67     PIEE    BIT     0F8H.7
+  00D2                68     OV      BIT     0D0H.2
+  00A4                69     SS      BIT     0A0H.4
+  00F9                70     PKBI    BIT     0F8H.1
+  00DD                71     I2SCLH  DATA    0DDH
+  00F3                72     DEEADR  DATA    0F3H
+  00C0                73     ADMODA  DATA    0C0H
+  00F2                74     DEEDAT  DATA    0F2H
+  00A1                75     ADMODB  DATA    0A1H
+  00DC                76     I2SCLL  DATA    0DCH
+  00FC                77     PCCU    BIT     0F8H.4
+  00F1                78     DEECON  DATA    0F1H
+  0095                79     DIVM    DATA    095H
+  0099                80     SBUF    DATA    099H
+  0087                81     PCON    DATA    087H
+  00EB                82     ESPI    BIT     0E8H.3
+  00D2                83     RTCH    DATA    0D2H
+  0098                84     SCON    DATA    098H
+  00CB                85     TPCR2H  DATA    0CBH
+  0089                86     TMOD    DATA    089H
+  0088                87     TCON    DATA    088H
+  00D3                88     RTCL    DATA    0D3H
+  00A2                89     MOSI    BIT     0A0H.2
+  00A3                90     MISO    BIT     0A0H.3
+  00CA                91     TPCR2L  DATA    0CAH
+  00D9                92     I2STAT  DATA    0D9H
+  0086                93     KBMASK  DATA    086H
+  0080                94     KB0     BIT     080H.0
+  00FB                95     PSPI    BIT     0F8H.3
+  0096                96     TRIM    DATA    096H
+  00BD                97     BRGCON  DATA    0BDH
+  0081                98     KB1     BIT     080H.1
+  0089                99     IE0     BIT     088H.1
+  0082               100     KB2     BIT     080H.2
+  008B               101     IE1     BIT     088H.3
+  0083               102     KB3     BIT     080H.3
+  00BB               103     AD0BH   DATA    0BBH
+  00C5               104     AD0DAT0 DATA    0C5H
+  0084               105     KB4     BIT     080H.4
+  00C4               106     AD1BH   DATA    0C4H
+  00D5               107     AD1DAT0 DATA    0D5H
+  00C6               108     AD0DAT1 DATA    0C6H
+  00F0               109     B       DATA    0F0H
+  00C2               110     BURST0  BIT     0C0H.2
+  0085               111     KB5     BIT     080H.5
+  00BD               112     PB0     BIT     0B8H.5
+  0093               113     KBPATN  DATA    093H
+  00D6               114     AD1DAT1 DATA    0D6H
+  00C7               115     AD0DAT2 DATA    0C7H
+  00C6               116     BURST1  BIT     0C0H.6
+  0086               117     KB6     BIT     080H.6
+  00D7               118     AD1DAT2 DATA    0D7H
+  00F4               119     AD0DAT3 DATA    0F4H
+  0087               120     KB7     BIT     080H.7
+  00A6               121     AD0BL   DATA    0A6H
+  00F5               122     AD1DAT3 DATA    0F5H
+  00BC               123     AD1BL   DATA    0BCH
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     3
+
+  00E0               124     ACC     DATA    0E0H
+  00A5               125     SPICLK  BIT     0A0H.5
+  00A9               126     ET0     BIT     0A8H.1
+  00B8               127     IP0     DATA    0B8H
+  00EF               128     EAD     BIT     0E8H.7
+  00AB               129     ET1     BIT     0A8H.3
+  008D               130     TF0     BIT     088H.5
+  00F8               131     IP1     DATA    0F8H
+  00A0               132     ccTimer BIT     0A0H.0
+  008F               133     TF1     BIT     088H.7
+  00D1               134     RTCCON  DATA    0D1H
+  009A               135     RB8     BIT     098H.2
+  00C8               136     TCR20   DATA    0C8H
+  008C               137     TH0     DATA    08CH
+  00A7               138     ICA     BIT     0A0H.7
+  00A8               139     EX0     BIT     0A8H.0
+  0088               140     IT0     BIT     088H.0
+  00F9               141     TCR21   DATA    0F9H
+  008D               142     TH1     DATA    08DH
+  00C3               143     BNDI0   BIT     0C0H.3
+  00A0               144     ICB     BIT     0A0H.0
+  009B               145     TB8     BIT     098H.3
+  00AA               146     EX1     BIT     0A8H.2
+  008A               147     IT1     BIT     088H.2
+  00CD               148     TH2     DATA    0CDH
+  00C7               149     BNDI1   BIT     0C0H.7
+  00D0               150     P       BIT     0D0H.0
+  009F               151     SM0     BIT     098H.7
+  008A               152     TL0     DATA    08AH
+  009E               153     SM1     BIT     098H.6
+  008B               154     TL1     DATA    08BH
+  009D               155     SM2     BIT     098H.5
+  00CC               156     TL2     DATA    0CCH
+  00A6               157     OCA     BIT     0A0H.6
+  00DB               158     I2ADR   DATA    0DBH
+  0096               159     OCB     BIT     090H.6
+  00B9               160     PT0     BIT     0B8H.1
+  00A5               161     LED     BIT     0A0H.5
+  0097               162     OCC     BIT     090H.7
+  00FF               163     PAD     BIT     0F8H.7
+  00BB               164     PT1     BIT     0B8H.3
+  00D3               165     RS0     BIT     0D0H.3
+  00DA               166     I2DAT   DATA    0DAH
+  00C0               167     SCAN0   BIT     0C0H.0
+  00A1               168     OCD     BIT     0A0H.1
+  00AD               169     EBO     BIT     0A8H.5
+  008C               170     TR0     BIT     088H.4
+  00D4               171     RS1     BIT     0D0H.4
+  00C4               172     SCAN1   BIT     0C0H.4
+  008E               173     TR1     BIT     088H.6
+  0093               174     SDA     BIT     090H.3
+  00B8               175     PX0     BIT     0B8H.0
+  00BA               176     PX1     BIT     0B8H.2
+  00F6               177     PT0AD   DATA    0F6H
+  00D8               178     I2CON   DATA    0D8H
+  0083               179     DPH     DATA    083H
+  0080               180     midButt BIT     080H.0
+  00EA               181     CCCRA   DATA    0EAH
+  00EB               182     CCCRB   DATA    0EBH
+  00BE               183     BRGR0   DATA    0BEH
+  00EC               184     CCCRC   DATA    0ECH
+  00BF               185     BRGR1   DATA    0BFH
+  00ED               186     CCCRD   DATA    0EDH
+  0082               187     DPL     DATA    082H
+  0083               188     audioL  BIT     080H.3
+  00E1               189     SPSTAT  DATA    0E1H
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     4
+
+  0092               190     SCL     BIT     090H.2
+  0084               191     audioN  BIT     080H.4
+  00DF               192     RSTSRC  DATA    0DFH
+  00CB               193     ALTAB   BIT     0C8H.3
+  009C               194     REN     BIT     098H.4
+  00C9               195     TICR2   DATA    0C9H
+  00CA               196     TDIR2   BIT     0C8H.2
+  00C1               197     WDL     DATA    0C1H
+  00DD               198     STA     BIT     0D8H.5
+  00DE               199     TISE2   DATA    0DEH
+  00E9               200     TIFR2   DATA    0E9H
+  00AB               201     ICRAH   DATA    0ABH
+  00A2               202     txData  BIT     0A0H.2
+  00CC               203     ALTCD   BIT     0C8H.4
+  00AF               204     ICRBH   DATA    0AFH
+  00AC               205     ESR     BIT     0A8H.4
+  00B1               206     XTAL1   BIT     0B0H.1
+  00B0               207     XTAL2   BIT     0B0H.0
+  00EE               208     EST     BIT     0E8H.6
+  00AA               209     ICRAL   DATA    0AAH
+  00B9               210     SADEN   DATA    0B9H
+  00AE               211     ICRBL   DATA    0AEH
+  00EF               212     OCRAH   DATA    0EFH
+  0094               213     KBCON   DATA    094H
+  00FB               214     OCRBH   DATA    0FBH
+  00A9               215     SADDR   DATA    0A9H
+  00CF               216     TOR2H   DATA    0CFH
+  00FD               217     OCRCH   DATA    0FDH
+  00A3               218     ADINS   DATA    0A3H
+  00FF               219     OCRDH   DATA    0FFH
+  00FA               220     PC_     BIT     0F8H.2
+  00B5               221     PCONA   DATA    0B5H
+  00EE               222     OCRAL   DATA    0EEH
+  00A2               223     AUXR1   DATA    0A2H
+  0081               224     hiButt  BIT     080H.1
+  00FA               225     OCRBL   DATA    0FAH
+  00CE               226     TOR2L   DATA    0CEH
+  00FC               227     OCRCL   DATA    0FCH
+  00BC               228     PSR     BIT     0B8H.4
+  00D5               229     F0      BIT     0D0H.5
+  00FE               230     OCRDL   DATA    0FEH
+  00DC               231     STO     BIT     0D8H.4
+  00D1               232     F1      BIT     0D0H.1
+  008F               233     TAMOD   DATA    08FH
+  00FE               234     PST     BIT     0F8H.6
+  0095               235     RST     BIT     090H.5
+  00D8               236     CRSEL   BIT     0D8H.0
+  00D0               237     PSW     DATA    0D0H
+  00CD               238     HLTEN   BIT     0C8H.5
+  00CF               239     PLLEN   BIT     0C8H.7
+  00A7               240     WDCON   DATA    0A7H
+  0082               241     loButt  BIT     080H.2
+  00E3               242     SPDAT   DATA    0E3H
+                     243     ?PR?timers_init?TIMERS                   SEGMENT CODE INBLOCK 
+                     244     ?PR?timers_isr0?TIMERS                   SEGMENT CODE INBLOCK 
+                     245     ?PR?timers_starttimer0?TIMERS            SEGMENT CODE INBLOCK 
+                     246     ?PR?timers_stoptimer0?TIMERS             SEGMENT CODE INBLOCK 
+                     247     ?C_INITSEG           SEGMENT CODE 
+                     248     ?DT?TIMERS           SEGMENT DATA 
+                     249     ?BI?TIMERS           SEGMENT BIT 
+                     250             EXTRN   DATA (smootherCnt)
+                     251             EXTRN   DATA (inputBitSmoother)
+                     252             EXTRN   DATA (inputByte)
+                     253             EXTRN   BIT (startBit)
+                     254             EXTRN   DATA (inputBuf)
+                     255             EXTRN   BIT (inEmpty)
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     5
+
+                     256             EXTRN   BIT (outEmpty)
+                     257             EXTRN   DATA (inByte)
+                     258             EXTRN   DATA (outByte)
+                     259             EXTRN   DATA (inBuf)
+                     260             EXTRN   DATA (outBuf)
+                     261             PUBLIC  outEnd
+                     262             PUBLIC  curBit
+                     263             PUBLIC  outStart
+                     264             PUBLIC  outputBit
+                     265             PUBLIC  outputByte
+                     266             PUBLIC  output
+                     267             PUBLIC  outputSmoother
+                     268             PUBLIC  timers_stoptimer0
+                     269             PUBLIC  timers_starttimer0
+                     270             PUBLIC  timers_isr0
+                     271             PUBLIC  timers_init
+                     272     
+----                 273             RSEG  ?DT?TIMERS
+0000                 274      outputSmoother:   DS   1
+0001                 275              output:   DS   3
+0004                 276          outputByte:   DS   1
+0005                 277           outputBit:   DS   1
+0006                 278              curBit:   DS   1
+                     279     
+----                 280             RSEG  ?BI?TIMERS
+0000                 281            outStart:   DBIT   1
+0001                 282              outEnd:   DBIT   1
+                     283     
+----                 284             RSEG  ?C_INITSEG
+0000 C100     F      285             DB      0C1H, outStart + 000H   ; bit-init
+                     286     
+0002 C100     F      287             DB      0C1H, outEnd + 000H     ; bit-init
+                     288     
+0004 01              289             DB      001H
+0005 00       F      290             DB      curBit
+0006 08              291             DB      008H
+                     292     
+0007 01              293             DB      001H
+0008 00       F      294             DB      outputSmoother
+0009 03              295             DB      003H
+                     296     
+000A 01              297             DB      001H
+000B 00       F      298             DB      outputByte
+000C 06              299             DB      006H
+                     300     
+000D 01              301             DB      001H
+000E 00       F      302             DB      outputBit
+000F 08              303             DB      008H
+                     304     
+                     305     ; /***********************************************************************
+                     306     ; MODULE:    Timers
+                     307     ; VERSION:   1.00
+                     308     ; CONTAINS:  Routines for controlling the timers on the Philips
+                     309     ;            P89LPC936
+                     310     ; COPYRIGHT: Embedded Systems Academy, Inc. - www.esacademy.com
+                     311     ; LICENSE:   May be freely used in commercial and non-commercial code
+                     312     ;            without royalties provided this copyright notice remains
+                     313     ;            in this file and unaltered
+                     314     ; WARNING:   IF THIS FILE IS REGENERATED BY CODE ARCHITECT ANY CHANGES
+                     315     ;            MADE WILL BE LOST. WHERE POSSIBLE USE ONLY CODE ARCHITECT
+                     316     ;            TO CHANGE THE CONTENTS OF THIS FILE
+                     317     ; GENERATED: On "Oct 11 2010" at "17:21:42" by Code Architect 2.06
+                     318     ; ***********************************************************************/
+                     319     ; 
+                     320     ; // SFR description needs to be included
+                     321     ; //#pragma SRC
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     6
+
+                     322     ; #include <reg936.h>
+                     323     ; #include "itrip.h"
+                     324     ; #include "timers.h"
+                     325     ; 
+                     326     ; /********external Globals**************************/
+                     327     ; //2 byte timer start value...  t = (0xFFFF - start value) * 271 ns + timer0_isr execution
+                              time
+                     328     ; //extern volatile byte t0High, t0Low;
+                     329     ; 
+                     330     ; //buffers and iterators and flags
+                     331     ; extern volatile byte inputBuf[BUFFER_LENGTH], inBuf[BUFFER_LENGTH], outBuf[BUFFER_LENGTH]
+                             ;
+                     332     ; extern volatile byte inputByte, inByte, outByte, inputBitSmoother, smootherCnt;
+                     333     ; 
+                     334     ; extern volatile bit inEmpty, outEmpty, startBit;
+                     335     ; 
+                     336     ; volatile bit outStart = 0, outEnd = 0;
+                     337     ; volatile byte curBit = 8, outputSmoother = 3, outputByte = BUFFER_LENGTH, outputBit = 8, 
+                             *output;
+                     338     ; /***********************************************************************
+                     339     ; DESC:    Initializes timers
+                     340     ;          Timer 0 generates an interrupt every ms
+                     341     ;          Timer 1 is not used
+                     342     ; RETURNS: Nothing
+                     343     ; CAUTION: If interrupts are being used then EA must be set to 1
+                     344     ;          after calling this function
+                     345     ; ************************************************************************/
+                     346     ; void timers_init
+                     347     
+----                 348             RSEG  ?PR?timers_init?TIMERS
+0000                 349     timers_init:
+                     350             USING   0
+                     351                             ; SOURCE LINE # 42
+                     352     ;   (
+                     353     ;   void
+                     354     ;   )
+                     355     ; {
+                     356                             ; SOURCE LINE # 46
+                     357     ;   // configure timer 0 and 1
+                     358     ;   TMOD &= 0xF0;
+                     359                             ; SOURCE LINE # 48
+0000 5389F0          360             ANL     TMOD,#0F0H
+                     361     ;   TMOD |= 0x01;
+                     362                             ; SOURCE LINE # 49
+0003 438901          363             ORL     TMOD,#01H
+                     364     ;   TAMOD &= 0xFE;
+                     365                             ; SOURCE LINE # 50
+0006 538FFE          366             ANL     TAMOD,#0FEH
+                     367     ; 
+                     368     ;   // initial timer values
+                     369     ;   TH0 = t0High;
+                     370                             ; SOURCE LINE # 53
+0009 758CFF          371             MOV     TH0,#0FFH
+                     372     ;   TL0 = t0Low;
+                     373                             ; SOURCE LINE # 54
+000C 758A96          374             MOV     TL0,#096H
+                     375     ;   
+                     376     ; //  TH1 = t1High;
+                     377     ; //  TL1 = t1Low;
+                     378     ;   // set timer 1 isr priority to highest, t0 below
+                     379     ;   IP0 &= 0xFD;
+                     380                             ; SOURCE LINE # 59
+000F 53B8FD          381             ANL     IP0,#0FDH
+                     382     ;   IP0H &= 0xFD;
+                     383                             ; SOURCE LINE # 60
+0012 53B7FD          384             ANL     IP0H,#0FDH
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     7
+
+                     385     ;   IP0 |= 0x02;
+                     386                             ; SOURCE LINE # 61
+0015 43B802          387             ORL     IP0,#02H
+                     388     ;   IP0H |= 0x02;
+                     389                             ; SOURCE LINE # 62
+0018 43B702          390             ORL     IP0H,#02H
+                     391     ; 
+                     392     ;   // enable timer 0 interrupt
+                     393     ;   ET0 = 1;
+                     394                             ; SOURCE LINE # 65
+001B D2A9            395             SETB    ET0
+                     396     ;   // enable timer 1 interrupt
+                     397     ; //  ET1 = 1;
+                     398     ; //  TR1 = 1;
+                     399     ;   // start timer 0    TODO???
+                     400     ;   //TR0 = 1;
+                     401     ;   inputBuf[inputByte] = inputBuf[inputByte];  //trick assenbler into including inBuf for 
+                             the interrupt......
+                     402                             ; SOURCE LINE # 71
+001D AF00     F      403             MOV     R7,inputByte
+001F 7400     F      404             MOV     A,#LOW (inputBuf)
+0021 2F              405             ADD     A,R7
+0022 F8              406             MOV     R0,A
+0023 E6              407             MOV     A,@R0
+0024 FF              408             MOV     R7,A
+0025 AE00     F      409             MOV     R6,inputByte
+0027 7400     F      410             MOV     A,#LOW (inputBuf)
+0029 2E              411             ADD     A,R6
+002A F8              412             MOV     R0,A
+002B A607            413             MOV     @R0,AR7
+                     414     ;   inBuf[inByte] = inBuf[inByte];
+                     415                             ; SOURCE LINE # 72
+002D AF00     F      416             MOV     R7,inByte
+002F 7400     F      417             MOV     A,#LOW (inBuf)
+0031 2F              418             ADD     A,R7
+0032 F8              419             MOV     R0,A
+0033 E6              420             MOV     A,@R0
+0034 FF              421             MOV     R7,A
+0035 AE00     F      422             MOV     R6,inByte
+0037 7400     F      423             MOV     A,#LOW (inBuf)
+0039 2E              424             ADD     A,R6
+003A F8              425             MOV     R0,A
+003B A607            426             MOV     @R0,AR7
+                     427     ;   outBuf[outByte] = outBuf[outByte];
+                     428                             ; SOURCE LINE # 73
+003D AF00     F      429             MOV     R7,outByte
+003F 7400     F      430             MOV     A,#LOW (outBuf)
+0041 2F              431             ADD     A,R7
+0042 F8              432             MOV     R0,A
+0043 E6              433             MOV     A,@R0
+0044 FF              434             MOV     R7,A
+0045 AE00     F      435             MOV     R6,outByte
+0047 7400     F      436             MOV     A,#LOW (outBuf)
+0049 2E              437             ADD     A,R6
+004A F8              438             MOV     R0,A
+004B A607            439             MOV     @R0,AR7
+                     440     ;   outEmpty = outEmpty;
+                     441                             ; SOURCE LINE # 74
+004D A200     F      442             MOV     C,outEmpty
+004F 9200     F      443             MOV     outEmpty,C
+                     444     ;   output = output;
+                     445                             ; SOURCE LINE # 75
+                     446     ; } // timers_init
+                     447                             ; SOURCE LINE # 76
+0051 22              448             RET     
+                     449     ; END OF timers_init
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     8
+
+                     450     
+----                 451     CSEG    AT      0000BH
+000B 020000   F      452             LJMP    timers_isr0
+                     453     
+                     454     ; 
+                     455     ; 
+                     456     ; /***********************************************************************
+                     457     ; DESC:    Timer 0 Interrupt Service Routine
+                     458     ;                executes in 4.4, 4.4, 7 or 4.4, 4.4, 12 us
+                     459     ; RETURNS: Nothing
+                     460     ; CAUTION: timers_init must be called first
+                     461     ;          EA must be set to 1
+                     462     ; ************************************************************************/
+                     463     ; void timers_isr0
+                     464     
+----                 465             RSEG  ?PR?timers_isr0?TIMERS
+                     466             USING   3
+0000                 467     timers_isr0:
+0000 C0E0            468             PUSH    ACC
+0002 C0D0            469             PUSH    PSW
+                     470             USING   3
+0004 75D018          471             MOV     PSW,#018H
+                     472                             ; SOURCE LINE # 86
+                     473     ;   (
+                     474     ;   void
+                     475     ;   ) interrupt 1 using 3
+                     476                             ; SOURCE LINE # 89
+                     477     ; {
+                     478     ; // reinitialize
+                     479     ;       TL0 = t0Low;//0xC3;
+                     480                             ; SOURCE LINE # 92
+0007 758A96          481             MOV     TL0,#096H
+                     482     ;       TH0 = t0High;//0xff;
+                     483                             ; SOURCE LINE # 93
+000A 758CFF          484             MOV     TH0,#0FFH
+                     485     ;       --smootherCnt;
+                     486                             ; SOURCE LINE # 94
+000D 1500     F      487             DEC     smootherCnt
+                     488     ;       startBit = 1;
+                     489                             ; SOURCE LINE # 95
+000F D200     F      490             SETB    startBit
+                     491     ;       #pragma ASM
+                     492     ;                       JB              outEmpty, ONWARD
+0011 200040   F      493               JB            outEmpty, ONWARD
+                     494     ;                       DEC             outputSmoother
+0014 1500     F      495               DEC           outputSmoother
+                     496     ;                       MOV             A, outputSmoother
+0016 E500     F      497               MOV           A, outputSmoother
+                     498     ;                       JNZ             ONWARD
+0018 703A            499               JNZ           ONWARD
+                     500     ;                       MOV             outputSmoother, #0x03
+001A 750003   F      501               MOV           outputSmoother, #0x03
+                     502     ;                       JB              outStart, STARTED
+001D 20000D   F      503               JB            outStart, STARTED
+                     504     ;                       SETB    audioL
+0020 D283            505               SETB  audioL
+                     506     ;                       SETB    outStart
+0022 D200     F      507               SETB  outStart
+                     508     ;                       MOV             R0, outputByte
+0024 A800     F      509               MOV           R0, outputByte
+                     510     ;                       MOV             A, #LOW (outBuf - 1)
+0026 7400     F      511               MOV           A, #LOW (outBuf - 1)
+                     512     ;                       ADD             A, R0
+0028 28              513               ADD           A, R0
+                     514     ;                       MOV             output, A
+0029 F500     F      515               MOV           output, A
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE     9
+
+                     516     ;                       SJMP    ONWARD
+002B 8027            517               SJMP  ONWARD
+                     518     ;               STARTED:
+002D                 519               STARTED:
+                     520     ;                       JB              outEnd, ENDER
+002D 20001C   F      521               JB            outEnd, ENDER
+                     522     ;                       MOV             R0, output 
+0030 A800     F      523               MOV           R0, output 
+                     524     ;                       MOV             A, @R0
+0032 E6              525               MOV           A, @R0
+                     526     ;                       ADDC    A, ACC
+0033 35E0            527               ADDC  A, ACC
+                     528     ;                       MOV             @R0, A
+0035 F6              529               MOV           @R0, A
+                     530     ;                       JNC             OUT_0
+0036 5002            531               JNC           OUT_0
+                     532     ;                       CPL             audioL
+0038 B283            533               CPL           audioL
+                     534     ;               OUT_0:  
+003A                 535               OUT_0:        
+                     536     ;                       DJNZ    outputBit, ONWARD
+003A D50017   F      537               DJNZ  outputBit, ONWARD
+                     538     ;                       MOV             outputBit, #0x08
+003D 750008   F      539               MOV           outputBit, #0x08
+                     540     ;                       DEC             output
+0040 1500     F      541               DEC           output
+                     542     ;                       DJNZ    outputByte, ONWARD
+0042 D5000F   F      543               DJNZ  outputByte, ONWARD
+                     544     ;                       MOV             outputByte, #BUFFER_LENGTH
+0045 750006   F      545               MOV           outputByte, #0x06
+                     546     ;                       SETB    outEnd
+0048 D200     F      547               SETB  outEnd
+                     548     ;                       SJMP    ONWARD
+004A 8008            549               SJMP  ONWARD
+                     550     ;               ENDER:
+004C                 551               ENDER:
+                     552     ;                       CLR             outStart
+004C C200     F      553               CLR           outStart
+                     554     ;                       CLR             audioL
+004E C283            555               CLR           audioL
+                     556     ;                       CLR             outEnd
+0050 C200     F      557               CLR           outEnd
+                     558     ;                       SETB    outEmpty
+0052 D200     F      559               SETB  outEmpty
+                     560     ;               ONWARD:
+0054                 561               ONWARD:
+                     562     ;               #pragma ENDASM
+                     563     ;       inputBitSmoother += rawInput;
+                     564                             ; SOURCE LINE # 133
+0054 E5AC            565             MOV     A,CMP1
+0056 5401            566             ANL     A,#01H
+0058 2500     F      567             ADD     A,inputBitSmoother
+005A F500     F      568             MOV     inputBitSmoother,A
+                     569     ;       CMP1 &= ~0x01;
+                     570                             ; SOURCE LINE # 134
+005C 53ACFE          571             ANL     CMP1,#0FEH
+                     572     ;       if (startBit) {
+                     573                             ; SOURCE LINE # 135
+005F 300042   F      574             JNB     startBit,?C0002
+                     575     ;               if (!smootherCnt) {
+                     576                             ; SOURCE LINE # 136
+0062 E500     F      577             MOV     A,smootherCnt
+0064 7052            578             JNZ     ?C0009
+                     579     ;                       smootherCnt = SAMPLES_PER_BIT;
+                     580                             ; SOURCE LINE # 137
+0066 750003   F      581             MOV     smootherCnt,#03H
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    10
+
+                     582     ; //                    inBuf[inByte] <<= 1;
+                     583     ; //                    inBuf[inByte] += inputBitSmoother & 0x01;
+                     584     ;                       #pragma ASM
+                     585     ;                               MOV     R0, inputByte
+0069 A800     F      586               MOV   R0, inputByte
+                     587     ;                               MOV     A, #LOW (inputBuf - 1)
+006B 7400     F      588               MOV   A, #LOW (inputBuf - 1)
+                     589     ;                               ADD     A, R0
+006D 28              590               ADD   A, R0
+                     591     ;                               MOV     R0, A
+006E F8              592               MOV   R0, A
+                     593     ;                               MOV     A, @R0
+006F E6              594               MOV   A, @R0
+                     595     ;                               ADD     A, ACC
+0070 25E0            596               ADD   A, ACC
+                     597     ;                               MOV     @R0, A
+0072 F6              598               MOV   @R0, A
+                     599     ;                               MOV     A, inputBitSmoother
+0073 E500     F      600               MOV   A, inputBitSmoother
+                     601     ;                               ANL     A, #0x01
+0075 5401            602               ANL   A, #0x01
+                     603     ;                               ADD             A, @R0
+0077 26              604               ADD           A, @R0
+                     605     ;                               MOV             @R0, A
+0078 F6              606               MOV           @R0, A
+                     607     ;                       #pragma ENDASM
+                     608     ;                       if (--curBit == 0) {
+                     609                             ; SOURCE LINE # 153
+0079 1500     F      610             DEC     curBit
+007B AF00     F      611             MOV     R7,curBit
+007D EF              612             MOV     A,R7
+007E 701F            613             JNZ     ?C0004
+                     614     ;                               curBit = 8;
+                     615                             ; SOURCE LINE # 154
+0080 750008   F      616             MOV     curBit,#08H
+                     617     ;                               if (inputByte-- == 0) {
+                     618                             ; SOURCE LINE # 155
+0083 AF00     F      619             MOV     R7,inputByte
+0085 1500     F      620             DEC     inputByte
+0087 EF              621             MOV     A,R7
+0088 7015            622             JNZ     ?C0004
+                     623     ;                                       startBit = 0;
+                     624                             ; SOURCE LINE # 156
+008A C200     F      625             CLR     startBit
+                     626     ;                                       //inByte = BUFFER_LENGTH;
+                     627     ;                                       inEmpty = 0;
+                     628                             ; SOURCE LINE # 158
+008C C200     F      629             CLR     inEmpty
+                     630     ;       //                              for (inputByte = 0; inputByte < BUFFER_LENGTH; ++in
+                             putByte) {
+                     631     ;       //                                      inBuf[inputByte] = inputBuf[inputByte];
+                     632     ;       //                                      inBuf[inputByte] = 0;
+                     633     ;       //                              }
+                     634     ;                                       #pragma ASM
+                     635     ;                                                       MOV             R2, #0x06
+008E 7A06            636               MOV           R2, #0x06
+                     637     ;                                                       MOV     R0, #LOW (inputBuf)
+0090 7800     F      638               MOV   R0, #LOW (inputBuf)
+                     639     ;                                                       MOV             R1, #LOW (inBuf)
+0092 7900     F      640               MOV           R1, #LOW (inBuf)
+                     641     ;                                               LOOP:
+0094                 642               LOOP:
+                     643     ;                                                       MOV     A,@R0
+0094 E6              644               MOV   A,@R0
+                     645     ;                                                       MOV     @R1,A
+0095 F7              646               MOV   @R1,A
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    11
+
+                     647     ;                                                       MOV             @R0, #0x00
+0096 7600            648               MOV           @R0, #0x00
+                     649     ;                                                       INC             R0
+0098 08              650               INC           R0
+                     651     ;                                                       INC             R1
+0099 09              652               INC           R1
+                     653     ;                                                       DJNZ    R2, LOOP
+009A DAF8            654               DJNZ  R2, LOOP
+                     655     ;                                                       MOV             inputByte, #BUFFER_
+                             LENGTH
+009C 750006   F      656               MOV           inputByte, #0x06
+                     657     ;                                       #pragma ENDASM
+                     658     ;                               }
+                     659                             ; SOURCE LINE # 176
+                     660     ;                       }       
+                     661                             ; SOURCE LINE # 177
+009F                 662     ?C0004:
+                     663     ;               inputBitSmoother = 0;
+                     664                             ; SOURCE LINE # 178
+009F 750000   F      665             MOV     inputBitSmoother,#00H
+                     666     ;               }               
+                     667                             ; SOURCE LINE # 179
+                     668     ;       } else {
+                     669                             ; SOURCE LINE # 180
+00A2 8014            670             SJMP    ?C0009
+00A4                 671     ?C0002:
+                     672     ;               if (!smootherCnt) {
+                     673                             ; SOURCE LINE # 181
+00A4 E500     F      674             MOV     A,smootherCnt
+00A6 7010            675             JNZ     ?C0009
+                     676     ;                       smootherCnt = SAMPLES_PER_BIT;
+                     677                             ; SOURCE LINE # 182
+00A8 750003   F      678             MOV     smootherCnt,#03H
+                     679     ;                       if (inputBitSmoother == 4) {
+                     680                             ; SOURCE LINE # 183
+00AB E500     F      681             MOV     A,inputBitSmoother
+00AD B40402          682             CJNE    A,#04H,?C0008
+                     683     ;                               startBit = 1;
+                     684                             ; SOURCE LINE # 184
+00B0 D200     F      685             SETB    startBit
+                     686     ;                       }
+                     687                             ; SOURCE LINE # 185
+00B2                 688     ?C0008:
+                     689     ;               inputBitSmoother <<= 1;
+                     690                             ; SOURCE LINE # 186
+00B2 E500     F      691             MOV     A,inputBitSmoother
+00B4 25E0            692             ADD     A,ACC
+00B6 F500     F      693             MOV     inputBitSmoother,A
+                     694     ;               }
+                     695                             ; SOURCE LINE # 187
+                     696     ;       }
+                     697                             ; SOURCE LINE # 188
+                     698     ; } // timers_isr0
+                     699                             ; SOURCE LINE # 189
+00B8                 700     ?C0009:
+00B8 D0D0            701             POP     PSW
+00BA D0E0            702             POP     ACC
+00BC 32              703             RETI    
+                     704     ; END OF timers_isr0
+                     705     
+                     706     ; 
+                     707     ; 
+                     708     ; //void timers_isr1
+                     709     ; //  (
+                     710     ; //  void
+                     711     ; //  ) interrupt 3 using 3
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    12
+
+                     712     ; //{
+                     713     ; //// reinitialize
+                     714     ; //    #pragma ASM
+                     715     ; //                    PUSH    ACC
+                     716     ; //                    PUSH    PSW
+                     717     ; //                    MOV     TH1, #t1High
+                     718     ; //                    MOV     TL1, #t1Low
+                     719     ; //                    JB              outEmpty, ONWARD
+                     720     ; //                    JB              outStart, STARTED
+                     721     ; //                    SETB    audioL
+                     722     ; //                    SETB    outStart
+                     723     ; //                    MOV             R0, outByte
+                     724     ; //                    MOV             A, #LOW (outBuf - 1)
+                     725     ; //                    ADD             A, R0
+                     726     ; //                    MOV             output, A
+                     727     ; //                    SJMP    ONWARD
+                     728     ; //            STARTED:
+                     729     ; //                    JB              outEnd, ENDER
+                     730     ; //                    MOV             R0, output 
+                     731     ; //                    MOV             A, @R0
+                     732     ; //                    ADDC    A, ACC
+                     733     ; //                    MOV             @R0, A
+                     734     ; //                    JNC             OUT_0
+                     735     ; //                    CPL             audioL
+                     736     ; //            OUT_0:  
+                     737     ; //                    DJNZ    outputBit, ONWARD
+                     738     ; //                    MOV             outputBit, #0x08
+                     739     ; //                    DEC             output
+                     740     ; //                    DJNZ    outByte, ONWARD
+                     741     ; //                    MOV             outByte, #BUFFER_LENGTH
+                     742     ; //                    SETB    outEnd
+                     743     ; //                    SJMP    ONWARD
+                     744     ; //            ENDER:
+                     745     ; //                    CLR             outStart
+                     746     ; //                    CLR             audioL
+                     747     ; //                    CLR             outEnd
+                     748     ; //                    SETB    outEmpty
+                     749     ; //            ONWARD:
+                     750     ; //                    POP     ACC
+                     751     ; //                    POP     PSW
+                     752     ; //            #pragma ENDASM
+                     753     ; //}
+                     754     ; 
+                     755     ; /***********************************************************************
+                     756     ; DESC:    Starts timer 0
+                     757     ; RETURNS: Nothing
+                     758     ; CAUTION: timers_init must be called first
+                     759     ; ************************************************************************/
+                     760     ; void timers_starttimer0
+                     761     
+----                 762             RSEG  ?PR?timers_starttimer0?TIMERS
+0000                 763     timers_starttimer0:
+                     764                             ; SOURCE LINE # 244
+                     765     ;   (
+                     766     ;   void
+                     767     ;   )
+                     768     ; {
+                     769                             ; SOURCE LINE # 248
+                     770     ;   TR0 = 1;
+                     771                             ; SOURCE LINE # 249
+0000 D28C            772             SETB    TR0
+                     773     ; } // timers_starttimer0
+                     774                             ; SOURCE LINE # 250
+0002 22              775             RET     
+                     776     ; END OF timers_starttimer0
+                     777     
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    13
+
+                     778     ; 
+                     779     ; /***********************************************************************
+                     780     ; DESC:    Stops timer 0
+                     781     ; RETURNS: Nothing
+                     782     ; CAUTION: timers_init must be called first
+                     783     ; ************************************************************************/
+                     784     ; void timers_stoptimer0
+                     785     
+----                 786             RSEG  ?PR?timers_stoptimer0?TIMERS
+0000                 787     timers_stoptimer0:
+                     788                             ; SOURCE LINE # 257
+                     789     ;   (
+                     790     ;   void
+                     791     ;   )
+                     792     ; {
+                     793                             ; SOURCE LINE # 261
+                     794     ;   TR0 = 0;
+                     795                             ; SOURCE LINE # 262
+0000 C28C            796             CLR     TR0
+                     797     ; } // timers_stoptimer0
+                     798                             ; SOURCE LINE # 263
+0002 22              799             RET     
+                     800     ; END OF timers_stoptimer0
+                     801     
+                     802             END
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    14
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                        T Y P E  V A L U E   ATTRIBUTES
+
+?BI?TIMERS. . . . . . . . . .  B SEG    0002H       REL=UNIT
+?C0002. . . . . . . . . . . .  C ADDR   00A4H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+?C0004. . . . . . . . . . . .  C ADDR   009FH   R   SEG=?PR?TIMERS_ISR0?TIMERS
+?C0008. . . . . . . . . . . .  C ADDR   00B2H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+?C0009. . . . . . . . . . . .  C ADDR   00B8H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+?C_INITSEG. . . . . . . . . .  C SEG    0010H       REL=UNIT
+?DT?TIMERS. . . . . . . . . .  D SEG    0007H       REL=UNIT
+?PR?TIMERS_INIT?TIMERS. . . .  C SEG    0052H       REL=INBLOCK
+?PR?TIMERS_ISR0?TIMERS. . . .  C SEG    00BDH       REL=INBLOCK
+?PR?TIMERS_STARTTIMER0?TIMERS  C SEG    0003H       REL=INBLOCK
+?PR?TIMERS_STOPTIMER0?TIMERS.  C SEG    0003H       REL=INBLOCK
+AA. . . . . . . . . . . . . .  B ADDR   00D8H.2 A   
+AC. . . . . . . . . . . . . .  B ADDR   00D0H.6 A   
+ACC . . . . . . . . . . . . .  D ADDR   00E0H   A   
+AD0BH . . . . . . . . . . . .  D ADDR   00BBH   A   
+AD0BL . . . . . . . . . . . .  D ADDR   00A6H   A   
+AD0DAT0 . . . . . . . . . . .  D ADDR   00C5H   A   
+AD0DAT1 . . . . . . . . . . .  D ADDR   00C6H   A   
+AD0DAT2 . . . . . . . . . . .  D ADDR   00C7H   A   
+AD0DAT3 . . . . . . . . . . .  D ADDR   00F4H   A   
+AD1BH . . . . . . . . . . . .  D ADDR   00C4H   A   
+AD1BL . . . . . . . . . . . .  D ADDR   00BCH   A   
+AD1DAT0 . . . . . . . . . . .  D ADDR   00D5H   A   
+AD1DAT1 . . . . . . . . . . .  D ADDR   00D6H   A   
+AD1DAT2 . . . . . . . . . . .  D ADDR   00D7H   A   
+AD1DAT3 . . . . . . . . . . .  D ADDR   00F5H   A   
+ADCON0. . . . . . . . . . . .  D ADDR   008EH   A   
+ADCON1. . . . . . . . . . . .  D ADDR   0097H   A   
+ADINS . . . . . . . . . . . .  D ADDR   00A3H   A   
+ADMODA. . . . . . . . . . . .  D ADDR   00C0H   A   
+ADMODB. . . . . . . . . . . .  D ADDR   00A1H   A   
+ALTAB . . . . . . . . . . . .  B ADDR   00C8H.3 A   
+ALTCD . . . . . . . . . . . .  B ADDR   00C8H.4 A   
+AR7 . . . . . . . . . . . . .  D ADDR   001FH   A   
+AUDIOL. . . . . . . . . . . .  B ADDR   0080H.3 A   
+AUDION. . . . . . . . . . . .  B ADDR   0080H.4 A   
+AUXR1 . . . . . . . . . . . .  D ADDR   00A2H   A   
+B . . . . . . . . . . . . . .  D ADDR   00F0H   A   
+BNDI0 . . . . . . . . . . . .  B ADDR   00C0H.3 A   
+BNDI1 . . . . . . . . . . . .  B ADDR   00C0H.7 A   
+BRGCON. . . . . . . . . . . .  D ADDR   00BDH   A   
+BRGR0 . . . . . . . . . . . .  D ADDR   00BEH   A   
+BRGR1 . . . . . . . . . . . .  D ADDR   00BFH   A   
+BURST0. . . . . . . . . . . .  B ADDR   00C0H.2 A   
+BURST1. . . . . . . . . . . .  B ADDR   00C0H.6 A   
+CCCRA . . . . . . . . . . . .  D ADDR   00EAH   A   
+CCCRB . . . . . . . . . . . .  D ADDR   00EBH   A   
+CCCRC . . . . . . . . . . . .  D ADDR   00ECH   A   
+CCCRD . . . . . . . . . . . .  D ADDR   00EDH   A   
+CCTIMER . . . . . . . . . . .  B ADDR   00A0H.0 A   
+CE. . . . . . . . . . . . . .  B ADDR   00A0H.4 A   
+CMP1. . . . . . . . . . . . .  D ADDR   00ACH   A   
+CMP2. . . . . . . . . . . . .  D ADDR   00ADH   A   
+CRSEL . . . . . . . . . . . .  B ADDR   00D8H.0 A   
+CURBIT. . . . . . . . . . . .  D ADDR   0006H   R   SEG=?DT?TIMERS
+CY. . . . . . . . . . . . . .  B ADDR   00D0H.7 A   
+DEEADR. . . . . . . . . . . .  D ADDR   00F3H   A   
+DEECON. . . . . . . . . . . .  D ADDR   00F1H   A   
+DEEDAT. . . . . . . . . . . .  D ADDR   00F2H   A   
+DIVM. . . . . . . . . . . . .  D ADDR   0095H   A   
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    15
+
+DPH . . . . . . . . . . . . .  D ADDR   0083H   A   
+DPL . . . . . . . . . . . . .  D ADDR   0082H   A   
+EA. . . . . . . . . . . . . .  B ADDR   00A8H.7 A   
+EAD . . . . . . . . . . . . .  B ADDR   00E8H.7 A   
+EBO . . . . . . . . . . . . .  B ADDR   00A8H.5 A   
+EC. . . . . . . . . . . . . .  B ADDR   00E8H.2 A   
+ECCU. . . . . . . . . . . . .  B ADDR   00E8H.4 A   
+EI2C. . . . . . . . . . . . .  B ADDR   00E8H.0 A   
+EIEE. . . . . . . . . . . . .  B ADDR   00E8H.7 A   
+EKBI. . . . . . . . . . . . .  B ADDR   00E8H.1 A   
+ENDER . . . . . . . . . . . .  C ADDR   004CH   R   SEG=?PR?TIMERS_ISR0?TIMERS
+ES. . . . . . . . . . . . . .  B ADDR   00A8H.4 A   
+ESPI. . . . . . . . . . . . .  B ADDR   00E8H.3 A   
+ESR . . . . . . . . . . . . .  B ADDR   00A8H.4 A   
+EST . . . . . . . . . . . . .  B ADDR   00E8H.6 A   
+ET0 . . . . . . . . . . . . .  B ADDR   00A8H.1 A   
+ET1 . . . . . . . . . . . . .  B ADDR   00A8H.3 A   
+EWDRT . . . . . . . . . . . .  B ADDR   00A8H.6 A   
+EX0 . . . . . . . . . . . . .  B ADDR   00A8H.0 A   
+EX1 . . . . . . . . . . . . .  B ADDR   00A8H.2 A   
+F0. . . . . . . . . . . . . .  B ADDR   00D0H.5 A   
+F1. . . . . . . . . . . . . .  B ADDR   00D0H.1 A   
+FE. . . . . . . . . . . . . .  B ADDR   0098H.7 A   
+HIBUTT. . . . . . . . . . . .  B ADDR   0080H.1 A   
+HLTEN . . . . . . . . . . . .  B ADDR   00C8H.5 A   
+HLTRN . . . . . . . . . . . .  B ADDR   00C8H.6 A   
+I2ADR . . . . . . . . . . . .  D ADDR   00DBH   A   
+I2CON . . . . . . . . . . . .  D ADDR   00D8H   A   
+I2DAT . . . . . . . . . . . .  D ADDR   00DAH   A   
+I2EN. . . . . . . . . . . . .  B ADDR   00D8H.6 A   
+I2SCLH. . . . . . . . . . . .  D ADDR   00DDH   A   
+I2SCLL. . . . . . . . . . . .  D ADDR   00DCH   A   
+I2STAT. . . . . . . . . . . .  D ADDR   00D9H   A   
+ICA . . . . . . . . . . . . .  B ADDR   00A0H.7 A   
+ICB . . . . . . . . . . . . .  B ADDR   00A0H.0 A   
+ICRAH . . . . . . . . . . . .  D ADDR   00ABH   A   
+ICRAL . . . . . . . . . . . .  D ADDR   00AAH   A   
+ICRBH . . . . . . . . . . . .  D ADDR   00AFH   A   
+ICRBL . . . . . . . . . . . .  D ADDR   00AEH   A   
+IE0 . . . . . . . . . . . . .  B ADDR   0088H.1 A   
+IE1 . . . . . . . . . . . . .  B ADDR   0088H.3 A   
+IEN0. . . . . . . . . . . . .  D ADDR   00A8H   A   
+IEN1. . . . . . . . . . . . .  D ADDR   00E8H   A   
+INBUF . . . . . . . . . . . .  D ADDR   -----       EXT
+INBYTE. . . . . . . . . . . .  D ADDR   -----       EXT
+INEMPTY . . . . . . . . . . .  B ADDR   -----       EXT
+INPUTBITSMOOTHER. . . . . . .  D ADDR   -----       EXT
+INPUTBUF. . . . . . . . . . .  D ADDR   -----       EXT
+INPUTBYTE . . . . . . . . . .  D ADDR   -----       EXT
+INT0. . . . . . . . . . . . .  B ADDR   0090H.3 A   
+INT1. . . . . . . . . . . . .  B ADDR   0090H.4 A   
+IP0 . . . . . . . . . . . . .  D ADDR   00B8H   A   
+IP0H. . . . . . . . . . . . .  D ADDR   00B7H   A   
+IP1 . . . . . . . . . . . . .  D ADDR   00F8H   A   
+IP1H. . . . . . . . . . . . .  D ADDR   00F7H   A   
+IT0 . . . . . . . . . . . . .  B ADDR   0088H.0 A   
+IT1 . . . . . . . . . . . . .  B ADDR   0088H.2 A   
+KB0 . . . . . . . . . . . . .  B ADDR   0080H.0 A   
+KB1 . . . . . . . . . . . . .  B ADDR   0080H.1 A   
+KB2 . . . . . . . . . . . . .  B ADDR   0080H.2 A   
+KB3 . . . . . . . . . . . . .  B ADDR   0080H.3 A   
+KB4 . . . . . . . . . . . . .  B ADDR   0080H.4 A   
+KB5 . . . . . . . . . . . . .  B ADDR   0080H.5 A   
+KB6 . . . . . . . . . . . . .  B ADDR   0080H.6 A   
+KB7 . . . . . . . . . . . . .  B ADDR   0080H.7 A   
+KBCON . . . . . . . . . . . .  D ADDR   0094H   A   
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    16
+
+KBMASK. . . . . . . . . . . .  D ADDR   0086H   A   
+KBPATN. . . . . . . . . . . .  D ADDR   0093H   A   
+LED . . . . . . . . . . . . .  B ADDR   00A0H.5 A   
+LOBUTT. . . . . . . . . . . .  B ADDR   0080H.2 A   
+LOOP. . . . . . . . . . . . .  C ADDR   0094H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+MIDBUTT . . . . . . . . . . .  B ADDR   0080H.0 A   
+MISO. . . . . . . . . . . . .  B ADDR   00A0H.3 A   
+MOSI. . . . . . . . . . . . .  B ADDR   00A0H.2 A   
+OCA . . . . . . . . . . . . .  B ADDR   00A0H.6 A   
+OCB . . . . . . . . . . . . .  B ADDR   0090H.6 A   
+OCC . . . . . . . . . . . . .  B ADDR   0090H.7 A   
+OCD . . . . . . . . . . . . .  B ADDR   00A0H.1 A   
+OCRAH . . . . . . . . . . . .  D ADDR   00EFH   A   
+OCRAL . . . . . . . . . . . .  D ADDR   00EEH   A   
+OCRBH . . . . . . . . . . . .  D ADDR   00FBH   A   
+OCRBL . . . . . . . . . . . .  D ADDR   00FAH   A   
+OCRCH . . . . . . . . . . . .  D ADDR   00FDH   A   
+OCRCL . . . . . . . . . . . .  D ADDR   00FCH   A   
+OCRDH . . . . . . . . . . . .  D ADDR   00FFH   A   
+OCRDL . . . . . . . . . . . .  D ADDR   00FEH   A   
+ONWARD. . . . . . . . . . . .  C ADDR   0054H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+OUTBUF. . . . . . . . . . . .  D ADDR   -----       EXT
+OUTBYTE . . . . . . . . . . .  D ADDR   -----       EXT
+OUTEMPTY. . . . . . . . . . .  B ADDR   -----       EXT
+OUTEND. . . . . . . . . . . .  B ADDR   0000H.1 R   SEG=?BI?TIMERS
+OUTPUT. . . . . . . . . . . .  D ADDR   0001H   R   SEG=?DT?TIMERS
+OUTPUTBIT . . . . . . . . . .  D ADDR   0005H   R   SEG=?DT?TIMERS
+OUTPUTBYTE. . . . . . . . . .  D ADDR   0004H   R   SEG=?DT?TIMERS
+OUTPUTSMOOTHER. . . . . . . .  D ADDR   0000H   R   SEG=?DT?TIMERS
+OUTSTART. . . . . . . . . . .  B ADDR   0000H.0 R   SEG=?BI?TIMERS
+OUT_0 . . . . . . . . . . . .  C ADDR   003AH   R   SEG=?PR?TIMERS_ISR0?TIMERS
+OV. . . . . . . . . . . . . .  B ADDR   00D0H.2 A   
+P . . . . . . . . . . . . . .  B ADDR   00D0H.0 A   
+P0. . . . . . . . . . . . . .  D ADDR   0080H   A   
+P0M1. . . . . . . . . . . . .  D ADDR   0084H   A   
+P0M2. . . . . . . . . . . . .  D ADDR   0085H   A   
+P1. . . . . . . . . . . . . .  D ADDR   0090H   A   
+P1M1. . . . . . . . . . . . .  D ADDR   0091H   A   
+P1M2. . . . . . . . . . . . .  D ADDR   0092H   A   
+P2. . . . . . . . . . . . . .  D ADDR   00A0H   A   
+P2M1. . . . . . . . . . . . .  D ADDR   00A4H   A   
+P2M2. . . . . . . . . . . . .  D ADDR   00A5H   A   
+P3. . . . . . . . . . . . . .  D ADDR   00B0H   A   
+P3M1. . . . . . . . . . . . .  D ADDR   00B1H   A   
+P3M2. . . . . . . . . . . . .  D ADDR   00B2H   A   
+PAD . . . . . . . . . . . . .  B ADDR   00F8H.7 A   
+PB0 . . . . . . . . . . . . .  B ADDR   00B8H.5 A   
+PCCU. . . . . . . . . . . . .  B ADDR   00F8H.4 A   
+PCON. . . . . . . . . . . . .  D ADDR   0087H   A   
+PCONA . . . . . . . . . . . .  D ADDR   00B5H   A   
+PC_ . . . . . . . . . . . . .  B ADDR   00F8H.2 A   
+PI2C. . . . . . . . . . . . .  B ADDR   00F8H.0 A   
+PIEE. . . . . . . . . . . . .  B ADDR   00F8H.7 A   
+PKBI. . . . . . . . . . . . .  B ADDR   00F8H.1 A   
+PLLEN . . . . . . . . . . . .  B ADDR   00C8H.7 A   
+PS. . . . . . . . . . . . . .  B ADDR   00B8H.4 A   
+PSPI. . . . . . . . . . . . .  B ADDR   00F8H.3 A   
+PSR . . . . . . . . . . . . .  B ADDR   00B8H.4 A   
+PST . . . . . . . . . . . . .  B ADDR   00F8H.6 A   
+PSW . . . . . . . . . . . . .  D ADDR   00D0H   A   
+PT0 . . . . . . . . . . . . .  B ADDR   00B8H.1 A   
+PT0AD . . . . . . . . . . . .  D ADDR   00F6H   A   
+PT1 . . . . . . . . . . . . .  B ADDR   00B8H.3 A   
+PWDRT . . . . . . . . . . . .  B ADDR   00B8H.6 A   
+PX0 . . . . . . . . . . . . .  B ADDR   00B8H.0 A   
+PX1 . . . . . . . . . . . . .  B ADDR   00B8H.2 A   
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    17
+
+RB8 . . . . . . . . . . . . .  B ADDR   0098H.2 A   
+REN . . . . . . . . . . . . .  B ADDR   0098H.4 A   
+RI. . . . . . . . . . . . . .  B ADDR   0098H.0 A   
+RS0 . . . . . . . . . . . . .  B ADDR   00D0H.3 A   
+RS1 . . . . . . . . . . . . .  B ADDR   00D0H.4 A   
+RST . . . . . . . . . . . . .  B ADDR   0090H.5 A   
+RSTSRC. . . . . . . . . . . .  D ADDR   00DFH   A   
+RTCCON. . . . . . . . . . . .  D ADDR   00D1H   A   
+RTCH. . . . . . . . . . . . .  D ADDR   00D2H   A   
+RTCL. . . . . . . . . . . . .  D ADDR   00D3H   A   
+RXD . . . . . . . . . . . . .  B ADDR   0090H.1 A   
+SADDR . . . . . . . . . . . .  D ADDR   00A9H   A   
+SADEN . . . . . . . . . . . .  D ADDR   00B9H   A   
+SBUF. . . . . . . . . . . . .  D ADDR   0099H   A   
+SCAN0 . . . . . . . . . . . .  B ADDR   00C0H.0 A   
+SCAN1 . . . . . . . . . . . .  B ADDR   00C0H.4 A   
+SCC0. . . . . . . . . . . . .  B ADDR   00C0H.1 A   
+SCC1. . . . . . . . . . . . .  B ADDR   00C0H.5 A   
+SCL . . . . . . . . . . . . .  B ADDR   0090H.2 A   
+SCON. . . . . . . . . . . . .  D ADDR   0098H   A   
+SDA . . . . . . . . . . . . .  B ADDR   0090H.3 A   
+SI. . . . . . . . . . . . . .  B ADDR   00D8H.3 A   
+SM0 . . . . . . . . . . . . .  B ADDR   0098H.7 A   
+SM1 . . . . . . . . . . . . .  B ADDR   0098H.6 A   
+SM2 . . . . . . . . . . . . .  B ADDR   0098H.5 A   
+SMOOTHERCNT . . . . . . . . .  D ADDR   -----       EXT
+SP. . . . . . . . . . . . . .  D ADDR   0081H   A   
+SPCTL . . . . . . . . . . . .  D ADDR   00E2H   A   
+SPDAT . . . . . . . . . . . .  D ADDR   00E3H   A   
+SPICLK. . . . . . . . . . . .  B ADDR   00A0H.5 A   
+SPSTAT. . . . . . . . . . . .  D ADDR   00E1H   A   
+SS. . . . . . . . . . . . . .  B ADDR   00A0H.4 A   
+SSTAT . . . . . . . . . . . .  D ADDR   00BAH   A   
+STA . . . . . . . . . . . . .  B ADDR   00D8H.5 A   
+STARTBIT. . . . . . . . . . .  B ADDR   -----       EXT
+STARTED . . . . . . . . . . .  C ADDR   002DH   R   SEG=?PR?TIMERS_ISR0?TIMERS
+STO . . . . . . . . . . . . .  B ADDR   00D8H.4 A   
+T0. . . . . . . . . . . . . .  B ADDR   0090H.2 A   
+T1. . . . . . . . . . . . . .  B ADDR   0080H.7 A   
+TAMOD . . . . . . . . . . . .  D ADDR   008FH   A   
+TB8 . . . . . . . . . . . . .  B ADDR   0098H.3 A   
+TCON. . . . . . . . . . . . .  D ADDR   0088H   A   
+TCR20 . . . . . . . . . . . .  D ADDR   00C8H   A   
+TCR21 . . . . . . . . . . . .  D ADDR   00F9H   A   
+TDIR2 . . . . . . . . . . . .  B ADDR   00C8H.2 A   
+TF0 . . . . . . . . . . . . .  B ADDR   0088H.5 A   
+TF1 . . . . . . . . . . . . .  B ADDR   0088H.7 A   
+TH0 . . . . . . . . . . . . .  D ADDR   008CH   A   
+TH1 . . . . . . . . . . . . .  D ADDR   008DH   A   
+TH2 . . . . . . . . . . . . .  D ADDR   00CDH   A   
+TI. . . . . . . . . . . . . .  B ADDR   0098H.1 A   
+TICR2 . . . . . . . . . . . .  D ADDR   00C9H   A   
+TIFR2 . . . . . . . . . . . .  D ADDR   00E9H   A   
+TIMERS. . . . . . . . . . . .  N NUMB   -----       
+TIMERS_INIT . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?TIMERS_INIT?TIMERS
+TIMERS_ISR0 . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?TIMERS_ISR0?TIMERS
+TIMERS_STARTTIMER0. . . . . .  C ADDR   0000H   R   SEG=?PR?TIMERS_STARTTIMER0?TIMERS
+TIMERS_STOPTIMER0 . . . . . .  C ADDR   0000H   R   SEG=?PR?TIMERS_STOPTIMER0?TIMERS
+TISE2 . . . . . . . . . . . .  D ADDR   00DEH   A   
+TL0 . . . . . . . . . . . . .  D ADDR   008AH   A   
+TL1 . . . . . . . . . . . . .  D ADDR   008BH   A   
+TL2 . . . . . . . . . . . . .  D ADDR   00CCH   A   
+TMOD. . . . . . . . . . . . .  D ADDR   0089H   A   
+TMOD20. . . . . . . . . . . .  B ADDR   00C8H.0 A   
+TMOD21. . . . . . . . . . . .  B ADDR   00C8H.1 A   
+TOR2H . . . . . . . . . . . .  D ADDR   00CFH   A   
+A51 MACRO ASSEMBLER  TIMERS                                                               01/21/2011 21:57:45 PAGE    18
+
+TOR2L . . . . . . . . . . . .  D ADDR   00CEH   A   
+TPCR2H. . . . . . . . . . . .  D ADDR   00CBH   A   
+TPCR2L. . . . . . . . . . . .  D ADDR   00CAH   A   
+TR0 . . . . . . . . . . . . .  B ADDR   0088H.4 A   
+TR1 . . . . . . . . . . . . .  B ADDR   0088H.6 A   
+TRIM. . . . . . . . . . . . .  D ADDR   0096H   A   
+TXCLK . . . . . . . . . . . .  B ADDR   00A0H.3 A   
+TXD . . . . . . . . . . . . .  B ADDR   0090H.0 A   
+TXDATA. . . . . . . . . . . .  B ADDR   00A0H.2 A   
+TXVCC . . . . . . . . . . . .  B ADDR   00A0H.7 A   
+WDCON . . . . . . . . . . . .  D ADDR   00A7H   A   
+WDL . . . . . . . . . . . . .  D ADDR   00C1H   A   
+WFEED1. . . . . . . . . . . .  D ADDR   00C2H   A   
+WFEED2. . . . . . . . . . . .  D ADDR   00C3H   A   
+XTAL1 . . . . . . . . . . . .  B ADDR   00B0H.1 A   
+XTAL2 . . . . . . . . . . . .  B ADDR   00B0H.0 A   
+
+
+REGISTER BANK(S) USED: 0 3 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

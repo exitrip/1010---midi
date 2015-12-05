@@ -1,0 +1,1 @@
+"riff.c" OMF2 ROM(COMPACT) BROWSE MODP2 DEBUG CODE LISTINCLUDE SYMBOLS PRINT(.\lst\riff.lst) PREPRINT(.\lst\riff.i) OBJECT(.\obj\riff.obj)

@@ -1,0 +1,635 @@
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE ITRIP
+OBJECT MODULE PLACED IN .\obj\itrip.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE itrip.c ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRI
+                    -NT(.\lst\itrip.lst) PREPRINT(.\lst\itrip.i) OBJECT(.\obj\itrip.obj)
+
+line level    source
+
+   1          #include <REG936.H>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  REG936.H
+   3      =1  
+   4      =1  Header file for Philips 89LPC936
+   5      =1  Copyright (c) 1988-2006 KEIL - An ARM Company
+   6      =1  All rights reserved.
+   7      =1  V1.1
+   8      =1  --------------------------------------------------------------------------*/
+   9      =1  
+  10      =1  #ifndef __REG936_H__
+  11      =1  #define __REG936_H__
+  12      =1  
+  13      =1  /*  BYTE Registers  */
+  14      =1  sfr P0   = 0x80;
+  15      =1  sfr P1   = 0x90;
+  16      =1  sfr P2   = 0xA0;
+  17      =1  sfr P3   = 0xB0;
+  18      =1  sfr PSW  = 0xD0;
+  19      =1  sfr ACC  = 0xE0;
+  20      =1  sfr B    = 0xF0;
+  21      =1  sfr SP   = 0x81;
+  22      =1  sfr DPL  = 0x82;
+  23      =1  sfr DPH  = 0x83;
+  24      =1  sfr PCON = 0x87;
+  25      =1  sfr TCON = 0x88;
+  26      =1  sfr TMOD = 0x89;
+  27      =1  sfr TL0  = 0x8A;
+  28      =1  sfr TL1  = 0x8B;
+  29      =1  sfr TH0  = 0x8C;
+  30      =1  sfr TH1  = 0x8D;
+  31      =1  sfr IEN0 = 0xA8;
+  32      =1  sfr IP0  = 0xB8;
+  33      =1  sfr SCON = 0x98;
+  34      =1  sfr SBUF = 0x99;
+  35      =1  
+  36      =1  sfr ADCON0 = 0x8E;
+  37      =1  sfr ADCON1 = 0x97;
+  38      =1  sfr ADMODA = 0xC0;
+  39      =1  sfr ADMODB = 0xA1;
+  40      =1  sfr ADINS  = 0xA3;
+  41      =1  sfr AD0DAT0= 0xC5;
+  42      =1  sfr AD0DAT1= 0xC6;
+  43      =1  sfr AD0DAT2= 0xC7;
+  44      =1  sfr AD0DAT3= 0xF4;
+  45      =1  sfr AD1DAT0= 0xD5;
+  46      =1  sfr AD1DAT1= 0xD6;
+  47      =1  sfr AD1DAT2= 0xD7;
+  48      =1  sfr AD1DAT3= 0xF5;
+  49      =1  sfr AD0BH  = 0xBB;
+  50      =1  sfr AD0BL  = 0xA6;
+  51      =1  sfr AD1BH  = 0xC4;
+  52      =1  sfr AD1BL  = 0xBC;
+  53      =1  sfr AUXR1  = 0xA2;
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 2   
+
+  54      =1  sfr SADDR  = 0xA9;
+  55      =1  sfr SADEN  = 0xB9;
+  56      =1  sfr TL2    = 0xCC;
+  57      =1  sfr TH2    = 0xCD;
+  58      =1  sfr BRGR0  = 0xBE;
+  59      =1  sfr BRGR1  = 0xBF;
+  60      =1  sfr BRGCON = 0xBD;
+  61      =1  sfr CCCRA  = 0xEA;
+  62      =1  sfr CCCRB  = 0xEB;
+  63      =1  sfr CCCRC  = 0xEC;
+  64      =1  sfr CCCRD  = 0xED;
+  65      =1  sfr CMP1   = 0xAC;
+  66      =1  sfr CMP2   = 0xAD;
+  67      =1  sfr DEECON = 0xF1;
+  68      =1  sfr DEEDAT = 0xF2;
+  69      =1  sfr DEEADR = 0xF3;
+  70      =1  sfr DIVM   = 0x95;
+  71      =1  sfr I2ADR  = 0xDB;
+  72      =1  sfr I2CON  = 0xD8;
+  73      =1  sfr I2DAT  = 0xDA;
+  74      =1  sfr I2SCLH = 0xDD;
+  75      =1  sfr I2SCLL = 0xDC;
+  76      =1  sfr I2STAT = 0xD9;
+  77      =1  sfr ICRAH  = 0xAB;
+  78      =1  sfr ICRAL  = 0xAA;
+  79      =1  sfr ICRBH  = 0xAF;
+  80      =1  sfr ICRBL  = 0xAE;
+  81      =1  sfr IEN1   = 0xE8;
+  82      =1  sfr IP1    = 0xF8;
+  83      =1  sfr IP1H   = 0xF7;
+  84      =1  sfr KBCON  = 0x94;
+  85      =1  sfr KBMASK = 0x86;
+  86      =1  sfr KBPATN = 0x93;
+  87      =1  sfr OCRAH  = 0xEF;
+  88      =1  sfr OCRAL  = 0xEE;
+  89      =1  sfr OCRBH  = 0xFB;
+  90      =1  sfr OCRBL  = 0xFA;
+  91      =1  sfr OCRCH  = 0xFD;
+  92      =1  sfr OCRCL  = 0xFC;
+  93      =1  sfr OCRDH  = 0xFF;
+  94      =1  sfr OCRDL  = 0xFE;
+  95      =1  sfr P0M1   = 0x84;
+  96      =1  sfr P0M2   = 0x85;
+  97      =1  sfr P1M1   = 0x91;
+  98      =1  sfr P1M2   = 0x92;
+  99      =1  sfr P2M1   = 0xA4;
+ 100      =1  sfr P2M2   = 0xA5;
+ 101      =1  sfr P3M1   = 0xB1;
+ 102      =1  sfr P3M2   = 0xB2;
+ 103      =1  sfr PCONA  = 0xB5;
+ 104      =1  sfr PT0AD  = 0xF6;
+ 105      =1  sfr RSTSRC = 0xDF;
+ 106      =1  sfr RTCCON = 0xD1;
+ 107      =1  sfr RTCH   = 0xD2;
+ 108      =1  sfr RTCL   = 0xD3;
+ 109      =1  sfr SSTAT  = 0xBA;
+ 110      =1  sfr SPCTL  = 0xE2;
+ 111      =1  sfr SPSTAT = 0xE1;
+ 112      =1  sfr SPDAT  = 0xE3;
+ 113      =1  sfr TAMOD  = 0x8F;
+ 114      =1  sfr TCR20  = 0xC8;
+ 115      =1  sfr TCR21  = 0xF9;
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 3   
+
+ 116      =1  sfr TICR2  = 0xC9;
+ 117      =1  sfr TIFR2  = 0xE9;
+ 118      =1  sfr TISE2  = 0xDE;
+ 119      =1  sfr TOR2H  = 0xCF;
+ 120      =1  sfr TOR2L  = 0xCE;
+ 121      =1  sfr TPCR2H = 0xCB;
+ 122      =1  sfr TPCR2L = 0xCA;
+ 123      =1  sfr TRIM   = 0x96;
+ 124      =1  sfr WDCON  = 0xA7;
+ 125      =1  sfr WDL    = 0xC1;
+ 126      =1  sfr WFEED1 = 0xC2;
+ 127      =1  sfr WFEED2 = 0xC3;
+ 128      =1  sfr IP0H   = 0xB7;
+ 129      =1  
+ 130      =1  /*  BIT Registers  */
+ 131      =1  /*  PSW   */
+ 132      =1  sbit CY   = PSW^7;
+ 133      =1  sbit AC   = PSW^6;
+ 134      =1  sbit F0   = PSW^5;
+ 135      =1  sbit RS1  = PSW^4;
+ 136      =1  sbit RS0  = PSW^3;
+ 137      =1  sbit OV   = PSW^2;
+ 138      =1  sbit F1   = PSW^1;
+ 139      =1  sbit P    = PSW^0;
+ 140      =1  
+ 141      =1  /*  TCON  */
+ 142      =1  sbit TF1  = TCON^7;
+ 143      =1  sbit TR1  = TCON^6;
+ 144      =1  sbit TF0  = TCON^5;
+ 145      =1  sbit TR0  = TCON^4;
+ 146      =1  sbit IE1  = TCON^3;
+ 147      =1  sbit IT1  = TCON^2;
+ 148      =1  sbit IE0  = TCON^1;
+ 149      =1  sbit IT0  = TCON^0;
+ 150      =1  
+ 151      =1  /*  IEN0   */
+ 152      =1  sbit EA   = IEN0^7;
+ 153      =1  sbit EWDRT = IEN0^6;
+ 154      =1  sbit EBO   = IEN0^5;
+ 155      =1  sbit ES   = IEN0^4; // alternatively "ESR"
+ 156      =1  sbit ESR  = IEN0^4;
+ 157      =1  sbit ET1  = IEN0^3;
+ 158      =1  sbit EX1  = IEN0^2;
+ 159      =1  sbit ET0  = IEN0^1;
+ 160      =1  sbit EX0  = IEN0^0;
+ 161      =1  
+ 162      =1  /*  IEN1   */
+ 163      =1  sbit EAD  = IEN1^7; // alternatively "EIEE" 
+ 164      =1  sbit EIEE = IEN1^7;
+ 165      =1  sbit EST  = IEN1^6;
+ 166      =1  sbit ECCU = IEN1^4;
+ 167      =1  sbit ESPI = IEN1^3;
+ 168      =1  sbit EC   = IEN1^2;
+ 169      =1  sbit EKBI = IEN1^1;
+ 170      =1  sbit EI2C = IEN1^0;
+ 171      =1  
+ 172      =1  /*  IP0   */ 
+ 173      =1  sbit PWDRT = IP0^6;
+ 174      =1  sbit PB0   = IP0^5;
+ 175      =1  sbit PS    = IP0^4; // alternatively "PSR"
+ 176      =1  sbit PSR   = IP0^4;
+ 177      =1  sbit PT1   = IP0^3;
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 4   
+
+ 178      =1  sbit PX1   = IP0^2;
+ 179      =1  sbit PT0   = IP0^1;
+ 180      =1  sbit PX0   = IP0^0;
+ 181      =1  
+ 182      =1  /*  IP1   */
+ 183      =1  sbit PAD  = IP1^7; // alternatively "PIEE" 
+ 184      =1  sbit PIEE = IP1^7;
+ 185      =1  sbit PST  = IP1^6;
+ 186      =1  sbit PCCU = IP1^4;
+ 187      =1  sbit PSPI = IP1^3;
+ 188      =1  sbit PC_  = IP1^2;
+ 189      =1  sbit PKBI = IP1^1;
+ 190      =1  sbit PI2C = IP1^0;
+ 191      =1  
+ 192      =1  /*  SCON  */
+ 193      =1  sbit SM0  = SCON^7; // alternatively "FE"
+ 194      =1  sbit FE   = SCON^7;
+ 195      =1  sbit SM1  = SCON^6;
+ 196      =1  sbit SM2  = SCON^5;
+ 197      =1  sbit REN  = SCON^4;
+ 198      =1  sbit TB8  = SCON^3;
+ 199      =1  sbit RB8  = SCON^2;
+ 200      =1  sbit TI   = SCON^1;
+ 201      =1  sbit RI   = SCON^0;
+ 202      =1  
+ 203      =1  /*  I2CON  */
+ 204      =1  sbit I2EN  = I2CON^6;
+ 205      =1  sbit STA   = I2CON^5;
+ 206      =1  sbit STO   = I2CON^4;
+ 207      =1  sbit SI    = I2CON^3;
+ 208      =1  sbit AA    = I2CON^2;
+ 209      =1  sbit CRSEL = I2CON^0;
+ 210      =1  
+ 211      =1  /*  P0  */
+ 212      =1  sbit KB7 = P0^7; // alternatively "T1"
+ 213      =1  sbit T1 = P0^7;
+ 214      =1  sbit KB6 = P0^6; // alternatively "CMP1"
+ 215      =1  //sbit CMP1 = P0^6;
+ 216      =1  sbit KB5 = P0^5;
+ 217      =1  sbit KB4 = P0^4;
+ 218      =1  sbit KB3 = P0^3;
+ 219      =1  sbit KB2 = P0^2;
+ 220      =1  sbit KB1 = P0^1;
+ 221      =1  sbit KB0 = P0^0; // alternatively "CMP2"
+ 222      =1  //sbit CMP2 = P0^0;
+ 223      =1  
+ 224      =1  /*  P1  */
+ 225      =1  sbit OCC     = P1^7;
+ 226      =1  sbit OCB     = P1^6;
+ 227      =1  sbit RST     = P1^5;
+ 228      =1  sbit INT1    = P1^4;
+ 229      =1  sbit INT0    = P1^3; // alternatively "SDA"
+ 230      =1  sbit SDA     = P1^3;
+ 231      =1  sbit T0      = P1^2; // alternatively "SCL"
+ 232      =1  sbit SCL     = P1^2;
+ 233      =1  sbit RxD     = P1^1;
+ 234      =1  sbit TxD     = P1^0;
+ 235      =1  
+ 236      =1  /*  P2  */
+ 237      =1  sbit ICA     = P2^7;
+ 238      =1  sbit OCA     = P2^6;
+ 239      =1  sbit SPICLK  = P2^5;
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 5   
+
+ 240      =1  sbit SS      = P2^4;
+ 241      =1  sbit MISO    = P2^3;
+ 242      =1  sbit MOSI    = P2^2;
+ 243      =1  sbit OCD     = P2^1;
+ 244      =1  sbit ICB     = P2^0;
+ 245      =1  
+ 246      =1  /*  P3  */
+ 247      =1  sbit XTAL1= P3^1;
+ 248      =1  sbit XTAL2= P3^0;
+ 249      =1  
+ 250      =1  /* TCR20 */
+ 251      =1  sbit PLLEN = TCR20^7;
+ 252      =1  sbit HLTRN = TCR20^6;
+ 253      =1  sbit HLTEN = TCR20^5;
+ 254      =1  sbit ALTCD = TCR20^4;
+ 255      =1  sbit ALTAB = TCR20^3;
+ 256      =1  sbit TDIR2 = TCR20^2;
+ 257      =1  sbit TMOD21= TCR20^1;
+ 258      =1  sbit TMOD20= TCR20^0;
+ 259      =1  
+ 260      =1  /* ADMODA */
+ 261      =1  sbit BNDI1  = ADMODA^7;
+ 262      =1  sbit BURST1 = ADMODA^6;
+ 263      =1  sbit SCC1   = ADMODA^5;
+ 264      =1  sbit SCAN1  = ADMODA^4;
+ 265      =1  sbit BNDI0  = ADMODA^3;
+ 266      =1  sbit BURST0 = ADMODA^2;
+ 267      =1  sbit SCC0   = ADMODA^1;
+ 268      =1  sbit SCAN0  = ADMODA^0;
+ 269      =1  
+ 270      =1  #endif
+ 271      =1  
+   2          #include "iTrip.h"
+   1      =1  /*
+   2      =1  itrip HEADERZ v1e-9
+   3      =1  */
+   4      =1  
+   5      =1  #ifndef _ITRIP_H
+   6      =1  #define _ITRIP_H 
+   7      =1          typedef unsigned char byte;
+   8      =1          typedef unsigned int word;
+   9      =1  /****************************PROTOS*********************/
+  10      =1          void setup ();  //name and turn on
+  11      =1          void delay (word cnt);
+  12      =1          void txProg ();
+  13      =1          void txStero ();
+  14      =1          void txMono ();
+  15      =1          void setFreq (word freq);
+  16      =1          void incFreq ();
+  17      =1          void decFreq ();
+  18      =1          void setChan (byte numChan);
+  19      =1  
+  20      =1  /******************PIN NAMES****************************/
+  21      =1          volatile word bdata txState;
+  22      =1  //      sbit monoStereo = txState^12;
+  23      =1  //      sbit phaseMode0 = txState^11;
+  24      =1  //      sbit phaseMode1 = txState^10;
+  25      =1  //      sbit test0 = txState^9;
+  26      =1  //      sbit test1 = txState^8;
+  27      =1          sbit stereo = txState^3;
+  28      =1          sbit phaseMode0 = txState^4;
+  29      =1          sbit phaseMode1 = txState^5;
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 6   
+
+  30      =1          sbit test0 = txState^6;
+  31      =1          sbit test1 = txState^7;
+  32      =1          
+  33      =1          sbit txVcc = P2^7;
+  34      =1          sbit txData = P2^2;
+  35      =1          sbit txClk = P2^3;
+  36      =1          sbit LED = P2^5;
+  37      =1          sbit CE = P2^4;
+  38      =1          sbit midButt = P0^0;
+  39      =1          sbit hiButt = P0^1;
+  40      =1          sbit loButt = P0^2;
+  41      =1          sbit audioL = P0^3;
+  42      =1  #endif
+   3          
+   4            /*******************SETUP FUNCTION*********************/
+   5          void setup() {
+   6   1      
+   7   1              #ifdef AUDIOL_I
+                              P0M1 = 0x0F;             //input for buttons, input for audioL
+                      #else
+  10   1                      P0M1 = 0x07;     //input for buttons, output for audioL
+  11   1              #endif
+  12   1      
+  13   1              P1M1 = 0;               //quasi-bidirectional pins
+  14   1              P2M1 = 0;
+  15   1              P3M1 = 0;
+  16   1              midButt = 1; //pull up resistors on the button inputs
+  17   1              hiButt = 1;
+  18   1              loButt = 1;
+  19   1              LED = 1;        //LED on
+  20   1              txVcc = 0;      //transmitter off
+  21   1              CE = 0;         //serial input inable for transmitter
+  22   1              stereo = 0;
+  23   1              test0 = 1;      //always
+  24   1              test1 = 0;      //always
+  25   1              phaseMode0 = 0; //?
+  26   1              phaseMode1 = 0; //?
+  27   1              
+  28   1      
+  29   1      /*****************TEST SETUP***************************************/
+  30   1              
+  31   1      #ifdef ADC_T_SOFT
+                      adc_init();  //P1.2 (audioL) as input only, set isr priority 0, enable isr
+                                              //clk - CPU/3 = 7.3628 MHz/3 = 2.454267 Mhz
+              #endif
+  35   1      
+  36   1      #ifdef ADC_T_HARD
+                      adc_init();  //P1.2 (audioL) as input only, set isr priority 0, enable isr
+                                              //clk - CPU/3 = 7.3628 MHz/3 = 2.454267 Mhz
+                      timers_init();
+              #endif
+  41   1              
+  42   1      #ifdef COM
+                      comparators_init(COMP_1, COMP_INPUTB, COMP_INTERNALREF, COMP_OUTPUTDISABLE);
+              #endif
+  45   1              
+  46   1      #ifdef POW_T
+                      power_mode(POWER_NORMAL);
+              #endif
+  49   1       
+  50   1      #ifdef OSC_T
+                      osc_init();
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 7   
+
+              #endif
+  53   1              
+  54   1      }
+  55          
+  56          /********************SETTERS****************************/  
+  57          void setFreq (word freq) { //takes
+  58   1              if (freq > 1080 || freq < 700) return;  //out of bounds, do-over
+  59   1              else {
+  60   2                      word temp = freq;
+  61   2                      temp += (txState & 0xF800);  //keep phase cntrl, channels, and test bits
+  62   2                      txState = temp;  //return or sorts
+  63   2                      txProg();
+  64   2              }       
+  65   1      }
+  66          
+  67          /*********************8CEREAL***************************/
+  68          void txProg() { //shift out txState to the transmitter
+  69   1              word i = 0x01;
+  70   1              txVcc = 0;      //      TX on
+  71   1              txClk = 0;   
+  72   1              CE = 0;   
+  73   1              CE = 1;   
+  74   1              for(i = 0x01; i != 0; i <<= 1) {  
+  75   2                      txData = txState & i;
+  76   2                      txClk = 1;   
+  77   2                      txClk = 0;   
+  78   2              }       
+  79   1              CE = 0;   
+  80   1      }
+  81          
+  82          /***********************UTILITIES***********************/
+  83          void delay (word cnt) {
+  84   1        while (--cnt);
+  85   1      }
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 8   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION setup (BEGIN)
+                                           ; SOURCE LINE # 5
+                                           ; SOURCE LINE # 10
+0000 758407            MOV     P0M1,#07H
+                                           ; SOURCE LINE # 13
+0003 E4                CLR     A
+0004 F591              MOV     P1M1,A
+                                           ; SOURCE LINE # 14
+0006 F5A4              MOV     P2M1,A
+                                           ; SOURCE LINE # 15
+0008 F5B1              MOV     P3M1,A
+                                           ; SOURCE LINE # 16
+000A D280              SETB    midButt
+                                           ; SOURCE LINE # 17
+000C D281              SETB    hiButt
+                                           ; SOURCE LINE # 18
+000E D282              SETB    loButt
+                                           ; SOURCE LINE # 19
+0010 D2A5              SETB    LED
+                                           ; SOURCE LINE # 20
+0012 C2A7              CLR     txVcc
+                                           ; SOURCE LINE # 21
+0014 C2A4              CLR     CE
+                                           ; SOURCE LINE # 22
+0016 C200        R     CLR     stereo
+                                           ; SOURCE LINE # 23
+0018 D200        R     SETB    test0
+                                           ; SOURCE LINE # 24
+001A C200        R     CLR     test1
+                                           ; SOURCE LINE # 25
+001C C200        R     CLR     phaseMode0
+                                           ; SOURCE LINE # 26
+001E C200        R     CLR     phaseMode1
+                                           ; SOURCE LINE # 54
+0020 22                RET     
+             ; FUNCTION setup (END)
+
+             ; FUNCTION _setFreq (BEGIN)
+                                           ; SOURCE LINE # 57
+;---- Variable 'freq' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 58
+0000 D3                SETB    C
+0001 EF                MOV     A,R7
+0002 9438              SUBB    A,#038H
+0004 EE                MOV     A,R6
+0005 9404              SUBB    A,#04H
+0007 5024              JNC     ?C0004
+0009 C3                CLR     C
+000A EF                MOV     A,R7
+000B 94BC              SUBB    A,#0BCH
+000D EE                MOV     A,R6
+000E 9402              SUBB    A,#02H
+0010 401B              JC      ?C0004
+0012         ?C0002:
+                                           ; SOURCE LINE # 59
+                                           ; SOURCE LINE # 60
+0012 8E00        R     MOV     temp,R6
+0014 8F00        R     MOV     temp+01H,R7
+                                           ; SOURCE LINE # 61
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 9   
+
+0016 E500        R     MOV     A,txState
+0018 54F8              ANL     A,#0F8H
+001A FE                MOV     R6,A
+001B E4                CLR     A
+001C 2500        R     ADD     A,temp+01H
+001E F500        R     MOV     temp+01H,A
+0020 EE                MOV     A,R6
+0021 3500        R     ADDC    A,temp
+0023 F500        R     MOV     temp,A
+                                           ; SOURCE LINE # 62
+0025 F500        R     MOV     txState,A
+0027 850000      R     MOV     txState+01H,temp+01H
+                                           ; SOURCE LINE # 63
+002A 120000      R     LCALL   txProg
+                                           ; SOURCE LINE # 64
+                                           ; SOURCE LINE # 65
+002D         ?C0004:
+002D 22                RET     
+             ; FUNCTION _setFreq (END)
+
+             ; FUNCTION txProg (BEGIN)
+                                           ; SOURCE LINE # 68
+                                           ; SOURCE LINE # 69
+;---- Variable 'i' assigned to Register 'R6/R7' ----
+0000 7F01              MOV     R7,#01H
+0002 7E00              MOV     R6,#00H
+                                           ; SOURCE LINE # 70
+0004 C2A7              CLR     txVcc
+                                           ; SOURCE LINE # 71
+0006 C2A3              CLR     txClk
+                                           ; SOURCE LINE # 72
+0008 C2A4              CLR     CE
+                                           ; SOURCE LINE # 73
+000A D2A4              SETB    CE
+                                           ; SOURCE LINE # 74
+000C         ?C0006:
+000C EF                MOV     A,R7
+000D 4E                ORL     A,R6
+000E 6019              JZ      ?C0007
+                                           ; SOURCE LINE # 75
+0010 E500        R     MOV     A,txState
+0012 5E                ANL     A,R6
+0013 FC                MOV     R4,A
+0014 E500        R     MOV     A,txState+01H
+0016 5F                ANL     A,R7
+0017 4C                ORL     A,R4
+0018 24FF              ADD     A,#0FFH
+001A 92A2              MOV     txData,C
+                                           ; SOURCE LINE # 76
+001C D2A3              SETB    txClk
+                                           ; SOURCE LINE # 77
+001E C2A3              CLR     txClk
+                                           ; SOURCE LINE # 78
+0020 EF                MOV     A,R7
+0021 25E0              ADD     A,ACC
+0023 FF                MOV     R7,A
+0024 EE                MOV     A,R6
+0025 33                RLC     A
+0026 FE                MOV     R6,A
+0027 80E3              SJMP    ?C0006
+0029         ?C0007:
+                                           ; SOURCE LINE # 79
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 10  
+
+0029 C2A4              CLR     CE
+                                           ; SOURCE LINE # 80
+002B 22                RET     
+             ; FUNCTION txProg (END)
+
+             ; FUNCTION _delay (BEGIN)
+                                           ; SOURCE LINE # 83
+;---- Variable 'cnt' assigned to Register 'R6/R7' ----
+0000         ?C0010:
+                                           ; SOURCE LINE # 84
+0000 EF                MOV     A,R7
+0001 1F                DEC     R7
+0002 7001              JNZ     ?C0013
+0004 1E                DEC     R6
+0005         ?C0013:
+0005 14                DEC     A
+0006 4E                ORL     A,R6
+0007 70F7              JNZ     ?C0010
+                                           ; SOURCE LINE # 85
+0009         ?C0012:
+0009 22                RET     
+             ; FUNCTION _delay (END)
+
+C51 COMPILER V8.12   ITRIP                                                                 10/25/2010 15:45:19 PAGE 11  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0084H  1
+P1M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0091H  1
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P2M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A4H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P3M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B1H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+CE . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
+txProg . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  i. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+txClk. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A3H  1
+txVcc. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A7H  1
+IEN0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+IEN1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+_delay . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  cnt. . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+stereo . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0003H  1
+ADMODA . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+setup. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+byte . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+word . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+IP0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+IP1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F8H  1
+phaseMode0 . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0004H  1
+TCR20. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+phaseMode1 . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0005H  1
+LED. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A5H  1
+I2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D8H  1
+midButt. . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+_setFreq . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  freq . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+  temp . . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+txData . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A2H  1
+txState. . . . . . . . . . . . . . . .  PUBLIC   DATA   U_INT    0000H  2
+test0. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0006H  1
+hiButt . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0081H  1
+test1. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0007H  1
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+loButt . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    133    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,1 @@
+"test\timers.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\timers.lst) PREPRINT(.\lst\timers.i) SRC (.\obj\timers.SRC)

@@ -1,0 +1,71 @@
+A51 MACRO ASSEMBLER  ENCODE_ASM                                                           12/20/2010 04:27:53 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN .\obj\encode_ASM.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE encode_ASM.a51 SET(SMALL) DEBUG PRINT(.\lst\encode_ASM.lst) OBJECT(.\obj\e
+                      ncode_ASM.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     NAME    ENCODE_MODULE
+                       2     
+                       3     ?PR?encode_ASM?ENCODE_MODULE                   SEGMENT CODE INBLOCK 
+                       4             ;EXTRN  DATA (interByte)
+                       5             EXTRN   DATA (interBuf)
+                       6             EXTRN   BIT (interEmpty)
+                       7             EXTRN   BIT (interENC)
+                       8             PUBLIC  encode_ASM
+                       9     
+----                  10             RSEG  ?PR?encode_ASM?ENCODE_MODULE
+                      11     
+0000                  12     encode_ASM:
+                      13             USING   1
+0000 7E03             14             MOV             R6, #0x03       ;COUNTER
+0002 7F00     F       15             MOV     R7, #LOW (interBuf)     
+0004 EE               16             MOV     A, R6 
+0005 2F               17             ADD     A,R7            
+0006 F8               18             MOV     R0,A            ;SAVE INTERBUF + 3 (PARITY high byte + 1)
+0007 2E               19             ADD             A, R6
+0008 F9               20             MOV             R1, A           ;SAVE INTERBUF + 6 (DATA high byte + 1)
+0009                  21     encode_Loop:
+0009 18               22             DEC             R0
+000A 19               23             DEC             R1
+000B E7               24             MOV             A, @R1          ;LOAD DATA
+000C 13               25             RRC             A
+000D 67               26             XRL             A, @R1          ;A <- DATA >> 1 XOR     DATA
+000E F6               27             MOV     @R0, A          ;STORE PARITY BYTE
+000F DEF8             28             DJNZ    R6, encode_Loop
+0011 5008             29             JNC             FINISH
+0013 EF               30             MOV             A, R7
+0014 2402             31             ADD             A, #0x02
+0016 F8               32             MOV             R0, A
+0017 E6               33             MOV     A, @R0
+0018 6480             34             XRL             A, #0x80
+001A F6               35             MOV             @R0, A
+001B                  36     FINISH:
+001B D200     F       37             SETB    interENC
+001D 22               38             RET
+                      39             END     
+A51 MACRO ASSEMBLER  ENCODE_ASM                                                           12/20/2010 04:27:53 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                       T Y P E  V A L U E   ATTRIBUTES
+
+?PR?ENCODE_ASM?ENCODE_MODULE  C SEG    001EH       REL=INBLOCK
+ENCODE_ASM . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?ENCODE_ASM?ENCODE_MODULE
+ENCODE_LOOP. . . . . . . . .  C ADDR   0009H   R   SEG=?PR?ENCODE_ASM?ENCODE_MODULE
+ENCODE_MODULE. . . . . . . .  N NUMB   -----       
+FINISH . . . . . . . . . . .  C ADDR   001BH   R   SEG=?PR?ENCODE_ASM?ENCODE_MODULE
+INTERBUF . . . . . . . . . .  D ADDR   -----       EXT
+INTEREMPTY . . . . . . . . .  B ADDR   -----       EXT
+INTERENC . . . . . . . . . .  B ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 1 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,1 @@
+"itrip.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\itrip.lst) PREPRINT(.\lst\itrip.i) OBJECT(.\obj\itrip.obj)

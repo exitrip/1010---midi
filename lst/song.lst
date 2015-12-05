@@ -1,0 +1,1387 @@
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE SONG
+OBJECT MODULE PLACED IN .\obj\song.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE song.c OMF2 ROM(COMPACT) BROWSE MODP2 DEBUG CODE LISTINCLUDE SYMBOLS PRINT(
+                    -.\lst\song.lst) PREPRINT(.\lst\song.i) OBJECT(.\obj\song.obj)
+
+line level    source
+
+   1          #include "itrip.h"
+   1      =1  /*
+   2      =1  itrip HEADERZ v1e-9
+   3      =1  */
+   4      =1  
+   5      =1  #ifndef ITRIP_H
+   6      =1  #define ITRIP_H 
+   7      =1  
+   8      =1  #include <REG936.H>
+   1      =2  /*--------------------------------------------------------------------------
+   2      =2  REG936.H
+   3      =2  
+   4      =2  Header file for Philips 89LPC936
+   5      =2  Copyright (c) 1988-2006 KEIL - An ARM Company
+   6      =2  All rights reserved.
+   7      =2  V1.1
+   8      =2  --------------------------------------------------------------------------*/
+   9      =2  
+  10      =2  #ifndef __REG936_H__
+  11      =2  #define __REG936_H__
+  12      =2  
+  13      =2  /*  BYTE Registers  */
+  14      =2  sfr P0   = 0x80;
+  15      =2  sfr P1   = 0x90;
+  16      =2  sfr P2   = 0xA0;
+  17      =2  sfr P3   = 0xB0;
+  18      =2  sfr PSW  = 0xD0;
+  19      =2  sfr ACC  = 0xE0;
+  20      =2  sfr B    = 0xF0;
+  21      =2  sfr SP   = 0x81;
+  22      =2  sfr DPL  = 0x82;
+  23      =2  sfr DPH  = 0x83;
+  24      =2  sfr PCON = 0x87;
+  25      =2  sfr TCON = 0x88;
+  26      =2  sfr TMOD = 0x89;
+  27      =2  sfr TL0  = 0x8A;
+  28      =2  sfr TL1  = 0x8B;
+  29      =2  sfr TH0  = 0x8C;
+  30      =2  sfr TH1  = 0x8D;
+  31      =2  sfr IEN0 = 0xA8;
+  32      =2  sfr IP0  = 0xB8;
+  33      =2  sfr SCON = 0x98;
+  34      =2  sfr SBUF = 0x99;
+  35      =2  
+  36      =2  sfr ADCON0 = 0x8E;
+  37      =2  sfr ADCON1 = 0x97;
+  38      =2  sfr ADMODA = 0xC0;
+  39      =2  sfr ADMODB = 0xA1;
+  40      =2  sfr ADINS  = 0xA3;
+  41      =2  sfr AD0DAT0= 0xC5;
+  42      =2  sfr AD0DAT1= 0xC6;
+  43      =2  sfr AD0DAT2= 0xC7;
+  44      =2  sfr AD0DAT3= 0xF4;
+  45      =2  sfr AD1DAT0= 0xD5;
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 2   
+
+  46      =2  sfr AD1DAT1= 0xD6;
+  47      =2  sfr AD1DAT2= 0xD7;
+  48      =2  sfr AD1DAT3= 0xF5;
+  49      =2  sfr AD0BH  = 0xBB;
+  50      =2  sfr AD0BL  = 0xA6;
+  51      =2  sfr AD1BH  = 0xC4;
+  52      =2  sfr AD1BL  = 0xBC;
+  53      =2  sfr AUXR1  = 0xA2;
+  54      =2  sfr SADDR  = 0xA9;
+  55      =2  sfr SADEN  = 0xB9;
+  56      =2  sfr TL2    = 0xCC;
+  57      =2  sfr TH2    = 0xCD;
+  58      =2  sfr BRGR0  = 0xBE;
+  59      =2  sfr BRGR1  = 0xBF;
+  60      =2  sfr BRGCON = 0xBD;
+  61      =2  sfr CCCRA  = 0xEA;
+  62      =2  sfr CCCRB  = 0xEB;
+  63      =2  sfr CCCRC  = 0xEC;
+  64      =2  sfr CCCRD  = 0xED;
+  65      =2  sfr CMP1   = 0xAC;
+  66      =2  sfr CMP2   = 0xAD;
+  67      =2  sfr DEECON = 0xF1;
+  68      =2  sfr DEEDAT = 0xF2;
+  69      =2  sfr DEEADR = 0xF3;
+  70      =2  sfr DIVM   = 0x95;
+  71      =2  sfr I2ADR  = 0xDB;
+  72      =2  sfr I2CON  = 0xD8;
+  73      =2  sfr I2DAT  = 0xDA;
+  74      =2  sfr I2SCLH = 0xDD;
+  75      =2  sfr I2SCLL = 0xDC;
+  76      =2  sfr I2STAT = 0xD9;
+  77      =2  sfr ICRAH  = 0xAB;
+  78      =2  sfr ICRAL  = 0xAA;
+  79      =2  sfr ICRBH  = 0xAF;
+  80      =2  sfr ICRBL  = 0xAE;
+  81      =2  sfr IEN1   = 0xE8;
+  82      =2  sfr IP1    = 0xF8;
+  83      =2  sfr IP1H   = 0xF7;
+  84      =2  sfr KBCON  = 0x94;
+  85      =2  sfr KBMASK = 0x86;
+  86      =2  sfr KBPATN = 0x93;
+  87      =2  sfr OCRAH  = 0xEF;
+  88      =2  sfr OCRAL  = 0xEE;
+  89      =2  sfr OCRBH  = 0xFB;
+  90      =2  sfr OCRBL  = 0xFA;
+  91      =2  sfr OCRCH  = 0xFD;
+  92      =2  sfr OCRCL  = 0xFC;
+  93      =2  sfr OCRDH  = 0xFF;
+  94      =2  sfr OCRDL  = 0xFE;
+  95      =2  sfr P0M1   = 0x84;
+  96      =2  sfr P0M2   = 0x85;
+  97      =2  sfr P1M1   = 0x91;
+  98      =2  sfr P1M2   = 0x92;
+  99      =2  sfr P2M1   = 0xA4;
+ 100      =2  sfr P2M2   = 0xA5;
+ 101      =2  sfr P3M1   = 0xB1;
+ 102      =2  sfr P3M2   = 0xB2;
+ 103      =2  sfr PCONA  = 0xB5;
+ 104      =2  sfr PT0AD  = 0xF6;
+ 105      =2  sfr RSTSRC = 0xDF;
+ 106      =2  sfr RTCCON = 0xD1;
+ 107      =2  sfr RTCH   = 0xD2;
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 3   
+
+ 108      =2  sfr RTCL   = 0xD3;
+ 109      =2  sfr SSTAT  = 0xBA;
+ 110      =2  sfr SPCTL  = 0xE2;
+ 111      =2  sfr SPSTAT = 0xE1;
+ 112      =2  sfr SPDAT  = 0xE3;
+ 113      =2  sfr TAMOD  = 0x8F;
+ 114      =2  sfr TCR20  = 0xC8;
+ 115      =2  sfr TCR21  = 0xF9;
+ 116      =2  sfr TICR2  = 0xC9;
+ 117      =2  sfr TIFR2  = 0xE9;
+ 118      =2  sfr TISE2  = 0xDE;
+ 119      =2  sfr TOR2H  = 0xCF;
+ 120      =2  sfr TOR2L  = 0xCE;
+ 121      =2  sfr TPCR2H = 0xCB;
+ 122      =2  sfr TPCR2L = 0xCA;
+ 123      =2  sfr TRIM   = 0x96;
+ 124      =2  sfr WDCON  = 0xA7;
+ 125      =2  sfr WDL    = 0xC1;
+ 126      =2  sfr WFEED1 = 0xC2;
+ 127      =2  sfr WFEED2 = 0xC3;
+ 128      =2  sfr IP0H   = 0xB7;
+ 129      =2  
+ 130      =2  /*  BIT Registers  */
+ 131      =2  ////AUXR1
+ 132      =2  //sbit DPS  = AUXR1^0;
+ 133      =2  ////not used
+ 134      =2  ////hard wired to 0
+ 135      =2  //sbit SRST = AUXR1^3;
+ 136      =2  //sbit ENT0 = AUXR1^4; //hardware toggle
+ 137      =2  //sbit ENT1 = AUXR1^5;
+ 138      =2  //sbit EBRR = AUXR1^6;
+ 139      =2  //sbit CLKLP = AUXR1^7;
+ 140      =2  
+ 141      =2  /*  PSW   */
+ 142      =2  sbit CY   = PSW^7;
+ 143      =2  sbit AC   = PSW^6;
+ 144      =2  sbit F0   = PSW^5;
+ 145      =2  sbit RS1  = PSW^4;
+ 146      =2  sbit RS0  = PSW^3;
+ 147      =2  sbit OV   = PSW^2;                 
+ 148      =2  sbit F1   = PSW^1;
+ 149      =2  sbit P    = PSW^0;
+ 150      =2  
+ 151      =2  /*  TCON  */
+ 152      =2  sbit TF1  = TCON^7;
+ 153      =2  sbit TR1  = TCON^6;
+ 154      =2  sbit TF0  = TCON^5;
+ 155      =2  sbit TR0  = TCON^4;
+ 156      =2  sbit IE1  = TCON^3;
+ 157      =2  sbit IT1  = TCON^2;
+ 158      =2  sbit IE0  = TCON^1;
+ 159      =2  sbit IT0  = TCON^0;
+ 160      =2  
+ 161      =2  /*  IEN0   */
+ 162      =2  sbit EA   = IEN0^7;
+ 163      =2  sbit EWDRT = IEN0^6;
+ 164      =2  sbit EBO   = IEN0^5;
+ 165      =2  sbit ES   = IEN0^4; // alternatively "ESR"
+ 166      =2  sbit ESR  = IEN0^4;
+ 167      =2  sbit ET1  = IEN0^3;
+ 168      =2  sbit EX1  = IEN0^2;
+ 169      =2  sbit ET0  = IEN0^1;
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 4   
+
+ 170      =2  sbit EX0  = IEN0^0;
+ 171      =2  
+ 172      =2  /*  IEN1   */
+ 173      =2  sbit EAD  = IEN1^7; // alternatively "EIEE" 
+ 174      =2  sbit EIEE = IEN1^7;
+ 175      =2  sbit EST  = IEN1^6;
+ 176      =2  sbit ECCU = IEN1^4;
+ 177      =2  sbit ESPI = IEN1^3;
+ 178      =2  sbit EC   = IEN1^2;
+ 179      =2  sbit EKBI = IEN1^1;
+ 180      =2  sbit EI2C = IEN1^0;
+ 181      =2  
+ 182      =2  /*  IP0   */ 
+ 183      =2  sbit PWDRT = IP0^6;
+ 184      =2  sbit PB0   = IP0^5;
+ 185      =2  sbit PS    = IP0^4; // alternatively "PSR"
+ 186      =2  sbit PSR   = IP0^4;
+ 187      =2  sbit PT1   = IP0^3;
+ 188      =2  sbit PX1   = IP0^2;
+ 189      =2  sbit PT0   = IP0^1;
+ 190      =2  sbit PX0   = IP0^0;
+ 191      =2  
+ 192      =2  /*  IP1   */
+ 193      =2  sbit PAD  = IP1^7; // alternatively "PIEE" 
+ 194      =2  sbit PIEE = IP1^7;
+ 195      =2  sbit PST  = IP1^6;
+ 196      =2  sbit PCCU = IP1^4;
+ 197      =2  sbit PSPI = IP1^3;
+ 198      =2  sbit PC_  = IP1^2;
+ 199      =2  sbit PKBI = IP1^1;
+ 200      =2  sbit PI2C = IP1^0;
+ 201      =2  
+ 202      =2  /*  SCON  */
+ 203      =2  sbit SM0  = SCON^7; // alternatively "FE"
+ 204      =2  sbit FE   = SCON^7;
+ 205      =2  sbit SM1  = SCON^6;
+ 206      =2  sbit SM2  = SCON^5;
+ 207      =2  sbit REN  = SCON^4;
+ 208      =2  sbit TB8  = SCON^3;
+ 209      =2  sbit RB8  = SCON^2;
+ 210      =2  sbit TI   = SCON^1;
+ 211      =2  sbit RI   = SCON^0;
+ 212      =2  
+ 213      =2  /*  I2CON  */
+ 214      =2  sbit I2EN  = I2CON^6;
+ 215      =2  sbit STA   = I2CON^5;
+ 216      =2  sbit STO   = I2CON^4;
+ 217      =2  sbit SI    = I2CON^3;
+ 218      =2  sbit AA    = I2CON^2;
+ 219      =2  sbit CRSEL = I2CON^0;
+ 220      =2  
+ 221      =2  /*  P0  */
+ 222      =2  sbit KB7 = P0^7; // alternatively "T1"
+ 223      =2  sbit T1 = P0^7;
+ 224      =2  sbit KB6 = P0^6; // alternatively "CMP1"
+ 225      =2  //sbit CMP1 = P0^6;
+ 226      =2  sbit KB5 = P0^5;
+ 227      =2  sbit KB4 = P0^4;
+ 228      =2  sbit KB3 = P0^3;
+ 229      =2  sbit KB2 = P0^2;
+ 230      =2  sbit KB1 = P0^1;
+ 231      =2  sbit KB0 = P0^0; // alternatively "CMP2"
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 5   
+
+ 232      =2  //sbit CMP2 = P0^0;
+ 233      =2  
+ 234      =2  /*  P1  */
+ 235      =2  sbit OCC     = P1^7;
+ 236      =2  sbit OCB     = P1^6;
+ 237      =2  sbit RST     = P1^5;
+ 238      =2  sbit INT1    = P1^4;
+ 239      =2  sbit INT0    = P1^3; // alternatively "SDA"
+ 240      =2  sbit SDA     = P1^3;
+ 241      =2  sbit T0      = P1^2; // alternatively "SCL"
+ 242      =2  sbit SCL     = P1^2;
+ 243      =2  sbit RxD     = P1^1;
+ 244      =2  sbit TxD     = P1^0;
+ 245      =2  
+ 246      =2  /*  P2  */
+ 247      =2  sbit ICA     = P2^7;
+ 248      =2  sbit OCA     = P2^6;
+ 249      =2  sbit SPICLK  = P2^5;
+ 250      =2  sbit SS      = P2^4;
+ 251      =2  sbit MISO    = P2^3;
+ 252      =2  sbit MOSI    = P2^2;
+ 253      =2  sbit OCD     = P2^1;
+ 254      =2  sbit ICB     = P2^0;
+ 255      =2  
+ 256      =2  /*  P3  */
+ 257      =2  sbit XTAL1= P3^1;
+ 258      =2  sbit XTAL2= P3^0;
+ 259      =2  
+ 260      =2  /* TCR20 */
+ 261      =2  sbit PLLEN = TCR20^7;
+ 262      =2  sbit HLTRN = TCR20^6;
+ 263      =2  sbit HLTEN = TCR20^5;
+ 264      =2  sbit ALTCD = TCR20^4;
+ 265      =2  sbit ALTAB = TCR20^3;
+ 266      =2  sbit TDIR2 = TCR20^2;
+ 267      =2  sbit TMOD21= TCR20^1;
+ 268      =2  sbit TMOD20= TCR20^0;
+ 269      =2  
+ 270      =2  /* ADMODA */
+ 271      =2  sbit BNDI1  = ADMODA^7;
+ 272      =2  sbit BURST1 = ADMODA^6;
+ 273      =2  sbit SCC1   = ADMODA^5;
+ 274      =2  sbit SCAN1  = ADMODA^4;
+ 275      =2  sbit BNDI0  = ADMODA^3;
+ 276      =2  sbit BURST0 = ADMODA^2;
+ 277      =2  sbit SCC0   = ADMODA^1;
+ 278      =2  sbit SCAN0  = ADMODA^0;
+ 279      =2  
+ 280      =2  #endif
+ 281      =2  
+   9      =1  
+  10      =1  /**************************TYPES*******************************************/
+  11      =1  typedef unsigned char byte;
+  12      =1  typedef unsigned int word; // 16 bits (is short)
+  13      =1  
+  14      =1  #define SYS_LEN 512
+  15      =1  
+  16      =1  typedef struct Riff_s {
+  17      =1          word rAddy; //the physical address of riff
+  18      =1          byte repeats;
+  19      =1  } RIFF_T;
+  20      =1  
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 6   
+
+  21      =1  
+  22      =1  /***********************DEFINE SWITCHES**********************/
+  23      =1  //a totally different program actually!!!!
+  24      =1  //#define COORD         //blast midi clock out of UArt and drive RT messages
+  25      =1  #define BASIC_TX
+  26      =1  //#define DEBUG_SIM
+  27      =1  
+  28      =1  //KEIL!!!!  you get the point!!!
+  29      =1  //#ifdef (COORD && BASIC_TX)
+  30      =1  //      #error "DUMB!!! L00K UP!!!"
+  31      =1  //#endif
+  32      =1  
+  33      =1  
+  34      =1  ///MIDI STUFF
+  35      =1  #define MY_L_CHAN       0 //[0-15] //base channel
+  36      =1  #define MY_V_CHAN       (MY_L_CHAN+1) //always Lchan++
+  37      =1  #define MY_ID           0
+  38      =1  
+  39      =1  #define MAX_FREQ        1200
+  40      =1  #define MIN_FREQ        700
+  41      =1  #define NUM_NOTE_CMDS   (127-LUT_NUM_NOTES) //28
+  42      =1  //we can either stuff cmds in 0-9 and 110-127 or rewrite storage...
+  43      =1  //seems tricky to rewrite, we just map low and hi notes to cmds
+  44      =1  //woah!!!  we could double these if we teamed up with NOTE_OFF...
+  45      =1  //not ideal for storage....  maybe for todo
+  46      =1  enum {
+  47      =1          TX_OFF = 0,     //npc
+  48      =1          TX_ON = 1,  //npc
+  49      =1          UPDOWN_OFF = 2,
+  50      =1          STATION_UP = 3,
+  51      =1          STATION_DOWN = 4,
+  52      =1          DOWN1 = 5,  //todo make relative...   align with pitch wheel
+  53      =1          DOWN2 = 6,      
+  54      =1          DOWN3 = 7,      
+  55      =1          DOWN4 = 8,
+  56      =1          DOWN5 = 9,
+  57      =1          HOLD0 = 109,
+  58      =1          UP1 = 110,
+  59      =1          UP2 = 111,
+  60      =1          UP3 = 112,
+  61      =1          UP4 = 113,
+  62      =1          UP5 = 114,
+  63      =1          STATION_UP2 = 115,                      //npc
+  64      =1          STATION_DOWN2 = 116,                     //npc//npc
+  65      =1          STATION_UP3 = 117,
+  66      =1          STATION_DOWN3 = 118,                                      //npc
+  67      =1          STATION_UP4 = 119,                                                        //npc
+  68      =1          STATION_DOWN4 = 120,                                                      //npc
+  69      =1          STATION_UP5 = 121,      //npc
+  70      =1          STATION_DOWN5 = 122,     //npc
+  71      =1          STATION_UP6 = 123,                       //npc
+  72      =1          STATION_DOWN6 = 124,                              //npc
+  73      =1          HOLD1 = 125,
+  74      =1          HOLD2 = 126,
+  75      =1          NOTE_OFF_MEM = 127
+  76      =1  };
+  77      =1  
+  78      =1  
+  79      =1  /***************************GLOBALS******************************************/
+  80      =1  extern volatile byte songNum; //127
+  81      =1  extern volatile word midiClk;
+  82      =1  extern volatile byte xdata sysEx[SYS_LEN];
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 7   
+
+  83      =1  extern volatile byte sysIx;
+  84      =1  
+  85      =1  extern volatile RIFF_T* curSong;
+  86      =1  extern volatile word nextRiff;
+  87      =1  extern volatile byte curRiffCnt;
+  88      =1  extern volatile word numRiffs;
+  89      =1  extern volatile byte code* riff;
+  90      =1  extern volatile word deltaPos;
+  91      =1  extern volatile byte numNotes;
+  92      =1  extern volatile byte nextNote;
+  93      =1  
+  94      =1  extern volatile byte bdata midiFlags;
+  95      =1  //state flags -- maybe change to sbit????
+  96      =1  extern bit AUDIO_L_ON;  
+  97      =1  extern bit TX_VCC_ON;   
+  98      =1  extern bit STEREO;              
+  99      =1  extern bit PLAYING;             
+ 100      =1  extern bit BUTT_EN;             
+ 101      =1  extern bit OMNI;                
+ 102      =1  extern bit SONG_DONE;   
+ 103      =1  //extern bit SYS_EX_DONE;
+ 104      =1  
+ 105      =1  extern volatile byte periodH0;
+ 106      =1  extern volatile byte periodL0;
+ 107      =1  extern volatile byte periodH1;
+ 108      =1  extern volatile byte periodL1;
+ 109      =1  extern volatile word lDelta;   //a proportion of sorts
+ 110      =1  extern volatile word txDelta;
+ 111      =1  extern volatile bit deltaLUp;
+ 112      =1  extern volatile bit deltaTxUp;
+ 113      =1  //extern volatile byte deltaLMount; 
+ 114      =1  //extern volatile byte deltaTxMount;
+ 115      =1  
+ 116      =1  extern volatile bit txOffSwitch;
+ 117      =1  extern word station;
+ 118      =1  
+ 119      =1  /****************************PROTOS*********************/
+ 120      =1  void setup ();  //name and turn on
+ 121      =1  void delay (word cnt);
+ 122      =1  void shiftout8 (byte d);
+ 123      =1  //      void shiftout16 (word d);
+ 124      =1  //      void shiftout32 (word dh, word dl);
+ 125      =1  void txProg ();
+ 126      =1  void setFreq (word freq);
+ 127      =1  void delayT (word t);
+ 128      =1  void updateNote(void);
+ 129      =1  /************************EMPTY Protos****************/  
+ 130      =1  
+ 131      =1  
+ 132      =1  /******************PIN NAMES****************************/       
+ 133      =1  sbit txVcc = P2^7;
+ 134      =1  sbit txData = P2^2;
+ 135      =1  sbit txClk = P2^3;
+ 136      =1  sbit LED = P2^5;
+ 137      =1  sbit CE = P2^4;
+ 138      =1  sbit midButt = P0^0;
+ 139      =1  sbit hiButt = P0^1;
+ 140      =1  sbit loButt = P0^2;
+ 141      =1  sbit audioL = P0^3;
+ 142      =1  sbit audioN = P0^4;     //must be soldered and AC coupled (DC blocked) with 1 uF
+ 143      =1  //sbit LEDout = P2
+ 144      =1  #endif
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 8   
+
+   2          #include "song.h"
+   1      =1  #ifndef SONG_H
+   2      =1  #define SONG_H
+   3      =1  
+   4      =1  #define NUM_SONGS       7
+   5      =1  
+   6      =1  //heavy Beats!!!
+   7      =1  extern RIFF_T code beatSong[];
+   8      =1  
+   9      =1  //Our body
+  10      =1  
+  11      =1  //droneStrike
+  12      =1  
+  13      =1  //omes
+  14      =1  
+  15      =1  //whole tone scale
+  16      =1  extern RIFF_T code wholeToneSong[];
+  17      =1  
+  18      =1  //minor
+  19      =1  extern RIFF_T code minorSong[];
+  20      =1  
+  21      =1  //silence 
+  22      =1  extern RIFF_T code silentSong[];
+  23      =1  
+  24      =1  //driving me backwards!!!!!
+  25      =1  extern RIFF_T code dmbSong[];
+  26      =1  
+  27      =1  #define TEST_SS1 6+1
+  28      =1  extern RIFF_T code testS1[TEST_SS1];
+  29      =1  
+  30      =1  #define TEST_SS2 6+1
+  31      =1  extern RIFF_T code testS2[TEST_SS2];
+  32      =1  
+  33      =1  extern RIFF_T code testSCo1[7];
+  34      =1  
+  35      =1  extern RIFF_T code testSCo2[3];
+  36      =1  
+  37      =1  #endif
+   3          #include "riff.h"
+   1      =1  #ifndef RIFF_H
+   2      =1  #define RIFF_H
+   3      =1  
+   4      =1  //utility riffs
+   5      =1  extern unsigned char code sthRest[5];
+   6      =1  extern unsigned char code eiRest[5];
+   7      =1  extern unsigned char code qRest[5];
+   8      =1  extern unsigned char code hRest[5];
+   9      =1  extern unsigned char code wRest[5];
+  10      =1  
+  11      =1  //single Piteches plus switches
+  12      =1  #define MINORDRONE_ROOT         29
+  13      =1  #define WHOLEDRONE_ROOT         30
+  14      =1  extern unsigned char code wholeDrone[5];
+  15      =1  extern unsigned char code minorDrone[5];
+  16      =1  
+  17      =1  //COORD UTIL
+  18      =1  #define RECO_S  (2+1)
+  19      =1  extern unsigned char code sthRestCoord[RECO_S];
+  20      =1  extern unsigned char code eiRestCoord[RECO_S];
+  21      =1  extern unsigned char code qRestCoord[RECO_S];
+  22      =1  extern unsigned char code hRestCoord[RECO_S];
+  23      =1  extern unsigned char code wRestCoord[RECO_S]; //one empty bar
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 9   
+
+  24      =1  
+  25      =1  #define CRTLTX_S        (4+1)
+  26      =1  extern unsigned char code on0Tx[CRTLTX_S];
+  27      =1  extern unsigned char code on2Tx[CRTLTX_S];
+  28      =1  extern unsigned char code on4Tx[CRTLTX_S];
+  29      =1  extern unsigned char code on6Tx[CRTLTX_S];
+  30      =1  extern unsigned char code on8Tx[CRTLTX_S];
+  31      =1  extern unsigned char code on10Tx[CRTLTX_S];
+  32      =1  extern unsigned char code on12Tx[CRTLTX_S];
+  33      =1  extern unsigned char code on14Tx[CRTLTX_S];
+  34      =1  
+  35      =1  extern unsigned char code off0Tx[CRTLTX_S];
+  36      =1  extern unsigned char code off2Tx[CRTLTX_S];
+  37      =1  extern unsigned char code off4Tx[CRTLTX_S];
+  38      =1  extern unsigned char code off6Tx[CRTLTX_S];
+  39      =1  extern unsigned char code off8Tx[CRTLTX_S];
+  40      =1  extern unsigned char code off10Tx[CRTLTX_S];
+  41      =1  extern unsigned char code off12Tx[CRTLTX_S];
+  42      =1  extern unsigned char code off14Tx[CRTLTX_S];
+  43      =1  
+  44      =1  //special riffs
+  45      =1  
+  46      =1  ///////////COORD SONG////////////////
+  47      =1  /*
+  48      =1          Spec for COORD song
+  49      =1          word songLen, byte???,
+  50      =1          word riffAddy, byte repeats... 
+  51      =1  */
+  52      =1  /*
+  53      =1          spec for COORD riff
+  54      =1          byte deltaPos, byte MIDI / CC+Ch, byte val
+  55      =1                                     o
+  56      =1                                     MIDI / Sys or RT,
+  57      =1                                     o
+  58      =1                                     tempo [hiNibble] val [loNibble], 2 bytes
+  59      =1                                     [e.g. 0x7F, 0xF3, 0xFF -> cnt0 = 0f, periodH0 = f3, periodL0 = ff
+  60      =1          ideal 77160 [0x12D68] is 120 bpm <- theres a mystery factor of two, but thats a godd thing!!!!
+  61      =1          Tempo and future file meta events...  
+  62      =1          we reserve the high nibble for meta events
+  63      =1          and the low nibble for data...
+  64      =1          Meta events are sparse and easily mapped and
+  65      =1          even extended to 8 states... (high bit is for real midi)
+  66      =1  */
+  67      =1  
+  68      =1  /////////////WORKER SONG//////////////////
+  69      =1  /*
+  70      =1  Spec for song:
+  71      =1  
+  72      =1    word songLen, byte ???,
+  73      =1    (word) riffAddress, byte repeats,      (riff_t)
+  74      =1    (word) riffAddress, byte repeats,
+  75      =1    ... 
+  76      =1  */
+  77      =1  /*
+  78      =1  Spec for riff:
+  79      =1  
+  80      =1          byte riffLen,
+  81      =1          byte deltaSongPos, byte 0-126 Notes [ 127 = NoteOff, 0x80 = V_Chan ]
+  82      =1          byte deltaSongPos, byte 0-126 Notes [ 127 = NoteOff, 0x80 = V_Chan ]
+  83      =1          ...
+  84      =1  */
+  85      =1  
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 10  
+
+  86      =1  #define BEAT_ROOT       (48)
+  87      =1  #define BEAT1_TEMPO     (0x6f00/2)  //240
+  88      =1  #define BEAT2_TEMPO     (0x6f00/4)  //240
+  89      =1  #define BEATCOORD1_S    (69)
+  90      =1  #define BEAT1_S         3
+  91      =1  extern unsigned char code beatCoord1[BEATCOORD1_S];
+  92      =1  extern unsigned char code beatCoord2[BEATCOORD1_S];
+  93      =1  extern unsigned char code beat1[BEAT1_S];
+  94      =1  
+  95      =1  //Driving me back...
+  96      =1  #define DMB_ROOT        (25) //C# - yeah we in tune!
+  97      =1  #define DMB_PEDAL       (DMB_ROOT-1)
+  98      =1  #define DMB_TEMPO       (0x20B61) //~69-70 BPM 0x20B61
+  99      =1  
+ 100      =1  #define DMBINIT_S       37
+ 101      =1  extern unsigned char code dmbInit[37];//tempo ... does pickup!!!
+ 102      =1  
+ 103      =1  #define DMBVAMP_S       (4+1)
+ 104      =1  extern unsigned char code dmbVamp0[DMBVAMP_S]; //sans downbeat
+ 105      =1  extern unsigned char code dmbVamp1[DMBVAMP_S]; //cum downbeat
+ 106      =1  
+ 107      =1  #define DMBROOT_S       ((104-72)*4+1)
+ 108      =1  extern unsigned char code dmbRoot0[DMBROOT_S]; //sans downbeat
+ 109      =1  extern unsigned char code dmbRoot1[DMBROOT_S];
+ 110      =1  
+ 111      =1  #define DMBBD_S         7       
+ 112      =1  extern unsigned char code dmbBDHa[DMBBD_S];
+ 113      =1  extern unsigned char code dmbBDWh[DMBBD_S];
+ 114      =1  
+ 115      =1  #define TEST_LEN        10//easier to parse later
+ 116      =1  extern unsigned char code downR1[];
+ 117      =1  extern unsigned char code downR2[];
+ 118      =1  extern unsigned char code downR3[];
+ 119      =1  extern unsigned char code downR4[];
+ 120      =1  extern unsigned char code downR5[];
+ 121      =1  
+ 122      =1  extern unsigned char code upR1[];
+ 123      =1  extern unsigned char code upR2[];
+ 124      =1  extern unsigned char code upR3[];
+ 125      =1  extern unsigned char code upR4[];
+ 126      =1  extern unsigned char code upR5[];
+ 127      =1  
+ 128      =1  
+ 129      =1  extern unsigned char code testCo1[];
+ 130      =1  extern unsigned char code testCo1b[];
+ 131      =1  extern unsigned char code testCo2[];
+ 132      =1  
+ 133      =1  extern unsigned char code testCo3[];
+ 134      =1  extern unsigned char code testCo3b[];
+ 135      =1  extern unsigned char code testCo3c[];
+ 136      =1  
+ 137      =1  extern unsigned char code testCo4[];
+ 138      =1  
+ 139      =1  /*
+ 140      =1  #define SAUCER_VOLCANO_SONG_SIZE 3
+ 141      =1  SONG_T saucerVolcano[SAUCER_VOLCANO_SONG_SIZE] = {
+ 142      =1          (word) saucer1, 8-1, SAUCER_SIZE/2
+ 143      =1  //      (word) volcano1, 2-1, VOLCANO_SIZE/2
+ 144      =1  };
+ 145      =1  
+ 146      =1  #define HEAVY_11_SONG_SIZE 6      
+ 147      =1  volatile word code heavy1Song[6] = {
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 11  
+
+ 148      =1          (word) heavy111, 4 - 1, HEAVY_11_SIZE/2,        //4*11
+ 149      =1          (word) heavy121, 1 - 1, HEAVY_12_SIZE/2         //1*22
+ 150      =1  };
+ 151      =1  
+ 152      =1  volatile word code heavy2Song[6] = {
+ 153      =1          (word) heavy112, 4 - 1, HEAVY_11_SIZE/2,
+ 154      =1          (word) heavy122, 1 - 1, HEAVY_12_SIZE/2
+ 155      =1  };
+ 156      =1  
+ 157      =1  #define DRIVE_BACK_SONG0_SIZE 3   
+ 158      =1  volatile word code driveBackSong0[3] = {
+ 159      =1          (word) driveBack0, 48 - 1, DRIVE_BACK_0SIZE/2
+ 160      =1  };
+ 161      =1  
+ 162      =1  #define DRIVE_BACK_SONG1_SIZE 3
+ 163      =1  volatile word code driveBackSong1[3] = {
+ 164      =1          (word) driveBack1, 48 - 1, DRIVE_BACK_1SIZE/2   
+ 165      =1  };
+ 166      =1  
+ 167      =1  #define DRIVE_BACK_SONG2_SIZE 3   
+ 168      =1  volatile word code driveBackSong2[3] = {
+ 169      =1          (word) driveBack2, 256 - 1, DRIVE_BACK_2SIZE/2
+ 170      =1  };
+ 171      =1  
+ 172      =1  #define DRIVE_BACK_SONG3_SIZE 3   
+ 173      =1  volatile word code driveBackSong3[3] = {
+ 174      =1          (word) driveBack3, 256 - 1, DRIVE_BACK_3SIZE/2
+ 175      =1  };
+ 176      =1  
+ 177      =1  #define FIRST_SONG_SIZE 24
+ 178      =1  volatile word code firstSong[FIRST_SONG_SIZE] = {
+ 179      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 180      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 181      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 182      =1          (word) oneRockMod, 3-1, ONEROCKMOD_SIZE/2, //8 - 24     
+ 183      =1          (word) fourFloor, 2 - 1, FOURFLOOR_SIZE/2,       //4 - 8
+ 184      =1          (word) fourFloorTX, 2 - 1, FOURFLOORTX_SIZE/2,   //4 - 8
+ 185      =1          (word) fourFloor, 2 - 1, FOURFLOOR_SIZE/2,       //4 - 8
+ 186      =1          (word) fourFloorTX, 2 - 1, FOURFLOORTX_SIZE/2    //4 - 8
+ 187      =1  };
+ 188      =1  
+ 189      =1  #define SEC_SONG_SIZE   24 
+ 190      =1  volatile word code secSong[SEC_SONG_SIZE] = {
+ 191      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 192      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 193      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 194      =1          (word) oneRockMod, 2-1, ONEROCKMOD_SIZE/2, //8 - 8      
+ 195      =1          (word) fourFloor, 2 - 1, FOURFLOOR_SIZE/2,       //4 - 8
+ 196      =1          (word) fourFloorTX, 2 - 1, FOURFLOORTX_SIZE/2,   //4 - 8
+ 197      =1          (word) fourFloor, 2 - 1, FOURFLOOR_SIZE/2,       //4 - 8
+ 198      =1          (word) fourFloorTX, 3 - 1, FOURFLOORTX_SIZE/2    //4 - 8
+ 199      =1  };
+ 200      =1  #endif
+ 201      =1  
+ 202      =1  SONG_T testSong[6] = {
+ 203      =1          (word) test, 1-1, TEST_SIZE/2,
+ 204      =1          (word) test, 1-1, TEST_SIZE/2
+ 205      =1  };
+ 206      =1  
+ 207      =1  //begin thumpDream song - not sure about freqs - maybe add high pitch drone?
+ 208      =1  #define THUMP1_SONG_SIZE        6        
+ 209      =1  SONG_T thump1Song[THUMP1_SONG_SIZE] = {
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 12  
+
+ 210      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 211      =1          (word) thumpFall8, 4 - 1, THUMP_FALL8_SIZE/2     //4 - 16
+ 212      =1  };
+ 213      =1  
+ 214      =1  #define THUMP2_SONG_SIZE 18      
+ 215      =1  SONG_T thump2Song[THUMP2_SONG_SIZE] = {
+ 216      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 217      =1          (word) thumpFall8, 4 - 1, THUMP_FALL8_SIZE/2,    //4 - 16
+ 218      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 219      =1          (word) thump2, 4 - 1, THUMP_2_SIZE/2,    //4 - 16
+ 220      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 221      =1          (word) thump2, 4 - 1, THUMP_2_SIZE/2     //4 - 16
+ 222      =1  };
+ 223      =1  
+ 224      =1  #define THUMP3_SONG_SIZE 24      
+ 225      =1  SONG_T thump3Song[THUMP3_SONG_SIZE] = {
+ 226      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 227      =1          (word) thumpFall8, 4 - 1, THUMP_FALL8_SIZE/2,    //4 - 16
+ 228      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 229      =1          (word) thumpFall8, 4 - 1, THUMP_FALL8_SIZE/2,    //4 - 16
+ 230      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 231      =1          (word) thump3, 4 - 1, THUMP_3_SIZE/2,    //4 - 16
+ 232      =1                  (word) thumpThump, 4 - 1, THUMP_THUMP_SIZE/2, //4 - 16
+ 233      =1          (word) thump3, 4 - 1, THUMP_3_SIZE/2     //4 - 16
+ 234      =1  };
+ 235      =1  
+ 236      =1  //Begin altSong - space two songs at 3 freqs - slowish interlocking riffage 
+ 237      =1  #define FIR_SONG_ALT_SIZE       15
+ 238      =1  volatile word code firSongAlt[FIR_SONG_ALT_SIZE] = {
+ 239      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 240      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 241      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 242      =1          (word) oneRockMod, 3-1, ONEROCKMOD_SIZE/2, //8 - 16
+ 243      =1          (word) oneRockB, 8-1, ONEROCKB_SIZE/2      //4 - 32
+ 244      =1  };
+ 245      =1  
+ 246      =1  #define SEC_SONG_ALT_SIZE       18 
+ 247      =1  volatile word code secSongAlt[SEC_SONG_ALT_SIZE] = {
+ 248      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 249      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 250      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 251      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 252      =1          (word) oneRockMod, 2-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 253      =1          (word) twoRockB, 8-1, TWOROCKB_SIZE/2      //4 - 32
+ 254      =1  };
+ 255      =1  
+ 256      =1  #define THI_SONG_ALT_SIZE       18 
+ 257      =1  volatile word code thiSongAlt[THI_SONG_ALT_SIZE] = {
+ 258      =1          (word) oneRockB, 10-1, ONEROCKB_SIZE/2,    //4 - 40
+ 259      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 260      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 261      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 262      =1          (word) twoRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 263      =1          (word) oneRockMod, 1-1, ONEROCKMOD_SIZE/2 //8 - 8
+ 264      =1  };
+ 265      =1  
+ 266      =1  
+ 267      =1  #define FOR_SONG_ALT_SIZE       18 
+ 268      =1  volatile word code forSongAlt[FOR_SONG_ALT_SIZE] = {
+ 269      =1          (word) twoRockB, 10-1, TWOROCKB_SIZE/2,    //4 - 40
+ 270      =1          (word) twoRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 271      =1          (word) oneRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 13  
+
+ 272      =1          (word) twoRockMod, 1-1, ONEROCKMOD_SIZE/2, //8 - 8
+ 273      =1          (word) oneRockMod, 1-1, TWOROCKMOD_SIZE/2, //8 - 8
+ 274      =1          (word) twoRockMod, 1-1, ONEROCKMOD_SIZE/2 //8 - 8
+ 275      =1  };
+ 276      =1  */
+ 277      =1  #endif
+   4          
+   5          //maybe not use these switches.. maybe they will be bery useful....
+   6          
+   7          ///silence for song 0
+   8          #ifdef COORD
+                      RIFF_T code silentSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+  14                  RIFF_T code silentSong[2] = {
+  15                          {2, 0},
+  16                          {wRest, 255}
+  17                  };
+  18          #endif
+  19          
+  20          //heavy Beats!!!
+  21          //byte code 
+  22          #ifdef COORD
+                      RIFF_T code beatSong[10] = {
+                              {10,0},
+                              {beatCoord2, 20-1},  //1.5833 min
+                              {beatCoord1, 10-1},  //1.5833 min
+                              {beatCoord2, 10-1},
+                              {wRestCoord, 9-1},       //38 more beats droning  {31.66 sec}
+                              {hRestCoord, 1-1},
+                              {beatCoord2, 20-1},  //1.5833 min
+                              {beatCoord1, 10-1},  //1.5833 min
+                              {wRestCoord, 9-1},       //38 more beats droning  {31.66 sec}
+                              {hRestCoord, 1-1}
+                      };
+              #else
+  36                  RIFF_T code beatSong[4] = {
+  37                          {4,0},
+  38                          {beat1, 255},
+  39                          {beat1, 255},
+  40                          {beat1, 255}
+  41                  };
+  42          #endif
+  43          
+  44          //Our body
+  45          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+  47          #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+              #endif
+  55          
+  56          //droneStrike
+  57          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+  59          #elif (MY_L_CHAN == 2)
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 14  
+
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+              #endif
+  67          
+  68          //omes
+  69          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+  71          #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+              #endif
+  79          
+  80          //whole tone and minor scale songs
+  81          #ifdef COORD
+                      //just use silent song
+                      RIFF_T code wholeToneSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+  88                  RIFF_T code wholeToneSong[2] = {
+  89                          {2, 0},
+  90                          {wholeDrone, 255}
+  91                  };
+  92          #endif
+  93          
+  94          #ifdef COORD
+                      //just use silent song
+                      RIFF_T code minorSong[2] = {
+                              {2, 0},
+                              {wRestCoord, 255}
+                      };
+              #else
+ 101                  RIFF_T code minorSong[2] = {
+ 102                          {2, 0},
+ 103                          {minorDrone, 255}
+ 104                  };
+ 105          #endif
+ 106          
+ 107          //driving me backwards!!!!!
+ 108          //timing is basically 1 Root = 4 bars
+ 109          //8 Vamps first verse, 5 Root solo, 8 Root second verse, then freak to fade out...
+ 110          //Bass per bar @ 2 Root then to 2 per bar befor solo....
+ 111          //bring in Vamps around second verse....
+ 112          //bring in more dissonance towards end....
+ 113          #ifdef COORD
+                      RIFF_T code dmbSong[13] = { //255 bars @ 70 bpm is more than 14 minutes
+                              {13, 0},
+                              {dmbInit, 1-1}, //pick up beat ?
+                              {wRestCoord, 4-1}, //one root
+                              {on10Tx, 1-1},  //1-5    BDwhole
+                              {wRestCoord, 16-1}, 
+                              {on12Tx, 1-1},  //5-11  BDhalf
+                              {wRestCoord, 24-1}, 
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 15  
+
+                              {on2Tx, 1-1},   //12 evil vamp
+                              {wRestCoord, 4-1}, 
+                              {on0Tx, 1-1},   //13-20 more pedal
+                              {wRestCoord, 28-1}, 
+                              {on4Tx, 1-1},   //20 onwards nice in crunchy
+                              {wRestCoord, 255-1}
+                      };
+              #elif (MY_L_CHAN == 0)
+ 130                  RIFF_T code dmbSong[2] = {
+ 131                          {2, 0},
+ 132          //              {qRest, 1-1},
+ 133                          {dmbVamp0, 255}
+ 134                  };
+ 135          #elif (MY_L_CHAN == 2)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {qRest, 1-1},
+                              {dmbVamp1, 255}
+                      };
+              #elif (MY_L_CHAN == 4)
+                      RIFF_T code dmbSong[2] = {
+                              {2, 0},
+                              //{qRest, 1-1},
+                              {dmbRoot0, 255}
+                      };
+              #elif (MY_L_CHAN == 6) /***************MAIN LINE*******************/
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {dmbVamp0, 1-1},
+                              {dmbRoot1, 255}
+                      };
+              #elif (MY_L_CHAN == 8)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {wRest, 255}
+              //              {qRest, 1-1},
+              //              {dmbChord15, 255}
+                      };
+              #elif (MY_L_CHAN == 10)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+                              {qRest, 1-1}, //pickup
+              //              {wRest, 16-1},
+                              {dmbBDWh, 255},  //one root
+              //              {dmbBDHa, 255-1} //five roots deep
+              //              {qRest, 1-1},
+              
+                      };
+              #elif (MY_L_CHAN == 12)
+                      RIFF_T code dmbSong[3] = {
+                              {3, 0},
+              //              {wRest, 255}
+                              {qRest, 1-1},
+                              {dmbBDHa, 255}
+                      };
+              #elif (MY_L_CHAN == 14)
+                      RIFF_T code dmbSong[2] = {
+                              {2, 0},
+                              {wRest, 255}
+              //              {qRest, 1-1},
+              //              {dmbChord53, 255}
+                      };
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 16  
+
+              #endif
+ 185          
+ 186          //eunice waymond
+ 187          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+ 189          #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+              #endif
+ 197          
+ 198          //AamilneBallad
+ 199          #ifdef COORD
+              #elif (MY_L_CHAN == 0)
+ 201          #elif (MY_L_CHAN == 2)
+              #elif (MY_L_CHAN == 4)
+              #elif (MY_L_CHAN == 6)
+              #elif (MY_L_CHAN == 8)
+              #elif (MY_L_CHAN == 10)
+              #elif (MY_L_CHAN == 12)
+              #elif (MY_L_CHAN == 14)
+              #endif
+ 209          
+ 210          
+ 211          //#define TEST_SS1 6+1
+ 212          RIFF_T code testS1[TEST_SS1] = {
+ 213                  {TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+ 214                  {upR1, 8-1},
+ 215                  {upR2, 8-1},
+ 216                  {upR3, 8-1},
+ 217                  {upR4, 8-1},
+ 218                  {upR5, 8-1},
+ 219                  {upR1, 8-1}
+ 220          };
+ 221          
+ 222          //#define TEST_SS2 6+1
+ 223          RIFF_T code testS2[TEST_SS2] = {
+ 224                  {TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+ 225                  {downR1, 8-1},
+ 226                  {downR2, 8-1},
+ 227                  {downR3, 8-1},
+ 228                  {downR4, 8-1},
+ 229                  {downR5, 8-1},
+ 230                  {downR1, 8-1}
+ 231          };
+ 232          
+ 233          RIFF_T code testSCo1[7] = {
+ 234                  {7, 0},
+ 235                  {testCo3, 1-1},
+ 236                  {testCo1, 15-1},
+ 237                  {testCo3b, 1-1},
+ 238                  {testCo1, 15-1},
+ 239                  {testCo3c, 1-1},
+ 240                  {testCo1, 15-1}
+ 241          };
+ 242          
+ 243          RIFF_T code testSCo2[3] = {
+ 244                  {3, 0},
+ 245                  {testCo4, 3-1},
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 17  
+
+ 246                  {testCo2, 3-1}
+ 247          };
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 18  
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 19  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0084H  1
+P1M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0091H  1
+P0M2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0085H  1
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P2M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A4H  1
+P1M2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0092H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+AA . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00DAH  1
+P3M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B1H  1
+P2M2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A5H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3M2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B2H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+T0 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0092H  1
+EI2C . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00E8H  1
+AC . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D6H  1
+T1 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0087H  1
+EA . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AFH  1
+CE . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
+EC . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EAH  1
+EWDRT. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AEH  1
+SPCTL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E2H  1
+txClk. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A3H  1
+SCC0 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C1H  1
+HLTRN. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CEH  1
+txVcc. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A7H  1
+SCC1 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C5H  1
+FE . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009FH  1
+testCo3b . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+testCo3c . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+IEN0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+IEN1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+RxD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0091H  1
+I2EN . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00DEH  1
+PI2C . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00F8H  1
+TxD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0090H  1
+SSTAT. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BAH  1
+IP0H . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B7H  1
+CMP1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ACH  1
+PWDRT. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BEH  1
+IP1H . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F7H  1
+CMP2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ADH  1
+ADCON0 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008EH  1
+wRest. . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  5
+TMOD20 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C8H  1
+ES . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ACH  1
+ADCON1 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0097H  1
+TMOD21 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C9H  1
+EIEE . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EFH  1
+RI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0098H  1
+UPDOWN_OFF . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+INT0 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0093H  1
+SI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00DBH  1
+EKBI . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00E9H  1
+CY . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D7H  1
+INT1 . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0094H  1
+TI . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 20  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+wholeDrone . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  5
+WFEED1 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C2H  1
+WFEED2 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C3H  1
+ECCU . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ECH  1
+PS . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BCH  1
+SP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0081H  1
+minorDrone . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  5
+PIEE . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FFH  1
+OV . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D2H  1
+SS . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
+testCo1. . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+PKBI . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00F9H  1
+I2SCLH . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DDH  1
+DEEADR . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F3H  1
+testCo2. . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+ADMODA . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+testCo3. . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+DEEDAT . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F2H  1
+ADMODB . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A1H  1
+testCo4. . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+TX_ON. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+STATION_UP . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+I2SCLL . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DCH  1
+PCCU . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FCH  1
+silentSong . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0000H  6
+DEECON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F1H  1
+DIVM . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0095H  1
+SBUF . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
+PCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0087H  1
+ESPI . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EBH  1
+RTCH . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D2H  1
+NOTE_OFF_MEM . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TPCR2H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CBH  1
+TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+byte . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+RTCL . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D3H  1
+beatSong . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0006H  12
+MOSI . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A2H  1
+MISO . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A3H  1
+TPCR2L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CAH  1
+I2STAT . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D9H  1
+KBMASK . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0086H  1
+KB0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+PSPI . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FBH  1
+TRIM . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0096H  1
+BRGCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BDH  1
+downR1 . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+word . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+KB1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0081H  1
+IE0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0089H  1
+downR2 . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+STATION_DOWN . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+KB2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
+IE1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008BH  1
+downR3 . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 21  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+KB3. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0083H  1
+AD0BH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BBH  1
+AD0DAT0. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C5H  1
+downR4 . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+KB4. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0084H  1
+AD1BH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C4H  1
+AD1DAT0. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D5H  1
+AD0DAT1. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C6H  1
+B. . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F0H  1
+downR5 . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+minorSong. . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0018H  6
+BURST0 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C2H  1
+KB5. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0085H  1
+PB0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BDH  1
+KBPATN . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0093H  1
+AD1DAT1. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D6H  1
+AD0DAT2. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C7H  1
+BURST1 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C6H  1
+KB6. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0086H  1
+AD1DAT2. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D7H  1
+AD0DAT3. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F4H  1
+KB7. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0087H  1
+AD0BL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A6H  1
+AD1DAT3. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F5H  1
+AD1BL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BCH  1
+testS1 . . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0024H  21
+ACC. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E0H  1
+testS2 . . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0039H  21
+SPICLK . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A5H  1
+ET0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A9H  1
+IP0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+EAD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EFH  1
+ET1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ABH  1
+TF0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008DH  1
+IP1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F8H  1
+TF1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008FH  1
+RTCCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D1H  1
+RB8. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009AH  1
+TCR20. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+TH0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008CH  1
+ICA. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A7H  1
+EX0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A8H  1
+IT0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0088H  1
+TCR21. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F9H  1
+TH1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008DH  1
+dmbSong. . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    001EH  6
+BNDI0. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C3H  1
+ICB. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A0H  1
+TB8. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009BH  1
+EX1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AAH  1
+IT1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008AH  1
+TH2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CDH  1
+beat1. . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  3
+BNDI1. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C7H  1
+P. . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D0H  1
+SM0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009FH  1
+TL0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008AH  1
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 22  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+SM1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009EH  1
+TL1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008BH  1
+SM2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009DH  1
+TL2. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CCH  1
+OCA. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A6H  1
+I2ADR. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DBH  1
+OCB. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0096H  1
+PT0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B9H  1
+wholeToneSong. . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0012H  6
+LED. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A5H  1
+OCC. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0097H  1
+PAD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FFH  1
+PT1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BBH  1
+RS0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D3H  1
+I2DAT. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DAH  1
+UP1. . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SCAN0. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C0H  1
+OCD. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A1H  1
+EBO. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ADH  1
+TR0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008CH  1
+RS1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D4H  1
+UP2. . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SCAN1. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00C4H  1
+TR1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008EH  1
+UP3. . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+HOLD0. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SDA. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0093H  1
+PX0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B8H  1
+HOLD1. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+UP4. . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+PX1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BAH  1
+HOLD2. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+UP5. . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+PT0AD. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F6H  1
+RIFF_T . . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  3
+  rAddy. . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  repeats. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0002H  1
+Riff_s . . . . . . . . . . . . . . . .  * TAG *  -----  STRUCT   -----  3
+  rAddy. . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  repeats. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0002H  1
+I2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D8H  1
+DPH. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0083H  1
+midButt. . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0080H  1
+STATION_UP2. . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+CCCRA. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EAH  1
+STATION_UP3. . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+CCCRB. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EBH  1
+BRGR0. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BEH  1
+STATION_UP4. . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+CCCRC. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ECH  1
+BRGR1. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00BFH  1
+STATION_UP5. . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+CCCRD. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EDH  1
+DPL. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0082H  1
+audioL . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0083H  1
+STATION_UP6. . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SPSTAT . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E1H  1
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 23  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+SCL. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0092H  1
+audioN . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0084H  1
+RSTSRC . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DFH  1
+ALTAB. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CBH  1
+REN. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      009CH  1
+TICR2. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C9H  1
+TDIR2. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CAH  1
+WDL. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C1H  1
+TX_OFF . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+STA. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00DDH  1
+TISE2. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00DEH  1
+TIFR2. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E9H  1
+ICRAH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ABH  1
+upR1 . . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+txData . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A2H  1
+ALTCD. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CCH  1
+ICRBH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00AFH  1
+upR2 . . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+DOWN1. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+ESR. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ACH  1
+upR3 . . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+DOWN2. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+XTAL1. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B1H  1
+upR4 . . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+DOWN3. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+XTAL2. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00B0H  1
+EST. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00EEH  1
+ICRAL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00AAH  1
+SADEN. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B9H  1
+upR5 . . . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  -----
+DOWN4. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+ICRBL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00AEH  1
+DOWN5. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+OCRAH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EFH  1
+KBCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
+OCRBH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FBH  1
+SADDR. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A9H  1
+TOR2H. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CFH  1
+OCRCH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FDH  1
+ADINS. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A3H  1
+STATION_DOWN2. . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+OCRDH. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FFH  1
+STATION_DOWN3. . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+PC_. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FAH  1
+PCONA. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B5H  1
+OCRAL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EEH  1
+AUXR1. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A2H  1
+hiButt . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0081H  1
+STATION_DOWN4. . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+OCRBL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FAH  1
+STATION_DOWN5. . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+TOR2L. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00CEH  1
+OCRCL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FCH  1
+STATION_DOWN6. . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+PSR. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00BCH  1
+F0 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D5H  1
+OCRDL. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00FEH  1
+C51 COMPILER V8.12   SONG                                                                  12/05/2015 12:11:33 PAGE 24  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+STO. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00DCH  1
+F1 . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D1H  1
+TAMOD. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008FH  1
+PST. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00FEH  1
+RST. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0095H  1
+testSCo1 . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    004EH  21
+CRSEL. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00D8H  1
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+dmbVamp0 . . . . . . . . . . . . . . .  EXTERN   CODE   ARRAY    -----  5
+testSCo2 . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0063H  9
+HLTEN. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CDH  1
+PLLEN. . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CFH  1
+WDCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A7H  1
+loButt . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
+SPDAT. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E3H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =    108    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

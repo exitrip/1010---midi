@@ -1,0 +1,168 @@
+C51 COMPILER V8.12   LUTFREQ                                                               08/03/2015 06:34:05 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE LUTFREQ
+OBJECT MODULE PLACED IN .\obj\LUTFreq.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LUTFreq.c OMF2 ROM(COMPACT) BROWSE MODP2 DEBUG CODE LISTINCLUDE SYMBOLS PRI
+                    -NT(.\lst\LUTFreq.lst) PREPRINT(.\lst\LUTFreq.i) OBJECT(.\obj\LUTFreq.obj)
+
+line level    source
+
+   1          #include "LUTFreq.h"
+   1      =1  #ifndef LUTFREQ_H
+   2      =1  #define LUTFREQ_H
+   3      =1  
+   4      =1  #define LUT_NUM_NOTES   99
+   5      =1  #define LUT_MIDI_NOTE_SHIFT     10
+   6      =1  #define LUT_LEN (LUT_NUM_NOTES)
+   7      =1  #define LUT_NOTE_LIMIT (LUT_LEN + LUT_MIDI_NOTE_SHIFT)
+   8      =1  
+   9      =1  extern const unsigned int code LUTFreq[LUT_LEN];
+  10      =1  
+  11      =1  #endif
+   2          
+   3          const unsigned int code LUTFreq[LUT_LEN] = {
+   4          //      0,
+   5          //      0,
+   6          //      0,
+   7          //      0,
+   8          //      0,
+   9          //      0,
+  10          //      0,
+  11          //      0,
+  12          //      0,
+  13          //      0,
+  14                  0,
+  15                  2376,
+  16                  5918,
+  17                  9256,
+  18                  12425,
+  19                  15407,
+  20                  18219,
+  21                  20874,
+  22                  23382,
+  23                  25754,
+  24                  27988,
+  25                  30095,
+  26                  32088,
+  27                  33967,
+  28                  35743,
+  29                  37416,
+  30                  38996,
+  31                  40488,
+  32                  41893,
+  33                  43224,
+  34                  44478,
+  35                  45661,
+  36                  46778,
+  37                  47833,
+  38                  48828,
+  39                  49767,
+  40                  50654,
+  41                  51491,
+  42                  52281,
+  43                  53027,
+C51 COMPILER V8.12   LUTFREQ                                                               08/03/2015 06:34:05 PAGE 2   
+
+  44                  53731,
+  45                  54395,
+  46                  55022,
+  47                  55614,
+  48                  56173,
+  49                  56700,
+  50                  57198,
+  51                  57668,
+  52                  58111,
+  53                  58530,
+  54                  58925,
+  55                  59297,
+  56                  59650,
+  57                  59982,
+  58                  60295,
+  59                  60591,
+  60                  60871,
+  61                  61134,
+  62                  61383,
+  63                  61618,
+  64                  61840,
+  65                  62049,
+  66                  62246,
+  67                  62433,
+  68                  62609,
+  69                  62775,
+  70                  62932,
+  71                  63080,
+  72                  63219,
+  73                  63351,
+  74                  63475,
+  75                  63593,
+  76                  63704,
+  77                  63808,
+  78                  63907,
+  79                  64000,
+  80                  64088,
+  81                  64171,
+  82                  64250,
+  83                  64324,
+  84                  64394,
+  85                  64460,
+  86                  64522,
+  87                  64580,
+  88                  64636,
+  89                  64688,
+  90                  64738,
+  91                  64784,
+  92                  64828,
+  93                  64870,
+  94                  64909,
+  95                  64946,
+  96                  64981,
+  97                  65014,
+  98                  65045,
+  99                  65074,
+ 100                  65102,
+ 101                  65128,
+ 102                  65153,
+ 103                  65176,
+ 104                  65198,
+ 105                  65219,
+C51 COMPILER V8.12   LUTFREQ                                                               08/03/2015 06:34:05 PAGE 3   
+
+ 106                  65239,
+ 107                  65257,
+ 108                  65275,
+ 109                  65291,
+ 110                  65307,
+ 111                  65321,
+ 112                  65335   //note 109
+ 113          };
+C51 COMPILER V8.12   LUTFREQ                                                               08/03/2015 06:34:05 PAGE 4   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+C51 COMPILER V8.12   LUTFREQ                                                               08/03/2015 06:34:05 PAGE 5   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+LUTFreq. . . . . . . . . . . . . . . .  PUBLIC   CODE   ARRAY    0000H  198
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =    198    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,802 @@
+; .\obj\timers.SRC generated from: test\timers.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.EXE test\timers.c ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\timers.lst) PREPRINT(.\lst\timers.i) SRC(.\obj\timers.SRC)
+
+$NOMOD51
+
+NAME	TIMERS
+
+P0M1	DATA	084H
+P1M1	DATA	091H
+P0M2	DATA	085H
+P0	DATA	080H
+P2M1	DATA	0A4H
+P1M2	DATA	092H
+P1	DATA	090H
+AA	BIT	0D8H.2
+P3M1	DATA	0B1H
+P2M2	DATA	0A5H
+P2	DATA	0A0H
+P3M2	DATA	0B2H
+P3	DATA	0B0H
+T0	BIT	090H.2
+EI2C	BIT	0E8H.0
+AC	BIT	0D0H.6
+T1	BIT	080H.7
+EA	BIT	0A8H.7
+CE	BIT	0A0H.4
+EC	BIT	0E8H.2
+EWDRT	BIT	0A8H.6
+SPCTL	DATA	0E2H
+txClk	BIT	0A0H.3
+SCC0	BIT	0C0H.1
+HLTRN	BIT	0C8H.6
+txVcc	BIT	0A0H.7
+SCC1	BIT	0C0H.5
+FE	BIT	098H.7
+IEN0	DATA	0A8H
+IEN1	DATA	0E8H
+RxD	BIT	090H.1
+I2EN	BIT	0D8H.6
+PI2C	BIT	0F8H.0
+TxD	BIT	090H.0
+SSTAT	DATA	0BAH
+IP0H	DATA	0B7H
+CMP1	DATA	0ACH
+PWDRT	BIT	0B8H.6
+IP1H	DATA	0F7H
+CMP2	DATA	0ADH
+ADCON0	DATA	08EH
+TMOD20	BIT	0C8H.0
+ES	BIT	0A8H.4
+ADCON1	DATA	097H
+TMOD21	BIT	0C8H.1
+EIEE	BIT	0E8H.7
+RI	BIT	098H.0
+INT0	BIT	090H.3
+SI	BIT	0D8H.3
+EKBI	BIT	0E8H.1
+CY	BIT	0D0H.7
+INT1	BIT	090H.4
+TI	BIT	098H.1
+WFEED1	DATA	0C2H
+WFEED2	DATA	0C3H
+ECCU	BIT	0E8H.4
+PS	BIT	0B8H.4
+SP	DATA	081H
+PIEE	BIT	0F8H.7
+OV	BIT	0D0H.2
+SS	BIT	0A0H.4
+PKBI	BIT	0F8H.1
+I2SCLH	DATA	0DDH
+DEEADR	DATA	0F3H
+ADMODA	DATA	0C0H
+DEEDAT	DATA	0F2H
+ADMODB	DATA	0A1H
+I2SCLL	DATA	0DCH
+PCCU	BIT	0F8H.4
+DEECON	DATA	0F1H
+DIVM	DATA	095H
+SBUF	DATA	099H
+PCON	DATA	087H
+ESPI	BIT	0E8H.3
+RTCH	DATA	0D2H
+SCON	DATA	098H
+TPCR2H	DATA	0CBH
+TMOD	DATA	089H
+TCON	DATA	088H
+RTCL	DATA	0D3H
+MOSI	BIT	0A0H.2
+MISO	BIT	0A0H.3
+TPCR2L	DATA	0CAH
+I2STAT	DATA	0D9H
+KBMASK	DATA	086H
+KB0	BIT	080H.0
+PSPI	BIT	0F8H.3
+TRIM	DATA	096H
+BRGCON	DATA	0BDH
+KB1	BIT	080H.1
+IE0	BIT	088H.1
+KB2	BIT	080H.2
+IE1	BIT	088H.3
+KB3	BIT	080H.3
+AD0BH	DATA	0BBH
+AD0DAT0	DATA	0C5H
+KB4	BIT	080H.4
+AD1BH	DATA	0C4H
+AD1DAT0	DATA	0D5H
+AD0DAT1	DATA	0C6H
+B	DATA	0F0H
+BURST0	BIT	0C0H.2
+KB5	BIT	080H.5
+PB0	BIT	0B8H.5
+KBPATN	DATA	093H
+AD1DAT1	DATA	0D6H
+AD0DAT2	DATA	0C7H
+BURST1	BIT	0C0H.6
+KB6	BIT	080H.6
+AD1DAT2	DATA	0D7H
+AD0DAT3	DATA	0F4H
+KB7	BIT	080H.7
+AD0BL	DATA	0A6H
+AD1DAT3	DATA	0F5H
+AD1BL	DATA	0BCH
+ACC	DATA	0E0H
+SPICLK	BIT	0A0H.5
+ET0	BIT	0A8H.1
+IP0	DATA	0B8H
+EAD	BIT	0E8H.7
+ET1	BIT	0A8H.3
+TF0	BIT	088H.5
+IP1	DATA	0F8H
+ccTimer	BIT	0A0H.0
+TF1	BIT	088H.7
+RTCCON	DATA	0D1H
+RB8	BIT	098H.2
+TCR20	DATA	0C8H
+TH0	DATA	08CH
+ICA	BIT	0A0H.7
+EX0	BIT	0A8H.0
+IT0	BIT	088H.0
+TCR21	DATA	0F9H
+TH1	DATA	08DH
+BNDI0	BIT	0C0H.3
+ICB	BIT	0A0H.0
+TB8	BIT	098H.3
+EX1	BIT	0A8H.2
+IT1	BIT	088H.2
+TH2	DATA	0CDH
+BNDI1	BIT	0C0H.7
+P	BIT	0D0H.0
+SM0	BIT	098H.7
+TL0	DATA	08AH
+SM1	BIT	098H.6
+TL1	DATA	08BH
+SM2	BIT	098H.5
+TL2	DATA	0CCH
+OCA	BIT	0A0H.6
+I2ADR	DATA	0DBH
+OCB	BIT	090H.6
+PT0	BIT	0B8H.1
+LED	BIT	0A0H.5
+OCC	BIT	090H.7
+PAD	BIT	0F8H.7
+PT1	BIT	0B8H.3
+RS0	BIT	0D0H.3
+I2DAT	DATA	0DAH
+SCAN0	BIT	0C0H.0
+OCD	BIT	0A0H.1
+EBO	BIT	0A8H.5
+TR0	BIT	088H.4
+RS1	BIT	0D0H.4
+SCAN1	BIT	0C0H.4
+TR1	BIT	088H.6
+SDA	BIT	090H.3
+PX0	BIT	0B8H.0
+PX1	BIT	0B8H.2
+PT0AD	DATA	0F6H
+I2CON	DATA	0D8H
+DPH	DATA	083H
+midButt	BIT	080H.0
+CCCRA	DATA	0EAH
+CCCRB	DATA	0EBH
+BRGR0	DATA	0BEH
+CCCRC	DATA	0ECH
+BRGR1	DATA	0BFH
+CCCRD	DATA	0EDH
+DPL	DATA	082H
+audioL	BIT	080H.3
+SPSTAT	DATA	0E1H
+SCL	BIT	090H.2
+audioN	BIT	080H.4
+RSTSRC	DATA	0DFH
+ALTAB	BIT	0C8H.3
+REN	BIT	098H.4
+TICR2	DATA	0C9H
+TDIR2	BIT	0C8H.2
+WDL	DATA	0C1H
+STA	BIT	0D8H.5
+TISE2	DATA	0DEH
+TIFR2	DATA	0E9H
+ICRAH	DATA	0ABH
+txData	BIT	0A0H.2
+ALTCD	BIT	0C8H.4
+ICRBH	DATA	0AFH
+ESR	BIT	0A8H.4
+XTAL1	BIT	0B0H.1
+XTAL2	BIT	0B0H.0
+EST	BIT	0E8H.6
+ICRAL	DATA	0AAH
+SADEN	DATA	0B9H
+ICRBL	DATA	0AEH
+OCRAH	DATA	0EFH
+KBCON	DATA	094H
+OCRBH	DATA	0FBH
+SADDR	DATA	0A9H
+TOR2H	DATA	0CFH
+OCRCH	DATA	0FDH
+ADINS	DATA	0A3H
+OCRDH	DATA	0FFH
+PC_	BIT	0F8H.2
+PCONA	DATA	0B5H
+OCRAL	DATA	0EEH
+AUXR1	DATA	0A2H
+hiButt	BIT	080H.1
+OCRBL	DATA	0FAH
+TOR2L	DATA	0CEH
+OCRCL	DATA	0FCH
+PSR	BIT	0B8H.4
+F0	BIT	0D0H.5
+OCRDL	DATA	0FEH
+STO	BIT	0D8H.4
+F1	BIT	0D0H.1
+TAMOD	DATA	08FH
+PST	BIT	0F8H.6
+RST	BIT	090H.5
+CRSEL	BIT	0D8H.0
+PSW	DATA	0D0H
+HLTEN	BIT	0C8H.5
+PLLEN	BIT	0C8H.7
+WDCON	DATA	0A7H
+loButt	BIT	080H.2
+SPDAT	DATA	0E3H
+?PR?timers_init?TIMERS                   SEGMENT CODE INBLOCK 
+?PR?timers_isr0?TIMERS                   SEGMENT CODE INBLOCK 
+?PR?timers_starttimer0?TIMERS            SEGMENT CODE INBLOCK 
+?PR?timers_stoptimer0?TIMERS             SEGMENT CODE INBLOCK 
+?C_INITSEG           SEGMENT CODE 
+?DT?TIMERS           SEGMENT DATA 
+?BI?TIMERS           SEGMENT BIT 
+	EXTRN	DATA (smootherCnt)
+	EXTRN	DATA (inputBitSmoother)
+	EXTRN	DATA (inputByte)
+	EXTRN	BIT (startBit)
+	EXTRN	DATA (inputBuf)
+	EXTRN	BIT (inEmpty)
+	EXTRN	BIT (outEmpty)
+	EXTRN	DATA (inByte)
+	EXTRN	DATA (outByte)
+	EXTRN	DATA (inBuf)
+	EXTRN	DATA (outBuf)
+	PUBLIC	outEnd
+	PUBLIC	curBit
+	PUBLIC	outStart
+	PUBLIC	outputBit
+	PUBLIC	outputByte
+	PUBLIC	output
+	PUBLIC	outputSmoother
+	PUBLIC	timers_stoptimer0
+	PUBLIC	timers_starttimer0
+	PUBLIC	timers_isr0
+	PUBLIC	timers_init
+
+	RSEG  ?DT?TIMERS
+ outputSmoother:   DS   1
+         output:   DS   3
+     outputByte:   DS   1
+      outputBit:   DS   1
+         curBit:   DS   1
+
+	RSEG  ?BI?TIMERS
+       outStart:   DBIT   1
+         outEnd:   DBIT   1
+
+	RSEG  ?C_INITSEG
+	DB	0C1H, outStart + 000H	; bit-init
+
+	DB	0C1H, outEnd + 000H	; bit-init
+
+	DB	001H
+	DB	curBit
+	DB	008H
+
+	DB	001H
+	DB	outputSmoother
+	DB	003H
+
+	DB	001H
+	DB	outputByte
+	DB	006H
+
+	DB	001H
+	DB	outputBit
+	DB	008H
+
+; /***********************************************************************
+; MODULE:    Timers
+; VERSION:   1.00
+; CONTAINS:  Routines for controlling the timers on the Philips
+;            P89LPC936
+; COPYRIGHT: Embedded Systems Academy, Inc. - www.esacademy.com
+; LICENSE:   May be freely used in commercial and non-commercial code
+;            without royalties provided this copyright notice remains
+;            in this file and unaltered
+; WARNING:   IF THIS FILE IS REGENERATED BY CODE ARCHITECT ANY CHANGES
+;            MADE WILL BE LOST. WHERE POSSIBLE USE ONLY CODE ARCHITECT
+;            TO CHANGE THE CONTENTS OF THIS FILE
+; GENERATED: On "Oct 11 2010" at "17:21:42" by Code Architect 2.06
+; ***********************************************************************/
+; 
+; // SFR description needs to be included
+; //#pragma SRC
+; #include <reg936.h>
+; #include "itrip.h"
+; #include "timers.h"
+; 
+; /********external Globals**************************/
+; //2 byte timer start value...  t = (0xFFFF - start value) * 271 ns + timer0_isr execution time
+; //extern volatile byte t0High, t0Low;
+; 
+; //buffers and iterators and flags
+; extern volatile byte inputBuf[BUFFER_LENGTH], inBuf[BUFFER_LENGTH], outBuf[BUFFER_LENGTH];
+; extern volatile byte inputByte, inByte, outByte, inputBitSmoother, smootherCnt;
+; 
+; extern volatile bit inEmpty, outEmpty, startBit;
+; 
+; volatile bit outStart = 0, outEnd = 0;
+; volatile byte curBit = 8, outputSmoother = 3, outputByte = BUFFER_LENGTH, outputBit = 8, *output;
+; /***********************************************************************
+; DESC:    Initializes timers
+;          Timer 0 generates an interrupt every ms
+;          Timer 1 is not used
+; RETURNS: Nothing
+; CAUTION: If interrupts are being used then EA must be set to 1
+;          after calling this function
+; ************************************************************************/
+; void timers_init
+
+	RSEG  ?PR?timers_init?TIMERS
+timers_init:
+	USING	0
+			; SOURCE LINE # 42
+;   (
+;   void
+;   )
+; {
+			; SOURCE LINE # 46
+;   // configure timer 0 and 1
+;   TMOD &= 0xF0;
+			; SOURCE LINE # 48
+	ANL  	TMOD,#0F0H
+;   TMOD |= 0x01;
+			; SOURCE LINE # 49
+	ORL  	TMOD,#01H
+;   TAMOD &= 0xFE;
+			; SOURCE LINE # 50
+	ANL  	TAMOD,#0FEH
+; 
+;   // initial timer values
+;   TH0 = t0High;
+			; SOURCE LINE # 53
+	MOV  	TH0,#0FFH
+;   TL0 = t0Low;
+			; SOURCE LINE # 54
+	MOV  	TL0,#096H
+;   
+; //  TH1 = t1High;
+; //  TL1 = t1Low;
+;   // set timer 1 isr priority to highest, t0 below
+;   IP0 &= 0xFD;
+			; SOURCE LINE # 59
+	ANL  	IP0,#0FDH
+;   IP0H &= 0xFD;
+			; SOURCE LINE # 60
+	ANL  	IP0H,#0FDH
+;   IP0 |= 0x02;
+			; SOURCE LINE # 61
+	ORL  	IP0,#02H
+;   IP0H |= 0x02;
+			; SOURCE LINE # 62
+	ORL  	IP0H,#02H
+; 
+;   // enable timer 0 interrupt
+;   ET0 = 1;
+			; SOURCE LINE # 65
+	SETB 	ET0
+;   // enable timer 1 interrupt
+; //  ET1 = 1;
+; //  TR1 = 1;
+;   // start timer 0	TODO???
+;   //TR0 = 1;
+;   inputBuf[inputByte] = inputBuf[inputByte];  //trick assenbler into including inBuf for the interrupt......
+			; SOURCE LINE # 71
+	MOV  	R7,inputByte
+	MOV  	A,#LOW (inputBuf)
+	ADD  	A,R7
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R7,A
+	MOV  	R6,inputByte
+	MOV  	A,#LOW (inputBuf)
+	ADD  	A,R6
+	MOV  	R0,A
+	MOV  	@R0,AR7
+;   inBuf[inByte] = inBuf[inByte];
+			; SOURCE LINE # 72
+	MOV  	R7,inByte
+	MOV  	A,#LOW (inBuf)
+	ADD  	A,R7
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R7,A
+	MOV  	R6,inByte
+	MOV  	A,#LOW (inBuf)
+	ADD  	A,R6
+	MOV  	R0,A
+	MOV  	@R0,AR7
+;   outBuf[outByte] = outBuf[outByte];
+			; SOURCE LINE # 73
+	MOV  	R7,outByte
+	MOV  	A,#LOW (outBuf)
+	ADD  	A,R7
+	MOV  	R0,A
+	MOV  	A,@R0
+	MOV  	R7,A
+	MOV  	R6,outByte
+	MOV  	A,#LOW (outBuf)
+	ADD  	A,R6
+	MOV  	R0,A
+	MOV  	@R0,AR7
+;   outEmpty = outEmpty;
+			; SOURCE LINE # 74
+	MOV  	C,outEmpty
+	MOV  	outEmpty,C
+;   output = output;
+			; SOURCE LINE # 75
+; } // timers_init
+			; SOURCE LINE # 76
+	RET  	
+; END OF timers_init
+
+CSEG	AT	0000BH
+	LJMP	timers_isr0
+
+; 
+; 
+; /***********************************************************************
+; DESC:    Timer 0 Interrupt Service Routine
+; 		 executes in 4.4, 4.4, 7 or 4.4, 4.4, 12 us
+; RETURNS: Nothing
+; CAUTION: timers_init must be called first
+;          EA must be set to 1
+; ************************************************************************/
+; void timers_isr0
+
+	RSEG  ?PR?timers_isr0?TIMERS
+	USING	3
+timers_isr0:
+	PUSH 	ACC
+	PUSH 	PSW
+	USING	3
+	MOV  	PSW,#018H
+			; SOURCE LINE # 86
+;   (
+;   void
+;   ) interrupt 1 using 3
+			; SOURCE LINE # 89
+; {
+; // reinitialize
+; 	TL0 = t0Low;//0xC3;
+			; SOURCE LINE # 92
+	MOV  	TL0,#096H
+; 	TH0 = t0High;//0xff;
+			; SOURCE LINE # 93
+	MOV  	TH0,#0FFH
+; 	--smootherCnt;
+			; SOURCE LINE # 94
+	DEC  	smootherCnt
+; 	startBit = 1;
+			; SOURCE LINE # 95
+	SETB 	startBit
+; 	#pragma ASM
+; 			JB		outEmpty, ONWARD
+	  JB		outEmpty, ONWARD
+; 			DEC		outputSmoother
+	  DEC		outputSmoother
+; 			MOV		A, outputSmoother
+	  MOV		A, outputSmoother
+; 			JNZ		ONWARD
+	  JNZ		ONWARD
+; 			MOV		outputSmoother, #0x03
+	  MOV		outputSmoother, #0x03
+; 			JB		outStart, STARTED
+	  JB		outStart, STARTED
+; 			SETB	audioL
+	  SETB	audioL
+; 			SETB	outStart
+	  SETB	outStart
+; 			MOV		R0, outputByte
+	  MOV		R0, outputByte
+; 			MOV		A, #LOW (outBuf - 1)
+	  MOV		A, #LOW (outBuf - 1)
+; 			ADD		A, R0
+	  ADD		A, R0
+; 			MOV		output, A
+	  MOV		output, A
+; 			SJMP	ONWARD
+	  SJMP	ONWARD
+; 		STARTED:
+	  STARTED:
+; 			JB		outEnd, ENDER
+	  JB		outEnd, ENDER
+; 			MOV		R0, output 
+	  MOV		R0, output 
+; 			MOV		A, @R0
+	  MOV		A, @R0
+; 			ADDC	A, ACC
+	  ADDC	A, ACC
+; 			MOV		@R0, A
+	  MOV		@R0, A
+; 			JNC		OUT_0
+	  JNC		OUT_0
+; 			CPL		audioL
+	  CPL		audioL
+; 		OUT_0:	
+	  OUT_0:	
+; 			DJNZ	outputBit, ONWARD
+	  DJNZ	outputBit, ONWARD
+; 			MOV		outputBit, #0x08
+	  MOV		outputBit, #0x08
+; 			DEC		output
+	  DEC		output
+; 			DJNZ	outputByte, ONWARD
+	  DJNZ	outputByte, ONWARD
+; 			MOV		outputByte, #BUFFER_LENGTH
+	  MOV		outputByte, #0x06
+; 			SETB 	outEnd
+	  SETB 	outEnd
+; 			SJMP	ONWARD
+	  SJMP	ONWARD
+; 		ENDER:
+	  ENDER:
+; 			CLR		outStart
+	  CLR		outStart
+; 			CLR		audioL
+	  CLR		audioL
+; 			CLR		outEnd
+	  CLR		outEnd
+; 			SETB	outEmpty
+	  SETB	outEmpty
+; 		ONWARD:
+	  ONWARD:
+; 		#pragma ENDASM
+; 	inputBitSmoother += rawInput;
+			; SOURCE LINE # 133
+	MOV  	A,CMP1
+	ANL  	A,#01H
+	ADD  	A,inputBitSmoother
+	MOV  	inputBitSmoother,A
+; 	CMP1 &= ~0x01;
+			; SOURCE LINE # 134
+	ANL  	CMP1,#0FEH
+; 	if (startBit) {
+			; SOURCE LINE # 135
+	JNB  	startBit,?C0002
+; 		if (!smootherCnt) {
+			; SOURCE LINE # 136
+	MOV  	A,smootherCnt
+	JNZ  	?C0009
+; 			smootherCnt = SAMPLES_PER_BIT;
+			; SOURCE LINE # 137
+	MOV  	smootherCnt,#03H
+; //			inBuf[inByte] <<= 1;
+; //			inBuf[inByte] += inputBitSmoother & 0x01;
+; 			#pragma ASM
+; 				MOV  	R0, inputByte
+	  MOV  	R0, inputByte
+; 				MOV  	A, #LOW (inputBuf - 1)
+	  MOV  	A, #LOW (inputBuf - 1)
+; 				ADD  	A, R0
+	  ADD  	A, R0
+; 				MOV  	R0, A
+	  MOV  	R0, A
+; 				MOV  	A, @R0
+	  MOV  	A, @R0
+; 				ADD  	A, ACC
+	  ADD  	A, ACC
+; 				MOV  	@R0, A
+	  MOV  	@R0, A
+; 				MOV  	A, inputBitSmoother
+	  MOV  	A, inputBitSmoother
+; 				ANL  	A, #0x01
+	  ANL  	A, #0x01
+; 				ADD		A, @R0
+	  ADD		A, @R0
+; 				MOV		@R0, A
+	  MOV		@R0, A
+; 			#pragma ENDASM
+; 			if (--curBit == 0) {
+			; SOURCE LINE # 153
+	DEC  	curBit
+	MOV  	R7,curBit
+	MOV  	A,R7
+	JNZ  	?C0004
+; 				curBit = 8;
+			; SOURCE LINE # 154
+	MOV  	curBit,#08H
+; 				if (inputByte-- == 0) {
+			; SOURCE LINE # 155
+	MOV  	R7,inputByte
+	DEC  	inputByte
+	MOV  	A,R7
+	JNZ  	?C0004
+; 					startBit = 0;
+			; SOURCE LINE # 156
+	CLR  	startBit
+; 					//inByte = BUFFER_LENGTH;
+; 					inEmpty = 0;
+			; SOURCE LINE # 158
+	CLR  	inEmpty
+; 	//				for (inputByte = 0; inputByte < BUFFER_LENGTH; ++inputByte) {
+; 	//					inBuf[inputByte] = inputBuf[inputByte];
+; 	//					inBuf[inputByte] = 0;
+; 	//				}
+; 					#pragma ASM
+; 							MOV		R2, #0x06
+	  MOV		R2, #0x06
+; 							MOV  	R0, #LOW (inputBuf)
+	  MOV  	R0, #LOW (inputBuf)
+; 							MOV		R1, #LOW (inBuf)
+	  MOV		R1, #LOW (inBuf)
+; 						LOOP:
+	  LOOP:
+; 							MOV  	A,@R0
+	  MOV  	A,@R0
+; 							MOV  	@R1,A
+	  MOV  	@R1,A
+; 							MOV		@R0, #0x00
+	  MOV		@R0, #0x00
+; 							INC		R0
+	  INC		R0
+; 							INC		R1
+	  INC		R1
+; 							DJNZ 	R2, LOOP
+	  DJNZ 	R2, LOOP
+; 							MOV		inputByte, #BUFFER_LENGTH
+	  MOV		inputByte, #0x06
+; 					#pragma ENDASM
+; 				}
+			; SOURCE LINE # 176
+; 			}	
+			; SOURCE LINE # 177
+?C0004:
+; 		inputBitSmoother = 0;
+			; SOURCE LINE # 178
+	MOV  	inputBitSmoother,#00H
+; 		}		
+			; SOURCE LINE # 179
+; 	} else {
+			; SOURCE LINE # 180
+	SJMP 	?C0009
+?C0002:
+; 		if (!smootherCnt) {
+			; SOURCE LINE # 181
+	MOV  	A,smootherCnt
+	JNZ  	?C0009
+; 			smootherCnt = SAMPLES_PER_BIT;
+			; SOURCE LINE # 182
+	MOV  	smootherCnt,#03H
+; 	 		if (inputBitSmoother == 4) {
+			; SOURCE LINE # 183
+	MOV  	A,inputBitSmoother
+	CJNE 	A,#04H,?C0008
+; 				startBit = 1;
+			; SOURCE LINE # 184
+	SETB 	startBit
+; 			}
+			; SOURCE LINE # 185
+?C0008:
+; 		inputBitSmoother <<= 1;
+			; SOURCE LINE # 186
+	MOV  	A,inputBitSmoother
+	ADD  	A,ACC
+	MOV  	inputBitSmoother,A
+; 		}
+			; SOURCE LINE # 187
+; 	}
+			; SOURCE LINE # 188
+; } // timers_isr0
+			; SOURCE LINE # 189
+?C0009:
+	POP  	PSW
+	POP  	ACC
+	RETI 	
+; END OF timers_isr0
+
+; 
+; 
+; //void timers_isr1
+; //  (
+; //  void
+; //  ) interrupt 3 using 3
+; //{
+; //// reinitialize
+; //	#pragma ASM
+; //			PUSH 	ACC
+; //			PUSH 	PSW
+; //			MOV 	TH1, #t1High
+; //			MOV 	TL1, #t1Low
+; //			JB		outEmpty, ONWARD
+; //			JB		outStart, STARTED
+; //			SETB	audioL
+; //			SETB	outStart
+; //			MOV		R0, outByte
+; //			MOV		A, #LOW (outBuf - 1)
+; //			ADD		A, R0
+; //			MOV		output, A
+; //			SJMP	ONWARD
+; //		STARTED:
+; //			JB		outEnd, ENDER
+; //			MOV		R0, output 
+; //			MOV		A, @R0
+; //			ADDC	A, ACC
+; //			MOV		@R0, A
+; //			JNC		OUT_0
+; //			CPL		audioL
+; //		OUT_0:	
+; //			DJNZ	outputBit, ONWARD
+; //			MOV		outputBit, #0x08
+; //			DEC		output
+; //			DJNZ	outByte, ONWARD
+; //			MOV		outByte, #BUFFER_LENGTH
+; //			SETB 	outEnd
+; //			SJMP	ONWARD
+; //		ENDER:
+; //			CLR		outStart
+; //			CLR		audioL
+; //			CLR		outEnd
+; //			SETB	outEmpty
+; //		ONWARD:
+; //			POP 	ACC
+; //			POP 	PSW
+; //		#pragma ENDASM
+; //}
+; 
+; /***********************************************************************
+; DESC:    Starts timer 0
+; RETURNS: Nothing
+; CAUTION: timers_init must be called first
+; ************************************************************************/
+; void timers_starttimer0
+
+	RSEG  ?PR?timers_starttimer0?TIMERS
+timers_starttimer0:
+			; SOURCE LINE # 244
+;   (
+;   void
+;   )
+; {
+			; SOURCE LINE # 248
+;   TR0 = 1;
+			; SOURCE LINE # 249
+	SETB 	TR0
+; } // timers_starttimer0
+			; SOURCE LINE # 250
+	RET  	
+; END OF timers_starttimer0
+
+; 
+; /***********************************************************************
+; DESC:    Stops timer 0
+; RETURNS: Nothing
+; CAUTION: timers_init must be called first
+; ************************************************************************/
+; void timers_stoptimer0
+
+	RSEG  ?PR?timers_stoptimer0?TIMERS
+timers_stoptimer0:
+			; SOURCE LINE # 257
+;   (
+;   void
+;   )
+; {
+			; SOURCE LINE # 261
+;   TR0 = 0;
+			; SOURCE LINE # 262
+	CLR  	TR0
+; } // timers_stoptimer0
+			; SOURCE LINE # 263
+	RET  	
+; END OF timers_stoptimer0
+
+	END

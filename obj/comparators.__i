@@ -1,0 +1,1 @@
+"test\comparators.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\comparators.lst) PREPRINT(.\lst\comparators.i) OBJECT(.\obj\comparators.obj)

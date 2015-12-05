@@ -1,0 +1,486 @@
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 1   
+
+
+C51 COMPILER V8.12, COMPILATION OF MODULE TEMPLEAVE
+NO OBJECT MODULE REQUESTED
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\templeave.c ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMB
+                    -OLS PRINT(.\lst\templeave.lst) PREPRINT(.\lst\templeave.i) OBJECT(.\obj\templeave.obj)
+
+line level    source
+
+   1          #pragma SRC
+   2          #include <reg936.h>
+   1      =1  /*--------------------------------------------------------------------------
+   2      =1  REG936.H
+   3      =1  
+   4      =1  Header file for Philips 89LPC936
+   5      =1  Copyright (c) 1988-2006 KEIL - An ARM Company
+   6      =1  All rights reserved.
+   7      =1  V1.1
+   8      =1  --------------------------------------------------------------------------*/
+   9      =1  
+  10      =1  #ifndef __REG936_H__
+  11      =1  #define __REG936_H__
+  12      =1  
+  13      =1  /*  BYTE Registers  */
+  14      =1  sfr P0   = 0x80;
+  15      =1  sfr P1   = 0x90;
+  16      =1  sfr P2   = 0xA0;
+  17      =1  sfr P3   = 0xB0;
+  18      =1  sfr PSW  = 0xD0;
+  19      =1  sfr ACC  = 0xE0;
+  20      =1  sfr B    = 0xF0;
+  21      =1  sfr SP   = 0x81;
+  22      =1  sfr DPL  = 0x82;
+  23      =1  sfr DPH  = 0x83;
+  24      =1  sfr PCON = 0x87;
+  25      =1  sfr TCON = 0x88;
+  26      =1  sfr TMOD = 0x89;
+  27      =1  sfr TL0  = 0x8A;
+  28      =1  sfr TL1  = 0x8B;
+  29      =1  sfr TH0  = 0x8C;
+  30      =1  sfr TH1  = 0x8D;
+  31      =1  sfr IEN0 = 0xA8;
+  32      =1  sfr IP0  = 0xB8;
+  33      =1  sfr SCON = 0x98;
+  34      =1  sfr SBUF = 0x99;
+  35      =1  
+  36      =1  sfr ADCON0 = 0x8E;
+  37      =1  sfr ADCON1 = 0x97;
+  38      =1  sfr ADMODA = 0xC0;
+  39      =1  sfr ADMODB = 0xA1;
+  40      =1  sfr ADINS  = 0xA3;
+  41      =1  sfr AD0DAT0= 0xC5;
+  42      =1  sfr AD0DAT1= 0xC6;
+  43      =1  sfr AD0DAT2= 0xC7;
+  44      =1  sfr AD0DAT3= 0xF4;
+  45      =1  sfr AD1DAT0= 0xD5;
+  46      =1  sfr AD1DAT1= 0xD6;
+  47      =1  sfr AD1DAT2= 0xD7;
+  48      =1  sfr AD1DAT3= 0xF5;
+  49      =1  sfr AD0BH  = 0xBB;
+  50      =1  sfr AD0BL  = 0xA6;
+  51      =1  sfr AD1BH  = 0xC4;
+  52      =1  sfr AD1BL  = 0xBC;
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 2   
+
+  53      =1  sfr AUXR1  = 0xA2;
+  54      =1  sfr SADDR  = 0xA9;
+  55      =1  sfr SADEN  = 0xB9;
+  56      =1  sfr TL2    = 0xCC;
+  57      =1  sfr TH2    = 0xCD;
+  58      =1  sfr BRGR0  = 0xBE;
+  59      =1  sfr BRGR1  = 0xBF;
+  60      =1  sfr BRGCON = 0xBD;
+  61      =1  sfr CCCRA  = 0xEA;
+  62      =1  sfr CCCRB  = 0xEB;
+  63      =1  sfr CCCRC  = 0xEC;
+  64      =1  sfr CCCRD  = 0xED;
+  65      =1  sfr CMP1   = 0xAC;
+  66      =1  sfr CMP2   = 0xAD;
+  67      =1  sfr DEECON = 0xF1;
+  68      =1  sfr DEEDAT = 0xF2;
+  69      =1  sfr DEEADR = 0xF3;
+  70      =1  sfr DIVM   = 0x95;
+  71      =1  sfr I2ADR  = 0xDB;
+  72      =1  sfr I2CON  = 0xD8;
+  73      =1  sfr I2DAT  = 0xDA;
+  74      =1  sfr I2SCLH = 0xDD;
+  75      =1  sfr I2SCLL = 0xDC;
+  76      =1  sfr I2STAT = 0xD9;
+  77      =1  sfr ICRAH  = 0xAB;
+  78      =1  sfr ICRAL  = 0xAA;
+  79      =1  sfr ICRBH  = 0xAF;
+  80      =1  sfr ICRBL  = 0xAE;
+  81      =1  sfr IEN1   = 0xE8;
+  82      =1  sfr IP1    = 0xF8;
+  83      =1  sfr IP1H   = 0xF7;
+  84      =1  sfr KBCON  = 0x94;
+  85      =1  sfr KBMASK = 0x86;
+  86      =1  sfr KBPATN = 0x93;
+  87      =1  sfr OCRAH  = 0xEF;
+  88      =1  sfr OCRAL  = 0xEE;
+  89      =1  sfr OCRBH  = 0xFB;
+  90      =1  sfr OCRBL  = 0xFA;
+  91      =1  sfr OCRCH  = 0xFD;
+  92      =1  sfr OCRCL  = 0xFC;
+  93      =1  sfr OCRDH  = 0xFF;
+  94      =1  sfr OCRDL  = 0xFE;
+  95      =1  sfr P0M1   = 0x84;
+  96      =1  sfr P0M2   = 0x85;
+  97      =1  sfr P1M1   = 0x91;
+  98      =1  sfr P1M2   = 0x92;
+  99      =1  sfr P2M1   = 0xA4;
+ 100      =1  sfr P2M2   = 0xA5;
+ 101      =1  sfr P3M1   = 0xB1;
+ 102      =1  sfr P3M2   = 0xB2;
+ 103      =1  sfr PCONA  = 0xB5;
+ 104      =1  sfr PT0AD  = 0xF6;
+ 105      =1  sfr RSTSRC = 0xDF;
+ 106      =1  sfr RTCCON = 0xD1;
+ 107      =1  sfr RTCH   = 0xD2;
+ 108      =1  sfr RTCL   = 0xD3;
+ 109      =1  sfr SSTAT  = 0xBA;
+ 110      =1  sfr SPCTL  = 0xE2;
+ 111      =1  sfr SPSTAT = 0xE1;
+ 112      =1  sfr SPDAT  = 0xE3;
+ 113      =1  sfr TAMOD  = 0x8F;
+ 114      =1  sfr TCR20  = 0xC8;
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 3   
+
+ 115      =1  sfr TCR21  = 0xF9;
+ 116      =1  sfr TICR2  = 0xC9;
+ 117      =1  sfr TIFR2  = 0xE9;
+ 118      =1  sfr TISE2  = 0xDE;
+ 119      =1  sfr TOR2H  = 0xCF;
+ 120      =1  sfr TOR2L  = 0xCE;
+ 121      =1  sfr TPCR2H = 0xCB;
+ 122      =1  sfr TPCR2L = 0xCA;
+ 123      =1  sfr TRIM   = 0x96;
+ 124      =1  sfr WDCON  = 0xA7;
+ 125      =1  sfr WDL    = 0xC1;
+ 126      =1  sfr WFEED1 = 0xC2;
+ 127      =1  sfr WFEED2 = 0xC3;
+ 128      =1  sfr IP0H   = 0xB7;
+ 129      =1  
+ 130      =1  /*  BIT Registers  */
+ 131      =1  /*  PSW   */
+ 132      =1  sbit CY   = PSW^7;
+ 133      =1  sbit AC   = PSW^6;
+ 134      =1  sbit F0   = PSW^5;
+ 135      =1  sbit RS1  = PSW^4;
+ 136      =1  sbit RS0  = PSW^3;
+ 137      =1  sbit OV   = PSW^2;
+ 138      =1  sbit F1   = PSW^1;
+ 139      =1  sbit P    = PSW^0;
+ 140      =1  
+ 141      =1  /*  TCON  */
+ 142      =1  sbit TF1  = TCON^7;
+ 143      =1  sbit TR1  = TCON^6;
+ 144      =1  sbit TF0  = TCON^5;
+ 145      =1  sbit TR0  = TCON^4;
+ 146      =1  sbit IE1  = TCON^3;
+ 147      =1  sbit IT1  = TCON^2;
+ 148      =1  sbit IE0  = TCON^1;
+ 149      =1  sbit IT0  = TCON^0;
+ 150      =1  
+ 151      =1  /*  IEN0   */
+ 152      =1  sbit EA   = IEN0^7;
+ 153      =1  sbit EWDRT = IEN0^6;
+ 154      =1  sbit EBO   = IEN0^5;
+ 155      =1  sbit ES   = IEN0^4; // alternatively "ESR"
+ 156      =1  sbit ESR  = IEN0^4;
+ 157      =1  sbit ET1  = IEN0^3;
+ 158      =1  sbit EX1  = IEN0^2;
+ 159      =1  sbit ET0  = IEN0^1;
+ 160      =1  sbit EX0  = IEN0^0;
+ 161      =1  
+ 162      =1  /*  IEN1   */
+ 163      =1  sbit EAD  = IEN1^7; // alternatively "EIEE" 
+ 164      =1  sbit EIEE = IEN1^7;
+ 165      =1  sbit EST  = IEN1^6;
+ 166      =1  sbit ECCU = IEN1^4;
+ 167      =1  sbit ESPI = IEN1^3;
+ 168      =1  sbit EC   = IEN1^2;
+ 169      =1  sbit EKBI = IEN1^1;
+ 170      =1  sbit EI2C = IEN1^0;
+ 171      =1  
+ 172      =1  /*  IP0   */ 
+ 173      =1  sbit PWDRT = IP0^6;
+ 174      =1  sbit PB0   = IP0^5;
+ 175      =1  sbit PS    = IP0^4; // alternatively "PSR"
+ 176      =1  sbit PSR   = IP0^4;
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 4   
+
+ 177      =1  sbit PT1   = IP0^3;
+ 178      =1  sbit PX1   = IP0^2;
+ 179      =1  sbit PT0   = IP0^1;
+ 180      =1  sbit PX0   = IP0^0;
+ 181      =1  
+ 182      =1  /*  IP1   */
+ 183      =1  sbit PAD  = IP1^7; // alternatively "PIEE" 
+ 184      =1  sbit PIEE = IP1^7;
+ 185      =1  sbit PST  = IP1^6;
+ 186      =1  sbit PCCU = IP1^4;
+ 187      =1  sbit PSPI = IP1^3;
+ 188      =1  sbit PC_  = IP1^2;
+ 189      =1  sbit PKBI = IP1^1;
+ 190      =1  sbit PI2C = IP1^0;
+ 191      =1  
+ 192      =1  /*  SCON  */
+ 193      =1  sbit SM0  = SCON^7; // alternatively "FE"
+ 194      =1  sbit FE   = SCON^7;
+ 195      =1  sbit SM1  = SCON^6;
+ 196      =1  sbit SM2  = SCON^5;
+ 197      =1  sbit REN  = SCON^4;
+ 198      =1  sbit TB8  = SCON^3;
+ 199      =1  sbit RB8  = SCON^2;
+ 200      =1  sbit TI   = SCON^1;
+ 201      =1  sbit RI   = SCON^0;
+ 202      =1  
+ 203      =1  /*  I2CON  */
+ 204      =1  sbit I2EN  = I2CON^6;
+ 205      =1  sbit STA   = I2CON^5;
+ 206      =1  sbit STO   = I2CON^4;
+ 207      =1  sbit SI    = I2CON^3;
+ 208      =1  sbit AA    = I2CON^2;
+ 209      =1  sbit CRSEL = I2CON^0;
+ 210      =1  
+ 211      =1  /*  P0  */
+ 212      =1  sbit KB7 = P0^7; // alternatively "T1"
+ 213      =1  sbit T1 = P0^7;
+ 214      =1  sbit KB6 = P0^6; // alternatively "CMP1"
+ 215      =1  //sbit CMP1 = P0^6;
+ 216      =1  sbit KB5 = P0^5;
+ 217      =1  sbit KB4 = P0^4;
+ 218      =1  sbit KB3 = P0^3;
+ 219      =1  sbit KB2 = P0^2;
+ 220      =1  sbit KB1 = P0^1;
+ 221      =1  sbit KB0 = P0^0; // alternatively "CMP2"
+ 222      =1  //sbit CMP2 = P0^0;
+ 223      =1  
+ 224      =1  /*  P1  */
+ 225      =1  sbit OCC     = P1^7;
+ 226      =1  sbit OCB     = P1^6;
+ 227      =1  sbit RST     = P1^5;
+ 228      =1  sbit INT1    = P1^4;
+ 229      =1  sbit INT0    = P1^3; // alternatively "SDA"
+ 230      =1  sbit SDA     = P1^3;
+ 231      =1  sbit T0      = P1^2; // alternatively "SCL"
+ 232      =1  sbit SCL     = P1^2;
+ 233      =1  sbit RxD     = P1^1;
+ 234      =1  sbit TxD     = P1^0;
+ 235      =1  
+ 236      =1  /*  P2  */
+ 237      =1  sbit ICA     = P2^7;
+ 238      =1  sbit OCA     = P2^6;
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 5   
+
+ 239      =1  sbit SPICLK  = P2^5;
+ 240      =1  sbit SS      = P2^4;
+ 241      =1  sbit MISO    = P2^3;
+ 242      =1  sbit MOSI    = P2^2;
+ 243      =1  sbit OCD     = P2^1;
+ 244      =1  sbit ICB     = P2^0;
+ 245      =1  
+ 246      =1  /*  P3  */
+ 247      =1  sbit XTAL1= P3^1;
+ 248      =1  sbit XTAL2= P3^0;
+ 249      =1  
+ 250      =1  /* TCR20 */
+ 251      =1  sbit PLLEN = TCR20^7;
+ 252      =1  sbit HLTRN = TCR20^6;
+ 253      =1  sbit HLTEN = TCR20^5;
+ 254      =1  sbit ALTCD = TCR20^4;
+ 255      =1  sbit ALTAB = TCR20^3;
+ 256      =1  sbit TDIR2 = TCR20^2;
+ 257      =1  sbit TMOD21= TCR20^1;
+ 258      =1  sbit TMOD20= TCR20^0;
+ 259      =1  
+ 260      =1  /* ADMODA */
+ 261      =1  sbit BNDI1  = ADMODA^7;
+ 262      =1  sbit BURST1 = ADMODA^6;
+ 263      =1  sbit SCC1   = ADMODA^5;
+ 264      =1  sbit SCAN1  = ADMODA^4;
+ 265      =1  sbit BNDI0  = ADMODA^3;
+ 266      =1  sbit BURST0 = ADMODA^2;
+ 267      =1  sbit SCC0   = ADMODA^1;
+ 268      =1  sbit SCAN0  = ADMODA^0;
+ 269      =1  
+ 270      =1  #endif
+ 271      =1  
+   3          #include "iTrip.h"
+   1      =1  /*
+   2      =1  itrip HEADERZ v1e-9
+   3      =1  */
+   4      =1  
+   5      =1  #ifndef ITRIP_H
+   6      =1  #define ITRIP_H 
+   7      =1  /**************************GLOBALS*******************************************/
+   8      =1  typedef unsigned char byte;
+   9      =1  typedef unsigned int word;
+  10      =1  
+  11      =1  #define MAX_FREQ        1080
+  12      =1  #define MIN_FREQ        700
+  13      =1  
+  14      =1  #define BARKER_7                0x58    //01011000
+  15      =1  #define NOT_BARKER_7    0xA7    //10100111
+  16      =1  
+  17      =1  #define fineStruct 30
+  18      =1  #define BUFFER_LENGTH   6
+  19      =1  #define SAMPLES_PER_BIT 3
+  20      =1  /*******************************EMPerical numbers
+  21      =1  11.8.10
+  22      =1  50 -> 416 HZ
+  23      =1  5 - >31.25 kHz
+  24      =1  
+  25      =1  11.22.10
+  26      =1  30 -> 25k  nothing else....
+  27      =1  *******************************************************************************/
+  28      =1  //#define NORM_T
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 6   
+
+  29      =1  //#define SHOW_T
+  30      =1  //#define SYNTH_T
+  31      =1  //#define LEAVE_T
+  32      =1  //#define DELEAVE_T
+  33      =1  //#define CODE_T
+  34      =1  
+  35      =1  //#define ADC_T_SOFT
+  36      =1  //#define ADC_DELAY  10000
+  37      =1  
+  38      =1  //#def4-ADC_T_HARD               
+  39      =1  #define ADC_ARRAY_L 16  
+  40      =1  
+  41      =1  #define COM_T
+  42      =1  #define rawInput                (CMP1 & 0x01)   //P0^4 is comp1 input from radio through 1 uF
+  43      =1  #define CCU_MIN_CYCLE   164     //<100 Hz
+  44      =1  #define CCU_MIN_GOOD    521     //<15 Hz
+  45      =1  #define CCU_DC                  8192    //<1 Hz
+  46      =1  #define CCU_MAX_BAD             25              //max number of fast cycles ~.5 sec
+  47      =1  
+  48      =1  #define MIN_GOOD_HALF_CYCLES    12 //~1 sec
+  49      =1  #define MAX_TUNING_TRIES                381 
+  50      =1  //#define POW_T 
+  51      =1  
+  52      =1  //#define OSC_T 
+  53      =1  
+  54      =1  /****************************PROTOS*********************/
+  55      =1          void setup ();  //name and turn on
+  56      =1          void delay (word cnt);
+  57      =1          void shiftout8 (byte d);
+  58      =1          void shiftout16 (word d);
+  59      =1          void shiftout32 (word dh, word dl);
+  60      =1          void txProg ();
+  61      =1          void txStero ();
+  62      =1          void txMono ();
+  63      =1          void setFreq (word freq);
+  64      =1          void incFreq ();
+  65      =1          void decFreq ();
+  66      =1          void setChan (byte numChan);
+  67      =1          bit getBit ();
+  68      =1  
+  69      =1  /*******************deinterleaver*********************
+  70      =1  DESC:           Loads interbuf with sequenced data from inBuf....
+  71      =1  
+  72      =1  RETURNS:        Nothing.
+  73      =1  
+  74      =1  CAUTION:        inBuf must be full and interByte, inByte must 
+  75      =1                          = 8 and interBuf must be zeros  
+  76      =1  
+  77      =1  299 - 366 us execution
+  78      =1  *******************************************************/        
+  79      =1          void deInterleave ();
+  80      =1          void deleaveBits ();
+  81      =1          void testDI();
+  82      =1  /*************************************8
+  83      =1  inBuf must be empty and inter / inByte must = 8
+  84      =1  and interBuf must hold sequenced data
+  85      =1  loads inBuf with interleaved data...
+  86      =1  
+  87      =1  340  - 375 us
+  88      =1  ************************************/
+  89      =1          void interleave ();
+  90      =1          void leaveBits ();
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 7   
+
+  91      =1          void testI ();
+  92      =1          void sync();
+  93      =1          void testEncode(byte cnt);
+  94      =1          void encode();
+  95      =1          void encode_ASM ();
+  96      =1          void testDecode(char error);
+  97      =1          void decode ();
+  98      =1          void decode_ASM();
+  99      =1  /*******************************************************
+ 100      =1  DESC:    Autotuning algorithm detects low frequency audio 
+ 101      =1                   feedback characteristic of a good TX to RX lock.
+ 102      =1  RETURNS: The frequency of the Rx on the input 
+ 103      =1                  (0x0000 indicates a failure, 0x01 indicates DC / no input on pin) 
+ 104      =1  CAUTION: The RX must be able to swing the output audio
+ 105      =1                   greater than 1.24V and produce a frequency of 
+ 106      =1                   feedback <15Hz. (Headphone outs work)
+ 107      =1  *********************************************************/
+ 108      =1          word autotune ();
+ 109      =1          
+ 110      =1  /******************PIN NAMES****************************/       
+ 111      =1          sbit txVcc = P2^7;
+ 112      =1          sbit txData = P2^2;
+ 113      =1          sbit txClk = P2^3;
+ 114      =1          sbit LED = P2^5;
+ 115      =1          sbit CE = P2^4;
+ 116      =1          sbit midButt = P0^0;
+ 117      =1          sbit hiButt = P0^1;
+ 118      =1          sbit loButt = P0^2;
+ 119      =1          sbit audioL = P0^3;
+ 120      =1          sbit audioN = P0^4;     //must be soldered and AC coupled (DC blocked) with 1 uF
+ 121      =1          sbit ccTimer = P2^0;
+ 122      =1  #endif
+   4          
+   5          extern volatile unsigned char inBuf[BUFFER_LENGTH], interBuf[BUFFER_LENGTH];
+   6          extern volatile unsigned char *outBuf;
+   7          extern volatile unsigned char inRegister, inBit, inByte, interByte;
+   8          
+   9          extern volatile bit barkerFlag, notBarkerFlag, inEmpty;
+  10          
+  11          void interleave () {
+  12   1              byte cnt = 0;
+  13   1              if(!inEmpty || interByte != BUFFER_LENGTH || inByte != BUFFER_LENGTH) {
+  14   2                      return;
+  15   2              }
+  16   1              for (cnt = 6; interByte > 0; --interByte) {
+  17   2                      for (inByte = 5; inByte > 2; --interByte) {
+  18   3                              inBuf[inByte] += interBuf[interByte--] & 0x80;
+  19   3                              if (interByte < 0)
+  20   3                                      interByte = 0x06;
+  21   3                              inBuf[inByte] += (interBuf[interByte--] & 0x80 >> 4);
+  22   3                              if (interByte < 0)
+  23   3                                      interByte = 0x06;
+  24   3                              }
+  25   2              }
+  26   1              interByte = 8;
+  27   1              inEmpty = 0;
+  28   1      }
+C51 COMPILER V8.12   TEMPLEAVE                                                             12/15/2010 03:01:02 PAGE 8   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
+P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
+P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
+IEN0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
+IEN1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00E8H  1
+ADMODA . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C0H  1
+SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
+interleave . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  cnt?040. . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+byte . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+interByte. . . . . . . . . . . . . . .  EXTERN   DATA   U_CHAR   -----  1
+word . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+interBuf . . . . . . . . . . . . . . .  EXTERN   DATA   ARRAY    -----  6
+IP0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+IP1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F8H  1
+TCR20. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+I2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D8H  1
+inEmpty. . . . . . . . . . . . . . . .  EXTERN   DATA   BIT      -----  1
+inByte . . . . . . . . . . . . . . . .  EXTERN   DATA   U_CHAR   -----  1
+inBuf. . . . . . . . . . . . . . . . .  EXTERN   DATA   ARRAY    -----  6
+PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    108    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,173 @@
+A51 MACRO ASSEMBLER  INTERLEAVE                                                           12/19/2010 21:16:09 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN .\obj\interleave.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE interleave.a51 SET(SMALL) DEBUG PRINT(.\lst\interleave.lst) OBJECT(.\obj\i
+                      nterleave.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     NAME INTERLEAVE
+                       2     
+                       3     ?PR?leaveBits?INTERLEAVE  SEGMENT CODE INBLOCK 
+                       4             EXTRN   DATA (interByte)
+                       5             EXTRN   DATA (interBuf)
+                       6             EXTRN   DATA (outByte)
+                       7             EXTRN   DATA (outBuf)
+                       8             PUBLIC  leaveBits
+                       9     
+----                  10             RSEG  ?PR?leaveBits?INTERLEAVE
+0000                  11     leaveBits:
+                      12             USING   0
+0000 AF00     F       13             MOV     R7,interByte
+0002 7400     F       14             MOV     A,#LOW (interBuf)
+0004 2F               15             ADD     A,R7
+0005 14               16             DEC             A
+0006 F9               17             MOV     R1,A                    ;R1 HOLDS INTERBUF + INTERBYTE
+0007 FB               18             MOV             R3, A
+0008 AF00     F       19             MOV     R7,outByte
+000A 7400     F       20             MOV     A,#LOW (outBuf)
+000C 2F               21             ADD     A,R7
+000D 14               22             DEC             A
+000E F8               23             MOV     R0, A                   ;R0 HOLDS OUTBYTE + OUTBUF
+000F FA               24             MOV             R2, A
+                      25             ;LEAVE DATABITS
+0010 7F80             26             MOV             R7, #0x80               ;INTERMASK
+0012 7E80             27             MOV             R6, #0x80               ;INMASK
+0014 1100     F       28             ACALL   LEAVE_COL
+0016 1A               29             DEC             R2
+0017 A903             30             MOV             R1, AR3
+0019 A802             31             MOV             R0, AR2
+001B 7F40             32             MOV             R7, #0x40               ;INTERMASK
+001D 7E02             33             MOV             R6, #0x02               ;INMASK
+001F 1100     F       34             ACALL   LEAVE_COL
+0021 1A               35             DEC             R2
+0022 1A               36             DEC             R2
+0023 A903             37             MOV             R1, AR3
+0025 A802             38             MOV             R0, AR2
+0027 7F20             39             MOV             R7, #0x20               ;INTERMASK
+0029 7E08             40             MOV             R6, #0x08               ;INMASK
+002B 1100     F       41             ACALL   LEAVE_COL
+002D 1A               42             DEC             R2
+002E 1A               43             DEC             R2
+002F A903             44             MOV             R1, AR3
+0031 A802             45             MOV             R0, AR2
+0033 7F10             46             MOV             R7, #0x10               ;INTERMASK
+0035 7E20             47             MOV             R6, #0x20               ;INMASK
+0037 1100     F       48             ACALL   LEAVE_COL
+                      49             ;leave parity
+0039 7405             50             MOV     A,#0x05
+003B 2A               51             ADD             A, R2
+003C F8               52             MOV     R0,A                    ;R0 HOLDS INBUF + INBYTE
+003D FA               53             MOV             R2, A
+003E AB01             54             MOV             R3, AR1
+0040 7F80             55             MOV             R7, #0x80               ;INTERMASK
+0042 7E01             56             MOV             R6, #0x01               ;INMASK
+0044 1100     F       57             ACALL   LEAVE_COL
+A51 MACRO ASSEMBLER  INTERLEAVE                                                           12/19/2010 21:16:09 PAGE     2
+
+0046 1A               58             DEC             R2
+0047 1A               59             DEC     R2
+0048 A903             60             MOV             R1, AR3
+004A A802             61             MOV             R0, AR2
+004C 7F40             62             MOV             R7, #0x40               ;INTERMASK
+004E 7E04             63             MOV             R6, #0x04               ;INMASK
+0050 1100     F       64             ACALL   LEAVE_COL
+0052 1A               65             DEC             R2
+0053 1A               66             DEC             R2
+0054 A903             67             MOV             R1, AR3
+0056 A802             68             MOV             R0, AR2
+0058 7F20             69             MOV             R7, #0x20               ;INTERMASK
+005A 7E10             70             MOV             R6, #0x10               ;INMASK
+005C 1100     F       71             ACALL   LEAVE_COL
+005E 7404             72             MOV             A, #0x04
+0060 2A               73             ADD             A, R2
+0061 FA               74             MOV             R2, A
+0062 A903             75             MOV             R1, AR3
+0064 A802             76             MOV             R0, AR2
+0066 7F10             77             MOV             R7, #0x10               ;INTERMASK
+0068 7E40             78             MOV             R6, #0x40               ;INMASK
+006A 1100     F       79             ACALL   LEAVE_COL
+                      80             ;EMPTY INTERBUF
+006C 7800     F       81             MOV     R0, #LOW (interBuf)     
+006E E4               82             CLR             A                               
+006F F6               83             MOV             @R0, A
+0070 08               84             INC             R0
+0071 F6               85             MOV             @R0, A
+0072 08               86             INC             R0
+0073 F6               87             MOV             @R0, A
+0074 08               88             INC             R0
+0075 F6               89             MOV             @R0, A
+0076 08               90             INC             R0
+0077 F6               91             MOV             @R0, A
+0078 08               92             INC             R0
+0079 F6               93             MOV             @R0, A
+                      94     
+007A 22               95             RET
+                      96     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      97     ;               R1 MUST POINT TO INBUF WITH MSB OF COLUMN
+                      98     ;               R0 MUST POINT TO MSB OF INterBUF 
+                      99     ;               BOTH RS WILL GET TRASHED
+                     100     ;               R7 MUST HAVE BIT OF COLUMN
+                     101     ;               R6 MUST HAVE MASK FOR INBUF (BIT OF NIBBLES)
+                     102     ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+007B                 103     LEAVE_COL:      
+007B 7D03            104             MOV             R5, #0x03       ;INTERCNT = BUFFER_LENGTH / 2
+007D 7C02            105             MOV             R4, #0x02       ;INCNT  = BUFFER_LENGTH /3
+007F                 106     INLOOP:
+007F E7              107             MOV     A, @R1
+0080 5F              108             ANL             A, R7
+0081 6004            109             JZ              CLRBIT
+0083 E4              110             CLR             A
+0084 2E              111             ADD             A, R6           ;ADD INTERMASK BIT
+0085 26              112             ADD             A, @R0
+0086 F6              113             MOV             @R0, A          ;SET INTERMASK BIT IN INTERBYTE
+0087                 114     CLRBIT:
+0087 EF              115             MOV             A, R7
+0088 C4              116             SWAP    A
+0089 FF              117             MOV             R7, A           ;CHANGE INTERMASK                       
+008A B80005   F      118             CJNE    R0, #LOW(outBuf), NEXTLINE       ;DEC AND CHECK NEXT INBYTE
+008D 7406            119             MOV     A, #06H         ;RESET INBYTE IF NEGATIVE
+008F 2400     F      120             ADD             A, #LOW(outBuf)
+0091 F8              121             MOV             R0, A
+0092                 122     NEXTLINE:
+0092 18              123             DEC             R0
+A51 MACRO ASSEMBLER  INTERLEAVE                                                           12/19/2010 21:16:09 PAGE     3
+
+0093 DCEA            124             DJNZ    R4, INLOOP      ;NEXT INTERBIT 
+                     125             
+0095 19              126             DEC             R1                      ;NEXT INTERBYTE
+0096 7C02            127             MOV             R4, #0x02       ;CHANGE INTERCNT        
+0098 DDE5            128             DJNZ    R5, INLOOP      
+009A 22              129             RET
+                     130                     
+                     131             END
+A51 MACRO ASSEMBLER  INTERLEAVE                                                           12/19/2010 21:16:09 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                   T Y P E  V A L U E   ATTRIBUTES
+
+?PR?LEAVEBITS?INTERLEAVE  C SEG    009BH       REL=INBLOCK
+AR1. . . . . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . . . . .  D ADDR   0003H   A   
+CLRBIT . . . . . . . . .  C ADDR   0087H   R   SEG=?PR?LEAVEBITS?INTERLEAVE
+INLOOP . . . . . . . . .  C ADDR   007FH   R   SEG=?PR?LEAVEBITS?INTERLEAVE
+INTERBUF . . . . . . . .  D ADDR   -----       EXT
+INTERBYTE. . . . . . . .  D ADDR   -----       EXT
+INTERLEAVE . . . . . . .  N NUMB   -----       
+LEAVEBITS. . . . . . . .  C ADDR   0000H   R   SEG=?PR?LEAVEBITS?INTERLEAVE
+LEAVE_COL. . . . . . . .  C ADDR   007BH   R   SEG=?PR?LEAVEBITS?INTERLEAVE
+NEXTLINE . . . . . . . .  C ADDR   0092H   R   SEG=?PR?LEAVEBITS?INTERLEAVE
+OUTBUF . . . . . . . . .  D ADDR   -----       EXT
+OUTBYTE. . . . . . . . .  D ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
