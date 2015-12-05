@@ -1,0 +1,11 @@
+*.OBJ
+*.__i
+*.LST
+*._ia
+*.lst
+*.plg
+*.SBR
+*.MAP
+*.hex
+obj/*
+lst/*
