@@ -1,1 +1,0 @@
-"..\templeave.c" ROM(COMPACT) BROWSE DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\lst\templeave.lst) PREPRINT(.\lst\templeave.i) OBJECT(.\obj\templeave.obj)
