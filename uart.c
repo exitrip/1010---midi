@@ -12,8 +12,8 @@ static bit mtxbusy;
 static volatile bit LnotV; //local flag of which channel to touch
 static volatile m_in_t midiMsg; 
 
-volatile word LPeriod;
-volatile word VPeriod;
+extern volatile word LPeriod;
+extern volatile word VPeriod;
 
 void uart_init (void) {
   // configure UART

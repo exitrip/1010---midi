@@ -234,9 +234,9 @@ RIFF_T code testSCo1[7] = {
 	{7, 0},
 	{testCo3, 1-1},
 	{testCo1, 15-1},
-	{testCo3b, 1-1},
+	{testCo3, 1-1},
 	{testCo1, 15-1},
-	{testCo3c, 1-1},
+	{testCo3, 1-1},
 	{testCo1, 15-1}
 };
 

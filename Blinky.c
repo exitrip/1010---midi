@@ -22,8 +22,8 @@ volatile byte sysIx = 0;
 
 void* code songBook[NUM_SONGS] = {
 	silentSong,
-	testS1,////testSCo1,//	  todo test updown songs....
-	testS2,////testSCo2,//
+	testS1,//testSCo1,////	  todo test updown songs....
+	testS2,//testSCo2,////
 	minorSong,
 	wholeToneSong,
 	beatSong,
@@ -73,6 +73,10 @@ volatile byte temp0 = 0;
 //pitch
 volatile byte periodH1 = 0; 
 volatile byte periodL1 = 0;
+
+//helpful shadows...
+volatile word LPeriod;
+volatile word VPeriod;
 
 volatile word lDelta = 0;
 volatile word txDelta = 0;
@@ -713,10 +717,12 @@ UPDATE_NOTE:
 				temp -= LUT_MIDI_NOTE_SHIFT;
 				if (VnotL == 1) {
 					TX_VCC_ON = 1;
+					VPeriod = LUTFreq[temp];
 					periodH0 = (0xff & (LUTFreq[temp] >> 8));
 					periodL0 = (0xff & LUTFreq[temp]);
 				} else {
 					AUDIO_L_ON = 1;
+					LPeriod = LUTFreq[temp];
 					periodH1 = (0xff & (LUTFreq[temp] >> 8));
 					periodL1 = (0xff & LUTFreq[temp]);
 				}
