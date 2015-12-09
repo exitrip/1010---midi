@@ -14,6 +14,8 @@ static volatile m_in_t midiMsg;
 
 extern volatile word LPeriod;
 extern volatile word VPeriod;
+extern volatile bit deltaLUp;
+extern volatile bit deltaTxUp;
 
 void uart_init (void) {
   // configure UART

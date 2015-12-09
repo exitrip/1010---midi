@@ -222,12 +222,12 @@ RIFF_T code testS1[TEST_SS1] = {
 //#define TEST_SS2 6+1
 RIFF_T code testS2[TEST_SS2] = {
 	{TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
-	{downR1, 8-1},
-	{downR2, 8-1},
-	{downR3, 8-1},
-	{downR4, 8-1},
-	{downR5, 8-1},
-	{downR1, 8-1}
+	{downR4, 2-1},
+	{downR5, 2-1},
+	{downR4, 2-1},
+	{downR5, 2-1},
+	{downR4, 2-1},
+	{downR5, 2-1}
 };
 
 RIFF_T code testSCo1[7] = {

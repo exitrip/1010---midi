@@ -479,19 +479,19 @@ byte code downR3[TEST_LEN+1] = {
 
 byte code downR4[TEST_LEN+1] = {
 	TEST_LEN,
-	0, DOWN4,
-	0, 33,
+	0, DOWN4+0x80,
+	0, 36+0x80,
 	24*2, TX_ON,
-	24*2, TX_OFF,
-	24, UPDOWN_OFF
+	24*2, NOTE_OFF_MEM+0x80,
+	24, UPDOWN_OFF+0x80
 };
 
 byte code downR5[TEST_LEN+1] = {
 	TEST_LEN,
 	0, DOWN5,
-	0, 33,
+	0, 33+0x80,
 	24*2, TX_ON,
-	24*2, TX_OFF,
+	24*2, NOTE_OFF_MEM+0x80,
 	24, UPDOWN_OFF
 };
 

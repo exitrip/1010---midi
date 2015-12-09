@@ -23,7 +23,7 @@ volatile byte sysIx = 0;
 void* code songBook[NUM_SONGS] = {
 	silentSong,
 	testS1,//testSCo1,////	  todo test updown songs....
-	testS2,//testSCo2,////
+	testS2,//testSCo1,//testSCo2,////
 	minorSong,
 	wholeToneSong,
 	beatSong,
@@ -80,8 +80,8 @@ volatile word VPeriod;
 
 volatile word lDelta = 0;
 volatile word txDelta = 0;
-volatile bit deltaLUp;
-volatile bit deltaTxUp;
+volatile bit deltaLUp = 0;
+volatile bit deltaTxUp = 0;
 
 /****************************BH141* instruction*******************************/
 
@@ -468,7 +468,7 @@ void timers_isr0 (void) interrupt 1 using 3
 void updateNote(void) {
 	byte temp, temp2;
 	word thisDelta = 0;
-	bit thisUp = 0, VnotL = 0;;
+	bit thisUp = 0, VnotL = 0;
 UPDATE_NOTE:
 	if (nextNote >= numNotes) {	 //equal to catches init!!!
 		nextNote = 1; //skip the riff len header
@@ -478,9 +478,10 @@ UPDATE_NOTE:
 				PLAYING = 0; //midi says stop
 				midiClk = 0;
 				LED = 0;
-				//going silent for the moment
+				//going silent but leave transmitter on for less static
 				AUDIO_L_ON = 0;
 				TX_VCC_ON = 0;
+				txOffSwitch = 0;
 				//ensure that we always fall through to this point
 				nextRiff = numRiffs - 1;
 				curRiffCnt = 0;
@@ -670,6 +671,11 @@ UPDATE_NOTE:
 		
 			case UPDOWN_OFF:
 				thisDelta = 0;
+				if (VnotL == 1) {
+					txDelta = 0;
+				} else {
+					lDelta = 0;
+				}
 			break;
 			
 			case STATION_UP6:
@@ -737,8 +743,11 @@ UPDATE_NOTE:
 				deltaLUp = thisUp;
 			}
 		}
-		//should just work.... untested...
+		//should just work.... and does...
 		if (deltaPos == 0) {
+			thisDelta = 0;
+			thisUp = 0; 
+			VnotL = 0;
 			goto UPDATE_NOTE;
 		}
 	}
