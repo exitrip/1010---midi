@@ -207,41 +207,106 @@
 #elif (MY_L_CHAN == 14)
 #endif
 
+//HAPPY
+#ifdef COORD
+	RIFF_T code happySong[5] = {
+		{5,0},
+		{happyCoordInit, 1-1},
+		{wRestCoord, 255-1},  //for now...;.
+		{wRestCoord, 255-1},
+		{wRestCoord, 255-1}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T code happySong[5] = {
+		{5,0},
+		{happy1, 4-1},
+		{happy2, 4-1},
+		{happy1, 4-1},
+		{happy2, 4-1}
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T code happySong[5] = {
+		{5,0},
+		{happy2, 4-1},
+		{happy1, 4-1},
+		{happy2, 4-1},
+		{happy1, 4-1}
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T code happySong[3] = {
+		{3,0},
+		{wRest, 24-1},
+		{happy3, 16-1},
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T code happySong[2] = {
+		{2,0},
+		{happyDrone, 4-1},
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T code happySong[3] = {
+		{3,0},
+		{wRest, 33-1},
+		{happyDroneTx, 1-1},
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T code happySong[3] = {
+		{3,0},
+		{wRest, 24-1},
+		{happy3, 16-1},
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T code happySong[5] = {
+		{5,0},
+		{happy1, 4-1},
+		{happy2, 4-1},
+		{happy1, 4-1},
+		{happy2, 4-1}
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T code happySong[5] = {
+		{5,0},
+		{happy2, 4-1},
+		{happy1, 4-1},
+		{happy2, 4-1},
+		{happy1, 4-1}
+	};
+#endif
 
-//#define TEST_SS1 6+1
-RIFF_T code testS1[TEST_SS1] = {
-	{TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
-	{upR1, 8-1},
-	{upR2, 8-1},
-	{upR3, 8-1},
-	{upR4, 8-1},
-	{upR5, 8-1},
-	{upR1, 8-1}
-};
-
-//#define TEST_SS2 6+1
-RIFF_T code testS2[TEST_SS2] = {
-	{TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
-	{downR4, 2-1},
-	{downR5, 2-1},
-	{downR4, 2-1},
-	{downR5, 2-1},
-	{downR4, 2-1},
-	{downR5, 2-1}
-};
-
-RIFF_T code testSCo1[7] = {
-	{7, 0},
-	{testCo3, 1-1},
-	{testCo1, 15-1},
-	{testCo3, 1-1},
-	{testCo1, 15-1},
-	{testCo3, 1-1},
-	{testCo1, 15-1}
-};
-
-RIFF_T code testSCo2[3] = {
-	{3, 0},
-	{testCo4, 3-1},
-	{testCo2, 3-1}
-};
+////#define TEST_SS1 6+1
+//RIFF_T code testS1[TEST_SS1] = {
+//	{TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+//	{upR1, 8-1},
+//	{upR2, 8-1},
+//	{upR3, 8-1},
+//	{upR4, 8-1},
+//	{upR5, 8-1},
+//	{upR1, 8-1}
+//};
+//
+////#define TEST_SS2 6+1
+//RIFF_T code testS2[TEST_SS2] = {
+//	{TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
+//	{downR1, 8-1},
+//	{downR2, 8-1},
+//	{downR3, 8-1},
+//	{downR4, 8-1},
+//	{downR5, 8-1},
+//	{downR1, 8-1}
+//};
+//
+//RIFF_T code testSCo1[7] = {
+//	{7, 0},
+//	{testCo3, 1-1},
+//	{testCo1, 15-1},
+//	{testCo3, 1-1},
+//	{testCo1, 15-1},
+//	{testCo3, 1-1},
+//	{testCo1, 15-1}
+//};
+//
+//RIFF_T code testSCo2[3] = {
+//	{3, 0},
+//	{testCo4, 3-1},
+//	{testCo2, 3-1}
+//};

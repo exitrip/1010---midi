@@ -22,8 +22,9 @@ volatile byte sysIx = 0;
 
 void* code songBook[NUM_SONGS] = {
 	silentSong,
-	testS1,//testSCo1,////	  todo test updown songs....
-	testS2,//testSCo1,//testSCo2,////
+	//testS1,//testSCo1,////	  todo test updown songs....
+	//testS2,//testSCo1,//testSCo2,////
+	happySong,
 	minorSong,
 	wholeToneSong,
 	beatSong,
@@ -259,6 +260,7 @@ void main() {
 			} else {
 				txOffSwitch = 0;
 				LED = 1;
+				delay(50);
 				setFreq(station);
 			} 
 		}	 		

@@ -32,7 +32,7 @@ typedef struct Riff_s {
 
 
 ///MIDI STUFF
-#define MY_L_CHAN 	0 //[0-15] //base channel
+#define MY_L_CHAN 	14 //[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #define MY_ID		0
 
