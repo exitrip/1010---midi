@@ -32,7 +32,7 @@ typedef struct Riff_s {
 
 
 ///MIDI STUFF
-#define MY_L_CHAN   14//[0-15] //base channel
+#define MY_L_CHAN   0//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #define MY_ID		0
 
@@ -86,7 +86,7 @@ extern volatile RIFF_T* curSong;
 extern volatile word nextRiff;
 extern volatile byte curRiffCnt;
 extern volatile word numRiffs;
-extern volatile byte code* riff;
+extern volatile byte* riff;
 extern volatile word deltaPos;
 extern volatile byte numNotes;
 extern volatile byte nextNote;

@@ -2,45 +2,46 @@
 #define SONG_H
 
 #define NUM_SONGS	8
+extern void* const code songBook[NUM_SONGS];
 
-extern RIFF_T code busySong[];
+extern RIFF_T const code busySong[];
 
 //Station beats and simple melody
-extern RIFF_T code statSong[];
+extern RIFF_T const code statSong[];
 
 //heavy Beats!!!  N0T!!!
-//extern RIFF_T code beatSong[];
+//extern RIFF_T const const code beatSong[];
 
 //Our body
-extern RIFF_T code bodySong[];
+extern RIFF_T const code bodySong[];
 
 //droneStrike
 
 //omes
 
 //whole tone scale
-extern RIFF_T code wholeToneSong[];
+extern RIFF_T const code wholeToneSong[];
 
 //minor
-extern RIFF_T code minorSong[];
+extern RIFF_T const code minorSong[];
 
 //silence 
-extern RIFF_T code silentSong[];
+extern RIFF_T const code silentSong[];
 
 //driving me backwards!!!!!
-extern RIFF_T code dmbSong[];
+extern RIFF_T const code dmbSong[];
 
 //HAPPY	
-extern RIFF_T code happySong[];
+extern RIFF_T const code happySong[];
  
 //#define TEST_SS1 6+1
-//extern RIFF_T code testS1[TEST_SS1];
+//extern RIFF_T const code testS1[TEST_SS1];
 //
 //#define TEST_SS2 6+1
-//extern RIFF_T code testS2[TEST_SS2];
+//extern RIFF_T const code testS2[TEST_SS2];
 //
-//extern RIFF_T code testSCo1[7];
+//extern RIFF_T const code testSCo1[7];
 //
-//extern RIFF_T code testSCo2[3];
+//extern RIFF_T const code testSCo2[3];
 
 #endif

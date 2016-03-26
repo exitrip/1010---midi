@@ -9,29 +9,15 @@
 #include "midi_spec.h"
 #include "uart.h"
 #include "LUTFreq.h"  
-#include "LUTsin.h" 
+//#include "LUTsin.h" 
 #include "itrip.h"
-#include "riff.h"
 #include "song.h"
 
 /******************************* GLOBALS**************************************/
 volatile byte xdata sysEx[SYS_LEN];
 volatile byte sysIx = 0;
 
-///////////all songs....   //drive song selection from here...
 
-void* code songBook[NUM_SONGS] = {
-	silentSong,
-	busySong,
-	//testS1,//testSCo1,////	  todo test updown songs....
-	//testS2,//testSCo1,//testSCo2,////
-	happySong,
-	minorSong,
-	wholeToneSong,
-	bodySong,
-	statSong,
-	dmbSong
-};
 
 volatile byte songNum = 0; 
 volatile word midiClk = 0;
@@ -54,7 +40,7 @@ volatile RIFF_T* curSong;
 volatile word nextRiff = 0;
 volatile byte curRiffCnt = 0;
 volatile word numRiffs = 0;
-volatile byte code* riff;
+volatile byte* riff;
 //deltaSongPos ... just ... cant..  be ...  a ...  byte....
 volatile word deltaPos = 0;
 volatile byte numNotes = 0;
