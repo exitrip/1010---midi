@@ -22,12 +22,14 @@ volatile byte sysIx = 0;
 
 void* code songBook[NUM_SONGS] = {
 	silentSong,
+	busySong,
 	//testS1,//testSCo1,////	  todo test updown songs....
 	//testS2,//testSCo1,//testSCo2,////
 	happySong,
 	minorSong,
 	wholeToneSong,
-	beatSong,
+	bodySong,
+	statSong,
 	dmbSong
 };
 

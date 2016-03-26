@@ -19,50 +19,130 @@
 
 //heavy Beats!!!
 //byte code 
+//#ifdef COORD
+//	RIFF_T code beatSong[10] = {
+//		{10,0},
+//		{beatCoord2, 20-1},  //1.5833 min
+//		{beatCoord1, 10-1},  //1.5833 min
+//		{beatCoord2, 10-1},
+//		{wRestCoord, 9-1},	 //38 more beats droning  {31.66 sec}
+//		{hRestCoord, 1-1},
+//		{beatCoord2, 20-1},  //1.5833 min
+//		{beatCoord1, 10-1},  //1.5833 min
+//		{wRestCoord, 9-1},	 //38 more beats droning  {31.66 sec}
+//		{hRestCoord, 1-1}
+//	};
+//#else
+//	RIFF_T code beatSong[4] = {
+//		{4,0},
+//		{beat1, 255},
+//		{beat1, 255},
+//		{beat1, 255}
+//	};
+//#endif
+
+//statSong
 #ifdef COORD
-	RIFF_T code beatSong[10] = {
-		{10,0},
-		{beatCoord2, 20-1},  //1.5833 min
-		{beatCoord1, 10-1},  //1.5833 min
-		{beatCoord2, 10-1},
-		{wRestCoord, 9-1},	 //38 more beats droning  {31.66 sec}
-		{hRestCoord, 1-1},
-		{beatCoord2, 20-1},  //1.5833 min
-		{beatCoord1, 10-1},  //1.5833 min
-		{wRestCoord, 9-1},	 //38 more beats droning  {31.66 sec}
-		{hRestCoord, 1-1}
+	//just use silent song
+	RIFF_T code statSong[3] = {
+		{3, 0},
+		{OnStatCoordInit, 1},
+		{wRestCoord, 255}
 	};
-#else
-	RIFF_T code beatSong[4] = {
-		{4,0},
-		{beat1, 255},
-		{beat1, 255},
-		{beat1, 255}
+#elif (MY_L_CHAN == 0)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat1, 255}	   
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat2, 255}	   
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat3, 255}	   
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat4, 255}	   
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStatMel1, 255}	   
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStatMel2, 255}	   
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat3, 255}	   
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T code statSong[2] = {
+		{2, 0},
+		{OnStat4, 255}	   
 	};
 #endif
 
 //Our body
 #ifdef COORD
-#elif (MY_L_CHAN == 0)
-#elif (MY_L_CHAN == 2)
-#elif (MY_L_CHAN == 4)
-#elif (MY_L_CHAN == 6)
-#elif (MY_L_CHAN == 8)
-#elif (MY_L_CHAN == 10)
-#elif (MY_L_CHAN == 12)
-#elif (MY_L_CHAN == 14)
-#endif
-
-//droneStrike
-#ifdef COORD
-#elif (MY_L_CHAN == 0)
-#elif (MY_L_CHAN == 2)
-#elif (MY_L_CHAN == 4)
-#elif (MY_L_CHAN == 6)
-#elif (MY_L_CHAN == 8)
-#elif (MY_L_CHAN == 10)
-#elif (MY_L_CHAN == 12)
-#elif (MY_L_CHAN == 14)
+	//just use silent song
+	RIFF_T code bodySong[3] = {
+		{3, 0},
+		{bodyInit, 1},
+		{wRestCoord, 255}
+	};
+#else
+	RIFF_T code bodySong[41] = {
+		{41, 0},
+			{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+					{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3},
+				{minorDrone, 3},
+		{wholeDrone, 3}
+	}; 
 #endif
 
 //omes
@@ -75,6 +155,93 @@
 #elif (MY_L_CHAN == 10)
 #elif (MY_L_CHAN == 12)
 #elif (MY_L_CHAN == 14)
+#endif
+
+//busy
+#ifdef COORD
+	//just use silent song
+	RIFF_T code busySong[28] = {
+		{28, 0},
+		{busyInit, 1},
+		{wRestCoord, 6},
+		{busySlower1, 1},
+		{wRestCoord, 5},
+		{busySlower2, 1},
+		{wRestCoord, 4},
+		{busySlower3, 1},
+		{wRestCoord, 3},
+		{busySlower4, 1},
+		{wRestCoord, 2},
+		{busyInit, 1},
+		{wRestCoord, 6},
+		{busySlower4, 1},
+		{wRestCoord, 2},
+		{wRestCoord, 6*3},
+		{busySlower1, 1},
+		{wRestCoord, 5*3},
+		{busySlower2, 1},
+		{wRestCoord, 4*3},
+		{busySlower3, 1},
+		{wRestCoord, 3*3},
+		{busySlower4, 1},
+		{wRestCoord, 2*3},
+		{busyInit, 1},
+		{wRestCoord, 6*3},
+		{busySlower4, 1},
+		{wRestCoord, 2*3}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T code busySong[2] = {
+		{2, 0},
+		{busy1, 255}	   
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T code busySong[5] = {
+		{5,0},
+		{wRest, 11-1},
+		{happy2, 3-1},		 //176 beats - 44 bars
+		{happy1, 4-1},
+		{happy2, 4-1}
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T code busySong[4] = {
+		{4,0},
+		{happyDrone, 22-1},		 //8*22 = 176 beats	- 44 bars
+//		{wRest, 2-1},		   //8 beats
+		{happy3, 64-1},	  //160 beats - 5*16 is 80 beats ... ends early
+		{happyDroneTx, 255-1}  //
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T code busySong[3] = {
+		{3,0},
+		{happyDrone, 33-1},		 // 4 * 176
+		{happy3, 255-1}
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T code busySong[3] = {
+		{3,0},
+		{wRest, 33-1},
+		{happyDroneTx2, 255-1},
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T code busySong[4] = {
+		{4,0},
+		{happyDrone, 11-1},		 //88 beats	- 22 bars
+		//{wRest, 22-1},		   //88 beats
+		{happy3, 32-1},	  //160 beats - 5*16 is 80 beats ... ends early
+		{happyDrone, 255-1}  //
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T code busySong[3] = {
+		{3, 0},
+		{wRest, 56},
+		{busy2Stat, 255}	   
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T code busySong[2] = {
+		{2, 0},
+		{busy2, 255}	   
+	};
 #endif
 
 //whole tone and minor scale songs
@@ -207,7 +374,7 @@
 #elif (MY_L_CHAN == 14)
 #endif
 
-//HAPPY
+//HAPPY		  ---  works with hands.....
 #ifdef COORD
 	RIFF_T code happySong[5] = {
 		{5,0},
@@ -219,57 +386,62 @@
 #elif (MY_L_CHAN == 0)
 	RIFF_T code happySong[5] = {
 		{5,0},
-		{happy1, 4-1},
+		{wRest, 11-1},
+		{happy1, 3-1},
 		{happy2, 4-1},
-		{happy1, 4-1},
-		{happy2, 4-1}
+		{happy1, 4-1}
 	};
 #elif (MY_L_CHAN == 2)
 	RIFF_T code happySong[5] = {
 		{5,0},
-		{happy2, 4-1},
+		{wRest, 11-1},
+		{happy2, 3-1},		 //176 beats - 44 bars
 		{happy1, 4-1},
-		{happy2, 4-1},
-		{happy1, 4-1}
+		{happy2, 4-1}
 	};
 #elif (MY_L_CHAN == 4)
-	RIFF_T code happySong[3] = {
-		{3,0},
-		{wRest, 24-1},
-		{happy3, 16-1},
+	RIFF_T code happySong[4] = {
+		{4,0},
+		{happyDrone, 22-1},		 //8*22 = 176 beats	- 44 bars
+//		{wRest, 2-1},		   //8 beats
+		{happy3, 64-1},	  //160 beats - 5*16 is 80 beats ... ends early
+		{happyDroneTx, 255-1}  //
 	};
 #elif (MY_L_CHAN == 6)
-	RIFF_T code happySong[2] = {
-		{2,0},
-		{happyDrone, 4-1},
+	RIFF_T code happySong[3] = {
+		{3,0},
+		{happyDrone, 33-1},		 // 4 * 176
+		{happy3, 255-1}
 	};
 #elif (MY_L_CHAN == 8)
 	RIFF_T code happySong[3] = {
 		{3,0},
 		{wRest, 33-1},
-		{happyDroneTx, 1-1},
+		{happyDroneTx2, 255-1},
 	};
 #elif (MY_L_CHAN == 10)
-	RIFF_T code happySong[3] = {
-		{3,0},
-		{wRest, 24-1},
-		{happy3, 16-1},
+	RIFF_T code happySong[4] = {
+		{4,0},
+		{happyDrone, 11-1},		 //88 beats	- 22 bars
+		//{wRest, 22-1},		   //88 beats
+		{happy3, 32-1},	  //160 beats - 5*16 is 80 beats ... ends early
+		{happyDrone, 255-1}  //
 	};
 #elif (MY_L_CHAN == 12)
 	RIFF_T code happySong[5] = {
 		{5,0},
-		{happy1, 4-1},
+		{wRest, 11-1},
+		{happy1, 3-1},
 		{happy2, 4-1},
-		{happy1, 4-1},
-		{happy2, 4-1}
+		{happy1, 4-1}
 	};
 #elif (MY_L_CHAN == 14)
 	RIFF_T code happySong[5] = {
 		{5,0},
-		{happy2, 4-1},
+		{wRest, 11-1},
+		{happy2, 3-1},
 		{happy1, 4-1},
-		{happy2, 4-1},
-		{happy1, 4-1}
+		{happy2, 4-1}
 	};
 #endif
 

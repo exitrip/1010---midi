@@ -1,12 +1,18 @@
 #ifndef SONG_H
 #define SONG_H
 
-#define NUM_SONGS	6
+#define NUM_SONGS	8
 
-//heavy Beats!!!
-extern RIFF_T code beatSong[];
+extern RIFF_T code busySong[];
+
+//Station beats and simple melody
+extern RIFF_T code statSong[];
+
+//heavy Beats!!!  N0T!!!
+//extern RIFF_T code beatSong[];
 
 //Our body
+extern RIFF_T code bodySong[];
 
 //droneStrike
 

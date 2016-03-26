@@ -32,7 +32,7 @@ typedef struct Riff_s {
 
 
 ///MIDI STUFF
-#define MY_L_CHAN 	14 //[0-15] //base channel
+#define MY_L_CHAN   14//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #define MY_ID		0
 
@@ -63,7 +63,7 @@ enum {
 	STATION_UP2 = 115,			//npc
 	STATION_DOWN2 = 116,			 //npc//npc
 	STATION_UP3 = 117,
-	STATION_DOWN3 = 118,					  //npc
+	STATION_DOWN3 = 18,					  //npc
 	STATION_UP4 = 119,							  //npc
 	STATION_DOWN4 = 120,							  //npc
 	STATION_UP5 = 121,	//npc

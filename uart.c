@@ -149,7 +149,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								tempDelta = 11 - lDelta;
 							}
 							if (deltaLUp) {
-								if ((LPeriod + tempDelta) <= UINT_MAX) {
+								if ((word)(LPeriod + tempDelta) > LPeriod) {
 									LPeriod += tempDelta;
 								}
 							} else {
@@ -166,7 +166,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								tempDelta = 11 - txDelta;
 							}
 							if (deltaTxUp) {
-								if ((VPeriod + tempDelta) <= UINT_MAX) {
+								if ((word)(VPeriod + tempDelta) > VPeriod) {
 									VPeriod += tempDelta;
 								}
 							} else {
@@ -398,8 +398,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								thisDelta = 6;
 							break;
 							
-							case UPDOWN_OFF: //redundant?  only if we make it leave the pitch detuned
+							case UPDOWN_OFF:
 								thisDelta = 0;
+								if (LnotV == 0) {
+									txDelta = 0;
+								} else {
+									lDelta = 0;
+								}
 							break;
 							
 							case STATION_UP6:

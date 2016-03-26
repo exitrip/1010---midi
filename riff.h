@@ -84,14 +84,54 @@ Spec for riff:
 	...
 */
 
-#define BEAT_ROOT	(48)
-#define BEAT1_TEMPO	(0x6f00/2)  //240
-#define BEAT2_TEMPO	(0x6f00/4)  //240
-#define BEATCOORD1_S	(69)
-#define BEAT1_S		3
-extern unsigned char code beatCoord1[BEATCOORD1_S];
-extern unsigned char code beatCoord2[BEATCOORD1_S];
-extern unsigned char code beat1[BEAT1_S];
+//#define BEAT_ROOT	(48)
+//#define BEAT1_TEMPO	(0x6f00/2)  //240
+//#define BEAT2_TEMPO	(0x6f00/4)  //240
+//#define BEATCOORD1_S	(69)
+//#define BEAT1_S		3
+//extern unsigned char code beatCoord1[BEATCOORD1_S];
+//extern unsigned char code beatCoord2[BEATCOORD1_S];
+//extern unsigned char code beat1[BEAT1_S];
+
+//BODY
+#define BODY_TEMPO	(0x12D68*2) //60 BPM
+extern unsigned char code bodyInit[5];  //uses whole and minor drone
+
+//BUSY
+#define BUSY_TEMPO	(0x6f00)
+#define BUSY_TEMPO1	(0x7f00)
+#define BUSY_TEMPO2	(0x8f00)
+#define BUSY_TEMPO3	(0x9f00)
+#define BUSY_TEMPO4	(0xaf00)
+
+#define BUSY1_SIZE	(13)
+#define BUSY2STAT_SIZE (29)
+extern unsigned char code busyInit[5];
+extern unsigned char code busySlower1[5];
+extern unsigned char code busySlower2[5];
+extern unsigned char code busySlower3[5];
+extern unsigned char code busySlower4[5];
+
+extern unsigned char code busy1[BUSY1_SIZE];
+extern unsigned char code busy2[BUSY1_SIZE-2];
+extern unsigned char code busy2Stat[BUSY2STAT_SIZE];
+
+//onStat
+#define ONSTAT_TEMPO  	(0x1EDED)	 //??
+#define ONSTAT1_S		(28+1)
+#define ONSTAT2_S		(60+1)
+#define ONSTAT3_S		(28+1)
+#define ONSTAT4_S		(28+1)
+#define ONSTATMEL1_S 	(24+1)
+#define ONSTATMEL2_S 	(16+1)
+
+extern unsigned char code OnStatCoordInit[5];
+extern unsigned char code OnStat1[ONSTAT1_S];
+extern unsigned char code OnStat2[ONSTAT2_S];
+extern unsigned char code OnStat3[ONSTAT3_S];
+extern unsigned char code OnStat4[ONSTAT4_S];
+extern unsigned char code OnStatMel1[ONSTATMEL1_S];
+extern unsigned char code OnStatMel2[ONSTATMEL2_S];
 
 //HAPPY
 #define	HAPPY1_S 	(177)
@@ -103,6 +143,7 @@ extern unsigned char code happy2[HAPPY1_S];
 extern unsigned char code happy3[HAPPY3_S];
 extern unsigned char code happyDrone[3];
 extern unsigned char code happyDroneTx[3];
+extern unsigned char code happyDroneTx2[3];
 
 //extern unsigned char code happy1Tx[HAPPY1_S];
 //extern unsigned char code happy2Tx[HAPPY1_S];
@@ -129,27 +170,27 @@ extern unsigned char code dmbRoot1[DMBROOT_S];
 extern unsigned char code dmbBDHa[DMBBD_S];
 extern unsigned char code dmbBDWh[DMBBD_S];
 
-#define TEST_LEN	10//easier to parse later
-extern unsigned char code downR1[];
-extern unsigned char code downR2[];
-extern unsigned char code downR3[];
-extern unsigned char code downR4[];
-extern unsigned char code downR5[];
-
-extern unsigned char code upR1[];
-extern unsigned char code upR2[];
-extern unsigned char code upR3[];
-extern unsigned char code upR4[];
-extern unsigned char code upR5[];
-
-
-extern unsigned char code testCo1[];
-extern unsigned char code testCo1b[];
-extern unsigned char code testCo2[];
-
-extern unsigned char code testCo3[];
-extern unsigned char code testCo3b[];
-extern unsigned char code testCo3c[];
-
-extern unsigned char code testCo4[];
+//#define TEST_LEN	10//easier to parse later
+//extern unsigned char code downR1[];
+//extern unsigned char code downR2[];
+//extern unsigned char code downR3[];
+//extern unsigned char code downR4[];
+//extern unsigned char code downR5[];
+//
+//extern unsigned char code upR1[];
+//extern unsigned char code upR2[];
+//extern unsigned char code upR3[];
+//extern unsigned char code upR4[];
+//extern unsigned char code upR5[];
+//
+//
+//extern unsigned char code testCo1[];
+//extern unsigned char code testCo1b[];
+//extern unsigned char code testCo2[];
+//
+//extern unsigned char code testCo3[];
+//extern unsigned char code testCo3b[];
+//extern unsigned char code testCo3c[];
+//
+//extern unsigned char code testCo4[];
 #endif
