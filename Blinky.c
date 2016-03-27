@@ -40,7 +40,7 @@ volatile RIFF_T* curSong;
 volatile word nextRiff = 0;
 volatile byte curRiffCnt = 0;
 volatile word numRiffs = 0;
-volatile byte* riff;
+volatile byte code* riff;
 //deltaSongPos ... just ... cant..  be ...  a ...  byte....
 volatile word deltaPos = 0;
 volatile byte numNotes = 0;
@@ -147,7 +147,7 @@ void main() {
 						if (PLAYING) { //we are already playing
 							uart_transmit(STOP);
 							PLAYING = 0;
-						} else if (midiClk == 0) { //we were playing once
+						} else if (midiClk == 0) { //were we playing once?
 							curSong = songBook[songNum];
 							nextRiff = 0;
 							deltaPos = 0; //trigger update
