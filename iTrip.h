@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-//#define COORD		//blast midi clock out of UArt and drive RT messages
-#define BASIC_TX
+#define COORD		//blast midi clock out of UArt and drive RT messages
+//#define BASIC_TX
 //#define DEBUG_SIM
 
 //KEIL!!!!  you get the point!!!
@@ -34,7 +34,8 @@ typedef struct Riff_s {
 ///MIDI STUFF
 #define MY_L_CHAN   0//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#define MY_ID		0
+#define MY_ID_H		"0"
+#define MY_ID_L		"0"	  //stick to ascii ex: "CO" or "14"
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -80,13 +81,13 @@ enum {
 extern volatile byte songNum; //127
 extern volatile word midiClk;
 extern volatile byte xdata sysEx[SYS_LEN];
-extern volatile byte sysIx;
+extern volatile word sysIx;
 
 extern volatile RIFF_T* curSong;
 extern volatile word nextRiff;
 extern volatile byte curRiffCnt;
 extern volatile word numRiffs;
-extern volatile byte* riff;
+extern volatile byte code* riff;
 extern volatile word deltaPos;
 extern volatile byte numNotes;
 extern volatile byte nextNote;
@@ -126,6 +127,9 @@ void txProg ();
 void setFreq (word freq);
 void delayT (word t);
 void updateNote(void);
+
+//called by sysEx after checking the sysEx header and ':'
+char progMemSysEx();
 /************************EMPTY Protos****************/	
 
 
@@ -140,5 +144,5 @@ sbit hiButt = P0^1;
 sbit loButt = P0^2;
 sbit audioL = P0^3;
 sbit audioN = P0^4; 	//must be soldered and AC coupled (DC blocked) with 1 uF
-//sbit LEDout = P2
+
 #endif

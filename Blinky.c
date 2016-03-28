@@ -15,8 +15,7 @@
 
 /******************************* GLOBALS**************************************/
 volatile byte xdata sysEx[SYS_LEN];
-volatile byte sysIx = 0;
-
+volatile word sysIx = 0;
 
 
 volatile byte songNum = 0; 
@@ -239,75 +238,77 @@ void main() {
 	//low priority stuff
 	//todo add a flag to loop songs???  fuck midi....
 #ifdef BASIC_TX
-		if (midButt == 0) {
-//			LED ^= 1;
-			txVcc ^= 1;
-			if(txVcc == 1) {
-				txOffSwitch = 1;
-				LED = 0;
-			} else {
-				txOffSwitch = 0;
-				LED = 1;
-				delay(50);
-				setFreq(station);
-			} 
-		}	 		
-		delay(UINT_MAX);
-		if (LED) {
-			if (hiButt == 0) {
-				LED = 0;
-				delay(UINT_MAX);
-				station++;
-				setFreq(station);
-				LED = 1;
-				delay(UINT_MAX);
-			} 
-			else if (loButt == 0) {
-				LED = 0;
-				delay(UINT_MAX);
-				--station;
-				setFreq(station);
-				LED = 1;
-				delay(UINT_MAX);
+		if (BUTT_EN == 1) {
+			if (midButt == 0) {
+	//			LED ^= 1;
+				txVcc ^= 1;
+				if(txVcc == 1) {
+					txOffSwitch = 1;
+					LED = 0;
+				} else {
+					txOffSwitch = 0;
+					LED = 1;
+					delay(50);
+					setFreq(station);
+				} 
+			}	 		
+			delay(UINT_MAX);
+			if (LED) {
+				if (hiButt == 0) {
+					LED = 0;
+					delay(UINT_MAX);
+					station++;
+					setFreq(station);
+					LED = 1;
+					delay(UINT_MAX);
+				} 
+				else if (loButt == 0) {
+					LED = 0;
+					delay(UINT_MAX);
+					--station;
+					setFreq(station);
+					LED = 1;
+					delay(UINT_MAX);
+				}
+				if (station < MIN_FREQ) {
+					station = MIN_FREQ;
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+				}
+				if (station > MAX_FREQ) {
+					station = MAX_FREQ;
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+				}						  
 			}
-			if (station < MIN_FREQ) {
-				station = MIN_FREQ;
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-			}
-			if (station > MAX_FREQ) {
-				station = MAX_FREQ;
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-			}						  
 		}
 #endif
 	}
