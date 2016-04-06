@@ -3,22 +3,18 @@
 ;
 ;copyright Philips Semiconductors 2003, 2004
 
-;FILENAME: 		LPC2_ISP_16K_V04.TXT
+;FILENAME: 		LPC2_ISP_16K_V03.TXT
 ;CODE TYPE: 		ISP
-;VERSION: 		04
-;RELEASE DATE: 		30 JUL 04
+;VERSION: 		03
+;RELEASE DATE: 		29 JUN 04
 ;CODE MEMORY SIZE: 	16KB
 ;CODE ADDRESS RANGE: 	3E00h - 3FFFh
 ;BOOT VECTOR: 		3F00h
-;USES IAP VERSION: 	04
+;USES IAP VERSION: 	03
 ;USES IAP ENTRY: 	FF03h
 ;Author:		Bill Houghton
 ;
 ;Features:
-;
-;Version 4:
-;
-;- Fixes bug: CCP command was assigned the same value as the write sec 2 security byte.
 ;
 ;Version 3:
 ;
@@ -36,7 +32,7 @@
 ;- Includes standard features originally released with LPC932.
 
 
-
+#include <REG36.H>
 
 ;********************************************************************************
 ;************************* SET DEVICE CODE MEMORY SIZE HERE *********************
@@ -83,7 +79,6 @@ FMDATA	EQU	0E5H
                
 PGM_MTP	EQU	0FF03H		
 
-;PUBLIC	no_touch
 
 ;byte variables definition
 
@@ -130,7 +125,7 @@ KEY data 0xFF
 
 CONFB		EQU	UCFG1		;start of CONF register space
 RXDn		EQU	P1.1		;RxD pin
-ISP_VER		EQU	04H		;ISP version id = 4
+ISP_VER		EQU	03H		;ISP version id = 3
 AUXR		EQU	08EH		;auxr register
 AUXR1		EQU	0A2H		;auxr 1 register
 SRST		EQU	8H		;OR mask for software reset bit

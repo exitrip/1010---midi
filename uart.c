@@ -63,7 +63,7 @@ void uart_init (void) {
 
 void uart_rx_isr (void) interrupt 4 using 0 {
 	//variables for scanning !!!
-	word riffClks = 0;
+	word idata riffClks = 0;
 	bit riffCntGotReset = 0;
 #ifdef DEBUG_SIM
 	volatile byte temp = SBUF;
@@ -129,13 +129,15 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case EOX: // system exclusive terminator 
 					//do stuff
 					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
-					//check manuId [000e0d], myDevId, Universal sysEx header for file transfers, ihex start
+					//check manuId [000e0d], myDevId, Universal sysEx header for file transfers
 					if (sysEx[0] == 0x0 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && sysEx[3] == MY_ID_H &&
 						sysEx[4] == MY_ID_L && sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && 
-						sysEx[7] == 0x02 && sysEx[8] == ':') {
+						sysEx[7] == 0x02) {
 						//we should only be here on purpose...
 						//going it alone!!!
-						progMemSysEx();
+						//we are going to use this as a reboot into bootloader CMD
+						//progMemSysEx();
+						no_touch();
 					}
 	          	break;
 	
@@ -732,92 +734,94 @@ void print_hex_to_ascii(unsigned char ch) {
   temp_character += 0x30;						// add '0' to get ascii
   uart_transmit(temp_character);					// print lower nible
 }
-
+/******************   Couldn't get IAP-Lite to work! ****************************/
 ///the hail mary, happy Easter
-#define LOAD 0x00 // clear page register, enable loading
-#define EP 0x68 // erase & program page
+//#define LOAD 0x00 // clear page register, enable loading
+//#define EP 0x68 // erase & program page
 
 
 //returns 0 on success, -1 on failure, and 1 on EOF packet
-char progMemSysEx() {
-	//get length and check checksum
-	byte length = (ascii_to_hex(sysEx[9]) << 4) + ascii_to_hex(sysEx[10]);			
-	byte hiAddy;
-	byte loAddy;		
-	word addy;
-	byte pageOffset;
-	byte overflow = 0;
-	byte checksum = 0;
-	byte index = 9;
-	byte fmStat;
-	byte temp;
-	word wTemp;
-	//scan uart buffer till the end of the data section
-	for (index = 9; index < sysIx-2; index) {
-		temp = ascii_to_hex(sysEx[index++]) << 4;
-		temp += ascii_to_hex(sysEx[index++]);
-		checksum += temp;	
-	}
-	checksum = ~checksum;
-	checksum++;
-	//compare calc checksum to reported
-	if (checksum != ((ascii_to_hex(sysEx[sysIx-2]) << 4) + ascii_to_hex(sysEx[sysIx-1]))) {
-		return -1;	//failed checksum
-		//uart_transmit('X');
-	}
-//	if (length == 0) {
-//		if (ascii_to_hex(15) == 1 && )
+//char progMemSysEx() {
+//  TODO DONT WORK FIXME NEVER?
+//	//get length and check checksum
+//	byte length = (ascii_to_hex(sysEx[9]) << 4) + ascii_to_hex(sysEx[10]);			
+//	byte hiAddy;
+//	byte loAddy;		
+//	word addy;
+//	byte pageOffset;
+//	byte overflow = 0;
+//	byte checksum = 0;
+//	byte index = 9;
+//	byte fmStat;
+//	byte temp;
+//	word wTemp;
+//	//scan uart buffer till the end of the data section
+//	for (index = 9; index < sysIx-2; index) {
+//		temp = ascii_to_hex(sysEx[index++]) << 4;
+//		temp += ascii_to_hex(sysEx[index++]);
+//		checksum += temp;	
 //	}
-	//grab metadata	
-	hiAddy = (ascii_to_hex(sysEx[11]) << 4) + ascii_to_hex(sysEx[12]);
-	loAddy = (ascii_to_hex(sysEx[13]) << 4) + ascii_to_hex(sysEx[14]);		
-	addy = (hiAddy << 8) + loAddy;
-	pageOffset = loAddy & 0x3F;
-	//does the record actually want us to write anything???
-	//00 means data to write
-	if (sysEx[15] == '0' && sysEx[16] == '0') {
-		//does the data cross a page boundary????  ...  jerks...
-		if (pageOffset + length > 0x3F) {	//hic sunt leones
-			overflow = length - (pageOffset + length - 0x40); //e.g. 0x31+16-0x40 = 1
-			length -= overflow;  //adjust amount to write to this page 
-		}
-		//word pageAddy = (hiAddy << 8 + (loAddy & 0xC0)); //pages are 64 byte aligned
-		FMCON = LOAD; //load command, clears page reg
-		FMADRH = hiAddy; //
-		FMADRL = loAddy; //write my page address to addr regs
-		index = 17;
-		while (length-- != 0) {
-			temp = ascii_to_hex(sysEx[index++]) << 4;
-			temp += ascii_to_hex(sysEx[index++]);
-			FMDATA = temp;	
-		}
-		FMCON = EP; //erase & prog page command
-		//delay???
-		wTemp = 4000;
-		while (--wTemp);
-		fmStat = FMCON; //read the result status
-		if ((fmStat & 0x0F)!= 0) {
-			return -1;
-		}
-		if (overflow != 0) {
-			FMADRH = ++hiAddy; //
-			FMADRL = 0; //write my page address to addr regs
-			while (overflow-- != 0) {
-				temp = ascii_to_hex(sysEx[index++]) << 8;
-				temp += ascii_to_hex(sysEx[index++]);
-				FMDATA = temp;
-				length--;	
-			}
-			FMCON = EP; //erase & prog page command
-			//delay???
-			wTemp = 4000;
-			while (--wTemp);
-			fmStat = FMCON; //read the result status
-			if ((fmStat & 0x0F)!=0) {
-				return -1;
-			}
-		}
-		//success???
-		return 0;
-	}
-}
+//	checksum = ~checksum;
+//	checksum++;
+//	//compare calc checksum to reported
+//	if (checksum != ((ascii_to_hex(sysEx[sysIx-2]) << 4) + ascii_to_hex(sysEx[sysIx-1]))) {
+//		return -1;	//failed checksum
+//		//uart_transmit('X');
+//	}
+////	if (length == 0) {
+////		if (ascii_to_hex(15) == 1 && )
+////	}
+//	//grab metadata	
+//	hiAddy = (ascii_to_hex(sysEx[11]) << 4) + ascii_to_hex(sysEx[12]);
+//	loAddy = (ascii_to_hex(sysEx[13]) << 4) + ascii_to_hex(sysEx[14]);		
+//	addy = (hiAddy << 8) + loAddy;
+//	pageOffset = loAddy & 0x3F;
+//	//does the record actually want us to write anything???
+//	//00 means data to write
+//	if (sysEx[15] == '0' && sysEx[16] == '0') {
+//		//does the data cross a page boundary????  ...  jerks...
+//		if (pageOffset + length > 0x3F) {	//hic sunt leones
+//			overflow = length - (pageOffset + length - 0x40); //e.g. 0x31+16-0x40 = 1
+//			length -= overflow;  //adjust amount to write to this page 
+//		}
+//		//word pageAddy = (hiAddy << 8 + (loAddy & 0xC0)); //pages are 64 byte aligned
+//		FMCON = LOAD; //load command, clears page reg
+//		FMADRH = hiAddy; //
+//		FMADRL = loAddy; //write my page address to addr regs
+//		index = 17;
+//		while (length-- != 0) {
+//			temp = ascii_to_hex(sysEx[index++]) << 4;
+//			temp += ascii_to_hex(sysEx[index++]);
+//			FMDATA = temp;	
+//		}
+//		FMCON = EP; //erase & prog page command
+//		//delay???
+//		wTemp = 4000;
+//		while (--wTemp);
+//		fmStat = FMCON; //read the result status
+//		if ((fmStat & 0x0F)!= 0) {
+//			return -1;
+//		}
+//		if (overflow != 0) {
+//			FMADRH = ++hiAddy; //
+//			FMADRL = 0; //write my page address to addr regs
+//			while (overflow-- != 0) {
+//				temp = ascii_to_hex(sysEx[index++]) << 8;
+//				temp += ascii_to_hex(sysEx[index++]);
+//				FMDATA = temp;
+//				length--;	
+//			}
+//			FMCON = EP; //erase & prog page command
+//			//delay???
+//			wTemp = 4000;
+//			while (--wTemp);
+//			fmStat = FMCON; //read the result status
+//			if ((fmStat & 0x0F)!=0) {
+//				return -1;
+//			}
+//		}
+//		//success???
+//		return 0;
+//	}
+//	return 0;
+//}

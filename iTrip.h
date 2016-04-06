@@ -34,8 +34,8 @@ typedef struct Riff_s {
 ///MIDI STUFF
 #define MY_L_CHAN   0//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#define MY_ID_H		"0"
-#define MY_ID_L		"0"	  //stick to ascii ex: "CO" or "14"
+#define MY_ID_H		"C"
+#define MY_ID_L		"o"	  //stick to ascii ex: "Co" or "14"
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -118,8 +118,9 @@ extern volatile bit txOffSwitch;
 extern word station;
 
 /****************************PROTOS*********************/
+extern void no_touch(void); //set the bootstat and reset to program
 void setup ();  //name and turn on
-void delay (word cnt);
+void delay (word cnt);	 //~2.17us to a tick
 void shiftout8 (byte d);
 //	void shiftout16 (word d);
 //	void shiftout32 (word dh, word dl);
