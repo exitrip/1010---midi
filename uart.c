@@ -127,17 +127,27 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	          	break;
 	
 	        	case EOX: // system exclusive terminator 
-					//do stuff
+					//do stuff - everbody who heard the SYS_EX stopped playing and their timers 
 					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
-					//check manuId [000e0d], myDevId, Universal sysEx header for file transfers
-					if (sysEx[0] == 0x0 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && sysEx[3] == MY_ID_H &&
-						sysEx[4] == MY_ID_L && sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && 
-						sysEx[7] == 0x02) {
+					//check manuId [010e0d], ignore myDevId, Universal sysEx header for file transfers
+					if (sysEx[0] == 0x01 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && 
+						sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && sysEx[7] == 0x02) {
 						//we should only be here on purpose...
-						//going it alone!!!
-						//we are going to use this as a reboot into bootloader CMD
-						//progMemSysEx();
-						no_touch();
+						//my devID?
+						if (sysEx[3] == MY_ID_H && sysEx[4] == MY_ID_L) {
+							//we are going to use this as a reboot into bootloader CMD
+							LED = 1;
+							delay(50000);
+							no_touch();
+						} else {
+							//somebody is getting programmed, so ... just freak out... ihex is all ascii
+							//the further progBaud is away the safer this is
+						}
+					} else { //sysEx flying around by not a programming instruction						
+					}
+					//erase sysEx buffer
+					while(sysIx > 0) {
+						sysEx[sysIx--] = 0;
 					}
 	          	break;
 	

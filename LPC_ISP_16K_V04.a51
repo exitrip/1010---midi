@@ -83,8 +83,6 @@ FMDATA	EQU	0E5H
                
 PGM_MTP	EQU	0FF03H		
 
-;PUBLIC	no_touch
-
 ;byte variables definition
 
 DSEG	AT	30H

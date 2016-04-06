@@ -131,7 +131,7 @@ WDTE EQU 0
 ;    <0=>  Disable ISP entry on power-up
 ;    <1=>  Enable ISP entry on power-up
 ;          <i> enables In-System Programming (ISP) power-up
-BOOTSTAT EQU 1
+BOOTSTAT EQU 0
 ;             
 ;
 ; BOOTVECTOR (BOOTVEC)
