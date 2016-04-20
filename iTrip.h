@@ -30,12 +30,16 @@ typedef struct Riff_s {
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
 
-
 ///MIDI STUFF
 #define MY_L_CHAN   0//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#define MY_ID_H		'C'
-#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+#ifdef COORD
+	#define MY_ID_H		'C'
+	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+#else //convert to decimal ascii no.
+	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+#endif
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -111,6 +115,8 @@ extern volatile word lDelta;   //a proportion of sorts
 extern volatile word txDelta;
 extern volatile bit deltaLUp;
 extern volatile bit deltaTxUp;
+extern volatile byte volume;  //only 4 left out..
+
 //extern volatile byte deltaLMount; 
 //extern volatile byte deltaTxMount;
 

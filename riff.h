@@ -93,8 +93,31 @@ Spec for riff:
 //extern unsigned char code beatCoord2[BEATCOORD1_S];
 //extern unsigned char code beat1[BEAT1_S];
 
+//shepStat
+#define	SHEP_TEMPO (0x12D68*2) //60BPM
+#define SHEP_FASTER_TEMPO (0x6666) //real fast
+#define SHEP_FAST_TEMPO (0x2666) //real fast
+ 
+extern unsigned char code shepStatCoordInit[5];
+extern unsigned char code shepStatCoordFastInit[5];
+extern unsigned char code shepStatCoordFasterInit[5];
+
+extern unsigned char code shepStatCoord[33];
+extern unsigned char code shepStat[9];
+//shepStatVoiced
+extern unsigned char code shepStatVoiced[17];
+//peace
+#define PEACE_TEMPO	(0x800d)	// >160?
+#define PEACEONE_S	(7)
+extern unsigned char code peaceCoord[5];
+extern unsigned char code peaceOne[PEACEONE_S];
+extern unsigned char code peaceTwo[PEACEONE_S];
+extern unsigned char code peaceThree[PEACEONE_S];
+extern unsigned char code peaceAs4[PEACEONE_S];
+extern unsigned char code peaceGs4[PEACEONE_S];
+
 //BODY
-#define BODY_TEMPO	(0x12D68*2) //60 BPM
+#define BODY_TEMPO	(0x12D68*2) //60 BPM						 
 extern unsigned char code bodyInit[5];  //uses whole and minor drone
 
 //BUSY
@@ -117,7 +140,7 @@ extern unsigned char code busy2[BUSY1_SIZE-2];
 extern unsigned char code busy2Stat[BUSY2STAT_SIZE];
 
 //onStat
-#define ONSTAT_TEMPO  	(0x1EDED)	 //??
+#define ONSTAT_TEMPO  	(0xEDED)	 //??
 #define ONSTAT1_S		(28+1)
 #define ONSTAT2_S		(60+1)
 #define ONSTAT3_S		(28+1)

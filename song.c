@@ -7,9 +7,11 @@
 void* const code songBook[NUM_SONGS] = {
 	silentSong,
 	busySong,
+	shepStatSong,
 	//testS1,//testSCo1,////	  todo test updown songs....
 	//testS2,//testSCo1,//testSCo2,////
 	happySong,
+	peaceSong,
 	minorSong,
 	wholeToneSong,									 
 	bodySong,
@@ -27,6 +29,35 @@ void* const code songBook[NUM_SONGS] = {
 	RIFF_T const code silentSong[2] = {
 		{2, 0},
 		{wRest, 255}
+	};
+#endif
+
+///shepard station
+#ifdef COORD
+	RIFF_T const code shepStatSong[15] = {
+		{15, 0},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 10},
+		{shepStatCoordFasterInit, 0},
+		{shepStatCoord, 16},
+		{shepStatCoordFastInit, 0},
+		{shepStatCoord, 32},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 2},
+		{shepStatCoordFastInit, 0},
+		{shepStatCoord, 128},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 255},
+	};
+#else
+	RIFF_T const code shepStatSong[13] = {
+		{13, 0},
+		{shepStat, 20},
+		{shepStat, 64},
+		{shepStatVoiced, 68},
+		{shepStat, 64},
+		{shepStatVoiced, 255},
+		{shepStatVoiced, 255}
 	};
 #endif
 
@@ -101,6 +132,183 @@ void* const code songBook[NUM_SONGS] = {
 	RIFF_T const code statSong[2] = {
 		{2, 0},
 		{OnStat4, 255}	   
+	};
+#endif
+// peace riff
+//statSong
+#ifdef COORD
+	//just use silent song
+	RIFF_T const code peaceSong[7] = {
+		{7, 0},
+		{peaceCoord, 1},
+		{wRestCoord, 255},
+		{wRestCoord, 255},
+		{wRestCoord, 255}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T const code peaceSong[8] = {
+		{8, 0},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255}	   
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{wRest, 9},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{wRest, 45},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{wRest, 81},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{wRest, 126},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{wRest, 162},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T const code peaceSong[44] = {
+		{2, 0},
+		{sthRest, 1},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T const code peaceSong[8] = {
+		{2, 0},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255}	   
 	};
 #endif
 

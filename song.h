@@ -1,9 +1,13 @@
 #ifndef SONG_H
 #define SONG_H
 
-#define NUM_SONGS	8
+#define NUM_SONGS	10
 extern void* const code songBook[NUM_SONGS];
 
+//constantly falling, spaced out silence
+extern RIFF_T const code shepStatSong[];
+
+//version of omes
 extern RIFF_T const code busySong[];
 
 //Station beats and simple melody
@@ -14,6 +18,9 @@ extern RIFF_T const code statSong[];
 
 //Our body
 extern RIFF_T const code bodySong[];
+
+//just a riff right now
+extern RIFF_T const code peaceSong[];
 
 //droneStrike
 

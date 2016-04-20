@@ -715,6 +715,7 @@ unsigned char uart_get (void) {
   return SBUF;
 } // uart_get
 
+
 unsigned char ascii_to_hex(unsigned char ch) {
   if (ch & 0x40)								// convert ASCII character
   {	
@@ -722,6 +723,7 @@ unsigned char ascii_to_hex(unsigned char ch) {
   }
   ch &= 0x0F;									// into 2 digit Hex
   return ch;
+
 }
 
 void print_hex_to_ascii(unsigned char ch) {

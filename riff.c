@@ -61,12 +61,6 @@ unsigned char code wholeDrone[5] = {
 	0, WHOLEDRONE_ROOT+MY_L_CHAN, 24*4, WHOLEDRONE_ROOT+0x80+MY_L_CHAN
 };
 
-//Our body
-unsigned char code bodyInit[5] = {
-	5,
-	0, TEMPO_SET+((byte)(BODY_TEMPO>>16)), ((byte)(BODY_TEMPO>>8)), ((byte)(BODY_TEMPO))
-};
-
 //COORD UTILL
 unsigned char code sthRestCoord[RECO_S] = {	 //one empty bar
 	RECO_S,
@@ -173,6 +167,94 @@ unsigned char code off14Tx[CRTLTX_S] = {
 	0, CONTROL+14, GENERAL_BUTTON_1_on, 0
 };
 
+//shepard station
+unsigned char code shepStatCoordInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_TEMPO>>16)), ((byte)(SHEP_TEMPO>>8)), ((byte)(SHEP_TEMPO))
+};
+
+unsigned char code shepStatCoordFasterInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_FASTER_TEMPO>>16)), ((byte)(SHEP_FASTER_TEMPO>>8)), ((byte)(SHEP_FASTER_TEMPO))
+};
+
+unsigned char code shepStatCoordFastInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_FAST_TEMPO>>16)), ((byte)(SHEP_FAST_TEMPO>>8)), ((byte)(SHEP_FAST_TEMPO))
+};
+
+unsigned char code shepStatCoord[33] = {
+	33,
+	24, CONTROL+0, GENERAL_SLIDER_1_hi, 55,  //92 MHz
+	24, CONTROL+2, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+4, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+6, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+8, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+10, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+12, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+14, GENERAL_SLIDER_1_hi, 55
+};
+
+unsigned char code shepStat[9] = {
+	3,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6
+};
+
+unsigned char code shepStatVoiced[17] = {
+	3,
+	12+MY_L_CHAN, STATION_DOWN6,
+	12, C5,
+	18-MY_L_CHAN, STATION_DOWN6,
+	6, A4,
+	16, STATION_DOWN6,
+	8, E4,
+	8, STATION_DOWN6,
+	16, A3
+};
+
+//peace
+unsigned char code peaceCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(PEACE_TEMPO>>16)), ((byte)(PEACE_TEMPO>>8)), ((byte)(PEACE_TEMPO))
+};
+
+unsigned char code peaceOne[PEACEONE_S] = {
+	PEACEONE_S,
+		24, C4,
+	24, B4,
+	24, B4
+};
+
+unsigned char code peaceTwo[PEACEONE_S] = {
+	PEACEONE_S,
+		24, As4,
+	24, G4,
+	24, As4
+};
+
+unsigned char code peaceThree[PEACEONE_S] = {
+	PEACEONE_S,
+		24, Gs4,
+	24, G4,
+	24, Gs4		 
+};
+
+unsigned char code peaceAs4[PEACEONE_S] = {
+	PEACEONE_S,
+		24, As4,
+	24, As4,
+	24, As4
+};
+
+unsigned char code peaceGs4[PEACEONE_S] = {
+	PEACEONE_S,
+		24, Gs4,
+	24, Gs4,
+	24, Gs4
+};
 //4onStat
 unsigned char code OnStatCoordInit[5] = {
 	5,
@@ -295,7 +377,7 @@ unsigned char code OnStatMel2[ONSTATMEL2_S] = {
 	72, As3
 };
 
-//happy
+//happy //omes
 unsigned char code happyCoordInit[5] = {
 	5,
 	0, TEMPO_SET+((byte)(HAPPY_TEMPO>>16)), ((byte)(HAPPY_TEMPO>>8)), ((byte)(HAPPY_TEMPO))
@@ -578,7 +660,11 @@ unsigned char code happyDroneTx2[3] = {
 //	24*4, BEAT_ROOT//+((MY_L_CHAN*2))
 //};
 
-//omes
+//Our body
+unsigned char code bodyInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(BODY_TEMPO>>16)), ((byte)(BODY_TEMPO>>8)), ((byte)(BODY_TEMPO))
+};
 
 //driving me backwards!!!!! Vamp on Vcc....
 unsigned char code dmbInit[DMBINIT_S] = {	 //tempo... does beat pickup!!! all but 6 off
