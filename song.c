@@ -138,24 +138,24 @@ void* const code songBook[NUM_SONGS] = {
 //statSong
 #ifdef COORD
 	//just use silent song
-	RIFF_T const code peaceSong[7] = {
-		{7, 0},
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
 		{peaceCoord, 1},
 		{wRestCoord, 255},
 		{wRestCoord, 255},
 		{wRestCoord, 255}
 	};
 #elif (MY_L_CHAN == 0)
-	RIFF_T const code peaceSong[8] = {
-		{8, 0},
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
 		{peaceOne, 255},
 		{peaceOne, 255},
 		{peaceOne, 255},
 		{peaceOne, 255}	   
 	};
 #elif (MY_L_CHAN == 2)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{wRest, 9},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -179,8 +179,8 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 4)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{wRest, 45},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -204,8 +204,8 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 6)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{wRest, 81},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -229,8 +229,8 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 8)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{wRest, 126},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -254,8 +254,8 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 10)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{wRest, 162},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -279,8 +279,8 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 12)
-	RIFF_T const code peaceSong[44] = {
-		{2, 0},
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
 		{sthRest, 1},
 		{peaceOne, 15},
 		{peaceTwo, 1},
@@ -304,8 +304,9 @@ void* const code songBook[NUM_SONGS] = {
 		{peaceGs4, 3}	   
 	};
 #elif (MY_L_CHAN == 14)
-	RIFF_T const code peaceSong[8] = {
-		{2, 0},
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
+		{peaceOne, 255},
 		{peaceOne, 255},
 		{peaceOne, 255},
 		{peaceOne, 255}	   
