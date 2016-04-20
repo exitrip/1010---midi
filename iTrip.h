@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-//#define COORD		//blast midi clock out of UArt and drive RT messages
-#define BASIC_TX
+#define COORD		//blast midi clock out of UArt and drive RT messages
+//#define BASIC_TX
 //#define DEBUG_SIM
 
 //KEIL!!!!  you get the point!!!
@@ -31,7 +31,7 @@ typedef struct Riff_s {
 //#endif
 
 ///MIDI STUFF
-#define MY_L_CHAN   2//[0-15] //base channel
+#define MY_L_CHAN   0//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #ifdef COORD
 	#define MY_ID_H		'C'
@@ -59,7 +59,7 @@ enum {
 	DOWN3 = 7,	
 	DOWN4 = 8,
 	DOWN5 = 9,
-	HOLD0 = 109,
+	STEREO_TOG = 109,
 	UP1 = 110,
 	UP2 = 111,
 	UP3 = 112,

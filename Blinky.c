@@ -246,6 +246,11 @@ void main() {
 	//low priority stuff
 	//todo add a flag to loop songs???  fuck midi....
 #ifdef BASIC_TX
+		//was number of transmit channels changed
+		if (stereoTx != STEREO) {
+			stereoTx = STEREO;
+			txProg();
+		}
 		if (BUTT_EN == 1) {
 			if (midButt == 0) {
 	//			LED ^= 1;
@@ -580,7 +585,7 @@ UPDATE_NOTE:
 						TR0 = 1;
 		          	break;
 		
-		        	case STOP:  //this will cease the whole !# till the button is pressed again
+		        	case STOP:  //this will cease the whole #! till the button is pressed again
 				  		PLAYING = 0;
 						uart_transmit(temp);
 						TR0 = 0;
@@ -705,7 +710,6 @@ UPDATE_NOTE:
 				setFreq(--station);
 			break;
 			
-			case HOLD0:
 			case HOLD1:
 			case HOLD2:
 			break;
@@ -716,6 +720,12 @@ UPDATE_NOTE:
 				} else {
 					AUDIO_L_ON = 0;
 				}
+			break;
+
+			case STEREO_TOG:
+				STEREO ^= 1;
+				stereoTx = STEREO;
+				txProg();
 			break;
 
 			default:

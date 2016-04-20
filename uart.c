@@ -587,7 +587,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 //            case BALANCE_lo: load_14bit_value(&c->balance, dataByte, LSB); break;
 
-//            case PAN_POSN_hi: load_14bit_value(&c->pan_posn, dataByte, MSB); break;
+            			case PAN_POSN_hi:
+							if (dataByte >= 64) {
+								STEREO = 1;
+							} else {
+								STEREO = 0;
+							}	
+						break;
 
 //            case PAN_POSN_lo: load_14bit_value(&c->pan_posn, dataByte, LSB); break;
 
