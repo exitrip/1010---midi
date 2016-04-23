@@ -870,6 +870,13 @@ unsigned char code busy2Stat[BUSY2STAT_SIZE] = {
 	22, NOTE_OFF_MEM+0x80  		//256
 };
 
+//unsigned char code stereoTest1[9] = {
+//	9,
+//	24, 36,
+//	24, STEREO_TOG_MEM,
+//	24, NOTE_OFF_MEM,
+//	24, STEREO_TOG_MEM
+//};
 //unsigned char code busy1[BUSY1_SIZE] = {
 //	BUSY1_SIZE,
 //		0, DOWN3+0x80,

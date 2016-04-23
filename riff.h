@@ -193,6 +193,8 @@ extern unsigned char code dmbRoot1[DMBROOT_S];
 extern unsigned char code dmbBDHa[DMBBD_S];
 extern unsigned char code dmbBDWh[DMBBD_S];
 
+//extern unsigned char code stereoTest1[9];
+
 //#define TEST_LEN	10//easier to parse later
 //extern unsigned char code downR1[];
 //extern unsigned char code downR2[];

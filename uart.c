@@ -463,7 +463,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								setFreq(--station);
 							break;
 							
-							case HOLD0:
 							case HOLD1:
 							case HOLD2:
 							break;

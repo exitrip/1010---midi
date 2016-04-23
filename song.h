@@ -40,7 +40,8 @@ extern RIFF_T const code dmbSong[];
 
 //HAPPY	
 extern RIFF_T const code happySong[];
- 
+
+//extern RIFF_T const code testS1[2]; 
 //#define TEST_SS1 6+1
 //extern RIFF_T const code testS1[TEST_SS1];
 //

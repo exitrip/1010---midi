@@ -5,11 +5,11 @@
 //maybe not use these switches.. maybe they will be bery useful....
 ///////////all songs....   //drive song selection from here...
 void* const code songBook[NUM_SONGS] = {
+	//testS1,//testSCo1,////	  
+	//testS2,//testSCo1,//testSCo2,////
 	silentSong,
 	busySong,
 	shepStatSong,
-	//testS1,//testSCo1,////	  todo test updown songs....
-	//testS2,//testSCo1,//testSCo2,////
 	happySong,
 	peaceSong,
 	minorSong,
@@ -668,6 +668,12 @@ void* const code songBook[NUM_SONGS] = {
 #endif
 
 ////#define TEST_SS1 6+1
+//RIFF_T const code testS1[2] = {
+//	{2,0},
+//	{stereoTest1, 255}
+//};
+
+////#define TEST_SS1 6+1
 //RIFF_T const code testS1[TEST_SS1] = {
 //	{TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
 //	{upR1, 8-1},
@@ -677,7 +683,7 @@ void* const code songBook[NUM_SONGS] = {
 //	{upR5, 8-1},
 //	{upR1, 8-1}
 //};
-//
+
 ////#define TEST_SS2 6+1
 //RIFF_T const code testS2[TEST_SS2] = {
 //	{TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!

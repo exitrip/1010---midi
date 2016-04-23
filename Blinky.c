@@ -722,10 +722,8 @@ UPDATE_NOTE:
 				}
 			break;
 
-			case STEREO_TOG:
+			case STEREO_TOG_MEM:
 				STEREO ^= 1;
-				stereoTx = STEREO;
-				txProg();
 			break;
 
 			default:
