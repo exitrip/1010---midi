@@ -2,6 +2,8 @@
 #include "song.h"
 #include "riff.h"
 
+//TODO
+//   create control bitfield for riff.rePeats field of first member of song....
 //maybe not use these switches.. maybe they will be bery useful....
 ///////////all songs....   //drive song selection from here...
 void* const code songBook[NUM_SONGS] = {
@@ -19,6 +21,51 @@ void* const code songBook[NUM_SONGS] = {
 	dmbSong
 };
 
+///vexations
+#ifdef COORD
+	RIFF_T const code vexations[21] = {
+		{21, 0},
+			{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wRestCoord, 240},
+		{qRestCoord, 240},
+				{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wDblRestCoord, 240},
+		{wRestCoord, 240},
+		{qRestCoord, 240}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T const code vexations[3] = {
+		{3, 0},
+		{wRestCoord, 240},
+		{wRestCoord, 240}
+	};
+#elif (MY_L_CHAN == 2)
+#elif (MY_L_CHAN == 4)
+#elif (MY_L_CHAN == 6)
+#elif (MY_L_CHAN == 8)
+#elif (MY_L_CHAN == 10)
+#elif (MY_L_CHAN == 12)
+#elif (MY_L_CHAN == 14)
+#else
+	RIFF_T const code vexations[2] = {
+		{2, 0},
+		{wRest, 255}
+	};
+#endif
+			
 ///silence for song 0
 #ifdef COORD
 	RIFF_T const code silentSong[2] = {

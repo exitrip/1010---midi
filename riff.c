@@ -87,6 +87,11 @@ unsigned char code wRestCoord[RECO_S] = {	 //one empty bar
 	24*4, NOTE_ON
 };
 
+unsigned char code wDblRestCoord[RECO_S] = {	 //one empty bar
+	RECO_S,
+	24*8, NOTE_ON
+};
+
 unsigned char code on0Tx[CRTLTX_S] = {
 	CRTLTX_S,
 	0, CONTROL+0, GENERAL_BUTTON_1_on, 127
@@ -869,7 +874,95 @@ unsigned char code busy2Stat[BUSY2STAT_SIZE] = {
 	24, NOTE_OFF_MEM,
 	22, NOTE_OFF_MEM+0x80  		//256
 };
-
+//vexations 12 beats to a quarter
+unsigned char code vex1[VEX_S] = {
+	VEX_S,
+		12, 60 + VEX_SHIFT,
+	6,  57 + VEX_SHIFT,
+	6,  61 + VEX_SHIFT,
+	12,	58 + VEX_SHIFT,
+	12,	63 + VEX_SHIFT,
+	6,	55 + VEX_SHIFT,
+	6,	62 + VEX_SHIFT,
+	6,	60 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	12,	54 + VEX_SHIFT,
+	12,	61 + VEX_SHIFT,
+	6,	53 + VEX_SHIFT,
+	6,	58 + VEX_SHIFT,
+	6,	54 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	12,	59 + VEX_SHIFT,
+	6,	64 + VEX_SHIFT,
+	12,	64 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+unsigned char code vex2[VEX_S] = {
+	VEX_S,
+		12, 69 + VEX_SHIFT,
+	6,	73 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	12,	73 + VEX_SHIFT,
+	12,	72 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	6,	71 + VEX_SHIFT,
+	6,	75 + VEX_SHIFT,
+	6,	72 + VEX_SHIFT,
+	12,	69 + VEX_SHIFT,
+	12,	70 + VEX_SHIFT,
+	6,	69 + VEX_SHIFT,
+	6,	68 + VEX_SHIFT,
+	6,	69 + VEX_SHIFT,
+	6,	72 + VEX_SHIFT,
+	12,	74 + VEX_SHIFT,
+	6,	73 + VEX_SHIFT,
+	12,	73 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+unsigned char code vex3[VEX_S] = {
+	VEX_S,
+		12, 63 + 12 + VEX_SHIFT,
+	6,  65 + 12 + VEX_SHIFT,
+	6,  64 + 12 + VEX_SHIFT,
+	12,	67 + 12 + VEX_SHIFT,
+	12,	66 + 12 + VEX_SHIFT,
+	6,	64 + 12 + VEX_SHIFT,
+	6,	65 + 12 + VEX_SHIFT,
+	6,	70 + 12 + VEX_SHIFT,
+	6,	66 + 12 + VEX_SHIFT,
+	12,	63 + 12 + VEX_SHIFT,
+	12,	64 + 12 + VEX_SHIFT,
+	6,	63 + 12 + VEX_SHIFT,
+	6,	62 + 12 + VEX_SHIFT,
+	6,	63 + 12 + VEX_SHIFT,
+	6,	66 + 12 + VEX_SHIFT,
+	12,	68 + 12 + VEX_SHIFT,
+	6,	67 + 12 + VEX_SHIFT,
+	12,	67 + 12 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+unsigned char code vex3vb[VEX_S] = {
+	VEX_S,
+		12, 63 + VEX_SHIFT,
+	6,  65 + VEX_SHIFT,
+	6,  64 + VEX_SHIFT,
+	12,	67 + VEX_SHIFT,
+	12,	66 + VEX_SHIFT,
+	6,	64 + VEX_SHIFT,
+	6,	65 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	6,	66 + VEX_SHIFT,
+	12,	63 + VEX_SHIFT,
+	12,	64 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	6,	62 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	6,	66 + VEX_SHIFT,
+	12,	68 + VEX_SHIFT,
+	6,	67 + VEX_SHIFT,
+	12,	67 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
 //unsigned char code stereoTest1[9] = {
 //	9,
 //	24, 36,

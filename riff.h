@@ -21,6 +21,7 @@ extern unsigned char code eiRestCoord[RECO_S];
 extern unsigned char code qRestCoord[RECO_S];
 extern unsigned char code hRestCoord[RECO_S];
 extern unsigned char code wRestCoord[RECO_S]; //one empty bar
+extern unsigned char code wDblRestCoord[RECO_S]; //two empty bars
 
 #define CRTLTX_S	(4+1)
 extern unsigned char code on0Tx[CRTLTX_S];
@@ -192,6 +193,13 @@ extern unsigned char code dmbRoot1[DMBROOT_S];
 #define DMBBD_S		7	
 extern unsigned char code dmbBDHa[DMBBD_S];
 extern unsigned char code dmbBDWh[DMBBD_S];
+
+#define VEX_S	( 19*2 + 1 )
+#define VEX_SHIFT	(0) //Pitch shift
+extern unsigned char code vex1[VEX_S];
+extern unsigned char code vex2[VEX_S];
+extern unsigned char code vex3[VEX_S];
+extern unsigned char code vex3vb[VEX_S];
 
 //extern unsigned char code stereoTest1[9];
 

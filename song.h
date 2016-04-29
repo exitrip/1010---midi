@@ -4,6 +4,9 @@
 #define NUM_SONGS	10
 extern void* const code songBook[NUM_SONGS];
 
+//vexations
+extern RIFF_T const code vexations[];
+
 //constantly falling, spaced out silence
 extern RIFF_T const code shepStatSong[];
 

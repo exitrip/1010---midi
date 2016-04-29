@@ -267,6 +267,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	      	
 			case SONG_SELECT:
 	      		//midiMsg.song = dataByte;
+				SONG_DONE = 0;
 				songNum = dataByte;
 				midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
 	        break;

@@ -107,6 +107,7 @@ void main() {
 	numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  update will inc nextRiff!!!
 	EA = 1;
 	BUTT_EN = 1;
+	LOOP_SONGS = 0;
 #ifdef COORD
 	TR0 = 0;
 	TR1 = 0;
@@ -491,10 +492,23 @@ UPDATE_NOTE:
 				curRiffCnt = 0;
 				nextNote = numNotes;
 				SONG_DONE = 1;
-#ifdef COORD
-				uart_transmit(STOP);
+#ifdef COORD	
 				TR0 = 0;  //stop playing
-				//TR1 = 0;	
+				uart_transmit(STOP);
+				if (LOOP_SONGS == 1) { //looP songs, reset everybody, looPSongs only for coord 
+					uart_transmit(SONG_SELECT);
+					uart_transmit(songNum);
+					curSong = songBook[songNum];
+					nextRiff = 0;
+					deltaPos = 0; //trigger update
+					numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+					numNotes = 0; //numNotes=nextNote skiPs songlength header, maybe hide init info like looPsongs in rePs field
+					nextNote = 0;
+					SONG_DONE = 0;
+					PLAYING = 1;
+					TR0 = 1;  //start playing
+					LED = 1;
+				}	
 #endif
 			} else {
 				riff = (byte*) (curSong[nextRiff]).rAddy;//grab the physical addy of first riff
@@ -521,6 +535,7 @@ UPDATE_NOTE:
 								//delay(900); //didnt help with bad sync on txToggle
 							case GENERAL_SLIDER_1_hi: //todo keep thinking about 14 bit values...
 							case GENERAL_SLIDER_1_lo:
+							case PAN_POSN_hi:
 							default:
 								uart_transmit(temp);
 								uart_transmit(temp2);
