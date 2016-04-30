@@ -874,6 +874,12 @@ unsigned char code busy2Stat[BUSY2STAT_SIZE] = {
 	24, NOTE_OFF_MEM,
 	22, NOTE_OFF_MEM+0x80  		//256
 };
+
+unsigned char code vexInit[] = {
+	5,
+	0, TEMPO_SET+((byte)(VEX_TEMPO>>16)), ((byte)(VEX_TEMPO>>8)), ((byte)(VEX_TEMPO))
+};
+
 //vexations 12 beats to a quarter
 unsigned char code vex1[VEX_S] = {
 	VEX_S,
@@ -893,7 +899,8 @@ unsigned char code vex1[VEX_S] = {
 	6,	54 + VEX_SHIFT,
 	6,	63 + VEX_SHIFT,
 	12,	59 + VEX_SHIFT,
-	6,	64 + VEX_SHIFT,
+	5,	64 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
 	12,	64 + VEX_SHIFT,
 	6, NOTE_OFF_MEM
 };
@@ -915,10 +922,12 @@ unsigned char code vex2[VEX_S] = {
 	6,	69 + VEX_SHIFT,
 	6,	72 + VEX_SHIFT,
 	12,	74 + VEX_SHIFT,
-	6,	73 + VEX_SHIFT,
+	5,	73 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
 	12,	73 + VEX_SHIFT,
 	6, NOTE_OFF_MEM
 };
+//not exactly va'd from vb
 unsigned char code vex3[VEX_S] = {
 	VEX_S,
 		12, 63 + 12 + VEX_SHIFT,
@@ -928,7 +937,7 @@ unsigned char code vex3[VEX_S] = {
 	12,	66 + 12 + VEX_SHIFT,
 	6,	64 + 12 + VEX_SHIFT,
 	6,	65 + 12 + VEX_SHIFT,
-	6,	70 + 12 + VEX_SHIFT,
+	6,	81 + VEX_SHIFT,
 	6,	66 + 12 + VEX_SHIFT,
 	12,	63 + 12 + VEX_SHIFT,
 	12,	64 + 12 + VEX_SHIFT,
@@ -937,7 +946,8 @@ unsigned char code vex3[VEX_S] = {
 	6,	63 + 12 + VEX_SHIFT,
 	6,	66 + 12 + VEX_SHIFT,
 	12,	68 + 12 + VEX_SHIFT,
-	6,	67 + 12 + VEX_SHIFT,
+	5,	67 + 12 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
 	12,	67 + 12 + VEX_SHIFT,
 	6, NOTE_OFF_MEM
 };
@@ -959,7 +969,8 @@ unsigned char code vex3vb[VEX_S] = {
 	6,	63 + VEX_SHIFT,
 	6,	66 + VEX_SHIFT,
 	12,	68 + VEX_SHIFT,
-	6,	67 + VEX_SHIFT,
+	5,	67 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
 	12,	67 + VEX_SHIFT,
 	6, NOTE_OFF_MEM
 };

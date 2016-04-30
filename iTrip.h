@@ -31,7 +31,7 @@ typedef struct Riff_s {
 //#endif
 
 ///MIDI STUFF
-#define MY_L_CHAN   0//[0-15] //base channel
+#define MY_L_CHAN   4	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #ifdef COORD
 	#define MY_ID_H		'C'
@@ -104,8 +104,15 @@ extern bit STEREO;
 extern bit PLAYING;		
 extern bit BUTT_EN;		
 extern bit OMNI;		
-extern bit SONG_DONE;	
+//extern bit SONG_DONE;	
 //extern bit SYS_EX_DONE;
+
+extern volatile byte bdata SongFlags;
+//state flags -- maybe change to sbit????		
+extern bit SONG_DONE;
+extern bit LOOP_SONGS;
+//flags for repeat section of first riff in song
+#define LOOP_SONG_F	(0x01)
 
 extern volatile byte periodH0;
 extern volatile byte periodL0;

@@ -29,9 +29,12 @@ sbit STEREO = midiFlags^2;		//(0x04)	//keep track of tx number of channels
 sbit PLAYING = midiFlags^3;		//(0x08)	//am I playing now?  //not Ignoring midiClk
 sbit BUTT_EN = midiFlags^4;		//(0x10)	//todo test
 sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
-sbit SONG_DONE = midiFlags^6;	//0x40
-sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
+//sbit SONG_DONE = midiFlags^6;	//0x40
+//sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
+volatile byte bdata songFlags;
+sbit SONG_DONE = songFlags^0;	//0x40
+sbit LOOP_SONGS = songFlags^1;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
 //try moving to locals!!!
 //#define NUM_RIFFS HEAVY_11_SONG_SIZE//SAUCER_VOLCANO_SONG_SIZE//THUMP1_SONG_SIZE//3//FOR_SONG_ALT_SIZE//FIRST_SONG_ALT_SIZE//THIRD_SONG_SIZE//
@@ -105,6 +108,11 @@ void main() {
 	//nextRiff = 0;	//to be explicit
 	curSong = songBook[songNum];
 	numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  update will inc nextRiff!!!
+	if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+		LOOP_SONGS = 1;
+	} else {
+		LOOP_SONGS = 0;
+	}
 	EA = 1;
 	BUTT_EN = 1;
 	LOOP_SONGS = 0;
@@ -159,7 +167,13 @@ void main() {
 							curSong = songBook[songNum];
 							nextRiff = 0;
 							deltaPos = 0; //trigger update
-							numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+							numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+							if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+								LOOP_SONGS = 1;
+							} else {
+								LOOP_SONGS = 0;
+							}
+							uart_transmit(STOP);
 							uart_transmit(SONG_SELECT);
 							uart_transmit(songNum);
 							uart_transmit(START);
@@ -198,6 +212,11 @@ void main() {
 						nextRiff = 0;
 						deltaPos = 0; //trigger update
 						numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -226,6 +245,11 @@ void main() {
 						nextRiff = 0;
 						deltaPos = 0; //trigger update
 						numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -242,7 +266,12 @@ void main() {
 		midiClk = 0;
 		nextRiff = 0;
 		deltaPos = 0; //trigger update
-		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will		
+		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+		if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+			LOOP_SONGS = 1;
+		} else {
+			LOOP_SONGS = 0;
+		}		
 	} else {
 	//low priority stuff
 	//todo add a flag to loop songs???  fuck midi....
@@ -470,6 +499,7 @@ void timers_isr0 (void) interrupt 1 using 3
 #endif
 }
 
+//Plays first riff one extra time!!!
 void updateNote(void) {
 	byte temp, temp2;
 	word thisDelta = 0;
@@ -478,7 +508,7 @@ UPDATE_NOTE:
 	if (nextNote >= numNotes) {	 //equal to catches init!!!
 		nextNote = 1; //skip the riff len header
 		if (curRiffCnt-- == 0) {
-			if (++nextRiff == numRiffs) { //next riff is newRiff
+			if (++nextRiff >= numRiffs) { //next riff is newRiff
 				//end of SONG!!!!
 				PLAYING = 0; //midi says stop
 				midiClk = 0;
@@ -492,22 +522,35 @@ UPDATE_NOTE:
 				curRiffCnt = 0;
 				nextNote = numNotes;
 				SONG_DONE = 1;
-#ifdef COORD	
-				TR0 = 0;  //stop playing
-				uart_transmit(STOP);
 				if (LOOP_SONGS == 1) { //looP songs, reset everybody, looPSongs only for coord 
-					uart_transmit(SONG_SELECT);
-					uart_transmit(songNum);
-					curSong = songBook[songNum];
+//					uart_transmit(SONG_SELECT);
+//					uart_transmit(songNum);
+//					uart_transmit(START);
+					//curSong = songBook[songNum];
 					nextRiff = 0;
 					deltaPos = 0; //trigger update
 					numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+					//loop song is set already, but this would parse other flags...  And we will consitently inc here
+					if ((curSong[nextRiff++]).repeats & LOOP_SONG_F) {
+						LOOP_SONGS = 1;
+					} else {
+						LOOP_SONGS = 0;
+					}
 					numNotes = 0; //numNotes=nextNote skiPs songlength header, maybe hide init info like looPsongs in rePs field
-					nextNote = 0;
+					nextNote = 1; //but this breaks that flow so we have to force it forward
+					riff = (byte*) (curSong[nextRiff]).rAddy;//grab the physical addy of first riff
+					curRiffCnt = (curSong[nextRiff]).repeats;//grabs number of time riff repeats  
+					numNotes = riff[0];				//grab the length of the riff
 					SONG_DONE = 0;
 					PLAYING = 1;
-					TR0 = 1;  //start playing
+//					TR0 = 1;  //start playing
 					LED = 1;
+					goto UPDATE_NOTE;
+				}
+#ifdef COORD	
+				else {
+					TR0 = 0;  //stop playing
+					uart_transmit(STOP);
 				}	
 #endif
 			} else {
@@ -580,6 +623,11 @@ UPDATE_NOTE:
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -592,6 +640,11 @@ UPDATE_NOTE:
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;

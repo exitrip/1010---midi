@@ -1,6 +1,7 @@
 #include "itrip.h"
 #include "song.h"
 #include "riff.h"
+//DONT FORGET THE MINUS ONE!!!!
 
 //TODO
 //   create control bitfield for riff.rePeats field of first member of song....
@@ -9,7 +10,8 @@
 void* const code songBook[NUM_SONGS] = {
 	//testS1,//testSCo1,////	  
 	//testS2,//testSCo1,//testSCo2,////
-	silentSong,
+	//silentSong,
+	vexations,
 	busySong,
 	shepStatSong,
 	happySong,
@@ -23,54 +25,61 @@ void* const code songBook[NUM_SONGS] = {
 
 ///vexations
 #ifdef COORD
-	RIFF_T const code vexations[21] = {
-		{21, 0},
-			{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wRestCoord, 240},
-		{qRestCoord, 240},
-				{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wDblRestCoord, 240},
-		{wRestCoord, 240},
-		{qRestCoord, 240}
-	};
-#elif (MY_L_CHAN == 0)
 	RIFF_T const code vexations[3] = {
-		{3, 0},
-		{wRestCoord, 240},
-		{wRestCoord, 240}
+		{3, LOOP_SONG_F},
+		{vexInit, 1-1},
+		{qRestCoord, 13-1},
+		//{wDblRestCoord, 13-1} //looPsong is just buggy, this works well but hung with just one rest line...
+//			{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wRestCoord, 240-1},
+//		{qRestCoord, 240-1},
+//				{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wRestCoord, 240-1},
+//		{qRestCoord, 240-1}
 	};
-#elif (MY_L_CHAN == 2)
-#elif (MY_L_CHAN == 4)
-#elif (MY_L_CHAN == 6)
-#elif (MY_L_CHAN == 8)
-#elif (MY_L_CHAN == 10)
-#elif (MY_L_CHAN == 12)
-#elif (MY_L_CHAN == 14)
+#elif (MY_L_CHAN == 0 || MY_L_CHAN == 6 || MY_L_CHAN == 14)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex1, 1-1},
+		{vex1, 1-1},
+		{vex1, 1-1}
+	};
+#elif (MY_L_CHAN == 2 || MY_L_CHAN == 8)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex2, 1-1},
+		{vex2, 1-1},
+		{vex1, 1-1}
+	};
+#elif (MY_L_CHAN == 4 || MY_L_CHAN == 12)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex3, 1-1},
+		{vex3vb, 1-1},
+		{vex1, 1-1}
+	};
 #else
-	RIFF_T const code vexations[2] = {
-		{2, 0},
-		{wRest, 255}
-	};
 #endif
 			
 ///silence for song 0
 #ifdef COORD
 	RIFF_T const code silentSong[2] = {
 		{2, 0},
-		{wRestCoord, 255}
+		{wRestCoord, 1}
 	};
 #else
 	RIFF_T const code silentSong[2] = {
@@ -187,7 +196,7 @@ void* const code songBook[NUM_SONGS] = {
 	//just use silent song
 	RIFF_T const code peaceSong[5] = {
 		{5, 0},
-		{peaceCoord, 1},
+		{peaceCoord, 1-1},
 		{wRestCoord, 255},
 		{wRestCoord, 255},
 		{wRestCoord, 255}

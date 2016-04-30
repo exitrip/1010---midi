@@ -213,6 +213,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 					deltaPos = 0;
 					nextRiff = 0;
 					numRiffs = (curSong[nextRiff]).rAddy;
+					if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+						LOOP_SONGS = 1;
+					} else {
+						LOOP_SONGS = 0;
+					}
 					curRiffCnt = 0;
 					numNotes = 0;
 					nextNote = 0;
@@ -238,15 +243,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case SYSTEM_RESET:
 					//Goodbye, See you!
 					AUXR1 |= 0x08; //soft reset
-//			  		midiFlags = 0;
-//					midiClk = 0;
-//					deltaPos = 0;
-//					numRiffs = (curSong[nextRiff]).rAddy;
-//					curRiffCnt = 0;
-//					numNotes = 0;
-//					nextNote = 0;
-//			  		PLAYING = 0;
-//					BUTT_EN = 1;
 	          	break;
 			
 				default:
@@ -290,6 +286,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						} 
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;

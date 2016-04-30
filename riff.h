@@ -194,8 +194,10 @@ extern unsigned char code dmbRoot1[DMBROOT_S];
 extern unsigned char code dmbBDHa[DMBBD_S];
 extern unsigned char code dmbBDWh[DMBBD_S];
 
-#define VEX_S	( 19*2 + 1 )
-#define VEX_SHIFT	(0) //Pitch shift
+#define VEX_S	( 20*2 + 1 )
+#define VEX_SHIFT	(-24) //Pitch shift
+#define VEX_TEMPO (0x5eB61)	  //still slightly fast...
+extern unsigned char code vexInit[5];
 extern unsigned char code vex1[VEX_S];
 extern unsigned char code vex2[VEX_S];
 extern unsigned char code vex3[VEX_S];
