@@ -4,6 +4,9 @@
 #define NUM_SONGS	10
 extern void* const code songBook[NUM_SONGS];
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+extern RIFF_T const code TeFFSong[];
+
 //vexations
 extern RIFF_T const code vexations[];
 

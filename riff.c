@@ -875,6 +875,245 @@ unsigned char code busy2Stat[BUSY2STAT_SIZE] = {
 	22, NOTE_OFF_MEM+0x80  		//256
 };
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+unsigned char code TeFFInitCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(TEFF_TEMPO>>16)), ((byte)(TEFF_TEMPO>>8)), ((byte)(TEFF_TEMPO))
+};
+unsigned char code TeFF1[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, G5,
+	4, NOTE_OFF_MEM,
+	16, A5,
+	4, G5,
+	4, NOTE_OFF_MEM,
+	16, A5,
+		48, NOTE_OFF_MEM,
+		4, C6,
+	4, NOTE_OFF_MEM,
+	16, D6,
+	4, C6,
+	4, NOTE_OFF_MEM,
+	16, D6
+};
+
+unsigned char code TeFF1vb[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, G4,
+	4, NOTE_OFF_MEM,
+	16, A4,
+	4, G4,
+	4, NOTE_OFF_MEM,
+	16, A4,
+		48, NOTE_OFF_MEM,
+		4, C5,
+	4, NOTE_OFF_MEM,
+	16, D5,
+	4, C5,
+	4, NOTE_OFF_MEM,
+	16, D5
+};
+
+unsigned char code TeFF2[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, D3,
+	4, NOTE_OFF_MEM,
+	16, E3,
+	4, D3,
+	4, NOTE_OFF_MEM,
+	16, E3,
+		48, NOTE_OFF_MEM,
+		4, A3,
+	4, NOTE_OFF_MEM,
+	16, As3,
+	4, A3,
+	4, NOTE_OFF_MEM,
+	16, As3
+};
+
+unsigned char code TeFF3[TEFF3_S] = {
+	TEFF3_S,
+		8, G3,
+	16, D4,
+	8, B3,
+	16, A3,
+		8, G3,
+	16, A3,
+	8, G3,
+	16, A3,
+			8, G3,
+	16, D4,
+	8, E4,
+	16, D4,
+		8, C4,
+	16, D4,
+	8, C4,
+	16, D4
+};
+
+unsigned char code TeFF4[TEFF4_S] = {
+	TEFF4_S,
+		16, E3,
+	8, C3,
+	15, D3,
+	1, NOTE_OFF_MEM,
+	8, D3,
+		8, B2,
+	8, A2,
+	8, C3,
+	8, B2,
+	8, A2,
+	8, C3,
+		16, E3,
+	8, E2,
+	16, Fs2,
+	8, Fs3,
+		8, G3,
+	8, F3,
+	8, E3,
+	8, G3,
+	8, F3,
+	8, E3
+};
+
+unsigned char code TeFF5[TEFF5_S] = {
+	TEFF5_S,
+		16, E3,
+	8, C3,
+	15, D3,
+	1, NOTE_OFF_MEM,
+	8, D3,
+		8, B3,
+	8, A3,
+	8, C4,
+	8, B3,
+	8, A3,
+	8, C4,
+		15, E3,
+	1, NOTE_OFF_MEM,
+	8, E3,
+	15, Fs3,
+	1, NOTE_OFF_MEM,
+	8, Fs3,
+		8, G3,
+	8, F3,
+	8, E3,
+	8, G3,
+	8, F3,
+	8, E3
+};
+
+//CARRELAGE PHONIQUE   ... ordinare, slow... 2/4
+
+unsigned char code cPhonInitCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(CPHON_TEMPO>>16)), ((byte)(CPHON_TEMPO>>8)), ((byte)(CPHON_TEMPO))
+};
+
+unsigned char code cPhon1[CPHON1_S] = {
+	CPHON1_S,
+		36, B4,
+	6, A4,
+	6, B4,
+		6, D5,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM, 
+	6, D5,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM,
+		36, B4,
+	6, A4,
+	5, B4,
+	1, NOTE_OFF_MEM,
+		6, B4,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon1va[CPHON1_S] = {
+	CPHON1_S,
+		36, B5,
+	6, A5,
+	6, B5,
+		6, D6,
+	6, NOTE_OFF_MEM,
+	6, D5,
+	6, NOTE_OFF_MEM, 
+	6, D6,
+	6, NOTE_OFF_MEM,
+	6, D5,
+	6, NOTE_OFF_MEM,
+		36, B5,
+	6, A5,
+	5, B5,
+	1, NOTE_OFF_MEM,
+		6, B5,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM,
+	6, B5,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon1vb[CPHON1_S] = {
+	CPHON1_S,
+		36, B3,
+	6, A3,
+	6, B3,
+		6, D4,
+	6, NOTE_OFF_MEM,
+	6, D3,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM,
+	6, D3,
+	6, NOTE_OFF_MEM,
+		36, B3,
+	6, A3,
+	5, B3,
+	1, NOTE_OFF_MEM,
+		6, B3,
+	6, NOTE_OFF_MEM,
+	6, B2,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM,
+	6, B2,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon2[CPHON2_S] = {
+	CPHON2_S,
+		12, Fs3,
+	12, E3,
+	12, Fs3,
+	12, D3,
+		12, G3,
+	12, A3,
+	12, C4,
+	12, G3,
+		12, Fs3,
+	12, E3,
+	12, Fs3,
+	12, D3,
+		12, G3,
+	12, Fs3,
+	12, E3,
+	12, G3 
+};
+
 unsigned char code vexInit[] = {
 	5,
 	0, TEMPO_SET+((byte)(VEX_TEMPO>>16)), ((byte)(VEX_TEMPO>>8)), ((byte)(VEX_TEMPO))

@@ -35,6 +35,8 @@ sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
 volatile byte bdata songFlags;
 sbit SONG_DONE = songFlags^0;	//0x40
 sbit LOOP_SONGS = songFlags^1;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
+sbit AUTO_START = songFlags^2; //you know, start on power up after a delay, for master....  maybe also function as a watchdog
+sbit WRAP_FREQ = songFlags^3; //if told to move beyond limits of txFreq, wrap around...  maybe break into top and bottom flags...
 
 //try moving to locals!!!
 //#define NUM_RIFFS HEAVY_11_SONG_SIZE//SAUCER_VOLCANO_SONG_SIZE//THUMP1_SONG_SIZE//3//FOR_SONG_ALT_SIZE//FIRST_SONG_ALT_SIZE//THIRD_SONG_SIZE//
@@ -50,7 +52,7 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-#define FREQ_START	879
+#define FREQ_START	(879 + MY_L_CHAN)
 			   
 
 //timing globals
@@ -116,6 +118,9 @@ void main() {
 	EA = 1;
 	BUTT_EN = 1;
 	LOOP_SONGS = 0;
+	//autoStart
+	AUTO_START = 1;
+
 #ifdef COORD
 	TR0 = 0;
 	TR1 = 0;
@@ -144,6 +149,27 @@ void main() {
 		uart_transmit(127);
 	}
 	LED = 0;
+	if (AUTO_START == 1) {
+		curSong = songBook[songNum];
+		nextRiff = 0;
+		deltaPos = 0; //trigger update
+		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+		if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+			LOOP_SONGS = 1;
+		} else {
+			LOOP_SONGS = 0;
+		}
+		uart_transmit(STOP);
+		uart_transmit(SONG_SELECT);
+		uart_transmit(songNum);
+		uart_transmit(START);
+		PLAYING = 1;
+		curRiffCnt = 0;
+		numNotes = 0;
+		nextNote = 0;
+		LED = PLAYING;
+		TR0 = PLAYING;
+	}
 #else
 	delay(65000);
 	delay(65000);
@@ -262,6 +288,7 @@ void main() {
 
 #else
 	if (curSong != songBook[songNum]) {
+		setFreq(station);
 		curSong = songBook[songNum];
 		midiClk = 0;
 		nextRiff = 0;

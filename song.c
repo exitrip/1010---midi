@@ -23,13 +23,62 @@ void* const code songBook[NUM_SONGS] = {
 	dmbSong
 };
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+#ifdef COORD
+	RIFF_T const code TeFFSong[3] = {
+		{3, LOOP_SONG_F},
+		{TeFFInitCoord, 1-1},
+		{wDblRestCoord, 240-1}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1, 240}
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1vb, 240}
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF2, 240}
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF3, 240}
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF4, 240}
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF5, 240}
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1vb, 240}
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF5, 240}
+	};
+#else
+#endif
+
 ///vexations
 #ifdef COORD
 	RIFF_T const code vexations[3] = {
 		{3, LOOP_SONG_F},
 		{vexInit, 1-1},
-		{qRestCoord, 13-1},
-		//{wDblRestCoord, 13-1} //looPsong is just buggy, this works well but hung with just one rest line...
+		{qRestCoord, 13-1}
 //			{wDblRestCoord, 240-1},
 //		{wDblRestCoord, 240-1},
 //		{wDblRestCoord, 240-1},
@@ -51,21 +100,21 @@ void* const code songBook[NUM_SONGS] = {
 //		{wRestCoord, 240-1},
 //		{qRestCoord, 240-1}
 	};
-#elif (MY_L_CHAN == 0 || MY_L_CHAN == 6 || MY_L_CHAN == 14)
+#elif (MY_L_CHAN == 0 || MY_L_CHAN == 6 || MY_L_CHAN == 12)
 	RIFF_T const code vexations[4] = {
 		{4, LOOP_SONG_F},
 		{vex1, 1-1},
 		{vex1, 1-1},
 		{vex1, 1-1}
 	};
-#elif (MY_L_CHAN == 2 || MY_L_CHAN == 8)
+#elif (MY_L_CHAN == 2 || MY_L_CHAN == 8 || MY_L_CHAN == 14)
 	RIFF_T const code vexations[4] = {
 		{4, LOOP_SONG_F},
 		{vex2, 1-1},
 		{vex2, 1-1},
 		{vex1, 1-1}
 	};
-#elif (MY_L_CHAN == 4 || MY_L_CHAN == 12)
+#elif (MY_L_CHAN == 4 || MY_L_CHAN == 10)
 	RIFF_T const code vexations[4] = {
 		{4, LOOP_SONG_F},
 		{vex3, 1-1},
