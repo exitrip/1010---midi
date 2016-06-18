@@ -1,9 +1,19 @@
 #ifndef SONG_H
 #define SONG_H
 
-#define NUM_SONGS	8
+#define NUM_SONGS	11
 extern void* const code songBook[NUM_SONGS];
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+extern RIFF_T const code TeFFSong[];
+
+//vexations
+extern RIFF_T const code vexations[];
+
+//constantly falling, spaced out silence
+extern RIFF_T const code shepStatSong[];
+
+//version of omes
 extern RIFF_T const code busySong[];
 
 //Station beats and simple melody
@@ -14,6 +24,9 @@ extern RIFF_T const code statSong[];
 
 //Our body
 extern RIFF_T const code bodySong[];
+
+//just a riff right now
+extern RIFF_T const code peaceSong[];
 
 //droneStrike
 
@@ -33,7 +46,8 @@ extern RIFF_T const code dmbSong[];
 
 //HAPPY	
 extern RIFF_T const code happySong[];
- 
+
+//extern RIFF_T const code testS1[2]; 
 //#define TEST_SS1 6+1
 //extern RIFF_T const code testS1[TEST_SS1];
 //

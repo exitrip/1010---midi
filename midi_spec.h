@@ -131,7 +131,7 @@ enum
 
 #define BALANCE_hi          0x08
 
-#define PAN_POSN_hi         0x0a
+#define PAN_POSN_hi         0x0a  // mono < 64 , else stereo
 
 #define EXPRESSION_hi       0x0b
 

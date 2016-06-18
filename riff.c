@@ -61,12 +61,6 @@ unsigned char code wholeDrone[5] = {
 	0, WHOLEDRONE_ROOT+MY_L_CHAN, 24*4, WHOLEDRONE_ROOT+0x80+MY_L_CHAN
 };
 
-//Our body
-unsigned char code bodyInit[5] = {
-	5,
-	0, TEMPO_SET+((byte)(BODY_TEMPO>>16)), ((byte)(BODY_TEMPO>>8)), ((byte)(BODY_TEMPO))
-};
-
 //COORD UTILL
 unsigned char code sthRestCoord[RECO_S] = {	 //one empty bar
 	RECO_S,
@@ -91,6 +85,11 @@ unsigned char code hRestCoord[RECO_S] = {	 //one empty bar
 unsigned char code wRestCoord[RECO_S] = {	 //one empty bar
 	RECO_S,
 	24*4, NOTE_ON
+};
+
+unsigned char code wDblRestCoord[RECO_S] = {	 //one empty bar
+	RECO_S,
+	24*8, NOTE_ON
 };
 
 unsigned char code on0Tx[CRTLTX_S] = {
@@ -173,6 +172,94 @@ unsigned char code off14Tx[CRTLTX_S] = {
 	0, CONTROL+14, GENERAL_BUTTON_1_on, 0
 };
 
+//shepard station
+unsigned char code shepStatCoordInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_TEMPO>>16)), ((byte)(SHEP_TEMPO>>8)), ((byte)(SHEP_TEMPO))
+};
+
+unsigned char code shepStatCoordFasterInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_FASTER_TEMPO>>16)), ((byte)(SHEP_FASTER_TEMPO>>8)), ((byte)(SHEP_FASTER_TEMPO))
+};
+
+unsigned char code shepStatCoordFastInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(SHEP_FAST_TEMPO>>16)), ((byte)(SHEP_FAST_TEMPO>>8)), ((byte)(SHEP_FAST_TEMPO))
+};
+
+unsigned char code shepStatCoord[33] = {
+	33,
+	24, CONTROL+0, GENERAL_SLIDER_1_hi, 55,  //92 MHz
+	24, CONTROL+2, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+4, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+6, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+8, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+10, GENERAL_SLIDER_1_hi, 55,
+	24, CONTROL+12, GENERAL_SLIDER_1_hi, 55,  
+	24, CONTROL+14, GENERAL_SLIDER_1_hi, 55
+};
+
+unsigned char code shepStat[9] = {
+	3,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6,
+	24, STATION_DOWN6
+};
+
+unsigned char code shepStatVoiced[17] = {
+	3,
+	12+MY_L_CHAN, STATION_DOWN6,
+	12, C5,
+	18-MY_L_CHAN, STATION_DOWN6,
+	6, A4,
+	16, STATION_DOWN6,
+	8, E4,
+	8, STATION_DOWN6,
+	16, A3
+};
+
+//peace
+unsigned char code peaceCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(PEACE_TEMPO>>16)), ((byte)(PEACE_TEMPO>>8)), ((byte)(PEACE_TEMPO))
+};
+
+unsigned char code peaceOne[PEACEONE_S] = {
+	PEACEONE_S,
+		24, C4,
+	24, B4,
+	24, B4
+};
+
+unsigned char code peaceTwo[PEACEONE_S] = {
+	PEACEONE_S,
+		24, As4,
+	24, G4,
+	24, As4
+};
+
+unsigned char code peaceThree[PEACEONE_S] = {
+	PEACEONE_S,
+		24, Gs4,
+	24, G4,
+	24, Gs4		 
+};
+
+unsigned char code peaceAs4[PEACEONE_S] = {
+	PEACEONE_S,
+		24, As4,
+	24, As4,
+	24, As4
+};
+
+unsigned char code peaceGs4[PEACEONE_S] = {
+	PEACEONE_S,
+		24, Gs4,
+	24, Gs4,
+	24, Gs4
+};
 //4onStat
 unsigned char code OnStatCoordInit[5] = {
 	5,
@@ -295,7 +382,7 @@ unsigned char code OnStatMel2[ONSTATMEL2_S] = {
 	72, As3
 };
 
-//happy
+//happy //omes
 unsigned char code happyCoordInit[5] = {
 	5,
 	0, TEMPO_SET+((byte)(HAPPY_TEMPO>>16)), ((byte)(HAPPY_TEMPO>>8)), ((byte)(HAPPY_TEMPO))
@@ -578,7 +665,11 @@ unsigned char code happyDroneTx2[3] = {
 //	24*4, BEAT_ROOT//+((MY_L_CHAN*2))
 //};
 
-//omes
+//Our body
+unsigned char code bodyInit[5] = {
+	5,
+	0, TEMPO_SET+((byte)(BODY_TEMPO>>16)), ((byte)(BODY_TEMPO>>8)), ((byte)(BODY_TEMPO))
+};
 
 //driving me backwards!!!!! Vamp on Vcc....
 unsigned char code dmbInit[DMBINIT_S] = {	 //tempo... does beat pickup!!! all but 6 off
@@ -784,6 +875,351 @@ unsigned char code busy2Stat[BUSY2STAT_SIZE] = {
 	22, NOTE_OFF_MEM+0x80  		//256
 };
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+unsigned char code TeFFInitCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(TEFF_TEMPO>>16)), ((byte)(TEFF_TEMPO>>8)), ((byte)(TEFF_TEMPO))
+};
+unsigned char code TeFF1[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, G5,
+	4, NOTE_OFF_MEM,
+	16, A5,
+	4, G5,
+	4, NOTE_OFF_MEM,
+	16, A5,
+		48, NOTE_OFF_MEM,
+		4, C6,
+	4, NOTE_OFF_MEM,
+	16, D6,
+	4, C6,
+	4, NOTE_OFF_MEM,
+	16, D6
+};
+
+unsigned char code TeFF1vb[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, G4,
+	4, NOTE_OFF_MEM,
+	16, A4,
+	4, G4,
+	4, NOTE_OFF_MEM,
+	16, A4,
+		48, NOTE_OFF_MEM,
+		4, C5,
+	4, NOTE_OFF_MEM,
+	16, D5,
+	4, C5,
+	4, NOTE_OFF_MEM,
+	16, D5
+};
+
+unsigned char code TeFF2[TEFF1_S] = {
+	TEFF1_S,
+		48, NOTE_OFF_MEM,
+		4, D3,
+	4, NOTE_OFF_MEM,
+	16, E3,
+	4, D3,
+	4, NOTE_OFF_MEM,
+	16, E3,
+		48, NOTE_OFF_MEM,
+		4, A3,
+	4, NOTE_OFF_MEM,
+	16, As3,
+	4, A3,
+	4, NOTE_OFF_MEM,
+	16, As3
+};
+
+unsigned char code TeFF3[TEFF3_S] = {
+	TEFF3_S,
+		8, G3,
+	16, D4,
+	8, B3,
+	16, A3,
+		8, G3,
+	16, A3,
+	8, G3,
+	16, A3,
+			8, G3,
+	16, D4,
+	8, E4,
+	16, D4,
+		8, C4,
+	16, D4,
+	8, C4,
+	16, D4
+};
+
+unsigned char code TeFF4[TEFF4_S] = {
+	TEFF4_S,
+		16, E3,
+	8, C3,
+	15, D3,
+	1, NOTE_OFF_MEM,
+	8, D3,
+		8, B2,
+	8, A2,
+	8, C3,
+	8, B2,
+	8, A2,
+	8, C3,
+		16, E3,
+	8, E2,
+	16, Fs2,
+	8, Fs3,
+		8, G3,
+	8, F3,
+	8, E3,
+	8, G3,
+	8, F3,
+	8, E3
+};
+
+unsigned char code TeFF5[TEFF5_S] = {
+	TEFF5_S,
+		16, E3,
+	8, C3,
+	15, D3,
+	1, NOTE_OFF_MEM,
+	8, D3,
+		8, B3,
+	8, A3,
+	8, C4,
+	8, B3,
+	8, A3,
+	8, C4,
+		15, E3,
+	1, NOTE_OFF_MEM,
+	8, E3,
+	15, Fs3,
+	1, NOTE_OFF_MEM,
+	8, Fs3,
+		8, G3,
+	8, F3,
+	8, E3,
+	8, G3,
+	8, F3,
+	8, E3
+};
+
+//CARRELAGE PHONIQUE   ... ordinare, slow... 2/4
+
+unsigned char code cPhonInitCoord[5] = {
+	5,
+	0, TEMPO_SET+((byte)(CPHON_TEMPO>>16)), ((byte)(CPHON_TEMPO>>8)), ((byte)(CPHON_TEMPO))
+};
+
+unsigned char code cPhon1[CPHON1_S] = {
+	CPHON1_S,
+		36, B4,
+	6, A4,
+	6, B4,
+		6, D5,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM, 
+	6, D5,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM,
+		36, B4,
+	6, A4,
+	5, B4,
+	1, NOTE_OFF_MEM,
+		6, B4,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon1va[CPHON1_S] = {
+	CPHON1_S,
+		36, B5,
+	6, A5,
+	6, B5,
+		6, D6,
+	6, NOTE_OFF_MEM,
+	6, D5,
+	6, NOTE_OFF_MEM, 
+	6, D6,
+	6, NOTE_OFF_MEM,
+	6, D5,
+	6, NOTE_OFF_MEM,
+		36, B5,
+	6, A5,
+	5, B5,
+	1, NOTE_OFF_MEM,
+		6, B5,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM,
+	6, B5,
+	6, NOTE_OFF_MEM,
+	6, B4,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon1vb[CPHON1_S] = {
+	CPHON1_S,
+		36, B3,
+	6, A3,
+	6, B3,
+		6, D4,
+	6, NOTE_OFF_MEM,
+	6, D3,
+	6, NOTE_OFF_MEM,
+	6, D4,
+	6, NOTE_OFF_MEM,
+	6, D3,
+	6, NOTE_OFF_MEM,
+		36, B3,
+	6, A3,
+	5, B3,
+	1, NOTE_OFF_MEM,
+		6, B3,
+	6, NOTE_OFF_MEM,
+	6, B2,
+	6, NOTE_OFF_MEM,
+	6, B3,
+	6, NOTE_OFF_MEM,
+	6, B2,
+	6, NOTE_OFF_MEM		
+};
+
+unsigned char code cPhon2[CPHON2_S] = {
+	CPHON2_S,
+		12, Fs3,
+	12, E3,
+	12, Fs3,
+	12, D3,
+		12, G3,
+	12, A3,
+	12, C4,
+	12, G3,
+		12, Fs3,
+	12, E3,
+	12, Fs3,
+	12, D3,
+		12, G3,
+	12, Fs3,
+	12, E3,
+	12, G3 
+};
+
+unsigned char code vexInit[] = {
+	5,
+	0, TEMPO_SET+((byte)(VEX_TEMPO>>16)), ((byte)(VEX_TEMPO>>8)), ((byte)(VEX_TEMPO))
+};
+
+//vexations 12 beats to a quarter
+unsigned char code vex1[VEX_S] = {
+	VEX_S,
+		12, 60 + VEX_SHIFT,
+	6,  57 + VEX_SHIFT,
+	6,  61 + VEX_SHIFT,
+	12,	58 + VEX_SHIFT,
+	12,	63 + VEX_SHIFT,
+	6,	55 + VEX_SHIFT,
+	6,	62 + VEX_SHIFT,
+	6,	60 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	12,	54 + VEX_SHIFT,
+	12,	61 + VEX_SHIFT,
+	6,	53 + VEX_SHIFT,
+	6,	58 + VEX_SHIFT,
+	6,	54 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	12,	59 + VEX_SHIFT,
+	5,	64 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
+	12,	64 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+unsigned char code vex2[VEX_S] = {
+	VEX_S,
+		12, 69 + VEX_SHIFT,
+	6,	73 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	12,	73 + VEX_SHIFT,
+	12,	72 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	6,	71 + VEX_SHIFT,
+	6,	75 + VEX_SHIFT,
+	6,	72 + VEX_SHIFT,
+	12,	69 + VEX_SHIFT,
+	12,	70 + VEX_SHIFT,
+	6,	69 + VEX_SHIFT,
+	6,	68 + VEX_SHIFT,
+	6,	69 + VEX_SHIFT,
+	6,	72 + VEX_SHIFT,
+	12,	74 + VEX_SHIFT,
+	5,	73 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
+	12,	73 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+//not exactly va'd from vb
+unsigned char code vex3[VEX_S] = {
+	VEX_S,
+		12, 63 + 12 + VEX_SHIFT,
+	6,  65 + 12 + VEX_SHIFT,
+	6,  64 + 12 + VEX_SHIFT,
+	12,	67 + 12 + VEX_SHIFT,
+	12,	66 + 12 + VEX_SHIFT,
+	6,	64 + 12 + VEX_SHIFT,
+	6,	65 + 12 + VEX_SHIFT,
+	6,	81 + VEX_SHIFT,
+	6,	66 + 12 + VEX_SHIFT,
+	12,	63 + 12 + VEX_SHIFT,
+	12,	64 + 12 + VEX_SHIFT,
+	6,	63 + 12 + VEX_SHIFT,
+	6,	62 + 12 + VEX_SHIFT,
+	6,	63 + 12 + VEX_SHIFT,
+	6,	66 + 12 + VEX_SHIFT,
+	12,	68 + 12 + VEX_SHIFT,
+	5,	67 + 12 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
+	12,	67 + 12 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+unsigned char code vex3vb[VEX_S] = {
+	VEX_S,
+		12, 63 + VEX_SHIFT,
+	6,  65 + VEX_SHIFT,
+	6,  64 + VEX_SHIFT,
+	12,	67 + VEX_SHIFT,
+	12,	66 + VEX_SHIFT,
+	6,	64 + VEX_SHIFT,
+	6,	65 + VEX_SHIFT,
+	6,	70 + VEX_SHIFT,
+	6,	66 + VEX_SHIFT,
+	12,	63 + VEX_SHIFT,
+	12,	64 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	6,	62 + VEX_SHIFT,
+	6,	63 + VEX_SHIFT,
+	6,	66 + VEX_SHIFT,
+	12,	68 + VEX_SHIFT,
+	5,	67 + VEX_SHIFT,
+	1,  NOTE_OFF_MEM,
+	12,	67 + VEX_SHIFT,
+	6, NOTE_OFF_MEM
+};
+//unsigned char code stereoTest1[9] = {
+//	9,
+//	24, 36,
+//	24, STEREO_TOG_MEM,
+//	24, NOTE_OFF_MEM,
+//	24, STEREO_TOG_MEM
+//};
 //unsigned char code busy1[BUSY1_SIZE] = {
 //	BUSY1_SIZE,
 //		0, DOWN3+0x80,

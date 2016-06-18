@@ -1,32 +1,169 @@
 #include "itrip.h"
 #include "song.h"
 #include "riff.h"
+//DONT FORGET THE MINUS ONE!!!!
 
+//TODO
+//   create control bitfield for riff.rePeats field of first member of song....
 //maybe not use these switches.. maybe they will be bery useful....
 ///////////all songs....   //drive song selection from here...
 void* const code songBook[NUM_SONGS] = {
-	silentSong,
-	busySong,
-	//testS1,//testSCo1,////	  todo test updown songs....
+	//testS1,//testSCo1,////	  
 	//testS2,//testSCo1,//testSCo2,////
+	silentSong,
+	//vexations,
+	busySong,
 	happySong,
+	peaceSong,
 	minorSong,
 	wholeToneSong,									 
 	bodySong,
 	statSong,
-	dmbSong
+	dmbSong,
+	TeFFSong,
+	shepStatSong
 };
 
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+#ifdef COORD
+	RIFF_T const code TeFFSong[3] = {
+		{3, LOOP_SONG_F},
+		{TeFFInitCoord, 1-1},
+		{wDblRestCoord, 240-1}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1, 240}
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1vb, 240}
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF2, 240}
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF3, 240}
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF4, 240}
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF5, 240}
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF1vb, 240}
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T const code TeFFSong[2] = {
+		{2, LOOP_SONG_F},
+		{TeFF5, 240}
+	};
+#else
+#endif
+
+///vexations
+#ifdef COORD
+	RIFF_T const code vexations[3] = {
+		{3, LOOP_SONG_F},
+		{vexInit, 1-1},
+		{qRestCoord, 13-1}
+//			{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wRestCoord, 240-1},
+//		{qRestCoord, 240-1},
+//				{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wDblRestCoord, 240-1},
+//		{wRestCoord, 240-1},
+//		{qRestCoord, 240-1}
+	};
+#elif (MY_L_CHAN == 0 || MY_L_CHAN == 6 || MY_L_CHAN == 12)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex1, 1-1},
+		{vex1, 1-1},
+		{vex1, 1-1}
+	};
+#elif (MY_L_CHAN == 2 || MY_L_CHAN == 8 || MY_L_CHAN == 14)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex2, 1-1},
+		{vex2, 1-1},
+		{vex1, 1-1}
+	};
+#elif (MY_L_CHAN == 4 || MY_L_CHAN == 10)
+	RIFF_T const code vexations[4] = {
+		{4, LOOP_SONG_F},
+		{vex3, 1-1},
+		{vex3vb, 1-1},
+		{vex1, 1-1}
+	};
+#else
+#endif
+			
 ///silence for song 0
 #ifdef COORD
 	RIFF_T const code silentSong[2] = {
 		{2, 0},
-		{wRestCoord, 255}
+		{wRestCoord, 1}
 	};
 #else
 	RIFF_T const code silentSong[2] = {
 		{2, 0},
 		{wRest, 255}
+	};
+#endif
+
+///shepard station
+#ifdef COORD
+	RIFF_T const code shepStatSong[15] = {
+		{15, 0},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 10},
+		{shepStatCoordFasterInit, 0},
+		{shepStatCoord, 16},
+		{shepStatCoordFastInit, 0},
+		{shepStatCoord, 32},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 2},
+		{shepStatCoordFastInit, 0},
+		{shepStatCoord, 128},
+		{shepStatCoordInit, 0},
+		{shepStatCoord, 255},
+	};
+#else
+	RIFF_T const code shepStatSong[13] = {
+		{13, 0},
+		{shepStat, 20},
+		{shepStat, 64},
+		{shepStatVoiced, 68},
+		{shepStat, 64},
+		{shepStatVoiced, 255},
+		{shepStatVoiced, 255}
 	};
 #endif
 
@@ -101,6 +238,184 @@ void* const code songBook[NUM_SONGS] = {
 	RIFF_T const code statSong[2] = {
 		{2, 0},
 		{OnStat4, 255}	   
+	};
+#endif
+// peace riff
+//statSong
+#ifdef COORD
+	//just use silent song
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
+		{peaceCoord, 1-1},
+		{wRestCoord, 255},
+		{wRestCoord, 255},
+		{wRestCoord, 255}
+	};
+#elif (MY_L_CHAN == 0)
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255}	   
+	};
+#elif (MY_L_CHAN == 2)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{wRest, 9},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 4)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{wRest, 45},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 6)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{wRest, 81},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 8)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{wRest, 126},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 10)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{wRest, 162},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 12)
+	RIFF_T const code peaceSong[22] = {
+		{22, 0},
+		{sthRest, 1},
+		{peaceOne, 15},
+		{peaceTwo, 1},
+		{peaceAs4, 15},
+		{peaceThree, 2},
+		{peaceGs4, 15},
+		{peaceOne, 7},
+		{peaceTwo, 1},
+		{peaceAs4, 8},
+		{peaceThree, 2},
+		{peaceGs4, 9},
+		{peaceOne, 3},
+		{peaceTwo, 1},
+		{peaceAs4, 4},
+		{peaceThree, 2},
+		{peaceGs4, 5},
+		{peaceOne, 1},
+		{peaceTwo, 1},
+		{peaceAs4, 2},
+		{peaceThree, 2},
+		{peaceGs4, 3}	   
+	};
+#elif (MY_L_CHAN == 14)
+	RIFF_T const code peaceSong[5] = {
+		{5, 0},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255},
+		{peaceOne, 255}	   
 	};
 #endif
 
@@ -459,6 +774,12 @@ void* const code songBook[NUM_SONGS] = {
 #endif
 
 ////#define TEST_SS1 6+1
+//RIFF_T const code testS1[2] = {
+//	{2,0},
+//	{stereoTest1, 255}
+//};
+
+////#define TEST_SS1 6+1
 //RIFF_T const code testS1[TEST_SS1] = {
 //	{TEST_SS1, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!
 //	{upR1, 8-1},
@@ -468,7 +789,7 @@ void* const code songBook[NUM_SONGS] = {
 //	{upR5, 8-1},
 //	{upR1, 8-1}
 //};
-//
+
 ////#define TEST_SS2 6+1
 //RIFF_T const code testS2[TEST_SS2] = {
 //	{TEST_SS2, 0}, //songLen, songNum!!!!  songNum for building of songBook!!!

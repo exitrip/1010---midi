@@ -21,6 +21,7 @@ extern unsigned char code eiRestCoord[RECO_S];
 extern unsigned char code qRestCoord[RECO_S];
 extern unsigned char code hRestCoord[RECO_S];
 extern unsigned char code wRestCoord[RECO_S]; //one empty bar
+extern unsigned char code wDblRestCoord[RECO_S]; //two empty bars
 
 #define CRTLTX_S	(4+1)
 extern unsigned char code on0Tx[CRTLTX_S];
@@ -93,8 +94,31 @@ Spec for riff:
 //extern unsigned char code beatCoord2[BEATCOORD1_S];
 //extern unsigned char code beat1[BEAT1_S];
 
+//shepStat
+#define	SHEP_TEMPO (0x12D68*2) //60BPM
+#define SHEP_FASTER_TEMPO (0x6666) //real fast
+#define SHEP_FAST_TEMPO (0x2666) //real fast
+ 
+extern unsigned char code shepStatCoordInit[5];
+extern unsigned char code shepStatCoordFastInit[5];
+extern unsigned char code shepStatCoordFasterInit[5];
+
+extern unsigned char code shepStatCoord[33];
+extern unsigned char code shepStat[9];
+//shepStatVoiced
+extern unsigned char code shepStatVoiced[17];
+//peace
+#define PEACE_TEMPO	(0x800d)	// >160?
+#define PEACEONE_S	(7)
+extern unsigned char code peaceCoord[5];
+extern unsigned char code peaceOne[PEACEONE_S];
+extern unsigned char code peaceTwo[PEACEONE_S];
+extern unsigned char code peaceThree[PEACEONE_S];
+extern unsigned char code peaceAs4[PEACEONE_S];
+extern unsigned char code peaceGs4[PEACEONE_S];
+
 //BODY
-#define BODY_TEMPO	(0x12D68*2) //60 BPM
+#define BODY_TEMPO	(0x12D68*2) //60 BPM						 
 extern unsigned char code bodyInit[5];  //uses whole and minor drone
 
 //BUSY
@@ -117,7 +141,7 @@ extern unsigned char code busy2[BUSY1_SIZE-2];
 extern unsigned char code busy2Stat[BUSY2STAT_SIZE];
 
 //onStat
-#define ONSTAT_TEMPO  	(0x1EDED)	 //??
+#define ONSTAT_TEMPO  	(0xEDED)	 //??
 #define ONSTAT1_S		(28+1)
 #define ONSTAT2_S		(60+1)
 #define ONSTAT3_S		(28+1)
@@ -169,6 +193,40 @@ extern unsigned char code dmbRoot1[DMBROOT_S];
 #define DMBBD_S		7	
 extern unsigned char code dmbBDHa[DMBBD_S];
 extern unsigned char code dmbBDWh[DMBBD_S];
+
+#define VEX_S	( 20*2 + 1 )
+#define VEX_SHIFT	(-24) //Pitch shift
+#define VEX_TEMPO (0xf0000)	  //goood...
+extern unsigned char code vexInit[5];
+extern unsigned char code vex1[VEX_S];
+extern unsigned char code vex2[VEX_S];
+extern unsigned char code vex3[VEX_S];
+extern unsigned char code vex3vb[VEX_S];
+
+
+//TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
+#define TEFF_TEMPO	(0x12D68*2)
+#define TEFF1_S		(29)
+#define TEFF3_S		(33)
+#define TEFF4_S		(43)
+#define TEFF5_S		(47)
+extern unsigned char code TeFFInitCoord[5];
+extern unsigned char code TeFF1[TEFF1_S];
+extern unsigned char code TeFF1vb[TEFF1_S];
+extern unsigned char code TeFF2[TEFF1_S];
+extern unsigned char code TeFF3[TEFF3_S];
+extern unsigned char code TeFF4[TEFF4_S];
+extern unsigned char code TeFF5[TEFF5_S];
+
+#define CPHON_TEMPO	(0x5eB61)
+#define CPHON1_S		(47)
+#define CPHON2_S		(33)
+extern unsigned char code cPhonInitCoord[5];
+extern unsigned char code cPhon1[CPHON1_S];
+extern unsigned char code cPhon1va[CPHON1_S];
+extern unsigned char code cPhon1vb[CPHON1_S];
+extern unsigned char code cPhon2[CPHON2_S];
+//extern unsigned char code stereoTest1[9];
 
 //#define TEST_LEN	10//easier to parse later
 //extern unsigned char code downR1[];

@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-#define COORD		//blast midi clock out of UArt and drive RT messages
-//#define BASIC_TX
+//#define COORD		//blast midi clock out of UArt and drive RT messages
+#define BASIC_TX
 //#define DEBUG_SIM
 
 //KEIL!!!!  you get the point!!!
@@ -30,12 +30,16 @@ typedef struct Riff_s {
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
 
-
 ///MIDI STUFF
-#define MY_L_CHAN   0//[0-15] //base channel
+#define MY_L_CHAN   0	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#define MY_ID_H		"C"
-#define MY_ID_L		"o"	  //stick to ascii ex: "Co" or "14"
+#ifdef COORD
+	#define MY_ID_H		'C'
+	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+#else //convert to decimal ascii no.
+	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+#endif
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -55,7 +59,7 @@ enum {
 	DOWN3 = 7,	
 	DOWN4 = 8,
 	DOWN5 = 9,
-	HOLD0 = 109,
+	STEREO_TOG_MEM = 109,
 	UP1 = 110,
 	UP2 = 111,
 	UP3 = 112,
@@ -100,8 +104,15 @@ extern bit STEREO;
 extern bit PLAYING;		
 extern bit BUTT_EN;		
 extern bit OMNI;		
-extern bit SONG_DONE;	
+//extern bit SONG_DONE;	
 //extern bit SYS_EX_DONE;
+
+extern volatile byte bdata SongFlags;
+//state flags -- maybe change to sbit????		
+extern bit SONG_DONE;
+extern bit LOOP_SONGS;
+//flags for repeat section of first riff in song
+#define LOOP_SONG_F	(0x01)
 
 extern volatile byte periodH0;
 extern volatile byte periodL0;
@@ -111,6 +122,8 @@ extern volatile word lDelta;   //a proportion of sorts
 extern volatile word txDelta;
 extern volatile bit deltaLUp;
 extern volatile bit deltaTxUp;
+//extern volatile byte volume;  //only 4 left out..
+
 //extern volatile byte deltaLMount; 
 //extern volatile byte deltaTxMount;
 

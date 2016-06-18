@@ -127,17 +127,27 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	          	break;
 	
 	        	case EOX: // system exclusive terminator 
-					//do stuff
+					//do stuff - everbody who heard the SYS_EX stopped playing and their timers 
 					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
-					//check manuId [000e0d], myDevId, Universal sysEx header for file transfers
-					if (sysEx[0] == 0x0 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && sysEx[3] == MY_ID_H &&
-						sysEx[4] == MY_ID_L && sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && 
-						sysEx[7] == 0x02) {
+					//check manuId [010e0d], ignore myDevId, Universal sysEx header for file transfers
+					if (sysEx[0] == 0x01 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && 
+						sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && sysEx[7] == 0x02) {
 						//we should only be here on purpose...
-						//going it alone!!!
-						//we are going to use this as a reboot into bootloader CMD
-						//progMemSysEx();
-						no_touch();
+						//my devID?
+						if (sysEx[3] == MY_ID_H && sysEx[4] == MY_ID_L) {
+							//we are going to use this as a reboot into bootloader CMD
+							LED = 1;
+							delay(50000);
+							no_touch();
+						} else {
+							//somebody is getting programmed, so ... just freak out... ihex is all ascii
+							//the further progBaud is away the safer this is
+						}
+					} else { //sysEx flying around by not a programming instruction						
+					}
+					//erase sysEx buffer
+					while(sysIx > 0) {
+						sysEx[sysIx--] = 0;
 					}
 	          	break;
 	
@@ -203,6 +213,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 					deltaPos = 0;
 					nextRiff = 0;
 					numRiffs = (curSong[nextRiff]).rAddy;
+					if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+						LOOP_SONGS = 1;
+					} else {
+						LOOP_SONGS = 0;
+					}
 					curRiffCnt = 0;
 					numNotes = 0;
 					nextNote = 0;
@@ -228,15 +243,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case SYSTEM_RESET:
 					//Goodbye, See you!
 					AUXR1 |= 0x08; //soft reset
-//			  		midiFlags = 0;
-//					midiClk = 0;
-//					deltaPos = 0;
-//					numRiffs = (curSong[nextRiff]).rAddy;
-//					curRiffCnt = 0;
-//					numNotes = 0;
-//					nextNote = 0;
-//			  		PLAYING = 0;
-//					BUTT_EN = 1;
 	          	break;
 			
 				default:
@@ -257,6 +263,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	      	
 			case SONG_SELECT:
 	      		//midiMsg.song = dataByte;
+				SONG_DONE = 0;
 				songNum = dataByte;
 				midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
 	        break;
@@ -279,6 +286,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						} 
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -453,7 +465,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								setFreq(--station);
 							break;
 							
-							case HOLD0:
 							case HOLD1:
 							case HOLD2:
 							break;
@@ -577,7 +588,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 //            case BALANCE_lo: load_14bit_value(&c->balance, dataByte, LSB); break;
 
-//            case PAN_POSN_hi: load_14bit_value(&c->pan_posn, dataByte, MSB); break;
+            			case PAN_POSN_hi:
+							if (dataByte >= 64) {
+								STEREO = 1;
+							} else {
+								STEREO = 0;
+							}	
+						break;
 
 //            case PAN_POSN_lo: load_14bit_value(&c->pan_posn, dataByte, LSB); break;
 
@@ -705,6 +722,7 @@ unsigned char uart_get (void) {
   return SBUF;
 } // uart_get
 
+
 unsigned char ascii_to_hex(unsigned char ch) {
   if (ch & 0x40)								// convert ASCII character
   {	
@@ -712,6 +730,7 @@ unsigned char ascii_to_hex(unsigned char ch) {
   }
   ch &= 0x0F;									// into 2 digit Hex
   return ch;
+
 }
 
 void print_hex_to_ascii(unsigned char ch) {
