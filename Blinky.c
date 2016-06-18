@@ -177,6 +177,8 @@ void main() {
 	TR1 = 1;
 	TR0 = 1;
 #endif
+	//UNIT!! only has onboard LEDS
+	LED = 1;
 /****************LOOP*****************************************/
 	for(;;) {
 #ifdef COORD
