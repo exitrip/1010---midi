@@ -1,2 +1,2 @@
 # 1010---midi
-working on midi sysEx programming
+uVision3 project for exitrip dev
