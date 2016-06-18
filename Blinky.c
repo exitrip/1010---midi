@@ -96,13 +96,13 @@ void main() {
 	byte i = 0;
 /**************SETUP++***************************************/
 	setup();
-	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
-		delay(UINT_MAX);
-		LED ^= 1;
-		if (cnt0++ > 10) {	//hold middle button at boot for ~2.5s
-			no_touch();
-		}
-	}
+//	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
+//		delay(UINT_MAX);
+//		LED ^= 1;
+//		if (cnt0++ > 10) {	//hold middle button at boot for ~2.5s
+//			no_touch();
+//		}
+//	}
 	cnt0 = 0;
 	txVcc = 0; //on
 	setFreq(station);
