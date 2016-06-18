@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-#define COORD		//blast midi clock out of UArt and drive RT messages
-//#define BASIC_TX
+//#define COORD		//blast midi clock out of UArt and drive RT messages
+#define BASIC_TX
 //#define DEBUG_SIM
 
 //KEIL!!!!  you get the point!!!

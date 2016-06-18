@@ -52,7 +52,8 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-#define FREQ_START	(879 + MY_L_CHAN)
+#define FREQ_START	(879)
+//#define FREQ_START	(879 + MY_L_CHAN)
 			   
 
 //timing globals
@@ -119,7 +120,7 @@ void main() {
 	BUTT_EN = 1;
 	LOOP_SONGS = 0;
 	//autoStart
-	AUTO_START = 1;
+	AUTO_START = 0;
 
 #ifdef COORD
 	TR0 = 0;
