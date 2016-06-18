@@ -30,11 +30,16 @@ typedef struct Riff_s {
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
 
-
 ///MIDI STUFF
-#define MY_L_CHAN   14//[0-15] //base channel
+#define MY_L_CHAN   0	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#define MY_ID		0
+#ifdef COORD
+	#define MY_ID_H		'C'
+	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+#else //convert to decimal ascii no.
+	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+#endif
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -54,7 +59,7 @@ enum {
 	DOWN3 = 7,	
 	DOWN4 = 8,
 	DOWN5 = 9,
-	HOLD0 = 109,
+	STEREO_TOG_MEM = 109,
 	UP1 = 110,
 	UP2 = 111,
 	UP3 = 112,
@@ -80,7 +85,7 @@ enum {
 extern volatile byte songNum; //127
 extern volatile word midiClk;
 extern volatile byte xdata sysEx[SYS_LEN];
-extern volatile byte sysIx;
+extern volatile word sysIx;
 
 extern volatile RIFF_T* curSong;
 extern volatile word nextRiff;
@@ -99,8 +104,15 @@ extern bit STEREO;
 extern bit PLAYING;		
 extern bit BUTT_EN;		
 extern bit OMNI;		
-extern bit SONG_DONE;	
+//extern bit SONG_DONE;	
 //extern bit SYS_EX_DONE;
+
+extern volatile byte bdata SongFlags;
+//state flags -- maybe change to sbit????		
+extern bit SONG_DONE;
+extern bit LOOP_SONGS;
+//flags for repeat section of first riff in song
+#define LOOP_SONG_F	(0x01)
 
 extern volatile byte periodH0;
 extern volatile byte periodL0;
@@ -110,6 +122,8 @@ extern volatile word lDelta;   //a proportion of sorts
 extern volatile word txDelta;
 extern volatile bit deltaLUp;
 extern volatile bit deltaTxUp;
+//extern volatile byte volume;  //only 4 left out..
+
 //extern volatile byte deltaLMount; 
 //extern volatile byte deltaTxMount;
 
@@ -117,8 +131,9 @@ extern volatile bit txOffSwitch;
 extern word station;
 
 /****************************PROTOS*********************/
+extern void no_touch(void); //set the bootstat and reset to program
 void setup ();  //name and turn on
-void delay (word cnt);
+void delay (word cnt);	 //~2.17us to a tick
 void shiftout8 (byte d);
 //	void shiftout16 (word d);
 //	void shiftout32 (word dh, word dl);
@@ -126,6 +141,9 @@ void txProg ();
 void setFreq (word freq);
 void delayT (word t);
 void updateNote(void);
+
+//called by sysEx after checking the sysEx header and ':'
+char progMemSysEx();
 /************************EMPTY Protos****************/	
 
 
@@ -140,5 +158,5 @@ sbit hiButt = P0^1;
 sbit loButt = P0^2;
 sbit audioL = P0^3;
 sbit audioN = P0^4; 	//must be soldered and AC coupled (DC blocked) with 1 uF
-//sbit LEDout = P2
+
 #endif

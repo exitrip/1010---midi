@@ -138,7 +138,7 @@ BOOTSTAT EQU 0
 ; --------------------
 ;  <o> ISP entry point <0x0-0x1F00:0x100> <# /0x100> 
 ;      <i> points to ISP entry point (default c:0x1E00 on unprogrammed part)
-BOOTVEC EQU 0x1E  ; 
+BOOTVEC EQU 0x3F  ; 
 ; </h>
 ;
 ; <h> Flash Security Configuration

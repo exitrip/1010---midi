@@ -1,6 +1,6 @@
 #include "LUTFreq.h"
 
-const unsigned int code LUTFreq[LUT_LEN] = {
+unsigned int code LUTFreq[LUT_LEN] = {
 //	0,
 //	0,
 //	0,

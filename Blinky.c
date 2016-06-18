@@ -9,29 +9,14 @@
 #include "midi_spec.h"
 #include "uart.h"
 #include "LUTFreq.h"  
-#include "LUTsin.h" 
+//#include "LUTsin.h" 
 #include "itrip.h"
-#include "riff.h"
 #include "song.h"
 
 /******************************* GLOBALS**************************************/
 volatile byte xdata sysEx[SYS_LEN];
-volatile byte sysIx = 0;
+volatile word sysIx = 0;
 
-///////////all songs....   //drive song selection from here...
-
-void* code songBook[NUM_SONGS] = {
-	silentSong,
-	busySong,
-	//testS1,//testSCo1,////	  todo test updown songs....
-	//testS2,//testSCo1,//testSCo2,////
-	happySong,
-	minorSong,
-	wholeToneSong,
-	bodySong,
-	statSong,
-	dmbSong
-};
 
 volatile byte songNum = 0; 
 volatile word midiClk = 0;
@@ -44,9 +29,14 @@ sbit STEREO = midiFlags^2;		//(0x04)	//keep track of tx number of channels
 sbit PLAYING = midiFlags^3;		//(0x08)	//am I playing now?  //not Ignoring midiClk
 sbit BUTT_EN = midiFlags^4;		//(0x10)	//todo test
 sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
-sbit SONG_DONE = midiFlags^6;	//0x40
-sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
+//sbit SONG_DONE = midiFlags^6;	//0x40
+//sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
+volatile byte bdata songFlags;
+sbit SONG_DONE = songFlags^0;	//0x40
+sbit LOOP_SONGS = songFlags^1;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
+sbit AUTO_START = songFlags^2; //you know, start on power up after a delay, for master....  maybe also function as a watchdog
+sbit WRAP_FREQ = songFlags^3; //if told to move beyond limits of txFreq, wrap around...  maybe break into top and bottom flags...
 
 //try moving to locals!!!
 //#define NUM_RIFFS HEAVY_11_SONG_SIZE//SAUCER_VOLCANO_SONG_SIZE//THUMP1_SONG_SIZE//3//FOR_SONG_ALT_SIZE//FIRST_SONG_ALT_SIZE//THIRD_SONG_SIZE//
@@ -62,7 +52,8 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-#define FREQ_START	879
+#define FREQ_START	(879)
+//#define FREQ_START	(879 + MY_L_CHAN)
 			   
 
 //timing globals
@@ -105,6 +96,14 @@ void main() {
 	byte i = 0;
 /**************SETUP++***************************************/
 	setup();
+	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
+		delay(UINT_MAX);
+		LED ^= 1;
+		if (cnt0++ > 10) {	//hold middle button at boot for ~2.5s
+			no_touch();
+		}
+	}
+	cnt0 = 0;
 	txVcc = 0; //on
 	setFreq(station);
 	uart_init();											 
@@ -112,8 +111,17 @@ void main() {
 	//nextRiff = 0;	//to be explicit
 	curSong = songBook[songNum];
 	numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  update will inc nextRiff!!!
+	if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+		LOOP_SONGS = 1;
+	} else {
+		LOOP_SONGS = 0;
+	}
 	EA = 1;
 	BUTT_EN = 1;
+	LOOP_SONGS = 0;
+	//autoStart
+	AUTO_START = 0;
+
 #ifdef COORD
 	TR0 = 0;
 	TR1 = 0;
@@ -142,6 +150,27 @@ void main() {
 		uart_transmit(127);
 	}
 	LED = 0;
+	if (AUTO_START == 1) {
+		curSong = songBook[songNum];
+		nextRiff = 0;
+		deltaPos = 0; //trigger update
+		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+		if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+			LOOP_SONGS = 1;
+		} else {
+			LOOP_SONGS = 0;
+		}
+		uart_transmit(STOP);
+		uart_transmit(SONG_SELECT);
+		uart_transmit(songNum);
+		uart_transmit(START);
+		PLAYING = 1;
+		curRiffCnt = 0;
+		numNotes = 0;
+		nextNote = 0;
+		LED = PLAYING;
+		TR0 = PLAYING;
+	}
 #else
 	delay(65000);
 	delay(65000);
@@ -161,11 +190,17 @@ void main() {
 						if (PLAYING) { //we are already playing
 							uart_transmit(STOP);
 							PLAYING = 0;
-						} else if (midiClk == 0) { //we were playing once
+						} else if (midiClk == 0) { //were we playing once?
 							curSong = songBook[songNum];
 							nextRiff = 0;
 							deltaPos = 0; //trigger update
-							numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+							numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+							if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+								LOOP_SONGS = 1;
+							} else {
+								LOOP_SONGS = 0;
+							}
+							uart_transmit(STOP);
 							uart_transmit(SONG_SELECT);
 							uart_transmit(songNum);
 							uart_transmit(START);
@@ -204,6 +239,11 @@ void main() {
 						nextRiff = 0;
 						deltaPos = 0; //trigger update
 						numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -232,6 +272,11 @@ void main() {
 						nextRiff = 0;
 						deltaPos = 0; //trigger update
 						numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -244,84 +289,97 @@ void main() {
 
 #else
 	if (curSong != songBook[songNum]) {
+		setFreq(station);
 		curSong = songBook[songNum];
 		midiClk = 0;
 		nextRiff = 0;
 		deltaPos = 0; //trigger update
-		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will		
+		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+		if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+			LOOP_SONGS = 1;
+		} else {
+			LOOP_SONGS = 0;
+		}		
 	} else {
 	//low priority stuff
 	//todo add a flag to loop songs???  fuck midi....
 #ifdef BASIC_TX
-		if (midButt == 0) {
-//			LED ^= 1;
-			txVcc ^= 1;
-			if(txVcc == 1) {
-				txOffSwitch = 1;
-				LED = 0;
-			} else {
-				txOffSwitch = 0;
-				LED = 1;
-				delay(50);
-				setFreq(station);
-			} 
-		}	 		
-		delay(UINT_MAX);
-		if (LED) {
-			if (hiButt == 0) {
-				LED = 0;
-				delay(UINT_MAX);
-				station++;
-				setFreq(station);
-				LED = 1;
-				delay(UINT_MAX);
-			} 
-			else if (loButt == 0) {
-				LED = 0;
-				delay(UINT_MAX);
-				--station;
-				setFreq(station);
-				LED = 1;
-				delay(UINT_MAX);
+		//was number of transmit channels changed
+		if (stereoTx != STEREO) {
+			stereoTx = STEREO;
+			txProg();
+		}
+		if (BUTT_EN == 1) {
+			if (midButt == 0) {
+	//			LED ^= 1;
+				txVcc ^= 1;
+				if(txVcc == 1) {
+					txOffSwitch = 1;
+					LED = 0;
+				} else {
+					txOffSwitch = 0;
+					LED = 1;
+					delay(50);
+					setFreq(station);
+				} 
+			}	 		
+			delay(UINT_MAX);
+			if (LED) {
+				if (hiButt == 0) {
+					LED = 0;
+					delay(UINT_MAX);
+					station++;
+					setFreq(station);
+					LED = 1;
+					delay(UINT_MAX);
+				} 
+				else if (loButt == 0) {
+					LED = 0;
+					delay(UINT_MAX);
+					--station;
+					setFreq(station);
+					LED = 1;
+					delay(UINT_MAX);
+				}
+				if (station < MIN_FREQ) {
+					station = MIN_FREQ;
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+				}
+				if (station > MAX_FREQ) {
+					station = MAX_FREQ;
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+					LED = 0;
+					delay(UINT_MAX);
+					LED = 1;
+					delay(UINT_MAX);
+				}						  
 			}
-			if (station < MIN_FREQ) {
-				station = MIN_FREQ;
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-			}
-			if (station > MAX_FREQ) {
-				station = MAX_FREQ;
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-				LED = 0;
-				delay(UINT_MAX);
-				LED = 1;
-				delay(UINT_MAX);
-			}						  
 		}
 #endif
 	}
@@ -469,6 +527,7 @@ void timers_isr0 (void) interrupt 1 using 3
 #endif
 }
 
+//Plays first riff one extra time!!!
 void updateNote(void) {
 	byte temp, temp2;
 	word thisDelta = 0;
@@ -477,7 +536,7 @@ UPDATE_NOTE:
 	if (nextNote >= numNotes) {	 //equal to catches init!!!
 		nextNote = 1; //skip the riff len header
 		if (curRiffCnt-- == 0) {
-			if (++nextRiff == numRiffs) { //next riff is newRiff
+			if (++nextRiff >= numRiffs) { //next riff is newRiff
 				//end of SONG!!!!
 				PLAYING = 0; //midi says stop
 				midiClk = 0;
@@ -491,10 +550,36 @@ UPDATE_NOTE:
 				curRiffCnt = 0;
 				nextNote = numNotes;
 				SONG_DONE = 1;
-#ifdef COORD
-				uart_transmit(STOP);
-				TR0 = 0;  //stop playing
-				//TR1 = 0;	
+				if (LOOP_SONGS == 1) { //looP songs, reset everybody, looPSongs only for coord 
+//					uart_transmit(SONG_SELECT);
+//					uart_transmit(songNum);
+//					uart_transmit(START);
+					//curSong = songBook[songNum];
+					nextRiff = 0;
+					deltaPos = 0; //trigger update
+					numRiffs = (curSong[nextRiff]).rAddy;  //grab song length!  dont inc it.. update will
+					//loop song is set already, but this would parse other flags...  And we will consitently inc here
+					if ((curSong[nextRiff++]).repeats & LOOP_SONG_F) {
+						LOOP_SONGS = 1;
+					} else {
+						LOOP_SONGS = 0;
+					}
+					numNotes = 0; //numNotes=nextNote skiPs songlength header, maybe hide init info like looPsongs in rePs field
+					nextNote = 1; //but this breaks that flow so we have to force it forward
+					riff = (byte*) (curSong[nextRiff]).rAddy;//grab the physical addy of first riff
+					curRiffCnt = (curSong[nextRiff]).repeats;//grabs number of time riff repeats  
+					numNotes = riff[0];				//grab the length of the riff
+					SONG_DONE = 0;
+					PLAYING = 1;
+//					TR0 = 1;  //start playing
+					LED = 1;
+					goto UPDATE_NOTE;
+				}
+#ifdef COORD	
+				else {
+					TR0 = 0;  //stop playing
+					uart_transmit(STOP);
+				}	
 #endif
 			} else {
 				riff = (byte*) (curSong[nextRiff]).rAddy;//grab the physical addy of first riff
@@ -521,6 +606,7 @@ UPDATE_NOTE:
 								//delay(900); //didnt help with bad sync on txToggle
 							case GENERAL_SLIDER_1_hi: //todo keep thinking about 14 bit values...
 							case GENERAL_SLIDER_1_lo:
+							case PAN_POSN_hi:
 							default:
 								uart_transmit(temp);
 								uart_transmit(temp2);
@@ -565,6 +651,11 @@ UPDATE_NOTE:
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -577,6 +668,11 @@ UPDATE_NOTE:
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -585,7 +681,7 @@ UPDATE_NOTE:
 						TR0 = 1;
 		          	break;
 		
-		        	case STOP:  //this will cease the whole !# till the button is pressed again
+		        	case STOP:  //this will cease the whole #! till the button is pressed again
 				  		PLAYING = 0;
 						uart_transmit(temp);
 						TR0 = 0;
@@ -710,7 +806,6 @@ UPDATE_NOTE:
 				setFreq(--station);
 			break;
 			
-			case HOLD0:
 			case HOLD1:
 			case HOLD2:
 			break;
@@ -721,6 +816,10 @@ UPDATE_NOTE:
 				} else {
 					AUDIO_L_ON = 0;
 				}
+			break;
+
+			case STEREO_TOG_MEM:
+				STEREO ^= 1;
 			break;
 
 			default:

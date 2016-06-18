@@ -63,7 +63,7 @@ void uart_init (void) {
 
 void uart_rx_isr (void) interrupt 4 using 0 {
 	//variables for scanning !!!
-	word riffClks = 0;
+	word idata riffClks = 0;
 	bit riffCntGotReset = 0;
 #ifdef DEBUG_SIM
 	volatile byte temp = SBUF;
@@ -104,7 +104,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 		      // system messages
 	    	switch (dataByte) {
 				case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
+					midiMsg.typeChan = dataByte;
 			  		sysIx = 0;
+					//stop what youre doing and listen
+					PLAYING = 0;
+					TR0 = 0;
+					TR1 = 0;
+					BUTT_EN = 0;
 				break;
 	
 	        	case SONG_POSITION:
@@ -121,7 +127,28 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	          	break;
 	
 	        	case EOX: // system exclusive terminator 
-					//do stuff
+					//do stuff - everbody who heard the SYS_EX stopped playing and their timers 
+					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
+					//check manuId [010e0d], ignore myDevId, Universal sysEx header for file transfers
+					if (sysEx[0] == 0x01 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && 
+						sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && sysEx[7] == 0x02) {
+						//we should only be here on purpose...
+						//my devID?
+						if (sysEx[3] == MY_ID_H && sysEx[4] == MY_ID_L) {
+							//we are going to use this as a reboot into bootloader CMD
+							LED = 1;
+							delay(50000);
+							no_touch();
+						} else {
+							//somebody is getting programmed, so ... just freak out... ihex is all ascii
+							//the further progBaud is away the safer this is
+						}
+					} else { //sysEx flying around by not a programming instruction						
+					}
+					//erase sysEx buffer
+					while(sysIx > 0) {
+						sysEx[sysIx--] = 0;
+					}
 	          	break;
 	
 	        	case TIMING_CLOCK:
@@ -129,7 +156,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 					#ifdef COORD
 //						midiClk++;
 //						if (deltaPos > 0) {
-//							deltaPos--; 
+//							deltaPos--; 										  
 //						}
 					#else
 						midiClk++;
@@ -186,6 +213,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 					deltaPos = 0;
 					nextRiff = 0;
 					numRiffs = (curSong[nextRiff]).rAddy;
+					if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+						LOOP_SONGS = 1;
+					} else {
+						LOOP_SONGS = 0;
+					}
 					curRiffCnt = 0;
 					numNotes = 0;
 					nextNote = 0;
@@ -211,15 +243,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case SYSTEM_RESET:
 					//Goodbye, See you!
 					AUXR1 |= 0x08; //soft reset
-//			  		midiFlags = 0;
-//					midiClk = 0;
-//					deltaPos = 0;
-//					numRiffs = (curSong[nextRiff]).rAddy;
-//					curRiffCnt = 0;
-//					numNotes = 0;
-//					nextNote = 0;
-//			  		PLAYING = 0;
-//					BUTT_EN = 1;
 	          	break;
 			
 				default:
@@ -233,12 +256,14 @@ void uart_rx_isr (void) interrupt 4 using 0 {
         		if(sysIx < SYS_LEN) {// discard data if the buffer is full
           			sysEx[sysIx++] = dataByte;
 				} else { //buffer full!!!
+					//reset??  something is real bad...
 				}
         	break;
 
 	      	
 			case SONG_SELECT:
 	      		//midiMsg.song = dataByte;
+				SONG_DONE = 0;
 				songNum = dataByte;
 				midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
 	        break;
@@ -261,6 +286,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
+						if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+							LOOP_SONGS = 1;
+						} else {
+							LOOP_SONGS = 0;
+						} 
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
@@ -435,7 +465,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								setFreq(--station);
 							break;
 							
-							case HOLD0:
 							case HOLD1:
 							case HOLD2:
 							break;
@@ -559,7 +588,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 //            case BALANCE_lo: load_14bit_value(&c->balance, dataByte, LSB); break;
 
-//            case PAN_POSN_hi: load_14bit_value(&c->pan_posn, dataByte, MSB); break;
+            			case PAN_POSN_hi:
+							if (dataByte >= 64) {
+								STEREO = 1;
+							} else {
+								STEREO = 0;
+							}	
+						break;
 
 //            case PAN_POSN_lo: load_14bit_value(&c->pan_posn, dataByte, LSB); break;
 
@@ -687,6 +722,7 @@ unsigned char uart_get (void) {
   return SBUF;
 } // uart_get
 
+
 unsigned char ascii_to_hex(unsigned char ch) {
   if (ch & 0x40)								// convert ASCII character
   {	
@@ -694,6 +730,7 @@ unsigned char ascii_to_hex(unsigned char ch) {
   }
   ch &= 0x0F;									// into 2 digit Hex
   return ch;
+
 }
 
 void print_hex_to_ascii(unsigned char ch) {
@@ -716,3 +753,94 @@ void print_hex_to_ascii(unsigned char ch) {
   temp_character += 0x30;						// add '0' to get ascii
   uart_transmit(temp_character);					// print lower nible
 }
+/******************   Couldn't get IAP-Lite to work! ****************************/
+///the hail mary, happy Easter
+//#define LOAD 0x00 // clear page register, enable loading
+//#define EP 0x68 // erase & program page
+
+
+//returns 0 on success, -1 on failure, and 1 on EOF packet
+//char progMemSysEx() {
+//  TODO DONT WORK FIXME NEVER?
+//	//get length and check checksum
+//	byte length = (ascii_to_hex(sysEx[9]) << 4) + ascii_to_hex(sysEx[10]);			
+//	byte hiAddy;
+//	byte loAddy;		
+//	word addy;
+//	byte pageOffset;
+//	byte overflow = 0;
+//	byte checksum = 0;
+//	byte index = 9;
+//	byte fmStat;
+//	byte temp;
+//	word wTemp;
+//	//scan uart buffer till the end of the data section
+//	for (index = 9; index < sysIx-2; index) {
+//		temp = ascii_to_hex(sysEx[index++]) << 4;
+//		temp += ascii_to_hex(sysEx[index++]);
+//		checksum += temp;	
+//	}
+//	checksum = ~checksum;
+//	checksum++;
+//	//compare calc checksum to reported
+//	if (checksum != ((ascii_to_hex(sysEx[sysIx-2]) << 4) + ascii_to_hex(sysEx[sysIx-1]))) {
+//		return -1;	//failed checksum
+//		//uart_transmit('X');
+//	}
+////	if (length == 0) {
+////		if (ascii_to_hex(15) == 1 && )
+////	}
+//	//grab metadata	
+//	hiAddy = (ascii_to_hex(sysEx[11]) << 4) + ascii_to_hex(sysEx[12]);
+//	loAddy = (ascii_to_hex(sysEx[13]) << 4) + ascii_to_hex(sysEx[14]);		
+//	addy = (hiAddy << 8) + loAddy;
+//	pageOffset = loAddy & 0x3F;
+//	//does the record actually want us to write anything???
+//	//00 means data to write
+//	if (sysEx[15] == '0' && sysEx[16] == '0') {
+//		//does the data cross a page boundary????  ...  jerks...
+//		if (pageOffset + length > 0x3F) {	//hic sunt leones
+//			overflow = length - (pageOffset + length - 0x40); //e.g. 0x31+16-0x40 = 1
+//			length -= overflow;  //adjust amount to write to this page 
+//		}
+//		//word pageAddy = (hiAddy << 8 + (loAddy & 0xC0)); //pages are 64 byte aligned
+//		FMCON = LOAD; //load command, clears page reg
+//		FMADRH = hiAddy; //
+//		FMADRL = loAddy; //write my page address to addr regs
+//		index = 17;
+//		while (length-- != 0) {
+//			temp = ascii_to_hex(sysEx[index++]) << 4;
+//			temp += ascii_to_hex(sysEx[index++]);
+//			FMDATA = temp;	
+//		}
+//		FMCON = EP; //erase & prog page command
+//		//delay???
+//		wTemp = 4000;
+//		while (--wTemp);
+//		fmStat = FMCON; //read the result status
+//		if ((fmStat & 0x0F)!= 0) {
+//			return -1;
+//		}
+//		if (overflow != 0) {
+//			FMADRH = ++hiAddy; //
+//			FMADRL = 0; //write my page address to addr regs
+//			while (overflow-- != 0) {
+//				temp = ascii_to_hex(sysEx[index++]) << 8;
+//				temp += ascii_to_hex(sysEx[index++]);
+//				FMDATA = temp;
+//				length--;	
+//			}
+//			FMCON = EP; //erase & prog page command
+//			//delay???
+//			wTemp = 4000;
+//			while (--wTemp);
+//			fmStat = FMCON; //read the result status
+//			if ((fmStat & 0x0F)!=0) {
+//				return -1;
+//			}
+//		}
+//		//success???
+//		return 0;
+//	}
+//	return 0;
+//}
