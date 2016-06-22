@@ -10,7 +10,7 @@
 #include "uart.h"
 #include "adc.h"
 #include "LUTFreq.h"  
-//#include "LUTsin.h" 
+#include "LUTsin.h" 
 #include "itrip.h"
 #include "song.h"
 
@@ -414,6 +414,19 @@ void setup() {
 	test1 = 0; 	//always
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
+
+#ifdef DAC0_OUT
+	//configure DAC1 out
+	  // set dac0 pin to input only (disables digital output)
+	P2M1 |= 0x01;
+	P1M2 &= ~0x01;
+	// init dac1 value to zero
+	AD1DAT3 = 0x00;
+	// enable dac0 output
+	ADMODB |= 0x04;
+	// enable adc0 (also enables dac0)
+	ADCON0 |= 0x04;
+#endif
 
 #ifdef DAC1_OUT
 	//configure DAC1 out

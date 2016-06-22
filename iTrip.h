@@ -29,6 +29,9 @@ typedef struct Riff_s {
 //#ifdef (COORD && BASIC_TX)
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
+//DAC/ADC stuff
+#define DAC0_OUT
+#define DAC1_OUT
 
 ///MIDI STUFF
 #define MY_L_CHAN   0	//[0-15] //base channel
