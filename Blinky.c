@@ -18,7 +18,6 @@
 volatile byte xdata sysEx[SYS_LEN];
 volatile word sysIx = 0;
 
-
 volatile byte songNum = 0; 
 volatile word midiClk = 0;
 
@@ -81,6 +80,10 @@ volatile bit deltaTxUp = 0;
 //////   ADC
 volatile byte adcFlag;
 volatile byte adcVal[2];
+
+///DAC
+byte dac0LUTdex = 0;
+byte dac1LUTdex = 0;
 
 /****************************BH141* instruction*******************************/
 
@@ -421,7 +424,7 @@ void setup() {
 	P2M1 |= 0x01;
 	P1M2 &= ~0x01;
 	// init dac1 value to zero
-	AD1DAT3 = 0x00;
+	AD0DAT3 = 0x00;
 	// enable dac0 output
 	ADMODB |= 0x04;
 	// enable adc0 (also enables dac0)
@@ -466,22 +469,23 @@ void setup() {
 	//set timer0 priority to 2, below tx
 	IP0 &= ~(0x02);
 	IP0H &= ~(0x02);
+	//CLK OUT
 #endif
 	// set timer 1 isr priority to 2 and timer 0 to priority 3
-
 	IP0 &= ~(0x80);
 	IP0H &= ~(0x00);
 	//  // enable timer 1 interrupt
-
 	ET1 = 1;
 	ET0 = 1;
 
-	// start timers
-
-	//TR1 = 1;
-	//TR0 = 1;
-//	LEDout = 0;
 	//adc_init();
+	// configure clock divider 
+	ADMODB |= 0x40;
+	// set isr priority to 0
+	IP1 &= 0x7F;
+	IP1H &= 0x7F;
+	// enable adc interrupt
+	EAD = 1;
 }	
 /*********************TIMER interrupts****************************/
 
@@ -509,6 +513,9 @@ void timers_isr1 (void) interrupt 3 using 2
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
+#ifdef DAC0_OUT
+		AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+#endif
 #endif
 }
 
@@ -544,6 +551,9 @@ void timers_isr0 (void) interrupt 1 using 3
 		} else {
 			txVcc = 1; //tx OFF!  station???
 		}
+#ifdef DAC1_OUT
+	AD0DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+#endif
 #endif
 }
 

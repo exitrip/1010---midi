@@ -30,6 +30,7 @@ typedef struct Riff_s {
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
 //DAC/ADC stuff
+//Maybe exclusive to basics
 #define DAC0_OUT
 #define DAC1_OUT
 

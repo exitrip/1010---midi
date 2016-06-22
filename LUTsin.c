@@ -1,6 +1,6 @@
 #include "LUTsin.h"
 
-const unsigned char code LUTSIN64[64] = {
+unsigned char code LUTSIN64[64] = {
 	128,
 	140,
 	152,
@@ -66,7 +66,8 @@ const unsigned char code LUTSIN64[64] = {
 	103,
 	115
 };
-const unsigned char code LUTSIN128[128] = {
+
+unsigned char code LUTSIN128[128] = {
 	128,
 	134,
 	140,
