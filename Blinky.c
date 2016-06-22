@@ -8,6 +8,7 @@
 #include <CTYPE.H>
 #include "midi_spec.h"
 #include "uart.h"
+#include "adc.h"
 #include "LUTFreq.h"  
 //#include "LUTsin.h" 
 #include "itrip.h"
@@ -76,6 +77,10 @@ volatile word lDelta = 0;
 volatile word txDelta = 0;
 volatile bit deltaLUp = 0;
 volatile bit deltaTxUp = 0;
+
+//////   ADC
+volatile byte adcFlag;
+volatile byte adcVal[2];
 
 /****************************BH141* instruction*******************************/
 
