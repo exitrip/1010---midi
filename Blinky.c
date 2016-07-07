@@ -79,7 +79,7 @@ volatile bit deltaTxUp = 0;
 
 //////   ADC
 volatile byte adcFlag;
-volatile byte adcVal[2];
+//volatile byte adcVal[2];
 
 ///DAC
 byte dac0LUTdex = 0;
@@ -502,6 +502,9 @@ void timers_isr1 (void) interrupt 3 using 2
 		//T0 = 0;
 //		P1^2 ^= 1; //also didnt work in conjunction with count mode...
 		//todo test...
+//#ifdef DAC0_OUT				//todo test moving before ifdef
+//		AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+//#endif
 #else
 		//reload
 		TH1 = periodH1;	//remember this only counts up!!!!
@@ -537,6 +540,12 @@ void timers_isr0 (void) interrupt 1 using 3
 			TH0 = 0;
 			TL0 = 0;
 		}
+#ifdef DAC1_OUT
+	AD1DAT3 ^= 0xff; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
+#endif
+#ifdef DAC0_OUT				
+	AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+#endif
 #else
 		//reload
 		TH0 = periodH0;
@@ -552,7 +561,7 @@ void timers_isr0 (void) interrupt 1 using 3
 			txVcc = 1; //tx OFF!  station???
 		}
 #ifdef DAC1_OUT
-	AD0DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
 #endif
 #endif
 }

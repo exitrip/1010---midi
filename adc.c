@@ -20,8 +20,8 @@ GENERATED: On "Sep 30 2010" at "21:16:49" by Code Architect 2.06
 #include "adc.h"
 
 /************************exterN GLOBOLS********************************/
-extern volatile byte adcFlag;
-extern volatile byte adcVal[2];
+//extern volatile byte adcFlag;
+//extern volatile byte adcVal[2];
 /***********************************************************************
 DESC:    Initializes the ADC
 RETURNS: Nothing
@@ -171,11 +171,11 @@ void adc_isr
     ADCON1 &= ~0x08;
     
 	//mycode........................
-	adcVal[0] = adcVal[1];
-	adcVal[1] = AD1DAT2; 
-	if ((adcVal[0] > 15) && (adcVal[1] > 15))
-		adcFlag = 1;
-	else {adcFlag = 0;}
+	//adcVal[0] = adcVal[1];
+	//adcVal[1] = AD1DAT2; 
+	//if ((adcVal[0] > 15) && (adcVal[1] > 15))
+	//	adcFlag = 1;
+	//else {adcFlag = 0;}
 	//mycodeend
 
   }

@@ -35,7 +35,7 @@ typedef struct Riff_s {
 #define DAC1_OUT
 
 ///MIDI STUFF
-#define MY_L_CHAN   0	//[0-15] //base channel
+#define MY_L_CHAN   14	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #ifdef COORD
 	#define MY_ID_H		'C'
