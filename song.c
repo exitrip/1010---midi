@@ -10,7 +10,7 @@
 void* const code songBook[NUM_SONGS] = {
 	//testS1,//testSCo1,////	  
 	//testS2,//testSCo1,//testSCo2,////
-	silentSong,
+	//silentSong,
 	//vexations,
 	busySong,
 	happySong,
@@ -21,7 +21,8 @@ void* const code songBook[NUM_SONGS] = {
 	statSong,
 	dmbSong,
 	TeFFSong,
-	shepStatSong
+	shepStatSong,
+	silentSong
 };
 
 //TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche

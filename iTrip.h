@@ -30,12 +30,12 @@ typedef struct Riff_s {
 //	#error "DUMB!!! L00K UP!!!"
 //#endif
 //DAC/ADC stuff
-//Maybe exclusive to basics
-#define DAC0_OUT
+//#define DAC0_OUT
 #define DAC1_OUT
+#define ADC_IN
 
 ///MIDI STUFF
-#define MY_L_CHAN   14	//[0-15] //base channel
+#define MY_L_CHAN   0	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 #ifdef COORD
 	#define MY_ID_H		'C'
@@ -99,6 +99,11 @@ extern volatile byte code* riff;
 extern volatile word deltaPos;
 extern volatile byte numNotes;
 extern volatile byte nextNote;
+
+#ifdef ADC_IN
+extern volatile byte newADC0;
+extern volatile byte newADC1;
+#endif
 
 extern volatile byte bdata midiFlags;
 //state flags -- maybe change to sbit????

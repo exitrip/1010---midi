@@ -6,9 +6,11 @@
 #include <INTRINS.H>   
 #include <STDIO.H> 
 #include <CTYPE.H>
-#include "midi_spec.h"
+#include "power.h"
 #include "uart.h"
 #include "adc.h"
+#include "ee.h"
+#include "midi_spec.h"
 #include "LUTFreq.h"  
 #include "LUTsin.h" 
 #include "itrip.h"
@@ -33,10 +35,14 @@ sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
 //sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
 volatile byte bdata songFlags;
-sbit SONG_DONE = songFlags^0;	//0x40
-sbit LOOP_SONGS = songFlags^1;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
-sbit AUTO_START = songFlags^2; //you know, start on power up after a delay, for master....  maybe also function as a watchdog
-sbit WRAP_FREQ = songFlags^3; //if told to move beyond limits of txFreq, wrap around...  maybe break into top and bottom flags...
+sbit STATE_0 = songFlags^0;
+sbit STATE_1 = songFlags^1;
+sbit STATE_2 = songFlags^2;
+sbit STATE_3 = songFlags^3;
+sbit SONG_DONE = songFlags^4;	//0x40
+sbit LOOP_SONGS = songFlags^5;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
+sbit AUTO_START = songFlags^6; //you know, start on power up after a delay, for master....  maybe also function as a watchdog
+sbit WRAP_FREQ = songFlags^7; //if told to move beyond limits of txFreq, wrap around...  maybe break into top and bottom flags...
 
 //try moving to locals!!!
 //#define NUM_RIFFS HEAVY_11_SONG_SIZE//SAUCER_VOLCANO_SONG_SIZE//THUMP1_SONG_SIZE//3//FOR_SONG_ALT_SIZE//FIRST_SONG_ALT_SIZE//THIRD_SONG_SIZE//
@@ -52,8 +58,8 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-#define FREQ_START	(879)
-//#define FREQ_START	(879 + MY_L_CHAN)
+//#define FREQ_START	(879)
+#define FREQ_START	(879 + (MY_L_CHAN*2) )
 			   
 
 //timing globals
@@ -62,7 +68,9 @@ volatile byte nextNote = 0;
 volatile byte periodH0 = 0; 
 volatile byte periodL0 = 0;   
 volatile byte cnt0 = 0;
-volatile byte temp0 = 0;
+#ifdef COORD
+	volatile byte temp0 = 0;
+#endif
 
 //pitch
 volatile byte periodH1 = 0; 
@@ -78,12 +86,22 @@ volatile bit deltaLUp = 0;
 volatile bit deltaTxUp = 0;
 
 //////   ADC
-volatile byte adcFlag;
+//volatile byte adcFlag;
+#ifdef ADC_IN
+	volatile byte newADC0 = 0;
+	byte oldADC0 = 0;
+	volatile byte newADC1 = 0;
+	//byte oldADC1 = 0;
+#endif
 //volatile byte adcVal[2];
 
 ///DAC
-byte dac0LUTdex = 0;
-byte dac1LUTdex = 0;
+#ifdef DAC0_OUT
+	byte dac0LUTdex = 0;
+#endif
+#ifdef DAC1_OUT
+	byte dac1LUTdex = 0;
+#endif
 
 /****************************BH141* instruction*******************************/
 
@@ -104,13 +122,41 @@ void main() {
 	byte i = 0;
 /**************SETUP++***************************************/
 	setup();
+	//Config boot-up
 	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
-		delay(UINT_MAX);
 		LED ^= 1;
-		if (cnt0++ > 10) {	//hold middle button at boot for ~2.5s
-			no_touch();
+		delay(UINT_MAX/3);	
+		if (cnt0++ > 80) {	//hold middle button at boot for ~2.5s
+			//add a gang sign to enter flash programming mode, cause it will be hard to recover from...
+			while (midButt == 0) {};
+			while (1) {
+				if (hiButt == 0 ) { 
+					no_touch();
+				} else if (loButt == 0) {
+					cnt0 = 0;
+					break;
+				}
+			}
 		}
+		//hopefully a graceful recovery from the threat of flash programming
+		//TODO for later peeps
+		//read butts
+		//if butts
+		//	write eeprom
+		//else read eeprom
 	}
+
+	while (hiButt == 0) {
+#ifdef COORD
+#else
+#endif
+	}
+	while (loButt == 0) {
+#ifdef COORD
+#else
+#endif
+	}
+	// End Config boot-up
 	cnt0 = 0;
 	txVcc = 0; //on
 	setFreq(station);
@@ -128,7 +174,7 @@ void main() {
 	BUTT_EN = 1;
 	LOOP_SONGS = 0;
 	//autoStart
-	AUTO_START = 0;
+	AUTO_START = 1;
 
 #ifdef COORD
 	TR0 = 0;
@@ -187,9 +233,47 @@ void main() {
 #endif
 	//UNIT!! only has onboard LEDS
 	LED = 1;
+	setFreq(station);
 /****************LOOP*****************************************/
 	for(;;) {
 #ifdef COORD
+#ifdef ADC_IN
+		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
+		//while (ADCON0 & 0x08 == 0x0) {}; 
+		//newADC0 = AD0DAT0;
+		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
+			LPeriod = VPeriod + newADC0;
+			temp0 = (LPeriod >> 8) & 0xff;
+			periodH0 = LPeriod & 0xff;
+		}
+		if (newADC1 > 127) {
+			uart_transmit(STOP);
+			PLAYING = 0;
+		} else {
+			if (midiClk == 0) { //were we playing once?
+				curSong = songBook[songNum];
+				nextRiff = 0;
+				deltaPos = 0; //trigger update
+				numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+				if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+					LOOP_SONGS = 1;
+				} else {
+					LOOP_SONGS = 0;
+				}
+				uart_transmit(STOP);
+				uart_transmit(SONG_SELECT);
+				uart_transmit(songNum);
+				uart_transmit(START);
+				PLAYING = 1;
+				curRiffCnt = 0;
+				numNotes = 0;
+				nextNote = 0;
+			} else {
+				uart_transmit(CONTINUE);
+				PLAYING = 1;
+			}
+		}
+#endif
 		txVcc = 1; //assert tx off...
 		if (BUTT_EN == 1) {
 			if (midButt == 0) {  //debounced midButt switches COORD's PLAYING
@@ -312,8 +396,25 @@ void main() {
 		}		
 	} else {
 	//low priority stuff
-	//todo add a flag to loop songs???  fuck midi....
 #ifdef BASIC_TX
+#ifdef ADC_IN
+		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
+		//while (ADCON0 & 0x08 == 0x0) {}; 
+		//newADC0 = AD0DAT0;
+		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
+		//if (newADC0 > 7 ) {
+			//LED = 0;
+			oldADC0 = newADC0; 
+			setFreq(station + (newADC0 >> 3)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
+		}
+		if (newADC1 > 127) {
+			txOffSwitch = 0;
+			LED = 0;
+		} else {
+			txOffSwitch = 1;
+			LED = 1;
+		}
+#endif 
 		//was number of transmit channels changed
 		if (stereoTx != STEREO) {
 			stereoTx = STEREO;
@@ -399,12 +500,17 @@ void main() {
 /*******************SETUP FUNCTION*********************/
 void setup() {
 
+	power_brownoutenable(POWER_BOINTERRUPT);
+	eeprom_init();
+
 	P0M1 = 0x07;	 //input for buttons and audioN, push pull for audioL
 	P0M2 = 0x08;
 	P1M1 = 0;		//uart_init takes care of TX/RX
 //	P1M2 |= 0x04;	//configure t0 [p1^2] as push pull
 	P2M1 = 0;		
 	P3M1 = 0;
+	//adc and dac taken care of later
+
 	midButt = 1; //pull up resistors on the button inputs
 	hiButt = 1;
 	loButt = 1;
@@ -418,18 +524,18 @@ void setup() {
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
 
-#ifdef DAC0_OUT
-	//configure DAC1 out
-	  // set dac0 pin to input only (disables digital output)
-	P2M1 |= 0x01;
-	P1M2 &= ~0x01;
-	// init dac1 value to zero
-	AD0DAT3 = 0x00;
-	// enable dac0 output
-	ADMODB |= 0x04;
-	// enable adc0 (also enables dac0)
-	ADCON0 |= 0x04;
-#endif
+//#ifdef DAC0_OUT
+//	//configure DAC1 out
+//	  // set dac0 pin to input only (disables digital output)
+//	P2M1 |= 0x01;
+//	P2M1 &= ~0x01;
+//	// init dac0 value to zero
+//	AD0DAT3 = 0x00;
+//	// enable dac0 output
+//	ADMODB |= 0x04;
+//	// enable adc0 (also enables dac0)
+//	ADCON0 |= 0x04;
+//#endif
 
 #ifdef DAC1_OUT
 	//configure DAC1 out
@@ -445,9 +551,7 @@ void setup() {
 #endif
 
 	  // configure timers
-
 	TMOD &= 0x00;	 //clear conf for timers
-
 	TAMOD &= 0xEE;	 //clear conf for timers
 	TMOD |= 0x11;	 //16bit mode for both
 
@@ -460,10 +564,6 @@ void setup() {
 	
 	TH1 = periodH1;
 	TL1 = periodL1;
-//#ifdef COORD	 //didnt work
-//	//chain the timers with GPIO toggling
-//	TMOD |= 0x04;  //set up t0 as a counter
-//#endif
 	//timer 0 interrupt is higher than timer 1 thus timer 0 is tempo and t1 is pitch
 #ifdef COORD
 	//set timer0 priority to 2, below tx
@@ -478,14 +578,34 @@ void setup() {
 	ET1 = 1;
 	ET0 = 1;
 
-	//adc_init();
-	// configure clock divider 
-	ADMODB |= 0x40;
-	// set isr priority to 0
-	IP1 &= 0x7F;
-	IP1H &= 0x7F;
-	// enable adc interrupt
-	EAD = 1;
+#ifdef ADC_IN
+	adc_init();
+	adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL2);
+
+//	// configure clock divider 
+//	ADMODB |= 0x40;
+//	//configure pins
+//	P1M1 |= 0x80; //input only for AD00, P1.7, pin 4, ADC1
+//	P1M2 &= ~0x80;
+//	P2M1 |= 0x02; //input only for AD02, P2.1, pin 2, ADC0
+//	P2M2 &= ~0x02;
+//	//setup rolling two channel conversion
+//	// disable all triggers
+//  	// ADCON0 &= 0xDC;
+//	// clear mode bits and boundary interrupt flag
+//  	ADMODA &= 0x0F;
+//	//autoscan, continuously on adc0 and adc1
+//	ADINS = (ADC0_CHANNEL0 | ADC0_CHANNEL2);
+//	ADMODA |= 0x04; //set burst flag, try the alternate bit conf if this doesnt work...
+//	//start now
+//	ADCON0 |= 0x01;
+//	//data should be in AD0DAT0 and AD0DAT2
+#endif
+//	// set isr priority to 0
+//	IP1 &= 0x7F;
+//	IP1H &= 0x7F;
+//	// enable adc interrupt	???
+//	EAD = 1;
 }	
 /*********************TIMER interrupts****************************/
 
@@ -753,6 +873,9 @@ UPDATE_NOTE:
 					periodH0 = 0xFF - riff[nextNote++];
 					periodL0 = 0xFF - riff[nextNote++];
 					cnt0 = 0;
+					//use LPeriod as tempo shadow for ADC time bending
+					LPeriod = (temp0 << 8) + periodH0;
+					VPeriod = LPeriod;
 					break;
 			}
 		}
