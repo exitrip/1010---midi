@@ -238,41 +238,41 @@ void main() {
 	for(;;) {
 #ifdef COORD
 #ifdef ADC_IN
-		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
-		//while (ADCON0 & 0x08 == 0x0) {}; 
-		//newADC0 = AD0DAT0;
 		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
+			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
 			LPeriod = VPeriod + newADC0;
 			temp0 = (LPeriod >> 8) & 0xff;
 			periodH0 = LPeriod & 0xff;
 		}
-		if (newADC1 > 127) {
-			uart_transmit(STOP);
-			PLAYING = 0;
-		} else {
-			if (midiClk == 0) { //were we playing once?
-				curSong = songBook[songNum];
-				nextRiff = 0;
-				deltaPos = 0; //trigger update
-				numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
-				if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
-					LOOP_SONGS = 1;
-				} else {
-					LOOP_SONGS = 0;
-				}
-				uart_transmit(STOP);
-				uart_transmit(SONG_SELECT);
-				uart_transmit(songNum);
-				uart_transmit(START);
-				PLAYING = 1;
-				curRiffCnt = 0;
-				numNotes = 0;
-				nextNote = 0;
-			} else {
-				uart_transmit(CONTINUE);
-				PLAYING = 1;
-			}
-		}
+		//this has to be a mode because it dominates functionality with no signal....
+//		//ring adc switches play on/off
+//		if (newADC1 > 127) {
+//			uart_transmit(STOP);
+//			PLAYING = 0;
+//		} else {
+//			if (midiClk == 0) { //were we playing once?
+//				curSong = songBook[songNum];
+//				nextRiff = 0;
+//				deltaPos = 0; //trigger update
+//				numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+//				if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+//					LOOP_SONGS = 1;
+//				} else {
+//					LOOP_SONGS = 0;
+//				}
+//				uart_transmit(STOP);
+//				uart_transmit(SONG_SELECT);
+//				uart_transmit(songNum);
+//				uart_transmit(START);
+//				PLAYING = 1;
+//				curRiffCnt = 0;
+//				numNotes = 0;
+//				nextNote = 0;
+//			} else {
+//				uart_transmit(CONTINUE);
+//				PLAYING = 1;
+//			}
+//		}
 #endif
 		txVcc = 1; //assert tx off...
 		if (BUTT_EN == 1) {
