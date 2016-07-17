@@ -48,7 +48,7 @@ void adc_init
   IP1H &= 0x7F;
 
   // enable adc interrupt
-  EAD = 1;
+  //EAD = 1;
 }
 
 /***********************************************************************
@@ -168,14 +168,16 @@ void adc_isr
     // clear ADCI0 flag
     ADCON0 &= ~0x08;
     // read results from AD0DAT0 - AD0DAT3
+#ifdef ADC_IN
 	newADC0 = AD0DAT0;
 	newADC1 = AD0DAT2;
+#endif
   }
   // adc0 outside boundary range?
-  if (ADMODA & 0x08)
-  {
-    // clear BND0 flag
-    ADMODA &= ~0x08;
-  }
+//  if (ADMODA & 0x08)
+//  {
+//    // clear BND0 flag
+//    ADMODA &= ~0x08;
+//  }
 
 }

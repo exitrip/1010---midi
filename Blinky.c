@@ -58,8 +58,12 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-//#define FREQ_START	(879)
-#define FREQ_START	(879 + (MY_L_CHAN*2) )
+#if (MY_L_CHAN > 4)
+#define FREQ_START	(882)
+#else
+#define FREQ_START	(879)
+#endif
+//#define FREQ_START	(879 + (MY_L_CHAN*2) ) //max station is 
 			   
 
 //timing globals
@@ -120,6 +124,7 @@ volatile word station = FREQ_START;
 void main() {	
 /**************LOCALS****************************/
 	byte i = 0;
+	//power_brownoutenable(POWER_BORESET);
 /**************SETUP++***************************************/
 	setup();
 	//Config boot-up
@@ -172,9 +177,9 @@ void main() {
 	}
 	EA = 1;
 	BUTT_EN = 1;
-	LOOP_SONGS = 0;
+	//LOOP_SONGS = 0;
 	//autoStart
-	AUTO_START = 1;
+	AUTO_START = 0;
 
 #ifdef COORD
 	TR0 = 0;
@@ -238,6 +243,13 @@ void main() {
 	for(;;) {
 #ifdef COORD
 #ifdef ADC_IN
+		if (ADCON0 & 0x08) {
+		    // clear ADCI0 flag
+		    ADCON0 &= ~0x08;
+		    // read results from AD0DAT0 - AD0DAT3
+			newADC0 = AD0DAT0;// >> 3;
+			newADC1 = AD0DAT2;
+		}
 		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
 			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
 			LPeriod = VPeriod + newADC0;
@@ -401,18 +413,25 @@ void main() {
 		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
 		//while (ADCON0 & 0x08 == 0x0) {}; 
 		//newADC0 = AD0DAT0;
-		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
-		//if (newADC0 > 7 ) {
-			//LED = 0;
+		if (ADCON0 & 0x08) {
+		    // clear ADCI0 flag
+		    ADCON0 &= ~0x08;
+		    // read results from AD0DAT0 - AD0DAT3
+			newADC0 = AD0DAT0 >> 3;
+			newADC1 = AD0DAT2;
+		} 
+		if (oldADC0 != newADC0 && txOffSwitch == 0 ) { //is the tx on???
 			oldADC0 = newADC0; 
-			setFreq(station + (newADC0 >> 3)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
+			setFreq(station + (newADC0)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
 		}
 		if (newADC1 > 127) {
-			txOffSwitch = 0;
-			LED = 0;
-		} else {
 			txOffSwitch = 1;
+			LED = 0;
+			//txVcc = 1;	//tx off
+		} else {
+			txOffSwitch = 0;
 			LED = 1;
+			//txVcc = 0;
 		}
 #endif 
 		//was number of transmit channels changed
@@ -432,9 +451,9 @@ void main() {
 					LED = 1;
 					delay(50);
 					setFreq(station);
-				} 
-			}	 		
-			delay(UINT_MAX);
+				}
+				delay(UINT_MAX); 
+			}
 			if (LED) {
 				if (hiButt == 0) {
 					LED = 0;
@@ -524,18 +543,21 @@ void setup() {
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
 
-//#ifdef DAC0_OUT
-//	//configure DAC1 out
-//	  // set dac0 pin to input only (disables digital output)
-//	P2M1 |= 0x01;
-//	P2M1 &= ~0x01;
-//	// init dac0 value to zero
-//	AD0DAT3 = 0x00;
-//	// enable dac0 output
-//	ADMODB |= 0x04;
-//	// enable adc0 (also enables dac0)
-//	ADCON0 |= 0x04;
-//#endif
+#ifdef DAC0_OUT
+	//configure DAC1 out
+	  // set dac0 pin to input only (disables digital output)
+	P2M1 |= 0x01;
+	P2M2 &= ~0x01;
+	// init dac0 value to zero
+	AD0DAT3 = 0x00;
+	// enable dac0 output
+	ADMODB |= 0x04;
+	// enable adc0 (also enables dac0)
+	ADCON0 |= 0x04;
+#else  ///  need to set DAC pins hiZ
+	P2M1 |= 0x01;
+	P2M2 &= ~0x01;	
+#endif
 
 #ifdef DAC1_OUT
 	//configure DAC1 out
@@ -548,7 +570,10 @@ void setup() {
 	ADMODB |= 0x08;
 	// enable adc1 (also enables dac1)
 	ADCON1 |= 0x04;
-#endif
+#else	 //set hiZ
+	P0M1 |= 0x10;
+	P0M2 &= ~0x10;
+#endif				 
 
 	  // configure timers
 	TMOD &= 0x00;	 //clear conf for timers
@@ -647,7 +672,6 @@ void timers_isr0 (void) interrupt 1 using 3
 #ifdef COORD
 		if (cnt0-- == 0) {
 			uart_transmit(TIMING_CLOCK);
-			++midiClk;
 			if (deltaPos == 0) {
 				updateNote();
 			} else { //parse song
@@ -655,14 +679,18 @@ void timers_isr0 (void) interrupt 1 using 3
 			}
 			cnt0 = temp0;
 			TH0 = periodH0;
-			TL0 = periodL0; 
+			TL0 = periodL0;
+#ifdef DAC1_OUT
+			if ( (++midiClk % 0x0C) == 0 ) {
+				AD1DAT3 ^= 0xFF; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
+			}
+#else 
+			++midiClk;
+#endif 
 		} else {
 			TH0 = 0;
 			TL0 = 0;
 		}
-#ifdef DAC1_OUT
-	AD1DAT3 ^= 0xff; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
-#endif
 #ifdef DAC0_OUT				
 	AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
 #endif

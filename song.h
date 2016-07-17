@@ -1,7 +1,7 @@
 #ifndef SONG_H
 #define SONG_H
 
-#define NUM_SONGS	11
+#define NUM_SONGS	12
 extern void* const code songBook[NUM_SONGS];
 
 //TAPISSERIE EN FER FORGE  ~60 BPM...  6/8  tres riche
