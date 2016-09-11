@@ -58,12 +58,12 @@ volatile byte nextNote = 0;
 
 //end exclusive defines
 #define SPEED_DIV	1
-#if (MY_L_CHAN > 4)
-#define FREQ_START	(882)
-#else
-#define FREQ_START	(879)
-#endif
-//#define FREQ_START	(879 + (MY_L_CHAN*2) ) //max station is 
+//#if (MY_L_CHAN > 4)
+//#define FREQ_START	(882)
+//#else
+//#define FREQ_START	(879)
+//#endif
+#define FREQ_START	(879 + (MY_L_CHAN*2) ) //max station is 
 			   
 
 //timing globals
@@ -243,19 +243,19 @@ void main() {
 	for(;;) {
 #ifdef COORD
 #ifdef ADC_IN
-		if (ADCON0 & 0x08) {
-		    // clear ADCI0 flag
-		    ADCON0 &= ~0x08;
-		    // read results from AD0DAT0 - AD0DAT3
-			newADC0 = AD0DAT0;// >> 3;
-			newADC1 = AD0DAT2;
-		}
-		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
-			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
-			LPeriod = VPeriod + newADC0;
-			temp0 = (LPeriod >> 8) & 0xff;
-			periodH0 = LPeriod & 0xff;
-		}
+//		if (ADCON0 & 0x08) {
+//		    // clear ADCI0 flag
+//		    ADCON0 &= ~0x08;
+//		    // read results from AD0DAT0 - AD0DAT3
+//			newADC0 = AD0DAT0;// >> 3;
+//			newADC1 = AD0DAT2;
+//		}
+//		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
+//			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
+//			LPeriod = VPeriod + newADC0;
+//			temp0 = (LPeriod >> 8) & 0xff;
+//			periodH0 = LPeriod & 0xff;
+//		}
 		//this has to be a mode because it dominates functionality with no signal....
 //		//ring adc switches play on/off
 //		if (newADC1 > 127) {
@@ -426,11 +426,11 @@ void main() {
 		}
 		if (newADC1 > 127) {
 			txOffSwitch = 1;
-			LED = 0;
+			//LED = 0;
 			//txVcc = 1;	//tx off
 		} else {
 			txOffSwitch = 0;
-			LED = 1;
+			//LED = 1;
 			//txVcc = 0;
 		}
 #endif 
@@ -454,7 +454,7 @@ void main() {
 				}
 				delay(UINT_MAX); 
 			}
-			if (LED) {
+			if (txVcc == 0) {
 				if (hiButt == 0) {
 					LED = 0;
 					delay(UINT_MAX);
@@ -519,8 +519,8 @@ void main() {
 /*******************SETUP FUNCTION*********************/
 void setup() {
 
-	power_brownoutenable(POWER_BOINTERRUPT);
-	eeprom_init();
+	//power_brownoutenable(POWER_BOINTERRUPT);
+	//eeprom_init();
 
 	P0M1 = 0x07;	 //input for buttons and audioN, push pull for audioL
 	P0M2 = 0x08;
@@ -539,6 +539,8 @@ void setup() {
 	stereoTx = STEREO;
 	audioL = 0;
 	test0 = 1; 	//always
+
+
 	test1 = 0; 	//always
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
@@ -555,8 +557,8 @@ void setup() {
 	// enable adc0 (also enables dac0)
 	ADCON0 |= 0x04;
 #else  ///  need to set DAC pins hiZ
-	P2M1 |= 0x01;
-	P2M2 &= ~0x01;	
+//	P2M1 |= 0x01;
+//	P2M2 &= ~0x01;	
 #endif
 
 #ifdef DAC1_OUT
@@ -571,8 +573,8 @@ void setup() {
 	// enable adc1 (also enables dac1)
 	ADCON1 |= 0x04;
 #else	 //set hiZ
-	P0M1 |= 0x10;
-	P0M2 &= ~0x10;
+//	P0M1 |= 0x10;
+//	P0M2 &= ~0x10;
 #endif				 
 
 	  // configure timers
