@@ -17,6 +17,7 @@ extern volatile word VPeriod;
 extern volatile bit deltaLUp;
 extern volatile bit deltaTxUp;
 
+
 void uart_init (void) {
   // configure UART
   // clear SMOD0
@@ -106,11 +107,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
 					midiMsg.typeChan = dataByte;
 			  		sysIx = 0;
-					//stop what youre doing and listen
-					PLAYING = 0;
-					TR0 = 0;
-					TR1 = 0;
-					BUTT_EN = 0;
 				break;
 	
 	        	case SONG_POSITION:
@@ -126,24 +122,39 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case TUNE_REQUEST:
 	          	break;
 	
-	        	case EOX: // system exclusive terminator 
-					//do stuff - everbody who heard the SYS_EX stopped playing and their timers 
-					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
-					//check manuId [010e0d], ignore myDevId, Universal sysEx header for file transfers
-					if (sysEx[0] == 0x01 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && 
-						sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && sysEx[7] == 0x02) {
-						//we should only be here on purpose...
-						//my devID?
-						if (sysEx[3] == MY_ID_H && sysEx[4] == MY_ID_L) {
-							//we are going to use this as a reboot into bootloader CMD
-							LED = 1;
-							delay(50000);
-							no_touch();
-						} else {
-							//somebody is getting programmed, so ... just freak out... ihex is all ascii
-							//the further progBaud is away the safer this is
+	        	case EOX: // system exclusive terminator
+					//check manuId [010e0d]
+					if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {
+						//stop what youre doing and listen
+						PLAYING = 0;
+						if (STATE_1 == 1) {
+							TR0 = 0; //TODO try to leave it going...
+							TR1 = 0;
 						}
-					} else { //sysEx flying around by not a programming instruction						
+						BUTT_EN = 0;
+						//ignore myDevId, Universal sysEx header for file transfers 
+						if (sysEx[0] == NON_REAL_TIME_ID) { 
+							if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
+								//we should only be here on purpose...
+								//my devID?
+								if (sysIx == 8 && sysEx[6] == MY_ID_H && sysEx[7] == MY_ID_L) {
+									//we are going to use this as a reboot into bootloader CMD
+									LED = 1;
+									delay(50000);
+									no_touch();
+								} else {
+									//somebody is getting programmed, so ... just freak out... ihex is all ascii
+									//the further progBaud is away the safer this is
+								}
+							}
+						} else if (sysEx[0] == REAL_TIME_ID) {
+							if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT11) {
+								STATE_0 = 0;
+							} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT11) {
+								STATE_0 = 1;
+							}
+						}
+					} else { //sysEx flying around by not for 0x01ed					
 					}
 					//erase sysEx buffer
 					while(sysIx > 0) {

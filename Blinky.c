@@ -35,8 +35,8 @@ sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
 //sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
 volatile byte bdata songFlags;
-sbit STATE_0 = songFlags^0;
-sbit STATE_1 = songFlags^1;
+sbit STATE_0 = songFlags^0;	  //MODE0 or MODE1 for unit11
+sbit STATE_1 = songFlags^1;	  //TURN ON? SONGS CODE!?!
 sbit STATE_2 = songFlags^2;
 sbit STATE_3 = songFlags^3;
 sbit SONG_DONE = songFlags^4;	//0x40
@@ -63,7 +63,7 @@ volatile byte nextNote = 0;
 //#else
 //#define FREQ_START	(879)
 //#endif
-#define FREQ_START	(879 + (MY_L_CHAN*2) ) //max station is 
+#define FREQ_START	(879 + (MY_L_CHAN*2))
 			   
 
 //timing globals
@@ -180,6 +180,8 @@ void main() {
 	//LOOP_SONGS = 0;
 	//autoStart
 	AUTO_START = 0;
+	STATE_0 = 0;
+	STATE_1 = 0;
 
 #ifdef COORD
 	TR0 = 0;
@@ -192,43 +194,45 @@ void main() {
 //	}
 	//makes for a happy synth!!!!
 	delay(50000);
-	uart_transmit(SONG_SELECT);
-	uart_transmit(songNum);
-	delay(50000);
-	for (i = 0; i < 16; i += 2) {
-		uart_transmit(CONTROL+i);
-		uart_transmit(GENERAL_SLIDER_1_lo);
-		uart_transmit(STATION_TO_LO(FREQ_START));
-		delay(1000);
-		uart_transmit(CONTROL+i);
-		uart_transmit(GENERAL_SLIDER_1_hi);
-		uart_transmit(STATION_TO_HI(FREQ_START));
-		delay(1000);
-		uart_transmit(CONTROL+i);
-		uart_transmit(GENERAL_BUTTON_1_on);
-		uart_transmit(127);
-	}
-	LED = 0;
-	if (AUTO_START == 1) {
-		curSong = songBook[songNum];
-		nextRiff = 0;
-		deltaPos = 0; //trigger update
-		numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
-		if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
-			LOOP_SONGS = 1;
-		} else {
-			LOOP_SONGS = 0;
-		}
-		uart_transmit(STOP);
+	if (STATE_1 == 1) {
 		uart_transmit(SONG_SELECT);
 		uart_transmit(songNum);
-		uart_transmit(START);
-		PLAYING = 1;
-		curRiffCnt = 0;
-		numNotes = 0;
-		nextNote = 0;
-		LED = PLAYING;
-		TR0 = PLAYING;
+		delay(50000);
+		for (i = 0; i < 16; i += 2) {
+			uart_transmit(CONTROL+i);
+			uart_transmit(GENERAL_SLIDER_1_lo);
+			uart_transmit(STATION_TO_LO((879 + (i*2))));
+			delay(1000);
+			uart_transmit(CONTROL+i);
+			uart_transmit(GENERAL_SLIDER_1_hi);
+			uart_transmit(STATION_TO_HI((879 + (i*2))));
+			delay(1000);
+			uart_transmit(CONTROL+i);
+			uart_transmit(GENERAL_BUTTON_1_on);
+			uart_transmit(127);
+		}
+		LED = 0;
+		if (AUTO_START == 1) {
+			curSong = songBook[songNum];
+			nextRiff = 0;
+			deltaPos = 0; //trigger update
+			numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
+			if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+				LOOP_SONGS = 1;
+			} else {
+				LOOP_SONGS = 0;
+			}
+			uart_transmit(STOP);
+			uart_transmit(SONG_SELECT);
+			uart_transmit(songNum);
+			uart_transmit(START);
+			PLAYING = 1;
+			curRiffCnt = 0;
+			numNotes = 0;
+			nextNote = 0;
+			LED = PLAYING;
+			TR0 = PLAYING;
+		}
 	}
 #else
 	delay(65000);
@@ -243,13 +247,13 @@ void main() {
 	for(;;) {
 #ifdef COORD
 #ifdef ADC_IN
-//		if (ADCON0 & 0x08) {
-//		    // clear ADCI0 flag
-//		    ADCON0 &= ~0x08;
-//		    // read results from AD0DAT0 - AD0DAT3
-//			newADC0 = AD0DAT0;// >> 3;
-//			newADC1 = AD0DAT2;
-//		}
+		if (ADCON0 & 0x08) {
+		    // clear ADCI0 flag
+		    ADCON0 &= ~0x08;
+		    // read results from AD0DAT0 - AD0DAT3
+			newADC0 = AD0DAT0;// >> 3;
+			newADC1 = AD0DAT2;
+		}
 //		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
 //			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
 //			LPeriod = VPeriod + newADC0;
@@ -257,11 +261,38 @@ void main() {
 //			periodH0 = LPeriod & 0xff;
 //		}
 		//this has to be a mode because it dominates functionality with no signal....
-//		//ring adc switches play on/off
-//		if (newADC1 > 127) {
-//			uart_transmit(STOP);
-//			PLAYING = 0;
-//		} else {
+		//ring adc switches play on/off
+		if (STATE_1 == 1) {
+			if (newADC1 > 55) {
+				uart_transmit(STOP);
+				PLAYING = 0;
+			}
+		} else {
+			if (newADC1 > 55) {
+				if (STATE_0 == 0) {
+					uart_transmit(SYSTEM_EXCLUSIVE);
+					uart_transmit(REAL_TIME_ID);
+					uart_transmit(0x01);
+					uart_transmit(0x0e);
+					uart_transmit(0x0d);
+					uart_transmit(SYS_EX_MODE_2_UNIT11);
+					uart_transmit(EOX);	
+				}
+				STATE_0 = 1;
+			} else {
+				if (STATE_0 == 1) {
+					uart_transmit(SYSTEM_EXCLUSIVE);
+					uart_transmit(REAL_TIME_ID);
+					uart_transmit(0x01);
+					uart_transmit(0x0e);
+					uart_transmit(0x0d);
+					uart_transmit(SYS_EX_MODE_1_UNIT11);
+					uart_transmit(EOX);	
+				}
+				STATE_0 = 0;
+			}
+		} 
+		//else {
 //			if (midiClk == 0) { //were we playing once?
 //				curSong = songBook[songNum];
 //				nextRiff = 0;
@@ -287,7 +318,7 @@ void main() {
 //		}
 #endif
 		txVcc = 1; //assert tx off...
-		if (BUTT_EN == 1) {
+		if (BUTT_EN == 1 && STATE_1 == 1) {
 			if (midButt == 0) {  //debounced midButt switches COORD's PLAYING
 				delay(50000);	  //cant functionalize this says the internet...
 				if (midButt == 0) {
@@ -394,7 +425,7 @@ void main() {
 		}
 
 #else
-	if (curSong != songBook[songNum]) {
+	if (curSong != songBook[songNum] && STATE_1 == 1) {
 		setFreq(station);
 		curSong = songBook[songNum];
 		midiClk = 0;
@@ -408,7 +439,6 @@ void main() {
 		}		
 	} else {
 	//low priority stuff
-#ifdef BASIC_TX
 #ifdef ADC_IN
 		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
 		//while (ADCON0 & 0x08 == 0x0) {}; 
@@ -417,14 +447,36 @@ void main() {
 		    // clear ADCI0 flag
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
-			newADC0 = AD0DAT0 >> 3;
+			newADC0 = AD0DAT0 >> 1;
 			newADC1 = AD0DAT2;
-		} 
-		if (oldADC0 != newADC0 && txOffSwitch == 0 ) { //is the tx on???
-			oldADC0 = newADC0; 
-			setFreq(station + (newADC0)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
 		}
-		if (newADC1 > 127) {
+		if (oldADC0 != newADC0) {
+			if (newADC0 >= 3) {	//~70mV "off"
+				i = newADC0 - 3;
+				if (i >= LUT_NUM_NOTES) { 
+					i = LUT_NUM_NOTES-1;
+				}
+				LPeriod = LUTFreq[i];
+				periodH1 = (0xff & (LUTFreq[i] >> 8));
+				periodL1 = (0xff & LUTFreq[i]);
+				i = 0;
+				if (STATE_0 == 0) {
+					AUDIO_L_ON = 1;
+				} else if (txOffSwitch == 0) {
+					if (oldADC0 >> 2 != newADC0 >> 2) {
+						setFreq(station + (newADC0 >> 2)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
+					}
+				}
+			} else {
+				if (STATE_0 == 0) {
+					AUDIO_L_ON = 0;
+				} else {
+					setFreq(station);
+				}
+			}
+			oldADC0 = newADC0;
+		}		 
+		if (newADC1 > 55) {	//1.2Volts at input ~ 5V gate through -12dB pad
 			txOffSwitch = 1;
 			//LED = 0;
 			//txVcc = 1;	//tx off
@@ -433,7 +485,8 @@ void main() {
 			//LED = 1;
 			//txVcc = 0;
 		}
-#endif 
+#endif
+#ifdef BASIC_TX 
 		//was number of transmit channels changed
 		if (stereoTx != STEREO) {
 			stereoTx = STEREO;
@@ -572,6 +625,9 @@ void setup() {
 	ADMODB |= 0x08;
 	// enable adc1 (also enables dac1)
 	ADCON1 |= 0x04;
+#ifdef COORD
+	AD1DAT3 = 0xFF; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
+#endif
 #else	 //set hiZ
 //	P0M1 |= 0x10;
 //	P0M2 &= ~0x10;
@@ -663,9 +719,12 @@ void timers_isr1 (void) interrupt 3 using 2
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
-#ifdef DAC0_OUT
-		AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+#ifdef DAC1_OUT
+		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
 #endif
+//#ifdef DAC0_OUT
+//		AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+//#endif
 #endif
 }
 
@@ -682,20 +741,20 @@ void timers_isr0 (void) interrupt 1 using 3
 			cnt0 = temp0;
 			TH0 = periodH0;
 			TL0 = periodL0;
-#ifdef DAC1_OUT
-			if ( (++midiClk % 0x0C) == 0 ) {
-				AD1DAT3 ^= 0xFF; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
-			}
-#else 
+//#ifdef DAC1_OUT
+//			if ( (++midiClk % 0x0C) == 0 ) {
+//				AD1DAT3 ^= 0xFF; //LUTSIN128[dac1LUTdex++ & 0x7F];	 //todo add counter to not multiply clk
+//			}
+//#else 
 			++midiClk;
-#endif 
+//#endif 
 		} else {
 			TH0 = 0;
 			TL0 = 0;
 		}
-#ifdef DAC0_OUT				
-	AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
-#endif
+//#ifdef DAC0_OUT				
+//	AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
+//#endif
 #else
 		//reload
 		TH0 = periodH0;
@@ -710,9 +769,9 @@ void timers_isr0 (void) interrupt 1 using 3
 		} else {
 			txVcc = 1; //tx OFF!  station???
 		}
-#ifdef DAC1_OUT
-	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
-#endif
+//#ifdef DAC1_OUT
+//	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+//#endif
 #endif
 }
 

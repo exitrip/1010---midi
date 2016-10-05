@@ -47,6 +47,10 @@ typedef struct Riff_s {
 	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
 #endif
 
+//SYS_EX_MAGIC
+#define SYS_EX_MODE_1_UNIT11	0x01
+#define SYS_EX_MODE_2_UNIT11	'!'
+
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
 #define NUM_NOTE_CMDS	(127-LUT_NUM_NOTES) //28
@@ -119,7 +123,9 @@ extern bit OMNI;
 //extern bit SYS_EX_DONE;
 
 extern volatile byte bdata SongFlags;
-//state flags -- maybe change to sbit????		
+//state flags -- maybe change to sbit????
+extern bit STATE_0;
+extern bit STATE_1;		
 extern bit SONG_DONE;
 extern bit LOOP_SONGS;
 //flags for repeat section of first riff in song
