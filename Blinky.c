@@ -182,6 +182,7 @@ void main() {
 	AUTO_START = 0;
 	STATE_0 = 0;
 	STATE_1 = 0;
+	STEREO = 1;
 
 #ifdef COORD
 	TR0 = 0;
@@ -460,7 +461,7 @@ void main() {
 				periodH1 = (0xff & (LUTFreq[i] >> 8));
 				periodL1 = (0xff & LUTFreq[i]);
 				i = 0;
-				if (STATE_0 == 0) {
+				if (STATE_0 == 1) {
 					AUDIO_L_ON = 1;
 				} else if (txOffSwitch == 0) {
 					if (oldADC0 >> 2 != newADC0 >> 2) {
@@ -572,7 +573,8 @@ void main() {
 /*******************SETUP FUNCTION*********************/
 void setup() {
 
-	//power_brownoutenable(POWER_BOINTERRUPT);
+	//power_brownoutenable(POWER_BOINTERRUPT);
+
 	//eeprom_init();
 
 	P0M1 = 0x07;	 //input for buttons and audioN, push pull for audioL
