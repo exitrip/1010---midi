@@ -181,8 +181,8 @@ void main() {
 	//autoStart
 	AUTO_START = 0;
 	STATE_0 = 0;
-	STATE_1 = 0;
-	STEREO = 1;
+	STATE_1 = 1;
+	STEREO = 0;
 
 #ifdef COORD
 	TR0 = 0;

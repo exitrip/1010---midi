@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-//#define COORD		//blast midi clock out of UArt and drive RT messages
-#define BASIC_TX
+#define COORD		//blast midi clock out of UArt and drive RT messages
+//#define BASIC_TX
 //#define DEBUG_SIM
 
 //KEIL!!!!  you get the point!!!
@@ -31,11 +31,11 @@ typedef struct Riff_s {
 //#endif
 //DAC/ADC stuff
 //#define DAC0_OUT
-#define DAC1_OUT
-#define ADC_IN
+//#define DAC1_OUT
+//#define ADC_IN
 
 ///MIDI STUFF
-#define MY_L_CHAN   10
+#define MY_L_CHAN   0
 
 	//[0-15] //base channel
 #define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
