@@ -33,7 +33,9 @@ GENERATED: On "Jul 07 2016" at "10:48:45" by Code Architect 2.06
 
 // adc channel names
 #define ADC0_CHANNEL0 0x01
+#define ADC0_CHANNEL1 0x02
 #define ADC0_CHANNEL2 0x04
+#define ADC0_CHANNEL3 0x08
 #define ADC1_CHANNEL0 0x10
 #define ADC1_CHANNEL1 0x20
 #define ADC1_CHANNEL2 0x40
