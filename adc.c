@@ -170,6 +170,9 @@ void adc_isr
     // read results from AD0DAT0 - AD0DAT3
 #ifdef ADC_IN
 	newADC0 = AD0DAT0;
+	//Unit 11
+	//newADC1 = AD0DAT2;
+	//Unit XII
 	newADC1 = AD0DAT2;
 #endif
   }
