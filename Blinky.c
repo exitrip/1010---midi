@@ -665,26 +665,10 @@ void setup() {
 
 #ifdef ADC_IN
 	adc_init();
-	adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL2);
-
-//	// configure clock divider 
-//	ADMODB |= 0x40;
-//	//configure pins
-//	P1M1 |= 0x80; //input only for AD00, P1.7, pin 4, ADC1
-//	P1M2 &= ~0x80;
-//	P2M1 |= 0x02; //input only for AD02, P2.1, pin 2, ADC0
-//	P2M2 &= ~0x02;
-//	//setup rolling two channel conversion
-//	// disable all triggers
-//  	// ADCON0 &= 0xDC;
-//	// clear mode bits and boundary interrupt flag
-//  	ADMODA &= 0x0F;
-//	//autoscan, continuously on adc0 and adc1
-//	ADINS = (ADC0_CHANNEL0 | ADC0_CHANNEL2);
-//	ADMODA |= 0x04; //set burst flag, try the alternate bit conf if this doesnt work...
-//	//start now
-//	ADCON0 |= 0x01;
-//	//data should be in AD0DAT0 and AD0DAT2
+	//unit 11
+	//adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL2);
+	//unit XII
+	adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL3);
 #endif
 //	// set isr priority to 0
 //	IP1 &= 0x7F;
