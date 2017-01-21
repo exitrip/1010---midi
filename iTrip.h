@@ -31,7 +31,7 @@ typedef struct Riff_s {
 //#endif
 //DAC/ADC stuff
 //#define DAC0_OUT
-//#define DAC1_OUT
+#define DAC1_OUT
 //#define ADC_IN
 
 ///MIDI STUFF
