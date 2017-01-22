@@ -253,7 +253,10 @@ void main() {
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
 			newADC0 = AD0DAT0;// >> 3;
-			newADC1 = AD0DAT2;
+			//unit11
+			//newADC1 = AD0DAT2;
+			//unitXII
+			newADC1 = AD0DAT3;
 		}
 //		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
 //			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
@@ -449,7 +452,10 @@ void main() {
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
 			newADC0 = AD0DAT0 >> 1;
-			newADC1 = AD0DAT2;
+			//unit11
+			//newADC1 = AD0DAT2;
+			//unitXII
+			newADC1 = AD0DAT3;
 		}
 		if (oldADC0 != newADC0) {
 			if (newADC0 >= 3) {	//~70mV "off"

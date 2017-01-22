@@ -393,7 +393,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 		  	case (NOTE_ON + MY_V_CHAN):
 				#ifdef COORD
 				#else
-		        	if(midiMsg.count == 2) {// pitch		 //todo test
+		        	if(midiMsg.count == 2) {// pitch
 						word thisDelta = 0;
 						bit thisUp = 0;
 						midiMsg.pitch = dataByte;
