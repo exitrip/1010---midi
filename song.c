@@ -813,6 +813,6 @@ void* const code songBook[NUM_SONGS] = {
 //
 //RIFF_T const code testSCo2[3] = {
 //	{3, 0},
-//	{testCo4, 3-1},
-//	{testCo2, 3-1}
+//	{testCo3b, 256-1},
+//	{testCo3b, 256-1}
 //};

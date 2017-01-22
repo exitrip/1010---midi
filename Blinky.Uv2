@@ -360,7 +360,7 @@ Options 3,0,0  // Target 'EPM900 - Emulator'
   OPTDBG 49142,3,()()()()()()()()()() (BIN\LPC2EMP.DLL)()()()
  FLASH1 { 9,0,0,0,1,0,0,0,0,16,0,0,0,0,0,0,0,0,0,0 }
  FLASH2 (BIN\LPC2EMP.DLL)
- FLASH3 ("C:\Program Files\Flash Magic\FM.EXE" ("DEVICE($D, 0.0, 0) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(6,9600)"))
+ FLASH3 ("C:\Program Files\Flash Magic\FM.EXE" (DEVICE(89LPC936, 0.000000, 0) ERASEUSED(E:\1010 - midi\obj\Blinky.hex, PROTECTISP) HEXFILE(E:\1010 - midi\obj\Blinky.hex, NOCHECKSUMS, NOFILL, PROTECTISP)))
  FLASH4 ()
 EndOpt
 

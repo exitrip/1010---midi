@@ -705,7 +705,7 @@ void timers_isr1 (void) interrupt 3 using 2
 		TH1 = periodH1;	//remember this only counts up!!!!
 		TL1 = periodL1;
 		//generate square waves
-		_nop_(); //matching cycles to t0 rupt
+		_nop_(); //matching cycles to t0 rupt  TODO retune
 		_nop_();
 		_nop_();
 		if(AUDIO_L_ON) { //could play with nops here
@@ -714,9 +714,6 @@ void timers_isr1 (void) interrupt 3 using 2
 #ifdef DAC1_OUT
 		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
 #endif
-//#ifdef DAC0_OUT
-//		AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
-//#endif
 #endif
 }
 
@@ -744,9 +741,6 @@ void timers_isr0 (void) interrupt 1 using 3
 			TH0 = 0;
 			TL0 = 0;
 		}
-//#ifdef DAC0_OUT				
-//	AD0DAT3 = LUTSIN128[dac0LUTdex++ & 0x7F];
-//#endif
 #else
 		//reload
 		TH0 = periodH0;
@@ -1108,27 +1102,30 @@ void setFreq (word freq) { //takes
  	//if (freq > MAX_FREQ || freq < MIN_FREQ) return;  //out of bounds, do-over
  	else {
 		word temp = freq;
-		//EA = 0;		//Disable interrupts for tuning
 		temp += (txState & 0xF800);  //keep phase cntrl, channels, and test bits
 		txState = temp;	 //return or sorts
 		txProg();
-		//EA = 1;		//resume interrupt service
 	}	
 }
 /*********************8CEREAL***************************/
 void txProg() {	//shift out txState to the transmitter
 	word i = 0x01;
-	bit tempTX = TX_VCC_ON;
+	bit tempTX;
 	TX_VCC_ON = 0;
 	txVcc = 0;	//	TX on
 	txClk = 0;   
 	CE = 0;   
-	CE = 1;   
+	CE = 1;
+	EA = 0;		//Disable interrupts
+	tempTX = TX_VCC_ON;
+	TX_VCC_ON = 0;
+	txVcc = 0;	//	TX on   
 	for(i = 0x01; i != 0; i <<= 1) {  
 		txData = txState & i;
 		txClk = 1;   
 		txClk = 0;   
-	}       
+	}
+	EA = 1;		//resume interrupt service       
 	CE = 0;
 	TX_VCC_ON = tempTX; 
 }
