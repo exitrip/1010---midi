@@ -35,7 +35,7 @@ sbit OMNI = midiFlags^5;		//(0x20)	//todo ?test
 //sbit LOOP_SONGS = midiFlags^7;	//instead of naziMidi stop...  just one?  everyone??  deviant!!!
 
 volatile byte bdata songFlags;
-sbit STATE_0 = songFlags^0;	  //MODE0 or MODE1 for unit11
+sbit STATE_0 = songFlags^0;	  //MODE0 or MODE1 for unit#s
 sbit STATE_1 = songFlags^1;	  //TURN ON? SONGS CODE!?!
 sbit STATE_2 = songFlags^2;
 sbit STATE_3 = songFlags^3;
@@ -117,6 +117,7 @@ sbit test0 = txState^6;
 sbit test1 = txState^7;
 
 volatile bit txOffSwitch = 0; 
+volatile bit enableTxCVGate = 1;
 
 volatile word station = FREQ_START;
 
@@ -253,10 +254,14 @@ void main() {
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
 			newADC0 = AD0DAT0;// >> 3;
+#ifdef UNIT_11
 			//unit11
-			//newADC1 = AD0DAT2;
+			newADC1 = AD0DAT2;
+#endif
+#ifdef UNIT_XII
 			//unitXII
 			newADC1 = AD0DAT3;
+#endif
 		}
 //		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
 //			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
@@ -265,14 +270,24 @@ void main() {
 //			periodH0 = LPeriod & 0xff;
 //		}
 		//this has to be a mode because it dominates functionality with no signal....
-		//ring adc switches play on/off
 		if (STATE_1 == 1) {
-			if (newADC1 > 55) {
-				uart_transmit(STOP);
-				PLAYING = 0;
+			if (newADC0 > 55) {
+				if (PLAYING == 1) {
+					uart_transmit(STOP);
+					PLAYING = 0;
+				}
+				BUTT_EN = 0;
+			} else {
+				 if (PLAYING == 0 && midiClk > 0) {
+					uart_transmit(CONTINUE);
+					PLAYING = 1;
+				}
+				BUTT_EN = 1;
 			}
+			LED = PLAYING;
+			TR0 = PLAYING;
 		} else {
-			if (newADC1 > 55) {
+			if (newADC0 > 55) {
 				if (STATE_0 == 0) {
 					uart_transmit(SYSTEM_EXCLUSIVE);
 					uart_transmit(REAL_TIME_ID);
@@ -296,30 +311,6 @@ void main() {
 				STATE_0 = 0;
 			}
 		} 
-		//else {
-//			if (midiClk == 0) { //were we playing once?
-//				curSong = songBook[songNum];
-//				nextRiff = 0;
-//				deltaPos = 0; //trigger update
-//				numRiffs = (curSong[nextRiff]).rAddy;  //grab song length and flags!  dont inc it.. update will
-//				if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
-//					LOOP_SONGS = 1;
-//				} else {
-//					LOOP_SONGS = 0;
-//				}
-//				uart_transmit(STOP);
-//				uart_transmit(SONG_SELECT);
-//				uart_transmit(songNum);
-//				uart_transmit(START);
-//				PLAYING = 1;
-//				curRiffCnt = 0;
-//				numNotes = 0;
-//				nextNote = 0;
-//			} else {
-//				uart_transmit(CONTINUE);
-//				PLAYING = 1;
-//			}
-//		}
 #endif
 		txVcc = 1; //assert tx off...
 		if (BUTT_EN == 1 && STATE_1 == 1) {
@@ -441,56 +432,54 @@ void main() {
 		} else {
 			LOOP_SONGS = 0;
 		}		
-	} else {
+	} else { //loops ~every 28us
 	//low priority stuff
 #ifdef ADC_IN
-		//adc_startadc0conversion(ADC_IMMEDIATE, ADC_FIXEDSINGLE, ADC0_CHANNEL0);
-		//while (ADCON0 & 0x08 == 0x0) {}; 
-		//newADC0 = AD0DAT0;
 		if (ADCON0 & 0x08) {
 		    // clear ADCI0 flag
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
-			newADC0 = AD0DAT0 >> 1;
+			newADC0 = AD0DAT0 >> 1;	  //<<results from 0 - 101...  0-30 behind pad...
+#ifdef UNIT_11
 			//unit11
-			//newADC1 = AD0DAT2;
+			newADC1 = AD0DAT2;
+#endif
+#ifdef UNIT_XII
 			//unitXII
 			newADC1 = AD0DAT3;
+#endif
 		}
 		if (oldADC0 != newADC0) {
-			if (newADC0 >= 3) {	//~70mV "off"
-				i = newADC0 - 3;
-				if (i >= LUT_NUM_NOTES) { 
-					i = LUT_NUM_NOTES-1;
-				}
-				LPeriod = LUTFreq[i];
-				periodH1 = (0xff & (LUTFreq[i] >> 8));
-				periodL1 = (0xff & LUTFreq[i]);
-				i = 0;
-				if (STATE_0 == 1) {
-					AUDIO_L_ON = 1;
-				} else if (txOffSwitch == 0) {
-					if (oldADC0 >> 2 != newADC0 >> 2) {
-						setFreq(station + (newADC0 >> 2)); //vary station by 3.2 Mhz max [a 0.8 MHz swing w/ 3V into HVCV]
+			if (STATE_0 == 1) {	
+				if (newADC0 >= 3) { //~70mV "off"
+					i = newADC0 - 3;
+					if (i >= LUT_NUM_NOTES) { //saturate at the top
+						i = LUT_NUM_NOTES-1;
 					}
-				}
-			} else {
-				if (STATE_0 == 0) {
-					AUDIO_L_ON = 0;
+					LPeriod = LUTFreq[i];
+					periodH1 = (0xff & (LUTFreq[i] >> 8));
+					periodL1 = (0xff & LUTFreq[i]);
+					i = 0;
+					AUDIO_L_ON = 1;
 				} else {
-					setFreq(station);
+					periodH1 = 0xff;
+					periodL1 = 0xff;
+					LPeriod =  0xffff;
+					AUDIO_L_ON = 0;
 				}
+			} else if (txOffSwitch == 0 && (newADC0 >> 1 != (oldADC0 >> 1))) {
+				setFreq(station + (newADC0 >> 1)); //vary station by 6.0 Mhz max [a 1.5 MHz swing w/ 3V into HVCV]
 			}
 			oldADC0 = newADC0;
 		}		 
-		if (newADC1 > 55) {	//1.2Volts at input ~ 5V gate through -12dB pad
-			txOffSwitch = 1;
-			//LED = 0;
-			//txVcc = 1;	//tx off
-		} else {
-			txOffSwitch = 0;
-			//LED = 1;
-			//txVcc = 0;
+		if (enableTxCVGate == 1) {	//1.2Volts at input ~ 5V gate through -12dB pad - 3V will trigger at peak too
+			if (newADC1 > 55) { 
+				txOffSwitch = 1;
+				LED = 0;
+			} else {
+				txOffSwitch = 0;
+				LED = 1;
+			}
 		}
 #endif
 #ifdef BASIC_TX 
@@ -606,22 +595,6 @@ void setup() {
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
 
-#ifdef DAC0_OUT
-	//configure DAC1 out
-	  // set dac0 pin to input only (disables digital output)
-	P2M1 |= 0x01;
-	P2M2 &= ~0x01;
-	// init dac0 value to zero
-	AD0DAT3 = 0x00;
-	// enable dac0 output
-	ADMODB |= 0x04;
-	// enable adc0 (also enables dac0)
-	ADCON0 |= 0x04;
-#else  ///  need to set DAC pins hiZ
-//	P2M1 |= 0x01;
-//	P2M2 &= ~0x01;	
-#endif
-
 #ifdef DAC1_OUT
 	//configure DAC1 out
 	  // set dac1 pin to input only (disables digital output)
@@ -671,10 +644,14 @@ void setup() {
 
 #ifdef ADC_IN
 	adc_init();
-	//unit 11
-	//adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL2);
+#ifdef UNIT_11
+	//unit11
+	adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL2);
+#endif
+#ifdef UNIT_XII
 	//unit XII
 	adc_startadc0conversion(ADC_IMMEDIATE, ADC_AUTOSCANCONT, ADC0_CHANNEL0 | ADC0_CHANNEL3);
+#endif
 #endif
 //	// set isr priority to 0
 //	IP1 &= 0x7F;
@@ -711,9 +688,9 @@ void timers_isr1 (void) interrupt 3 using 2
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
-#ifdef DAC1_OUT
-		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
-#endif
+//#ifdef DAC1_OUT
+//		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+//#endif
 #endif
 }
 
@@ -755,9 +732,9 @@ void timers_isr0 (void) interrupt 1 using 3
 		} else {
 			txVcc = 1; //tx OFF!  station???
 		}
-//#ifdef DAC1_OUT
-//	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
-//#endif
+#ifdef DAC1_OUT
+	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+#endif
 #endif
 }
 
@@ -1102,21 +1079,22 @@ void setFreq (word freq) { //takes
  	//if (freq > MAX_FREQ || freq < MIN_FREQ) return;  //out of bounds, do-over
  	else {
 		word temp = freq;
+		EA = 0;		//Disable interrupts
 		temp += (txState & 0xF800);  //keep phase cntrl, channels, and test bits
 		txState = temp;	 //return or sorts
 		txProg();
+		EA = 1;		//Enable interrupts
 	}	
 }
 /*********************8CEREAL***************************/
 void txProg() {	//shift out txState to the transmitter
 	word i = 0x01;
 	bit tempTX;
-	TX_VCC_ON = 0;
-	txVcc = 0;	//	TX on
 	txClk = 0;   
-	CE = 0;   
+	CE = 0;
+	//atomics!   
+//	EA = 0;		//Disable interrupts
 	CE = 1;
-	EA = 0;		//Disable interrupts
 	tempTX = TX_VCC_ON;
 	TX_VCC_ON = 0;
 	txVcc = 0;	//	TX on   
@@ -1125,7 +1103,7 @@ void txProg() {	//shift out txState to the transmitter
 		txClk = 1;   
 		txClk = 0;   
 	}
-	EA = 1;		//resume interrupt service       
+//	EA = 1;		//resume interrupt service       
 	CE = 0;
 	TX_VCC_ON = tempTX; 
 }

@@ -35,9 +35,16 @@ void adc_init
   // channel 0
   P1M1 |= 0x80;
   P1M2 &= ~0x80;
-  // channel 2
+#ifdef UNIT_11
+  // channel 2 //unit 11
   P2M1 |= 0x02;
   P2M2 &= ~0x02;
+#endif
+#ifdef UNIT_XII
+  // channel 3 //unitXII
+  P2M1 |= 0x01;
+  P1M2 &= ~0x02;
+#endif
   // disable dac0
   ADMODB &= ~0x04;
   // configure adc0 and enable (also enables dac0)
@@ -157,30 +164,32 @@ DESC:    ADC Interrupt Service Routine
 RETURNS: Nothing
 CAUTION: adc_init must be called first
 ************************************************************************/
-void adc_isr
-  (
-  void
-  ) interrupt 14 using 1
-{
-  // adc0 conversion complete?
-  if (ADCON0 & 0x08)
-  {
-    // clear ADCI0 flag
-    ADCON0 &= ~0x08;
-    // read results from AD0DAT0 - AD0DAT3
-#ifdef ADC_IN
-	newADC0 = AD0DAT0;
-	//Unit 11
-	//newADC1 = AD0DAT2;
-	//Unit XII
-	newADC1 = AD0DAT2;
-#endif
-  }
-  // adc0 outside boundary range?
-//  if (ADMODA & 0x08)
+//void adc_isr
+//  (
+//  void
+//  ) interrupt 14 using 1
+//{
+//  // adc0 conversion complete?
+//  if (ADCON0 & 0x08)
 //  {
-//    // clear BND0 flag
-//    ADMODA &= ~0x08;
+//    // clear ADCI0 flag
+//    ADCON0 &= ~0x08;
+//    // read results from AD0DAT0 - AD0DAT3
+//	newADC0 = AD0DAT0;
+//#ifdef UNIT_11
+//	//Unit 11
+//	newADC1 = AD0DAT2;
+//#endif
+//#ifdef UNIT_XII
+//	//Unit XII
+//	newADC1 = AD0DAT2;
+//#endif
+//
 //  }
-
-}
+//  // adc0 outside boundary range?
+////  if (ADMODA & 0x08)
+////  {
+////    // clear BND0 flag
+////    ADMODA &= ~0x08;
+////  }
+//}

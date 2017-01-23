@@ -21,18 +21,15 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-//#define COORD		//blast midi clock out of UArt and drive RT messages
-#define BASIC_TX
+#define COORD		//blast midi clock out of UArt and drive RT messages
+//#define BASIC_TX
 //#define DEBUG_SIM
 
-//KEIL!!!!  you get the point!!!
-//#ifdef (COORD && BASIC_TX)
-//	#error "DUMB!!! L00K UP!!!"
-//#endif
 //DAC/ADC stuff
-//#define DAC0_OUT
-//#define DAC1_OUT
-//#define ADC_IN
+#define DAC1_OUT
+#define ADC_IN
+//#define UNIT_11
+#define UNIT_XII
 
 ///MIDI STUFF
 #define MY_L_CHAN   0
@@ -131,6 +128,8 @@ extern bit LOOP_SONGS;
 //flags for repeat section of first riff in song
 #define LOOP_SONG_F	(0x01)
 
+extern volatile word LPeriod;
+extern volatile word VPeriod;
 extern volatile byte periodH0;
 extern volatile byte periodL0;
 extern volatile byte periodH1;
@@ -145,6 +144,7 @@ extern volatile bit deltaTxUp;
 //extern volatile byte deltaTxMount;
 
 extern volatile bit txOffSwitch;
+extern volatile bit enableTxCVGate;
 extern word station;
 
 /****************************PROTOS*********************/

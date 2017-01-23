@@ -12,12 +12,6 @@ static bit mtxbusy;
 static volatile bit LnotV; //local flag of which channel to touch
 static volatile m_in_t midiMsg; 
 
-extern volatile word LPeriod;
-extern volatile word VPeriod;
-extern volatile bit deltaLUp;
-extern volatile bit deltaTxUp;
-
-
 void uart_init (void) {
   // configure UART
   // clear SMOD0
@@ -402,11 +396,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							case TX_OFF:
 								LED = 0;
 								txOffSwitch = 1;	//	TX off
+								enableTxCVGate = 0;
 							break;
 							
 							case TX_ON:
 								LED = 1;
 								txOffSwitch = 0;	//	TX on
+								enableTxCVGate = 1;
 							break;
 							
 							case UP1:
@@ -577,9 +573,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							if (dataByte >= 64) {
 								LED = 1;
 								txOffSwitch = 0;
+								enableTxCVGate = 1;
 							} else {
 								LED = 0;
 								txOffSwitch = 1; //tx off
+								enableTxCVGate = 0;
 							}
 						break;
 
