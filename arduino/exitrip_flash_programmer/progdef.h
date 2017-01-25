@@ -30,21 +30,12 @@
 #endif
 
 //***************************************************************************
-//* Switch between 3V3 and 5V Arduinos, just in case we need to later
-//* Direct 5V connection not breaking the iTrip so far...
-//* Just comment the line `#define SYS_5_VOLT` to compile for a 3V3 Arduino 
-//***************************************************************************
-//#define SYS_5_VOLT
-#ifndef SYS_5_VOLT
-    #define SYS_3V3_VOLT
-#endif
-
-//***************************************************************************
-//* What board are we programming?
+//* What board are we programming with?
 //***************************************************************************
 //#define PRO_MINI
 #define UNO
-//#define LITTLEBITS
+//#define LITTLEBITS  //TODO test
+
 //***************************************************************************
 //* Pin Definitions, ported to Arduino pin numbers on boards
 //***************************************************************************
@@ -53,7 +44,7 @@
 #define PCL     3           // define PCL pin
 #define RESET   5           // define RESET control pin
 #define VDD     2           // define VDD control pin
-#elif defined(UNO)                 // needs level shifting at very least
+#elif defined(UNO)          
 #define PDA     11					// define PDA pin
 #define PCL     12 					// define PCL pin
 #define RESET   10  				// define RESET control pin
