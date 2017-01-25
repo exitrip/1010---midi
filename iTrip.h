@@ -26,10 +26,10 @@ typedef struct Riff_s {
 //#define DEBUG_SIM
 
 //DAC/ADC stuff
-//#define DAC1_OUT
-//#define ADC_IN
+#define DAC1_OUT
+#define ADC_IN
 //#define UNIT_11
-//#define UNIT_XII
+#define UNIT_XII
 
 ///MIDI STUFF
 #define MY_L_CHAN   0

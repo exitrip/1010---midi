@@ -19,6 +19,16 @@
     #define SERIAL_BRIDGE
 #endif
 
+
+//***************************************************************************
+//* Select the binary to program in Headless operation
+//* by including one and only one of the following header files 
+//***************************************************************************
+#ifdef HEADLESS
+  //#include "Blinky_hex_basic.h"
+  #include "Blinky_hex_unitXII_0.h"
+#endif
+
 //***************************************************************************
 //* Switch between 3V3 and 5V Arduinos, just in case we need to later
 //* Direct 5V connection not breaking the iTrip so far...
@@ -32,22 +42,24 @@
 //***************************************************************************
 //* What board are we programming?
 //***************************************************************************
-#define PRO_MINI
-//#define DUE
+//#define PRO_MINI
+#define UNO
 //#define LITTLEBITS
 //***************************************************************************
 //* Pin Definitions, ported to Arduino pin numbers on boards
 //***************************************************************************
 #if  defined(PRO_MINI)
-#define PDA     2           // define PDA pin
+#define PDA     4           // define PDA pin
 #define PCL     3           // define PCL pin
-#define RESET   4           // define RESET control pin
-#define VDD     5           // define VDD control pin
-#elif defined(DUE)                 // needs level shifting at very least
-#define PDA     9 					// define PDA pin
-#define PCL     10 					// define PCL pin
-#define RESET   11  				// define RESET control pin
-#define VDD     12					// define VDD control pin
+#define RESET   5           // define RESET control pin
+#define VDD     2           // define VDD control pin
+#elif defined(UNO)                 // needs level shifting at very least
+#define PDA     11					// define PDA pin
+#define PCL     12 					// define PCL pin
+#define RESET   10  				// define RESET control pin
+#define VDD     13					// define VDD control pin
+#undef LED_BUILTIN
+#define LED_BUILTIN 1
 #elif defined(LITTLEBITS)          // needs level shifting at very least
 #define PDA     10          // define PDA pin
 #define PCL     11          // define PCL pin

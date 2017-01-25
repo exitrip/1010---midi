@@ -9,14 +9,6 @@
 */
 
 #include "progdef.h"
-//#include "exitrip_flash_programmer.h"
-
-#ifdef  HEADLESS
-//***************************************************************************
-//* Global flash memory array holding the exitrip firmware
-//***************************************************************************
-    #include "BlinkyHex.h"
-#endif
 
 //***************************************************************************
 //* Global variable used for passing parameters
@@ -131,10 +123,11 @@ new_record:
       Serial.print(address_low, HEX);
                                     //config bytes are just
       if (address_high == 0xff) {         //records at high address
-        Serial.print(" - conf byte\n");
-        for(index=0; index < nbytes; index++) {
-          write_config_byte(address_low & 0x0F, data_bytes[index]);
-        }                               //but they have a special 
+        Serial.print(" - conf byte skipped\n");
+//        Serial.print(" - conf byte\n");
+//        for(index=0; index < nbytes; index++) {
+//          write_config_byte(address_low & 0x0F, data_bytes[index]);
+//        }                               //but they have a special 
         break;                          //write procedure
       }                                   
 #endif
