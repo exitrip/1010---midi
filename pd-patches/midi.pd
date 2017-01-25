@@ -42,7 +42,7 @@
 #X obj 690 399 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X floatatom 557 576 5 1 16 0 - - -, f 5;
-#X obj 106 317 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 106 317 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 118 393 ctlout 80 1;
 #X obj 111 350 * 127;
@@ -128,7 +128,7 @@
 #X obj 369 26 loadbang;
 #X obj 267 291 * 32;
 #X obj 326 117 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 9894 1;
+-262144 -1 -1 8980 1;
 #X obj 331 171 i;
 #X obj 671 116 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
 -262144 -1 -1 19488 1;
@@ -138,7 +138,7 @@
 #X obj 739 169 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
 -1 -1 8467 1;
 #X obj 376 170 hsl 128 15 0 3.75 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 6773 1;
+-1 -1 11300 1;
 #X msg 267 132 stop;
 #N canvas 0 0 450 300 (subpatch) 0;
 #X array \$0-song 8 float 1 black black;
@@ -690,10 +690,10 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 -1 -1 1;
 #X floatatom -49 652 5 1 16 0 - - -, f 5;
 #X obj -77 463 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 12700 1;
+-1 -1 0 1;
 #X floatatom -88 612 5 700 1200 0 - - -, f 5;
 #X obj -107 434 vsl 15 128 10 101 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+-1 -1 5800 1;
 #X floatatom -129 612 5 700 1200 0 - - -, f 5;
 #X obj 105 276 metro 88;
 #X obj 506 272 metro 500;
@@ -786,7 +786,6 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj -310 645 * 127;
 #X obj -309 670 ctlout 10;
 #X text -294 622 Stereo;
-#X text -108 573 comment;
 #X text -134 405 Pitch Slider;
 #X connect 4 0 133 0;
 #X connect 4 0 134 0;
@@ -1336,6 +1335,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 554 0 24 0;
 #X connect 554 0 7 0;
 #X connect 554 0 68 0;
+#X connect 554 0 51 0;
 #X connect 555 0 120 0;
 #X connect 556 0 555 0;
 #X connect 557 0 555 0;
