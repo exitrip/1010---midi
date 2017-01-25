@@ -116,7 +116,9 @@ sbit phaseMode1 = txState^5;
 sbit test0 = txState^6;
 sbit test1 = txState^7;
 
-volatile bit txOffSwitch = 0; 
+//flag between VChan timer and all other functions
+volatile bit txOffSwitch = 0;
+//flag between CV and uart 
 volatile bit enableTxCVGate = 1;
 
 volatile word station = FREQ_START;
@@ -182,6 +184,7 @@ void main() {
 	//autoStart
 	AUTO_START = 0;
 	STATE_0 = 0;
+	//will get turned on by ADC ATM in Coord
 	STATE_1 = 1;
 	STEREO = 0;
 
@@ -253,23 +256,54 @@ void main() {
 		    // clear ADCI0 flag
 		    ADCON0 &= ~0x08;
 		    // read results from AD0DAT0 - AD0DAT3
-			newADC0 = AD0DAT0;// >> 3;
+			newADC0 = AD0DAT0;
 #ifdef UNIT_11
 			//unit11
 			newADC1 = AD0DAT2;
 #endif
 #ifdef UNIT_XII
 			//unitXII
-			newADC1 = AD0DAT3;
+			newADC1 = (newADC1 >> 2) + (AD0DAT3 >> 2);
 #endif
 		}
-		if (oldADC1 != newADC1) { //totally arbitrary, TODO test!!!
-			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
-			//remember these are UP counters but temp0 is a down count!!!
-			LPeriod = VPeriod + newADC1 << 1;
-			temp0 = (LPeriod >> 8) & 0xff;
-			periodH0 = LPeriod & 0xff;
-		}
+//		if (oldADC1 != newADC1) { //might not be super useful....
+//			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
+//			//remember these are UP counters but temp0 is a down count!!!
+//			LPeriod = VPeriod + newADC1 << 1;
+//			temp0 = (LPeriod >> 8) & 0xff;
+//			periodH0 = LPeriod & 0xff;
+//		}
+//or ...  both arent super amazing (with one channel)
+		if (newADC1 > 55) {	  //TODO needs debugging... coord is ok, but basic isnt stable
+			if (STATE_0 == 0) {  //seems like playing on basic is not getting fired... still responds 
+			//to CV....   no response to coord button twiddlin
+			//really doesnt like it when you press the buttons.... [tbclear... it responds slowly]
+			//might be reseting
+				TR0 = 0;	//dont try to throw a clock in here 
+				uart_transmit(SYSTEM_EXCLUSIVE);
+				uart_transmit(REAL_TIME_ID);
+				uart_transmit(0x01);
+				uart_transmit(0x0e);
+				uart_transmit(0x0d);
+				uart_transmit(SYS_EX_MODE_2_UNIT);
+				uart_transmit(EOX);
+				TR0 = 1;	
+			}
+			STATE_0 = 1;
+		} else {
+			if (STATE_0 == 1) {
+				TR0 = 0;	//dont try to throw a clock in here
+				uart_transmit(SYSTEM_EXCLUSIVE);
+				uart_transmit(REAL_TIME_ID);
+				uart_transmit(0x01);
+				uart_transmit(0x0e);
+				uart_transmit(0x0d);
+				uart_transmit(SYS_EX_MODE_1_UNIT);
+				uart_transmit(EOX);	
+				TR0 = 1;
+			}
+			STATE_0 = 0;
+		} 
 		//this has to be a mode because it dominates functionality with no signal....
 		if (STATE_1 == 1) {
 			if (newADC0 > 55) {
@@ -287,31 +321,32 @@ void main() {
 			}
 			LED = PLAYING;
 			TR0 = PLAYING;
-		} else {
-			if (newADC0 > 55) {
-				if (STATE_0 == 0) {
-					uart_transmit(SYSTEM_EXCLUSIVE);
-					uart_transmit(REAL_TIME_ID);
-					uart_transmit(0x01);
-					uart_transmit(0x0e);
-					uart_transmit(0x0d);
-					uart_transmit(SYS_EX_MODE_2_UNIT11);
-					uart_transmit(EOX);	
-				}
-				STATE_0 = 1;
-			} else {
-				if (STATE_0 == 1) {
-					uart_transmit(SYSTEM_EXCLUSIVE);
-					uart_transmit(REAL_TIME_ID);
-					uart_transmit(0x01);
-					uart_transmit(0x0e);
-					uart_transmit(0x0d);
-					uart_transmit(SYS_EX_MODE_1_UNIT11);
-					uart_transmit(EOX);	
-				}
-				STATE_0 = 0;
-			}
 		} 
+//		else {
+//			if (newADC0 > 55) {
+//				if (STATE_0 == 0) {
+//					uart_transmit(SYSTEM_EXCLUSIVE);
+//					uart_transmit(REAL_TIME_ID);
+//					uart_transmit(0x01);
+//					uart_transmit(0x0e);
+//					uart_transmit(0x0d);
+//					uart_transmit(SYS_EX_MODE_2_UNIT);
+//					uart_transmit(EOX);	
+//				}
+//				STATE_0 = 1;
+//			} else {
+//				if (STATE_0 == 1) {
+//					uart_transmit(SYSTEM_EXCLUSIVE);
+//					uart_transmit(REAL_TIME_ID);
+//					uart_transmit(0x01);
+//					uart_transmit(0x0e);
+//					uart_transmit(0x0d);
+//					uart_transmit(SYS_EX_MODE_1_UNIT);
+//					uart_transmit(EOX);	
+//				}
+//				STATE_0 = 0;
+//			}
+//		} 
 #endif
 		txVcc = 1; //assert tx off...
 		if (BUTT_EN == 1 && STATE_1 == 1) {
@@ -451,7 +486,7 @@ void main() {
 #endif
 		}
 		if (oldADC0 != newADC0) {
-			if (STATE_0 == 1) {	
+			if (STATE_0 == 1) {  //try to think of some way to mix this with a +/- detune of midi....	
 				if (newADC0 >= 3) { //~70mV "off"
 					i = newADC0 - 3;
 					if (i >= LUT_NUM_NOTES) { //saturate at the top
@@ -462,11 +497,11 @@ void main() {
 					periodL1 = (0xff & LUTFreq[i]);
 					i = 0;
 					AUDIO_L_ON = 1;
-				} else {
-					periodH1 = 0xff;
-					periodL1 = 0xff;
-					LPeriod =  0xffff;
-					AUDIO_L_ON = 0;
+				} else {		 // midi pass????
+//					periodH1 = 0xff;
+//					periodL1 = 0xff;
+//					LPeriod =  0xffff;
+//					AUDIO_L_ON = 0;
 				}
 			} else if (txOffSwitch == 0 && (newADC0 >> 1 != (oldADC0 >> 1))) {
 				setFreq(station + (newADC0 >> 1)); //vary station by 6.0 Mhz max [a 1.5 MHz swing w/ 3V into HVCV]
@@ -1022,7 +1057,8 @@ UPDATE_NOTE:
 			break;
 			
 			case HOLD1:
-			case HOLD2:
+			case SET_DAC:
+				//TODO
 			break;
 
 			case NOTE_OFF_MEM:

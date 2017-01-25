@@ -118,16 +118,16 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	
 	        	case EOX: // system exclusive terminator
 					//check manuId [010e0d]
-					if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {
-						//stop what youre doing and listen
-						PLAYING = 0;
-						if (STATE_1 == 1) {
-							TR0 = 0; //TODO try to leave it going...
-							TR1 = 0;
-						}
-						BUTT_EN = 0;
+					if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {;
 						//ignore myDevId, Universal sysEx header for file transfers 
-						if (sysEx[0] == NON_REAL_TIME_ID) { 
+						if (sysEx[0] == NON_REAL_TIME_ID) {
+							//stop what youre doing and listen
+							PLAYING = 0;
+//							if (STATE_1 == 1) {
+//								TR0 = 0; //TODO try to leave it going...
+//								TR1 = 0;
+//							}
+							BUTT_EN = 0; 
 							if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
 								//we should only be here on purpose...
 								//my devID?
@@ -142,9 +142,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								}
 							}
 						} else if (sysEx[0] == REAL_TIME_ID) {
-							if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT11) {
+							if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT) {
 								STATE_0 = 0;
-							} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT11) {
+							} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT) {
 								STATE_0 = 1;
 							}
 						}
@@ -473,7 +473,8 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							break;
 							
 							case HOLD1:
-							case HOLD2:
+							case SET_DAC:
+								//todo
 							break;
 											
 							default:
@@ -542,7 +543,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
       		case KEY_PRESSURE:
         	break;
 
-      		case CONTROL + MY_L_CHAN:
+      		case CONTROL + MY_L_CHAN:	  //TODO: pick an endpoint and SET_DAC
 				LnotV = 1;
 			case CONTROL + MY_V_CHAN:
 		        if(midiMsg.count == 2) {

@@ -21,8 +21,8 @@ typedef struct Riff_s {
 
 /***********************DEFINE SWITCHES**********************/
 //a totally different program actually!!!!
-#define COORD		//blast midi clock out of UArt and drive RT messages
-//#define BASIC_TX
+#//define COORD		//blast midi clock out of UArt and drive RT messages
+#define BASIC_TX
 //#define DEBUG_SIM
 
 //DAC/ADC stuff
@@ -45,8 +45,8 @@ typedef struct Riff_s {
 #endif
 
 //SYS_EX_MAGIC
-#define SYS_EX_MODE_1_UNIT11	0x01
-#define SYS_EX_MODE_2_UNIT11	'!'
+#define SYS_EX_MODE_1_UNIT	0x01
+#define SYS_EX_MODE_2_UNIT	'!'
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -83,7 +83,7 @@ enum {
 	STATION_UP6 = 123,			 //npc
 	STATION_DOWN6 = 124,				  //npc
 	HOLD1 = 125,
-	HOLD2 = 126,
+	SET_DAC = 126,
 	NOTE_OFF_MEM = 127
 };
 
