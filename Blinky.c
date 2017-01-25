@@ -95,7 +95,7 @@ volatile bit deltaTxUp = 0;
 	volatile byte newADC0 = 0;
 	byte oldADC0 = 0;
 	volatile byte newADC1 = 0;
-	//byte oldADC1 = 0;
+	byte oldADC1 = 0;
 #endif
 //volatile byte adcVal[2];
 
@@ -263,12 +263,13 @@ void main() {
 			newADC1 = AD0DAT3;
 #endif
 		}
-//		if (oldADC0 != newADC0) { //totally arbitrary, TODO test!!!
-//			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
-//			LPeriod = VPeriod + newADC0;
-//			temp0 = (LPeriod >> 8) & 0xff;
-//			periodH0 = LPeriod & 0xff;
-//		}
+		if (oldADC1 != newADC1) { //totally arbitrary, TODO test!!!
+			//VPeriod is fixed record, LPeriod is scratch, newADC0 is basically periodH0
+			//remember these are UP counters but temp0 is a down count!!!
+			LPeriod = VPeriod + newADC1 << 1;
+			temp0 = (LPeriod >> 8) & 0xff;
+			periodH0 = LPeriod & 0xff;
+		}
 		//this has to be a mode because it dominates functionality with no signal....
 		if (STATE_1 == 1) {
 			if (newADC0 > 55) {

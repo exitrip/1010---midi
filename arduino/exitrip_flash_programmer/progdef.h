@@ -19,7 +19,6 @@
     #define SERIAL_BRIDGE
 #endif
 
-
 //***************************************************************************
 //* Select the binary to program in Headless operation
 //* by including one and only one of the following header files 
@@ -40,18 +39,18 @@
 //* Pin Definitions, ported to Arduino pin numbers on boards
 //***************************************************************************
 #if  defined(PRO_MINI)
-#define PDA     4           // define PDA pin
-#define PCL     3           // define PCL pin
-#define RESET   5           // define RESET control pin
-#define VDD     2           // define VDD control pin
+#define PDA     3           // define PDA pin
+#define PCL     4           // define PCL pin
+#define RESET   6           // define RESET control pin
+#define VDD     3           // define VDD control pin
+
 #elif defined(UNO)          
-#define PDA     11					// define PDA pin
-#define PCL     12 					// define PCL pin
-#define RESET   10  				// define RESET control pin
-#define VDD     13					// define VDD control pin
-#undef LED_BUILTIN
-#define LED_BUILTIN 1
-#elif defined(LITTLEBITS)          // needs level shifting at very least
+#define PDA     10					// define PDA pin
+#define PCL     11 					// define PCL pin
+#define RESET   9  				// define RESET control pin
+#define VDD     12					// define VDD control pin
+
+#elif defined(LITTLEBITS)   // needs testing TODO
 #define PDA     10          // define PDA pin
 #define PCL     11          // define PCL pin
 #define RESET   9           // needs to be broken out from bottom output
