@@ -715,14 +715,14 @@ void timers_isr1 (void) interrupt 3 using 2
 		TH1 = periodH1;	//remember this only counts up!!!!
 		TL1 = periodL1;
 		//generate square waves
-		_nop_(); //matching cycles to t0 rupt  TODO retune
-		_nop_();
-		_nop_();
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
 #ifdef DAC1_OUT_AUDIO
 		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+#else
+		//just for the delay...  hopefully it doesnt mess up ADC0
+		AD1DAT0 = LUTSIN128[dac1LUTdex & 0x7F];
 #endif
 #endif
 }
@@ -767,6 +767,8 @@ void timers_isr0 (void) interrupt 1 using 3
 		}
 #ifdef DAC1_OUT_VCC
 	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+#else
+	AD1DAT0 = LUTSIN128[dac1LUTdex & 0x7F];
 #endif
 #endif
 }
