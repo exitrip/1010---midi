@@ -100,10 +100,7 @@ volatile bit deltaTxUp = 0;
 //volatile byte adcVal[2];
 
 ///DAC
-#ifdef DAC1_OUT_AUDIO
-	byte dac1LUTdex = 0;
-#endif
-#ifdef DAC1_OUT_VCC
+#if defined(DAC1_OUT_AUDIO) || defined (DAC1_OUT_VCC)
 	byte dac1LUTdex = 0;
 #endif
 
@@ -631,7 +628,7 @@ void setup() {
 	phaseMode0 = 0;	//?
 	phaseMode1 = 0;	//?
 
-#ifdef DAC1_OUT
+#if defined(DAC1_OUT_AUDIO) || defined (DAC1_OUT_VCC)
 	//configure DAC1 out
 	  // set dac1 pin to input only (disables digital output)
 	P0M1 |= 0x10;
