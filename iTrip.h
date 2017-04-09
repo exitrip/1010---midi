@@ -26,8 +26,8 @@ typedef struct Riff_s {
 //#define DEBUG_SIM
 
 //DAC/ADC stuff
-//#define DAC1_OUT_AUDIO
-#define DAC1_OUT_VCC
+#define DAC1_OUT_AUDIO
+//#define DAC1_OUT_VCC
 #define ADC_IN
 //#define UNIT_11
 #define UNIT_XII

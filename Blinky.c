@@ -100,8 +100,8 @@ volatile bit deltaTxUp = 0;
 //volatile byte adcVal[2];
 
 ///DAC
-#ifdef DAC0_OUT
-	byte dac0LUTdex = 0;
+#ifdef DAC1_OUT_AUDIO
+	byte dac1LUTdex = 0;
 #endif
 #ifdef DAC1_OUT_VCC
 	byte dac1LUTdex = 0;
