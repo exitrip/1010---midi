@@ -16,6 +16,7 @@ File 1,1,<.\LUTFreq.c><LUTFreq.c>
 File 1,1,<.\riff.c><riff.c>
 File 1,1,<.\song.c><song.c>
 File 1,1,<.\adc.c><adc.c>
+File 1,1,<.\LUTsin.c><LUTsin.c>
 File 2,2,<.\START900.A51><START900.A51>
 File 3,5,<.\ABSTRACT.TXT><ABSTRACT.TXT>
 File 4,2,<.\LPC_ISP_16K_V04.a51><LPC_ISP_16K_V04.a51>

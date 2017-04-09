@@ -103,7 +103,7 @@ volatile bit deltaTxUp = 0;
 #ifdef DAC0_OUT
 	byte dac0LUTdex = 0;
 #endif
-#ifdef DAC1_OUT
+#ifdef DAC1_OUT_VCC
 	byte dac1LUTdex = 0;
 #endif
 
@@ -262,7 +262,7 @@ void main() {
 			newADC1 = AD0DAT2;
 #endif
 #ifdef UNIT_XII
-			//unitXII
+			//unitXII  TODO test and improve this strawFilter
 			newADC1 = (newADC1 >> 2) + (AD0DAT3 >> 2);
 #endif
 		}
@@ -724,9 +724,9 @@ void timers_isr1 (void) interrupt 3 using 2
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
-//#ifdef DAC1_OUT
-//		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
-//#endif
+#ifdef DAC1_OUT_AUDIO
+		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+#endif
 #endif
 }
 
@@ -768,7 +768,7 @@ void timers_isr0 (void) interrupt 1 using 3
 		} else {
 			txVcc = 1; //tx OFF!  station???
 		}
-#ifdef DAC1_OUT
+#ifdef DAC1_OUT_VCC
 	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
 #endif
 #endif
