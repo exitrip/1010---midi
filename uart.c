@@ -11,6 +11,8 @@
 static bit mtxbusy;
 static volatile bit LnotV; //local flag of which channel to touch
 static volatile m_in_t midiMsg; 
+extern volatile byte LNote;
+extern volatile byte VNote;
 
 void uart_init (void) {
   // configure UART
@@ -346,6 +348,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				#ifdef COORD
 				#else
 	        		if(midiMsg.count == 2) {// pitch
+						midiMsg.pitch = dataByte - LUT_MIDI_NOTE_SHIFT;
 					//commentint this out to keep noteOff from fiddling with up/down!!!
 //						if (dataByte >= LUT_NUM_NOTES || dataByte <	LUT_MIDI_NOTE_SHIFT) {  //treat as a special CMD
 //							//do nothing for now.... 
@@ -369,10 +372,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						  	TX_VCC_ON = 0;
 						  	AUDIO_L_ON = 0;
 						} else {
-						  	if (LnotV == 0) {
+						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  	  	//turn off txVCC
 								TX_VCC_ON = 0;
-						  	} else {
+						  	} else if (midiMsg.pitch == LNote) {
 						  		//turn off Left channel
 								AUDIO_L_ON = 0;
 						  	}
@@ -403,6 +406,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								LED = 1;
 								txOffSwitch = 0;	//	TX on
 								enableTxCVGate = 1;
+							break;
+							
+							case STEREO_TOG_MEM: 
+								STEREO ^= 1;
 							break;
 							
 							case UP1:
@@ -471,8 +478,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							case STATION_DOWN:
 								setFreq(--station);
 							break;
-							
-							case HOLD1:
+
 							case SET_DAC:
 								//todo
 							break;
@@ -483,11 +489,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 									VPeriod = LUTFreq[dataByte];
 									LPeriod = VPeriod;
 								} else {
-								  	if (LnotV == 0) {	   //why not???  
+								  	if (LnotV == 0) {	   //why not???
+										VNote = dataByte;  
 								  		VPeriod = LUTFreq[dataByte];
 //										thisDelta = txDelta;
 //										thisUp = deltaTxUp;
 								  	} else {
+										LNote = dataByte;
 								  		LPeriod = LUTFreq[dataByte];
 //										thisDelta = lDelta;
 //										thisUp = deltaLUp;
@@ -529,9 +537,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							  	}
 							}
 						} else {   //turn off cause Velocity = 0
-						  	if (LnotV == 0) {
+						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  		TX_VCC_ON = 0;
-						  	} else {	
+						  	} else if (midiMsg.pitch == LNote) {	
 						  		AUDIO_L_ON = 0;
 					  		}
 						}

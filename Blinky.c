@@ -47,9 +47,9 @@ sbit WRAP_FREQ = songFlags^7; //if told to move beyond limits of txFreq, wrap ar
 //try moving to locals!!!
 //#define NUM_RIFFS HEAVY_11_SONG_SIZE//SAUCER_VOLCANO_SONG_SIZE//THUMP1_SONG_SIZE//3//FOR_SONG_ALT_SIZE//FIRST_SONG_ALT_SIZE//THIRD_SONG_SIZE//
 volatile RIFF_T* curSong;
-volatile word nextRiff = 0;
-volatile byte curRiffCnt = 0;
-volatile word numRiffs = 0;
+volatile word xdata nextRiff = 0;
+volatile byte xdata curRiffCnt = 0;
+volatile word xdata numRiffs = 0;
 volatile byte code* riff;
 //deltaSongPos ... just ... cant..  be ...  a ...  byte....
 volatile word deltaPos = 0;
@@ -83,6 +83,8 @@ volatile byte periodL1 = 0;
 //helpful shadows...
 volatile word LPeriod;
 volatile word VPeriod;
+volatile byte LNote;
+volatile byte VNote;
 
 volatile word lDelta = 0;
 volatile word txDelta = 0;
@@ -714,15 +716,19 @@ void timers_isr1 (void) interrupt 3 using 2
 		//reload
 		TH1 = periodH1;	//remember this only counts up!!!!
 		TL1 = periodL1;
+		//Match to other ISR
+		_nop_();
+		_nop_();
+		_nop_();
 		//generate square waves
 		if(AUDIO_L_ON) { //could play with nops here
 			audioL ^= 1; 
 		}
 #ifdef DAC1_OUT_AUDIO
-		AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+		AD1DAT3 = LUTSIN[dac1LUTdex++ & LUTSINMASK];
 #else
 		//just for the delay...  hopefully it doesnt mess up ADC0
-		AD1DAT0 = LUTSIN128[dac1LUTdex & 0x7F];
+		AD1DAT0 = LUTSIN[dac1LUTdex & LUTSINMASK];
 #endif
 #endif
 }
@@ -766,9 +772,9 @@ void timers_isr0 (void) interrupt 1 using 3
 			txVcc = 1; //tx OFF!  station???
 		}
 #ifdef DAC1_OUT_VCC
-	AD1DAT3 = LUTSIN128[dac1LUTdex++ & 0x7F];
+	AD1DAT3 = LUTSIN[dac1LUTdex++ & LUTSINMASK];
 #else
-	AD1DAT0 = LUTSIN128[dac1LUTdex & 0x7F];
+	AD1DAT0 = LUTSIN[dac1LUTdex & LUTSINMASK];
 #endif
 #endif
 }
@@ -1054,8 +1060,7 @@ UPDATE_NOTE:
 			case STATION_DOWN:
 				setFreq(--station);
 			break;
-			
-			case HOLD1:
+
 			case SET_DAC:
 				//TODO
 			break;
@@ -1076,11 +1081,13 @@ UPDATE_NOTE:
 				temp -= LUT_MIDI_NOTE_SHIFT;
 				if (VnotL == 1) {
 					TX_VCC_ON = 1;
+					VNote = temp;
 					VPeriod = LUTFreq[temp];
 					periodH0 = (0xff & (LUTFreq[temp] >> 8));
 					periodL0 = (0xff & LUTFreq[temp]);
 				} else {
 					AUDIO_L_ON = 1;
+					LNote = temp;
 					LPeriod = LUTFreq[temp];
 					periodH1 = (0xff & (LUTFreq[temp] >> 8));
 					periodL1 = (0xff & LUTFreq[temp]);
