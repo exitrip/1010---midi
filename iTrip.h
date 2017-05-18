@@ -38,16 +38,15 @@ typedef struct Riff_s {
 
 ///MIDI STUFF
 #define MY_L_CHAN   0
-
-	//[0-15] //base channel
-#define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#ifdef COORD
-	#define MY_ID_H		'C'
-	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
-#else //convert to decimal ascii no.
-	#define MY_ID_H		(30 + (MY_L_CHAN/10))
-	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
-#endif
+//	//[0-15] //base channel
+//#define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
+//#ifdef COORD
+//	#define MY_ID_H		'C'
+//	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+//#else //convert to decimal ascii no.
+//	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+//	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+//#endif
 
 //SYS_EX_MAGIC
 #define SYS_EX_MODE_1_UNIT	0x01
@@ -133,6 +132,9 @@ extern bit SONG_DONE;
 extern bit LOOP_SONGS;
 //flags for repeat section of first riff in song
 #define LOOP_SONG_F	(0x01)
+
+extern volatile byte data myLChan;
+extern volatile byte data myVChan;
 
 extern volatile word LPeriod;
 extern volatile word VPeriod;

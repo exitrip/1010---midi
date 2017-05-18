@@ -74,9 +74,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	if (dataByte & 0x80) {   //status byte
 		if (dataByte < 0xf0) {	//voice mesg
 			if (OMNI == 1) {
-				midiMsg.typeChan = (byte)(dataByte & 0xf0) + MY_V_CHAN; //trigger note commands in OMNI mode 
-			} else if ((byte)(dataByte & 0x0f) == MY_L_CHAN || (byte)(dataByte & 0x0f) == MY_V_CHAN) {
-				midiMsg.typeChan = dataByte; 
+				midiMsg.typeChan = (byte)(dataByte & 0xf0); //trigger note commands in OMNI mode 
+			} else if ((byte)(dataByte & 0x0f) == myLChan) {	//if this is talking to one of my chans
+				midiMsg.typeChan = dataByte & 0xf0;			//go ahead and store with stripped chan info
+				LnotV = 1;
+			} else if ((byte)(dataByte & 0x0f) == myVChan) {
+				midiMsg.typeChan = dataByte & 0xf0;
+				LnotV = 0; 
 			} else {
 				midiMsg.typeChan = 0; //clear midiMsg
 				goto IGNORE_MIDI;
@@ -133,7 +137,8 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
 								//we should only be here on purpose...
 								//my devID?
-								if (sysIx == 8 && sysEx[6] == MY_ID_H && sysEx[7] == MY_ID_L) {
+								if (sysIx == 8 && sysEx[6] == (30 + (myLChan/10)) && 
+									sysEx[7] == (30 + (myLChan/10))) {
 									//we are going to use this as a reboot into bootloader CMD
 									LED = 1;
 									delay(50000);
@@ -341,10 +346,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				}
         	break;
 
-
-      		case (NOTE_OFF + MY_L_CHAN):
-				LnotV = 1;
-			case (NOTE_OFF + MY_V_CHAN):
+			case (NOTE_OFF):
 				#ifdef COORD
 				#else
 	        		if(midiMsg.count == 2) {// pitch
@@ -384,10 +386,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				#endif
 	  		break;
 
-      
-		  	case (NOTE_ON + MY_L_CHAN):
-				LnotV = 1;
-		  	case (NOTE_ON + MY_V_CHAN):
+		  	case (NOTE_ON):
 				#ifdef COORD
 				#else
 		        	if(midiMsg.count == 2) {// pitch
@@ -549,11 +548,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 
       		case KEY_PRESSURE:
-        	break;
-
-      		case CONTROL + MY_L_CHAN:	  //TODO: pick an endpoint and SET_DAC
-				LnotV = 1;
-			case CONTROL + MY_V_CHAN:
+        	break;  
+			
+			case CONTROL: //TODO: pick an endpoint and SET_DAC
 		        if(midiMsg.count == 2) {
 		          midiMsg.controller = dataByte; // controller number
 		        } else {// setting 
@@ -678,10 +675,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							#ifdef COORD
 							#else
 	//							midiFlags &= (BUTT_EN + PLAYING + STEREO);
-								if(dataByte >= MY_L_CHAN) {
+								if(dataByte >= myLChan) {
 									TR1 = 1;
 									periodH1 = 0x10;
-									if(dataByte >= MY_V_CHAN) {
+									if(dataByte >= myVChan) {
 										TR0 = 1;
 										periodH0 = 0x10;
 									} else {

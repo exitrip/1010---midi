@@ -17,6 +17,9 @@
 #include "song.h"
 
 /******************************* GLOBALS**************************************/
+volatile byte data myLChan = MY_L_CHAN;
+volatile byte data myVChan = MY_L_CHAN+1;
+
 volatile byte xdata sysEx[SYS_LEN];
 volatile word sysIx = 0;
 
@@ -63,7 +66,7 @@ volatile byte nextNote = 0;
 //#else
 //#define FREQ_START	(879)
 //#endif
-#define FREQ_START	(879 + (MY_L_CHAN*2))
+#define FREQ_START	(879)// + (MY_L_CHAN*2))
 			   
 
 //timing globals
@@ -128,6 +131,7 @@ void main() {
 	byte i = 0;
 	//power_brownoutenable(POWER_BORESET);
 /**************SETUP++***************************************/
+	station += MY_L_CHAN*2;
 	setup();
 	//Config boot-up
 	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
