@@ -37,7 +37,7 @@ typedef struct Riff_s {
 #define UNIT_XII
 
 ///MIDI STUFF
-#define MY_L_CHAN   0
+#define MY_L_CHAN   0  //FIXME to keep song.c and riff.c compiling
 //	//[0-15] //base channel
 //#define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
 //#ifdef COORD
@@ -133,8 +133,10 @@ extern bit LOOP_SONGS;
 //flags for repeat section of first riff in song
 #define LOOP_SONG_F	(0x01)
 
-extern volatile byte data myLChan;
-extern volatile byte data myVChan;
+extern byte data myLChan;
+extern byte data myVChan;
+extern const byte code myLChanFlash;
+extern const byte code myVChanFlash;
 
 extern volatile word LPeriod;
 extern volatile word VPeriod;

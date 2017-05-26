@@ -1,4 +1,4 @@
-#N canvas 949 -8 960 1009 10;
+#N canvas 480 48 960 1032 10;
 #X obj 316 871 ftom~;
 #X obj 374 874 ftom;
 #X obj 380 900 stripnote;
@@ -128,23 +128,23 @@
 #X obj 369 26 loadbang;
 #X obj 267 291 * 32;
 #X obj 326 117 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 8980 1;
+-262144 -1 -1 9588 1;
 #X obj 331 171 i;
 #X obj 671 116 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 19488 1;
+-262144 -1 -1 9588 1;
 #X obj 689 170 i;
 #X obj 795 328 % 4;
 #X obj 621 301 * 32;
 #X obj 739 169 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 8467 1;
+-1 -1 0 1;
 #X obj 376 170 hsl 128 15 0 3.75 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 11300 1;
+-1 -1 0 1;
 #X msg 267 132 stop;
 #N canvas 0 0 450 300 (subpatch) 0;
-#X array \$0-song 8 float 1 black black;
-#A 0 74.2855 82.8567 72.8569 87.1424 70.0001 80.7142 67.5708 80.7135
+#X array \$0-song 8 float 3 black #cb00ff;
+#A 0 74.2855 82.8567 72.8569 87.1424 70.0001 72.1428 67.5708 80.7135
 ;
-#X coords 0 100 7 0 200 140 1;
+#X coords 0 100 8 0 200 140 1;
 #X restore 25 -30 graph;
 #X obj 204 164 line 0;
 #X floatatom 260 91 5 0 0 0 - - -, f 5;
@@ -687,13 +687,13 @@ wise linear that way... DOWN4 = 8 \, DOWN5 = 9 \, UP1 = 110 \, UP2
 STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 = 123 \, //npc STATION_DOWN6 = 124 //npc;
 #X obj -51 394 vradio 15 1 0 17 empty empty Channel 0 -8 0 10 -262144
--1 -1 1;
+-1 -1 0;
 #X floatatom -49 652 5 1 16 0 - - -, f 5;
 #X obj -77 463 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
 #X floatatom -88 612 5 700 1200 0 - - -, f 5;
 #X obj -107 434 vsl 15 128 10 101 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 5800 1;
+-1 -1 0 1;
 #X floatatom -129 612 5 700 1200 0 - - -, f 5;
 #X obj 105 276 metro 88;
 #X obj 506 272 metro 500;
@@ -739,7 +739,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X text -157 403 up;
 #X text -325 401 glissOff;
 #X obj -312 565 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X text -320 492 TXOn;
 #X obj -1 873 r comctl;
 #X obj 10 890 r comtx;

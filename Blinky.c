@@ -17,8 +17,15 @@
 #include "song.h"
 
 /******************************* GLOBALS**************************************/
-volatile byte data myLChan = MY_L_CHAN;
-volatile byte data myVChan = MY_L_CHAN+1;
+byte data myLChan;
+byte data myVChan;
+//this must align with the final linker script to work....
+//song is at (C:0x1402)
+const byte code myLChanFlash _at_ 0x1000;// = MY_L_CHAN;
+const byte code myVChanFlash _at_ 0x1001;// = MY_L_CHAN+1;
+//so... to even test this we have to have a script that inits 
+//this code in the hex file........................................	 and it wont build in the simulator....
+///  so no dissasembly...........................................
 
 volatile byte xdata sysEx[SYS_LEN];
 volatile word sysIx = 0;
@@ -131,7 +138,9 @@ void main() {
 	byte i = 0;
 	//power_brownoutenable(POWER_BORESET);
 /**************SETUP++***************************************/
-	station += MY_L_CHAN*2;
+	myLChan = myLChanFlash;
+	myVChan = myVChanFlash;
+	station += myLChanFlash*2;
 	setup();
 	//Config boot-up
 	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
