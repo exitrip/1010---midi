@@ -24,22 +24,22 @@
 //* by including one and only one of the following header files 
 //***************************************************************************
 #ifdef HEADLESS
-  //#include "Blinky_hex_basic.h"
-  #include "Blinky_hex_unitXII_0.h"
+  #include "Blinky_hex_basic.h"
+  //#include "Blinky_hex_unitXII_0.h"
 #endif
 
 //***************************************************************************
 //* What board are we programming with?
 //***************************************************************************
-//#define PRO_MINI
-#define UNO
+#define PRO_MINI
+//#define UNO
 //#define LITTLEBITS  //TODO test
 
 //***************************************************************************
 //* Pin Definitions, ported to Arduino pin numbers on boards
 //***************************************************************************
 #if  defined(PRO_MINI)
-#define PDA     3           // define PDA pin
+#define PDA     5           // define PDA pin
 #define PCL     4           // define PCL pin
 #define RESET   6           // define RESET control pin
 #define VDD     3           // define VDD control pin
@@ -57,6 +57,8 @@
                             // for more mA... should test with ICSP outs
 #define VDD     13          // define VDD control pin
 #define LED_BUILTIN 1       //use the output 1 pin
+#else
+#error "Define board used as programmer!!!!"
 #endif
 //***************************************************************************
 //* Programmer Opcodes

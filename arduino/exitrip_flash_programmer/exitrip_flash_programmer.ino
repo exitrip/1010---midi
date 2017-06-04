@@ -32,8 +32,12 @@ void setup() {
   pinMode(RESET, OUTPUT);
   pinMode(VDD, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
+#ifdef DEBUG_SHIFT_OUT_PIN
+  pinMode(DEBUG_SHIFT_OUT_PIN, OUTPUT);
+#endif
+#ifdef DEBUG_SHIFT_IN_PIN
+  pinMode(DEBUG_SHIFT_IN_PIN, OUTPUT);
+#endif
   //PDA changes direction based on data direction
   pinMode(PDA, OUTPUT);
   
@@ -263,7 +267,9 @@ void enter_icp(void)
 //***************************************************************************
 void shift_out(char data_byte)
 {
-  digitalWrite(7, HIGH);
+#ifdef DEBUG_SHIFT_OUT_PIN
+  digitalWrite(DEBUG_SHIFT_OUT_PIN, HIGH);
+#endif
   char shift_bit;  
   char temp_byte = 0;
   pinMode(PDA, OUTPUT);              // make PDA output
@@ -290,7 +296,9 @@ void shift_out(char data_byte)
 //    shiftOut(PDA, PCL, LSBFIRST, data_byte);
 //    digitalWrite(PDA, HIGH);						// set dataline high after transfer
 //    digitalWrite(PCL, HIGH);						// hold clock high after transfer
-    digitalWrite(7, LOW);
+#ifdef DEBUG_SHIFT_OUT_PIN
+  digitalWrite(DEBUG_SHIFT_OUT_PIN, LOW);
+#endif
 }	
 
 //***************************************************************************
@@ -301,7 +309,9 @@ void shift_out(char data_byte)
 //***************************************************************************
 char shift_in(void)
 {
-  digitalWrite(6, HIGH);
+#ifdef DEBUG_SHIFT_IN_PIN
+  digitalWrite(DEBUG_SHIFT_IN_PIN, HIGH);
+#endif
   char data_byte = 0;
   char shift_bit = 0;
   digitalWrite(PCL, LOW);
@@ -328,7 +338,9 @@ char shift_in(void)
   digitalWrite(PCL, LOW);                    // set clockline low after transfer
   digitalWrite(PDA, HIGH);                    // hold dataline high
   pinMode(PDA, OUTPUT);
-  digitalWrite(6, LOW);
+#ifdef DEBUG_SHIFT_IN_PIN
+  digitalWrite(DEBUG_SHIFT_IN_PIN, LOW);
+#endif
   return data_byte;               // return clocked in bit
 
 //    char data_byte = 0;
@@ -367,8 +379,9 @@ void program(void)
     shift_out(RD_FMCON);						// read FMCON command
 	  read_data = shift_in();						// shift in data from FMCON
     if (read_data & 0x0F) {
-      Serial.print("err resp:");          // check for done status MSB
-      Serial.println(read_data, HEX);
+    //  Serial.print(".");
+      //Serial.print("err resp:");          // check for done status MSB
+      //Serial.println(read_data, HEX);
     }
   } while (read_data & 0x80);
 }
@@ -402,8 +415,9 @@ void erase_global(void)
     shift_out(RD_FMCON);						// read FMCON command
 	  read_data = shift_in();						// shift in data from FMCON
     if (read_data & 0x0F) {
-      Serial.print("err resp:");          // check for done status MSB
-      Serial.println(read_data, HEX);
+     // Serial.print(".");
+//      Serial.print("err resp:");          // check for done status MSB
+//      Serial.println(read_data, HEX);
     }
   } while (read_data & 0x80); 
 }
@@ -540,8 +554,9 @@ void write_config_byte(unsigned char addy, unsigned char data) {
       shift_out(RD_FMCON);            // read FMCON command
       read_data = shift_in();         // shift in data from FMCON
       if (read_data & 0x0F) {
-        Serial.print("err resp:");          // check for done status MSB
-        Serial.println(read_data, HEX);
+    //    Serial.print(".");
+       // Serial.print("err resp:");          // check for done status MSB
+     //   Serial.println(read_data, HEX);
       }
     }
     while(read_data & 0x80);          // check for done status MSB
@@ -557,8 +572,9 @@ void write_config_byte(unsigned char addy, unsigned char data) {
       shift_out(RD_FMCON);						// read FMCON command
 	    read_data = shift_in();					// shift in data from FMCON
       if (read_data & 0x0F) {
-        Serial.print("err resp:");          // check for done status MSB
-        Serial.println(read_data, HEX);
+  //      Serial.print(".");
+        //Serial.print("err resp:");          // check for done status MSB
+        //Serial.println(read_data, HEX);
       }
     }
     while (read_data & 0x80); 
