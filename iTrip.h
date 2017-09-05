@@ -32,9 +32,9 @@ typedef struct Riff_s {
 #define LUTSINMASK	0x3f
 //#define LUTSIN	LUTSIN128
 //#define LUTSINMASK	0x7f
-#define ADC_IN
+//#define ADC_IN
 //#define UNIT_11
-#define UNIT_XII
+//#define UNIT_XII
 
 ///MIDI STUFF
 #define MY_L_CHAN   0  //FIXME to keep song.c and riff.c compiling
