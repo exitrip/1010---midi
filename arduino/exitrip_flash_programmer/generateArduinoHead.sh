@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 echo "#ifndef ___BLINKY_HEX
 #define ___BLINKY_HEX
 #include <avr/pgmspace.h>
