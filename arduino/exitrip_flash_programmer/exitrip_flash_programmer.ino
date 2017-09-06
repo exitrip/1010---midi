@@ -25,6 +25,7 @@ unsigned char nbytes = 0;						// number of data bytes
 unsigned char record_type = 0;					// record type
 unsigned char data_bytes[64];				// data buffer
 unsigned char program_byte;						// byte to be programmed
+unsigned char channelsAreProg = 0;
 
 void setup() {
   //initialize output pins
@@ -64,7 +65,6 @@ void setup() {
 }
 
 void loop() {
-  unsigned char channelsAreProg = false;
   unsigned char index;
   checksum = 0;								// clear checksum before loading file
   delayMicroseconds(1000);    //why rush?
@@ -78,19 +78,19 @@ new_record:
 
 #ifdef HEADLESS
 //check for channel hardcoded address magic
-  if (channelsAreProg == false &&
+  if (channelsAreProg == 0 &&
       address_high == CHANNEL_MAGIC_ADDR_HI && 
       address_low == CHANNEL_MAGIC_ADDR_LO) 
   {
 //channels are recorded in the hex, or something is wrong
-    channelsAreProg = true;
+    channelsAreProg = 1;
   #ifdef OVERWRITE_HEXFILE_CHANNELS
 //load the defined channels
-    data_bytes[0] = TARGET_L_CHAN;
-    checksum -= TARGET_L_CHAN;            // update checksum
+    data_bytes[0] = TARGET_L_CHAN-1;
+    checksum -= TARGET_L_CHAN-1;            // update checksum
     hexIter++;
-    data_bytes[1] = TARGET_V_CHAN;
-    checksum -= TARGET_V_CHAN;            // update checksum
+    data_bytes[1] = TARGET_V_CHAN-1;
+    checksum -= TARGET_V_CHAN-1;            // update checksum
     hexIter++;
   #else
 //dont overwrite the hexfile's channels
@@ -106,20 +106,20 @@ new_record:
       Serial.println("crc fail...");
       goto new_record;            // restart HexLoader
     }
-  } else if (channelsAreProg == false &&
+  } else if (channelsAreProg == 0 &&
             address_high == CHANNEL_MAGIC_ADDR_HI && 
             address_low == (CHANNEL_MAGIC_ADDR_LO + 2)) 
   {
 //channels are not in the hex
-    channelsAreProg = true;
+    channelsAreProg = 1;
     //we need to forge a packet live and reset the iterator's to program the 0x1002 data
     nbytes = 2;
     record_type = PROGRAM;
     address_low = CHANNEL_MAGIC_ADDR_LO;
-    data_bytes[0] = TARGET_L_CHAN;
-    data_bytes[1] = TARGET_V_CHAN;
+    data_bytes[0] = TARGET_L_CHAN-1;
+    data_bytes[1] = TARGET_V_CHAN-1;
     //skip the checksum and point iterator to previous hex record
-    hexIter -=  7;   
+    hexIter -=  9;   
   } else
 #endif 
   {
@@ -138,6 +138,15 @@ new_record:
       goto new_record;						// restart HexLoader
     }
   }
+#ifdef EXCLUDE_SONGS
+  //are we in song memory and below the bootloader?
+  if (address_high < 0x3E &&
+      address_high >= CHANNEL_MAGIC_ADDR_HI && 
+      address_low >= CHANNEL_MAGIC_ADDR_LO + 2)
+  {
+    goto new_record;
+  }
+#endif
   if (nbytes == 0 && address_high == 0 &&     //do we have an EOF???
         address_low == 0 && record_type == 1) 
   {
@@ -172,6 +181,7 @@ new_record:
       Serial.print(" bytes to: ");
       Serial.print(address_high, HEX);
       Serial.print(address_low, HEX);
+//      Serial.print('.');
                                     //config bytes are just
       if (address_high == 0xff) {         //records at high address
         Serial.print(" - conf byte skipped\n");

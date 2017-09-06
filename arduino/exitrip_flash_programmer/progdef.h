@@ -21,8 +21,8 @@
 //*     Comment OVERWRITE_HEXFILE_CHANNELS to leave the channels as coded in
 //*     the hexfile.
 //***************************************************************************
-#define TARGET_L_CHAN   1
-#define TARGET_V_CHAN   2
+#define TARGET_L_CHAN   10
+#define TARGET_V_CHAN   12
 
 #define OVERWRITE_HEXFILE_CHANNELS
 
@@ -51,14 +51,21 @@
 //* Select the binary to program in Headless operation
 //* by including one and only one of the following header files 
 //*
+//* If EXCLUDE_SONGS is defined, the arduino will skip programming "songs" included in 
+//*   the hexfile.  See www.exitrip.org/howto/songs for more information.
+//*   You will always be able to include songs later.  This option is most useful
+//    if you are writing your own firmware.
+//*
 //* Only modify CHANNEL_MAGIC_ADDR if you have created custom firmware
 //***************************************************************************
 #ifdef HEADLESS
   #include "Blinky_hex_basic.h"
   //#include "Blinky_hex_unitXII_0.h"
 
+#define EXCLUDE_SONGS
+
 //must sync with firmware version....
-  #define CHANNEL_MAGIC_ADDR    0x1000
+  #define CHANNEL_MAGIC_ADDR    0x1800
   #define CHANNEL_MAGIC_ADDR_HI ((char)(CHANNEL_MAGIC_ADDR >> 8))
   #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
 #endif
