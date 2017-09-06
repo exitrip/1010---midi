@@ -6,6 +6,34 @@
 //***************************************************************************
 
 //***************************************************************************
+//* Assign the targets MIDI channels
+//* These two channels should not be the same and must be between 1 and 16
+//*   targetLChan [left channel] will create synth tones on the left [mono] 
+//*     audio channel.  These tones will be output the exitrip's headphone jack
+//*     on the TIP conductor.
+//*   targetVChan [voltage channel] will create a synth tone sent through the
+//*     transmitters power supply.  This channel is 'spookier': It gets quieter
+//*     as the pitch rises, while low pitches will modulate a reciever's sound
+//*     chaotically.
+//*
+//*   if OVERWRITE_HEXFILE_CHANNELS is defined, the arduino will overwrite
+//*     the channels recorded in the hexfile, if they exist.
+//*     Comment OVERWRITE_HEXFILE_CHANNELS to leave the channels as coded in
+//*     the hexfile.
+//***************************************************************************
+#define TARGET_L_CHAN   1
+#define TARGET_V_CHAN   2
+
+#define OVERWRITE_HEXFILE_CHANNELS
+
+//channel error checking
+#if ((TARGET_L_CHAN > 16) || (TARGET_L_CHAN < 1) || (TARGET_V_CHAN > 16) || (TARGET_V_CHAN < 1))
+  #error "MIDI channel is out of the range 1 to 16"
+#elif (TARGET_L_CHAN == TARGET_V_CHAN)
+  #error "MIDI Left and Voltage channels cannot be the same"
+#endif
+
+//***************************************************************************
 //* Switch between modes of programming:
 //* Headless mode stores exitrip program inside the Arduino for screen-less
 //*     operation
@@ -22,10 +50,17 @@
 //***************************************************************************
 //* Select the binary to program in Headless operation
 //* by including one and only one of the following header files 
+//*
+//* Only modify CHANNEL_MAGIC_ADDR if you have created custom firmware
 //***************************************************************************
 #ifdef HEADLESS
   #include "Blinky_hex_basic.h"
   //#include "Blinky_hex_unitXII_0.h"
+
+//must sync with firmware version....
+  #define CHANNEL_MAGIC_ADDR    0x1000
+  #define CHANNEL_MAGIC_ADDR_HI ((char)(CHANNEL_MAGIC_ADDR >> 8))
+  #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
 #endif
 
 //***************************************************************************

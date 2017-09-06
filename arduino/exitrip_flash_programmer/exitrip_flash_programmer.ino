@@ -64,6 +64,7 @@ void setup() {
 }
 
 void loop() {
+  unsigned char channelsAreProg = false;
   unsigned char index;
   checksum = 0;								// clear checksum before loading file
   delayMicroseconds(1000);    //why rush?
@@ -74,23 +75,69 @@ new_record:
   address_high = get2();						// get MSB of load address
   address_low = get2();						// get LSB of load address
   record_type = get2();						// get record type
-  
-  for(index=0; index < nbytes; index++)		// read record data to buffer
+
+#ifdef HEADLESS
+//check for channel hardcoded address magic
+  if (channelsAreProg == false &&
+      address_high == CHANNEL_MAGIC_ADDR_HI && 
+      address_low == CHANNEL_MAGIC_ADDR_LO) 
   {
-    data_bytes[index] = get2();				// put databytes in an array
-  }
-  
-  reg7 = checksum;							// put calculated checksum in reg7
-  if (reg7 != get2())							// read and check checksum on record
+//channels are recorded in the hex, or something is wrong
+    channelsAreProg = true;
+  #ifdef OVERWRITE_HEXFILE_CHANNELS
+//load the defined channels
+    data_bytes[0] = TARGET_L_CHAN;
+    checksum -= TARGET_L_CHAN;            // update checksum
+    hexIter++;
+    data_bytes[1] = TARGET_V_CHAN;
+    checksum -= TARGET_V_CHAN;            // update checksum
+    hexIter++;
+  #else
+//dont overwrite the hexfile's channels
+    for(index=0; index < nbytes; index++)    // read record data to buffer
+    {
+      data_bytes[index] = get2();       // put databytes in an array
+    }
+  #endif
+//check the sum
+    reg7 = checksum;              // put calculated checksum in reg7
+    if (reg7 != get2())             // read and check checksum on record
+    {
+      Serial.println("crc fail...");
+      goto new_record;            // restart HexLoader
+    }
+  } else if (channelsAreProg == false &&
+            address_high == CHANNEL_MAGIC_ADDR_HI && 
+            address_low == (CHANNEL_MAGIC_ADDR_LO + 2)) 
   {
-#ifdef SERIAL_BRIDGE
-    Serial.print("X\n");					// print error message
-#else
-    Serial.println("crc fail...");
-#endif
-    goto new_record;						// restart HexLoader
+//channels are not in the hex
+    channelsAreProg = true;
+    //we need to forge a packet live and reset the iterator's to program the 0x1002 data
+    nbytes = 2;
+    record_type = PROGRAM;
+    address_low = CHANNEL_MAGIC_ADDR_LO;
+    data_bytes[0] = TARGET_L_CHAN;
+    data_bytes[1] = TARGET_V_CHAN;
+    //skip the checksum and point iterator to previous hex record
+    hexIter -=  7;   
+  } else
+#endif 
+  {
+    for(index=0; index < nbytes; index++)		// read record data to buffer
+    {
+      data_bytes[index] = get2();				// put databytes in an array
+    }
+    reg7 = checksum;							// put calculated checksum in reg7
+    if (reg7 != get2())							// read and check checksum on record
+    {
+  #ifdef SERIAL_BRIDGE
+      Serial.print("X\n");					// print error message
+  #else
+      Serial.println("crc fail...");
+  #endif
+      goto new_record;						// restart HexLoader
+    }
   }
-  
   if (nbytes == 0 && address_high == 0 &&     //do we have an EOF???
         address_low == 0 && record_type == 1) 
   {
