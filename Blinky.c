@@ -20,12 +20,9 @@
 byte data myLChan;
 byte data myVChan;
 //this must align with the final linker script to work....
-//song is at (C:0x1402)
-const byte code myLChanFlash _at_ 0x1000;// = MY_L_CHAN;
-const byte code myVChanFlash _at_ 0x1001;// = MY_L_CHAN+1;
-//so... to even test this we have to have a script that inits 
-//this code in the hex file........................................	 and it wont build in the simulator....
-///  so no dissasembly...........................................
+//song is at (C:0x1802)
+const byte code myLChanFlash _at_ 0x1800;// = MY_L_CHAN;
+const byte code myVChanFlash _at_ 0x1801;// = MY_L_CHAN+1;
 
 volatile byte xdata sysEx[SYS_LEN];
 volatile word sysIx = 0;
@@ -140,8 +137,17 @@ void main() {
 /**************SETUP++***************************************/
 	myLChan = myLChanFlash;
 	myVChan = myVChanFlash;
-	station += myLChanFlash*2;
+	//if anything is fishy in flash, adjust the channel values
+	if (myLChan == myVChan) {
+		myVChan = myLChan + 1;
+	}
+	if (myLChan > 15 || myLChan < 0 || myVChan > 15 || myVChan < 0) {
+		myLChan = MY_L_CHAN;
+		myVChan = MY_V_CHAN;
+	}
+	station += myLChan*2;
 	setup();
+	OMNI = 0;
 	//Config boot-up
 	while (midButt == 0) {  //debounced midButt switches COORD's PLAYING
 		LED ^= 1;
@@ -571,40 +577,40 @@ void main() {
 				if (station < MIN_FREQ) {
 					station = MIN_FREQ;
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 				}
 				if (station > MAX_FREQ) {
 					station = MAX_FREQ;
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 0;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 					LED = 1;
-					delay(UINT_MAX);
+					delay(UINT_MAX/2);
 				}						  
 			}
 		}
@@ -740,8 +746,23 @@ void timers_isr1 (void) interrupt 3 using 2
 #ifdef DAC1_OUT_AUDIO
 		AD1DAT3 = LUTSIN[dac1LUTdex++ & LUTSINMASK];
 #else
-		//just for the delay...  hopefully it doesnt mess up ADC0
-		AD1DAT0 = LUTSIN[dac1LUTdex & LUTSINMASK];
+		//just for the delay... 
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
 #endif
 #endif
 }
@@ -787,7 +808,23 @@ void timers_isr0 (void) interrupt 1 using 3
 #ifdef DAC1_OUT_VCC
 	AD1DAT3 = LUTSIN[dac1LUTdex++ & LUTSINMASK];
 #else
-	AD1DAT0 = LUTSIN[dac1LUTdex & LUTSINMASK];
+			//just for the delay... 
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
 #endif
 #endif
 }

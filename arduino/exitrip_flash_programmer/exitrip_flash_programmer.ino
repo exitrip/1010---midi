@@ -26,6 +26,7 @@ unsigned char record_type = 0;					// record type
 unsigned char data_bytes[64];				// data buffer
 unsigned char program_byte;						// byte to be programmed
 unsigned char channelsAreProg = 0;
+unsigned char ledState = 0;
 
 void setup() {
   //initialize output pins
@@ -112,7 +113,7 @@ new_record:
   {
 //channels are not in the hex
     channelsAreProg = 1;
-    //we need to forge a packet live and reset the iterator's to program the 0x1002 data
+    //we need to forge a packet live and reset the iterator's to program the 0x1802 data
     nbytes = 2;
     record_type = PROGRAM;
     address_low = CHANNEL_MAGIC_ADDR_LO;
@@ -163,9 +164,9 @@ new_record:
 #endif
     while(1) {                               //then we are done, blink forever
       digitalWrite(LED_BUILTIN, LOW);
-      delay(500);
+      delay(750);
       digitalWrite(LED_BUILTIN, HIGH);
-      delay(500);    
+      delay(750);    
     }
   }
   
@@ -181,7 +182,7 @@ new_record:
       Serial.print(" bytes to: ");
       Serial.print(address_high, HEX);
       Serial.print(address_low, HEX);
-//      Serial.print('.');
+      digitalWrite(LED_BUILTIN, (ledState++)&0x01);
                                     //config bytes are just
       if (address_high == 0xff) {         //records at high address
         Serial.print(" - conf byte skipped\n");

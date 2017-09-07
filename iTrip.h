@@ -37,9 +37,10 @@ typedef struct Riff_s {
 //#define UNIT_XII
 
 ///MIDI STUFF
+//fall back channels
 #define MY_L_CHAN   0  //FIXME to keep song.c and riff.c compiling
-//	//[0-15] //base channel
-//#define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
+#define MY_V_CHAN	5
+
 //#ifdef COORD
 //	#define MY_ID_H		'C'
 //	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"

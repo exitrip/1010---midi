@@ -83,6 +83,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				LnotV = 0; 
 			} else {
 				midiMsg.typeChan = 0; //clear midiMsg
+				LnotV = 0;
 				goto IGNORE_MIDI;
 			}
 			switch (midiMsg.typeChan & 0xf0) {
@@ -377,7 +378,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  	  	//turn off txVCC
 								TX_VCC_ON = 0;
-						  	} else if (midiMsg.pitch == LNote) {
+						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {
 						  		//turn off Left channel
 								AUDIO_L_ON = 0;
 						  	}
@@ -538,7 +539,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						} else {   //turn off cause Velocity = 0
 						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  		TX_VCC_ON = 0;
-						  	} else if (midiMsg.pitch == LNote) {	
+						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {	
 						  		AUDIO_L_ON = 0;
 					  		}
 						}
@@ -713,9 +714,8 @@ void uart_rx_isr (void) interrupt 4 using 0 {
     midiMsg.count ^= 3; // toggle between 1 and 2 (MSB and LSB for 14 bit values)
 	}
 IGNORE_MIDI:
-  // clear interrupt flag
-  //RI = 0;
-  LnotV = 0;		
+  _nop_();
+  //LnotV = 0;		
   } // uart_rx_isr
 }
 void uart_tx_isr (void) interrupt 13 using 1 {

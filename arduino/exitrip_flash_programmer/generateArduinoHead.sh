@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-echo "#ifndef ___BLINKY_HEX
+echo "//Generated `date`
+#ifndef ___BLINKY_HEX
 #define ___BLINKY_HEX
 #include <avr/pgmspace.h>
 unsigned int hexIter = 0;

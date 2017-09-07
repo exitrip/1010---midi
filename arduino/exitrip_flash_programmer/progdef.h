@@ -14,7 +14,9 @@
 //*   targetVChan [voltage channel] will create a synth tone sent through the
 //*     transmitters power supply.  This channel is 'spookier': It gets quieter
 //*     as the pitch rises, while low pitches will modulate a reciever's sound
-//*     chaotically.
+//*     chaotically.  The V channel transmits around the center broadcast 
+//*     station, not exactly on it. (e.g. if the transmitter is tuned to 91.1 FM,
+//*     V Channel notes will be strongest around ~90.5 FM and ~91.7 FM)
 //*
 //*   if OVERWRITE_HEXFILE_CHANNELS is defined, the arduino will overwrite
 //*     the channels recorded in the hexfile, if they exist.
@@ -22,7 +24,7 @@
 //*     the hexfile.
 //***************************************************************************
 #define TARGET_L_CHAN   10
-#define TARGET_V_CHAN   12
+#define TARGET_V_CHAN   8
 
 #define OVERWRITE_HEXFILE_CHANNELS
 
