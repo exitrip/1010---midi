@@ -1,4 +1,4 @@
-#N canvas 480 48 960 1032 10;
+#N canvas 0 46 1920 1011 10;
 #X obj 316 871 ftom~;
 #X obj 374 874 ftom;
 #X obj 380 900 stripnote;
@@ -16,7 +16,7 @@
 #X text 156 442 pitch;
 #X text 197 440 vel;
 #X text 237 443 length;
-#X obj 58 432 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 58 432 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 261 388 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -37,7 +37,7 @@
 #X text 585 453 pitch;
 #X text 630 453 vel;
 #X text 666 454 length;
-#X obj 487 443 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 487 443 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 690 399 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -66,7 +66,7 @@
 #X text 168 674 pitch;
 #X text 213 674 vel;
 #X text 249 675 length;
-#X obj 70 664 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 70 664 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 273 620 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -87,7 +87,7 @@
 #X text 597 685 pitch;
 #X text 642 685 vel;
 #X text 678 686 length;
-#X obj 499 675 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 499 675 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 702 631 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -142,7 +142,7 @@
 #X msg 267 132 stop;
 #N canvas 0 0 450 300 (subpatch) 0;
 #X array \$0-song 8 float 3 black #cb00ff;
-#A 0 74.2855 82.8567 72.8569 87.1424 70.0001 72.1428 67.5708 80.7135
+#A 0 27.143 49.2856 73.5713 27.8572 54.9999 73.5714 36.4287 80.7135
 ;
 #X coords 0 100 8 0 200 140 1;
 #X restore 25 -30 graph;
@@ -156,7 +156,7 @@
 #X msg 396 445 1149;
 #X msg 307 445 1255;
 #X msg 339 445 14;
-#X obj 263 -29 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 263 -29 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X msg 66 246 108;
 #X msg -3 245 10 30000;
@@ -184,7 +184,7 @@
 #X obj 1078 405 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X floatatom 945 582 5 1 16 0 - - -, f 5;
-#X obj 900 326 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 900 326 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 905 359 * 127;
 #X obj 895 839 noteout;
@@ -256,7 +256,7 @@
 -1 -1;
 #X floatatom 1400 573 5 1 16 0 - - -, f 5;
 #X obj 1355 317 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 1360 350 * 127;
 #X obj 1350 830 noteout;
 #X obj 1591 650 loadbang;
@@ -347,7 +347,7 @@
 -1 -1;
 #X floatatom 1873 802 5 1 16 0 - - -, f 5;
 #X obj 1811 232 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X floatatom 1924 321 5 0 127 0 - - -, f 5;
 #X floatatom 2015 322 5 0 127 0 - - -, f 5;
 #X floatatom 2045 266 5 700 1200 0 - - -, f 5;
@@ -360,12 +360,12 @@
 #X msg 2128 56 911;
 #X obj 2109 10 loadbang;
 #X obj 1975 110 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 9588 1;
+-262144 -1 -1 9894 1;
 #X obj 1993 164 i;
 #X obj 2099 322 % 4;
 #X obj 1925 295 * 32;
 #X obj 2046 167 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+-1 -1 8467 1;
 #X obj 1828 390 ctlout 80;
 #X obj 1922 352 ctlout 48;
 #X obj 2016 351 ctlout 16;
@@ -396,12 +396,12 @@
 #X text 2374 451 vel;
 #X text 2410 452 length;
 #X obj 2231 441 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 2434 397 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X floatatom 2301 574 5 1 16 0 - - -, f 5;
 #X obj 2256 318 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 2261 351 * 127;
 #X obj 2251 831 noteout;
 #X obj 2492 651 loadbang;
@@ -423,7 +423,7 @@
 -1 -1;
 #X floatatom 2313 806 5 1 16 0 - - -, f 5;
 #X obj 2251 236 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X floatatom 2364 325 5 0 127 0 - - -, f 5;
 #X floatatom 2455 326 5 0 127 0 - - -, f 5;
 #X floatatom 2485 270 5 700 1200 0 - - -, f 5;
@@ -436,7 +436,7 @@
 #X msg 2568 60 911;
 #X obj 2549 14 loadbang;
 #X obj 2415 114 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 9588 1;
+-262144 -1 -1 9180 1;
 #X obj 2433 168 i;
 #X obj 2539 326 % 4;
 #X obj 2365 299 * 32;
@@ -471,7 +471,7 @@
 #X text 2796 457 vel;
 #X text 2832 458 length;
 #X obj 2653 447 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 2856 403 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X floatatom 2723 580 5 1 16 0 - - -, f 5;
@@ -498,7 +498,7 @@
 -1 -1;
 #X floatatom 2735 812 5 1 16 0 - - -, f 5;
 #X obj 2673 242 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X floatatom 2786 331 5 0 127 0 - - -, f 5;
 #X floatatom 2877 332 5 0 127 0 - - -, f 5;
 #X floatatom 2907 276 5 700 1200 0 - - -, f 5;
@@ -549,7 +549,7 @@
 -1 -1;
 #X floatatom 3181 570 5 1 16 0 - - -, f 5;
 #X obj 3136 314 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 3141 347 * 127;
 #X obj 3131 827 noteout;
 #X obj 3372 647 loadbang;
@@ -584,12 +584,12 @@
 #X msg 3448 56 911;
 #X obj 3429 10 loadbang;
 #X obj 3295 110 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 9588 1;
+-262144 -1 -1 9894 1;
 #X obj 3313 164 i;
 #X obj 3419 322 % 4;
 #X obj 3245 295 * 32;
 #X obj 3366 167 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+-1 -1 8467 1;
 #X obj 3148 390 ctlout 80;
 #X obj 3242 352 ctlout 48;
 #X obj 3336 351 ctlout 16;

@@ -6,6 +6,13 @@
 //***************************************************************************
 
 //***************************************************************************
+//* What board are we programming with?
+//***************************************************************************
+#define PRO_MINI
+//#define UNO
+//#define LITTLEBITS  //TODO test
+
+//***************************************************************************
 //* Assign the targets MIDI channels
 //* These two channels should not be the same and must be between 1 and 16
 //*   targetLChan [left channel] will create synth tones on the left [mono] 
@@ -71,13 +78,6 @@
   #define CHANNEL_MAGIC_ADDR_HI ((char)(CHANNEL_MAGIC_ADDR >> 8))
   #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
 #endif
-
-//***************************************************************************
-//* What board are we programming with?
-//***************************************************************************
-#define PRO_MINI
-//#define UNO
-//#define LITTLEBITS  //TODO test
 
 //***************************************************************************
 //* Pin Definitions, ported to Arduino pin numbers on boards
