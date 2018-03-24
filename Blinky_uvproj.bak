@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
 
-  <SchemaVersion>1.0</SchemaVersion>
+  <SchemaVersion>1.1</SchemaVersion>
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
@@ -12,14 +12,14 @@
       <ToolsetName>MCS-51</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>P89LPC932</Device>
-          <Vendor>Philips</Vendor>
-          <Cpu>IRAM(0-0xFF) IROM(0-0x1FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
+          <Device>P89LPC936</Device>
+          <Vendor>NXP (founded by Philips)</Vendor>
+          <Cpu>IRAM(0-0xFF) IROM(0-0x3FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
           <FlashUtilSpec>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</FlashUtilSpec>
           <StartupFile>"LIB\START900.A51" ("Philips LPC900 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId></DeviceId>
-          <RegisterFile>REG932.H</RegisterFile>
+          <DeviceId>3836</DeviceId>
+          <RegisterFile>REG935.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -29,12 +29,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿPhilips\</RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <RegisterFilePath>Philips\</RegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -60,6 +62,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -68,6 +72,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -94,17 +100,18 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>1</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DLPC.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC932</SimDlgDllArguments>
+          <SimDlgDllArguments>-pLPC935</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TLPC.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC932</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC935</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -124,6 +131,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
@@ -134,6 +142,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>8</TargetSelection>
@@ -162,15 +173,20 @@
             <Capability>1</Capability>
             <DriverSelection>0</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
-          <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
+          <Flash3>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>0</MemoryModel>
+            <MemoryModel>1</MemoryModel>
             <RTOS>0</RTOS>
-            <RomSize>0</RomSize>
+            <RomSize>1</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
             <UseOnchipRom>0</UseOnchipRom>
@@ -253,7 +269,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x4000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -428,12 +444,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿPhilips\</RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <RegisterFilePath>Philips\</RegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -459,6 +477,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -467,6 +487,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -493,6 +515,7 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>1</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
@@ -523,6 +546,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
@@ -533,6 +557,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>-1</TargetSelection>
@@ -561,9 +588,14 @@
             <Capability>1</Capability>
             <DriverSelection>0</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
           <Flash3>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
@@ -827,12 +859,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath>C:\Keil\C51\BIN\</BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
           <RegisterFilePath></RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -858,6 +892,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -866,6 +902,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -892,6 +930,7 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>1</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
@@ -922,6 +961,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -932,6 +972,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>3</TargetSelection>
@@ -960,9 +1003,14 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
           <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
