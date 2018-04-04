@@ -25,7 +25,7 @@
     <ToolsetNumber>0x0</ToolsetNumber>
     <ToolsetName>MCS-51</ToolsetName>
     <TargetOption>
-      <CLK51>12000000</CLK51>
+      <CLK51>7372800</CLK51>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -73,7 +73,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>1</CpuCode>
       <Books>
@@ -111,12 +111,12 @@
         <tRfunc>0</tRfunc>
         <tRbox>1</tRbox>
         <tRtrace>0</tRtrace>
-        <sRSysVw>1</sRSysVw>
-        <tRSysVw>1</tRSysVw>
-        <tPdscDbg>1</tPdscDbg>
+        <sRSysVw>0</sRSysVw>
+        <tRSysVw>0</tRSysVw>
+        <tPdscDbg>0</tPdscDbg>
         <sRunDeb>0</sRunDeb>
-        <sLrtime>1</sLrtime>
-        <nTsel>8</nTsel>
+        <sLrtime>0</sLrtime>
+        <nTsel>3</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -143,39 +143,23 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDLPC</Key>
-          <Name>(98=918,364,1260,662,1)(3003=661,363,943,577,0)(3004=324,246,537,395,0)(3006=735,415,948,584,0)(5019=616,354,823,519,0)(5028=1073,124,1280,579,0)(91=475,293,675,572,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=-1,-1,-1,-1,0)(5015=510,374,1092,796,0)(5094=-1,-1,-1,-1,0)(5095=-1,-1,-1,-1,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=-1,-1,-1,-1,0)(2003=-1,-1,-1,-1,0)(5006=-1,-1,-1,-1,0)(5004=803,271,1024,467,0)</Name>
+          <Name>(98=1559,158,1901,444,0)(3003=57,476,270,687,0)(3004=324,246,537,395,0)(3006=735,415,948,584,0)(5019=616,354,823,519,0)(5028=1073,124,1280,579,0)(91=475,293,675,572,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=-1,-1,-1,-1,0)(5015=510,374,1092,796,0)(5094=-1,-1,-1,-1,0)(5095=-1,-1,-1,-1,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=225,189,465,348,0)(2003=-1,-1,-1,-1,0)(5006=225,189,417,411,0)(5004=803,271,1024,474,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>344</LineNumber>
+          <LineNumber>128</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>-16775168</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>D:\omega\exTrip\1010---midi\Blinky.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>388</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>-16775067</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>D:\omega\exTrip\1010---midi\BLINKY.C</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -184,26 +168,66 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>adcArrayIter</ItemText>
+          <ItemText>curSong</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>adcArray</ItemText>
+          <ItemText>songNum</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>nextnote</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>numNotes</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>curRiffCnt</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>nextRiff</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>deltaPos</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>riff</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>curSong[nextRiff]</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>numRiffs</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>c:0xc</ItemText>
+          <ItemText>X:0x000</ItemText>
         </Mm>
       </MemoryWindow1>
       <MemoryWindow2>
         <Mm>
           <WinNumber>2</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:0x80</ItemText>
+          <ItemText>D:0x0</ItemText>
         </Mm>
       </MemoryWindow2>
       <MemoryWindow3>
@@ -224,9 +248,9 @@
         <THDelay>0</THDelay>
       </Tracepoint>
       <DebugFlag>
-        <trace>0</trace>
+        <trace>1</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -350,9 +374,9 @@
         <tRfunc>0</tRfunc>
         <tRbox>1</tRbox>
         <tRtrace>0</tRtrace>
-        <sRSysVw>1</sRSysVw>
-        <tRSysVw>1</tRSysVw>
-        <tPdscDbg>1</tPdscDbg>
+        <sRSysVw>0</sRSysVw>
+        <tRSysVw>0</tRSysVw>
+        <tPdscDbg>0</tPdscDbg>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <nTsel>-1</nTsel>
@@ -394,23 +418,7 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>344</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>D:\omega\exTrip\1010---midi\Blinky.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>388</LineNumber>
+          <LineNumber>128</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -491,7 +499,7 @@
     <ToolsetNumber>0x0</ToolsetNumber>
     <ToolsetName>MCS-51</ToolsetName>
     <TargetOption>
-      <CLK51>12000000</CLK51>
+      <CLK51>7372800</CLK51>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -539,7 +547,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>1</CpuCode>
       <Books>
@@ -582,9 +590,9 @@
         <tRfunc>0</tRfunc>
         <tRbox>1</tRbox>
         <tRtrace>0</tRtrace>
-        <sRSysVw>1</sRSysVw>
-        <tRSysVw>1</tRSysVw>
-        <tPdscDbg>1</tPdscDbg>
+        <sRSysVw>0</sRSysVw>
+        <tRSysVw>0</tRSysVw>
+        <tPdscDbg>0</tPdscDbg>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <nTsel>3</nTsel>
@@ -614,19 +622,19 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>LPC2EMP</Key>
-          <Name>-O8349503 -C50544385 -S0 -T6 -D25</Name>
+          <Name>-O16740158 -C50544385 -S0 -T6 -D25</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDLPC</Key>
-          <Name>(98=-1,-1,-1,-1,0)(3003=805,531,1018,711,0)(3004=742,252,1024,434,0)(3006=217,531,430,665,0)(5019=616,354,823,483,0)(5028=-1,-1,-1,-1,0)(91=475,293,675,554,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=527,221,869,597,0)(5015=442,346,1024,768,0)(5094=180,119,528,416,0)(5095=-1,-1,-1,-1,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=-1,-1,-1,-1,0)(2003=714,505,1024,705,0)(5006=-1,-1,-1,-1,0)(5004=732,271,1024,507,0)</Name>
+          <Name>(98=135,679,477,965,1)(3003=1328,140,1541,320,0)(3004=742,252,1024,434,0)(3006=217,531,430,665,0)(5019=616,354,823,483,0)(5028=-1,-1,-1,-1,0)(91=1341,391,1541,654,0)(92=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(5091=-1,-1,-1,-1,0)(5007=-1,-1,-1,-1,0)(5090=527,221,869,597,0)(5015=442,346,1024,768,0)(5094=180,119,528,416,0)(5095=-1,-1,-1,-1,0)(3007=627,99,959,303,0)(5029=-1,-1,-1,-1,0)(5097=1473,416,1713,575,0)(2003=714,505,1024,705,0)(5006=-1,-1,-1,-1,0)(5004=1320,255,1541,458,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>344</LineNumber>
+          <LineNumber>15</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -635,68 +643,108 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>D:\omega\exTrip\1010---midi\Blinky.c</Filename>
+          <Filename>D:\omega\exTrip\1010---midi\no_touch.a51</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>388</LineNumber>
+          <LineNumber>128</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>-16775964</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>D:\omega\exTrip\1010---midi\Blinky.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\BLINKY\128</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>txState,0x10</ItemText>
+          <ItemText>TH0</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>txData</ItemText>
+          <ItemText>TL0</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>txClk</ItemText>
+          <ItemText>CMP1</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>CE</ItemText>
+          <ItemText>sysIx</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sysEx</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>songBook</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
           <count>0</count>
           <WinNumber>2</WinNumber>
-          <ItemText>txState</ItemText>
+          <ItemText>riff</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>curRiffCnt</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>numNotes</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>curSong</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>periodH1</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>periodL1</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>txVcc</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
-          <SubType>0</SubType>
-          <ItemText>V:0</ItemText>
+          <SubType>8</SubType>
+          <ItemText>X:0</ItemText>
         </Mm>
       </MemoryWindow1>
       <MemoryWindow2>
         <Mm>
           <WinNumber>2</WinNumber>
           <SubType>0</SubType>
-          <ItemText>d:0x9E</ItemText>
+          <ItemText>C:0xFFF0</ItemText>
         </Mm>
       </MemoryWindow2>
       <MemoryWindow3>
@@ -710,7 +758,7 @@
         <Mm>
           <WinNumber>4</WinNumber>
           <SubType>0</SubType>
-          <ItemText>&amp;save_record</ItemText>
+          <ItemText>C:0x1000</ItemText>
         </Mm>
       </MemoryWindow4>
       <Tracepoint>
@@ -757,7 +805,7 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
@@ -767,21 +815,149 @@
       <bShared>0</bShared>
       <WindowPosition>
         <length>44</length>
-        <flags>2</flags>
-        <showCmd>3</showCmd>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
         <MinPosition>
           <xPos>-1</xPos>
           <yPos>-1</yPos>
         </MinPosition>
         <MaxPosition>
           <xPos>-4</xPos>
-          <yPos>-25</yPos>
+          <yPos>-30</yPos>
         </MaxPosition>
         <NormalPosition>
-          <Top>96</Top>
-          <Left>43</Left>
-          <Right>729</Right>
-          <Bottom>424</Bottom>
+          <Top>-2</Top>
+          <Left>-2</Left>
+          <Right>952</Right>
+          <Bottom>548</Bottom>
+        </NormalPosition>
+      </WindowPosition>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>2</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\uart.c</PathWithFileName>
+      <FilenameWithoutPath>uart.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+      <WindowPosition>
+        <length>44</length>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
+        <MinPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MinPosition>
+        <MaxPosition>
+          <xPos>-4</xPos>
+          <yPos>-30</yPos>
+        </MaxPosition>
+        <NormalPosition>
+          <Top>-4</Top>
+          <Left>2</Left>
+          <Right>960</Right>
+          <Bottom>609</Bottom>
+        </NormalPosition>
+      </WindowPosition>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>3</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\LUTFreq.c</PathWithFileName>
+      <FilenameWithoutPath>LUTFreq.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+      <WindowPosition>
+        <length>44</length>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
+        <MinPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MinPosition>
+        <MaxPosition>
+          <xPos>-4</xPos>
+          <yPos>-30</yPos>
+        </MaxPosition>
+        <NormalPosition>
+          <Top>-1</Top>
+          <Left>961</Left>
+          <Right>1645</Right>
+          <Bottom>516</Bottom>
+        </NormalPosition>
+      </WindowPosition>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>4</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\riff.c</PathWithFileName>
+      <FilenameWithoutPath>riff.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+      <WindowPosition>
+        <length>44</length>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
+        <MinPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MinPosition>
+        <MaxPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MaxPosition>
+        <NormalPosition>
+          <Top>6</Top>
+          <Left>963</Left>
+          <Right>1599</Right>
+          <Bottom>608</Bottom>
+        </NormalPosition>
+      </WindowPosition>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>5</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>1</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\song.c</PathWithFileName>
+      <FilenameWithoutPath>song.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+      <WindowPosition>
+        <length>44</length>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
+        <MinPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MinPosition>
+        <MaxPosition>
+          <xPos>-4</xPos>
+          <yPos>-30</yPos>
+        </MaxPosition>
+        <NormalPosition>
+          <Top>0</Top>
+          <Left>0</Left>
+          <Right>950</Right>
+          <Bottom>573</Bottom>
         </NormalPosition>
       </WindowPosition>
     </File>
@@ -795,7 +971,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>2</FileNumber>
+      <FileNumber>6</FileNumber>
       <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -803,27 +979,6 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\START900.A51</PathWithFileName>
       <FilenameWithoutPath>START900.A51</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>Documentation</GroupName>
-    <tvExp>1</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>3</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\ABSTRACT.TXT</PathWithFileName>
-      <FilenameWithoutPath>ABSTRACT.TXT</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
       <WindowPosition>
@@ -835,87 +990,88 @@
           <yPos>-1</yPos>
         </MinPosition>
         <MaxPosition>
-          <xPos>-4</xPos>
-          <yPos>-25</yPos>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
         </MaxPosition>
         <NormalPosition>
-          <Top>72</Top>
-          <Left>72</Left>
-          <Right>647</Right>
-          <Bottom>400</Bottom>
+          <Top>2</Top>
+          <Left>8</Left>
+          <Right>972</Right>
+          <Bottom>610</Bottom>
         </NormalPosition>
       </WindowPosition>
     </File>
   </Group>
 
   <Group>
-    <GroupName>test</GroupName>
+    <GroupName>Documentation</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>7</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\ABSTRACT.TXT</PathWithFileName>
+      <FilenameWithoutPath>ABSTRACT.TXT</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>ISP</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>4</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\test\adc.c</PathWithFileName>
-      <FilenameWithoutPath>adc.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>5</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\test\comparators.c</PathWithFileName>
-      <FilenameWithoutPath>comparators.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>6</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\test\osc.c</PathWithFileName>
-      <FilenameWithoutPath>osc.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>7</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\test\power.c</PathWithFileName>
-      <FilenameWithoutPath>power.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
       <FileNumber>8</FileNumber>
-      <FileType>1</FileType>
+      <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\test\timers.c</PathWithFileName>
-      <FilenameWithoutPath>timers.c</FilenameWithoutPath>
+      <PathWithFileName>.\LPC_ISP_16K_V04.a51</PathWithFileName>
+      <FilenameWithoutPath>LPC_ISP_16K_V04.a51</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+      <WindowPosition>
+        <length>44</length>
+        <flags>0</flags>
+        <showCmd>1</showCmd>
+        <MinPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MinPosition>
+        <MaxPosition>
+          <xPos>-1</xPos>
+          <yPos>-1</yPos>
+        </MaxPosition>
+        <NormalPosition>
+          <Top>7</Top>
+          <Left>12</Left>
+          <Right>938</Right>
+          <Bottom>587</Bottom>
+        </NormalPosition>
+      </WindowPosition>
+    </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>9</FileNumber>
+      <FileType>2</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\no_touch.a51</PathWithFileName>
+      <FilenameWithoutPath>no_touch.a51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
