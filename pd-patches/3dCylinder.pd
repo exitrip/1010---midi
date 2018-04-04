@@ -1,0 +1,109 @@
+#N canvas 419 0 840 893 10;
+#X obj 501 179 hsl 128 15 0 127 0 0 empty empty Max\ Size 10 5 0 10
+-1 -258049 -262144 1800 1;
+#X floatatom 448 159 7 0 0 0 - - -, f 7;
+#X text 334 214 size;
+#X obj 368 217 *;
+#X msg 728 296 draw line;
+#X msg 744 320 draw fill;
+#X msg 764 340 draw point;
+#X floatatom 448 200 7 0 0 2 - - -, f 7;
+#X obj 163 224 rotateXYZ;
+#X floatatom 448 96 7 0 0 0 - - -, f 7;
+#X floatatom 448 115 7 0 0 0 - - -, f 7;
+#X floatatom 448 134 7 0 0 0 - - -, f 7;
+#X obj 187 259 polygon_smooth;
+#X floatatom 448 35 7 0 0 0 - - -, f 7;
+#X floatatom 448 54 7 0 0 0 - - -, f 7;
+#X floatatom 448 73 7 0 0 0 - - -, f 7;
+#X obj 136 144 translateXYZ;
+#X obj 38 -20 inlet;
+#X obj 499 39 hsl 128 15 -360 360 0 0 empty empty X\ Translation 10
+5 0 10 -1 -258049 -262144 6350 1;
+#X obj 499 57 hsl 128 15 -360 360 0 0 empty empty Y\ Translation 10
+5 0 10 -1 -258049 -262144 6332 1;
+#X obj 499 75 hsl 128 15 -360 360 0 0 empty empty Z\ Translation 10
+5 0 10 -1 -258049 -262144 6438 1;
+#X obj 500 98 hsl 128 15 -360 360 0 0 empty empty X\ Rotatation 10
+5 0 10 -1 -258049 -262144 6262 1;
+#X obj 500 117 hsl 128 15 -360 360 0 0 empty empty Y\ Rotatation 10
+5 0 10 -1 -258049 -262144 6297 1;
+#X obj 500 136 hsl 128 15 -360 360 0 0 empty empty Z\ Rotatation 10
+5 0 10 -1 -258049 -262144 2650 1;
+#X obj 501 160 hsl 128 15 0 1 0 0 empty empty Size 10 5 0 10 -1 -258049
+-262144 1800 1;
+#X obj 501 203 hsl 128 15 0 1 0 0 empty empty Segments 10 5 0 10 -1
+-258049 -262144 450 1;
+#X obj 431 315 *;
+#X obj 80 -19 inlet;
+#X obj 122 -20 inlet;
+#X obj 162 -18 inlet;
+#X obj 206 -19 inlet;
+#X obj 248 -20 inlet;
+#X obj 288 -18 inlet;
+#X obj 334 -18 inlet;
+#X obj 374 -16 inlet;
+#X obj 418 -18 inlet;
+#X obj 458 -16 inlet;
+#X obj 501 224 hsl 128 15 0 512 0 0 empty empty Max\ Segments 10 5
+0 10 -1 -258049 -262144 2400 1;
+#X obj 250 440 outlet;
+#X text 446 245 setCord.. i j x/r y/phi z/theta;
+#X obj 684 -16 loadbang;
+#X obj 684 6 t 0;
+#X obj 750 253 inlet;
+#X text 603 19 draw;
+#X obj 250 408 cylinder;
+#X connect 0 0 3 1;
+#X connect 1 0 44 1;
+#X connect 3 0 1 0;
+#X connect 4 0 44 0;
+#X connect 5 0 44 0;
+#X connect 6 0 44 0;
+#X connect 7 0 44 2;
+#X connect 8 0 12 0;
+#X connect 9 0 8 1;
+#X connect 10 0 8 2;
+#X connect 11 0 8 3;
+#X connect 12 0 44 0;
+#X connect 13 0 16 1;
+#X connect 14 0 16 2;
+#X connect 15 0 16 3;
+#X connect 16 0 8 0;
+#X connect 17 0 16 0;
+#X connect 18 0 13 0;
+#X connect 19 0 14 0;
+#X connect 20 0 15 0;
+#X connect 21 0 9 0;
+#X connect 22 0 10 0;
+#X connect 23 0 11 0;
+#X connect 24 0 3 0;
+#X connect 25 0 26 0;
+#X connect 26 0 7 0;
+#X connect 27 0 18 0;
+#X connect 27 0 13 0;
+#X connect 28 0 19 0;
+#X connect 28 0 14 0;
+#X connect 29 0 20 0;
+#X connect 29 0 15 0;
+#X connect 30 0 21 0;
+#X connect 30 0 9 0;
+#X connect 31 0 22 0;
+#X connect 31 0 10 0;
+#X connect 32 0 23 0;
+#X connect 32 0 11 0;
+#X connect 33 0 24 0;
+#X connect 34 0 0 0;
+#X connect 35 0 25 0;
+#X connect 36 0 37 0;
+#X connect 37 0 26 1;
+#X connect 40 0 41 0;
+#X connect 41 0 18 0;
+#X connect 41 0 19 0;
+#X connect 41 0 20 0;
+#X connect 41 0 21 0;
+#X connect 41 0 22 0;
+#X connect 41 0 23 0;
+#X connect 42 0 44 0;
+#X connect 44 0 38 0;
+#X coords 0 -1 1 1 200 250 1 438 16;
