@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
 
-  <SchemaVersion>1.0</SchemaVersion>
+  <SchemaVersion>1.1</SchemaVersion>
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
@@ -12,14 +12,14 @@
       <ToolsetName>MCS-51</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>P89LPC932</Device>
-          <Vendor>Philips</Vendor>
-          <Cpu>IRAM(0-0xFF) IROM(0-0x1FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
+          <Device>P89LPC936</Device>
+          <Vendor>NXP (founded by Philips)</Vendor>
+          <Cpu>IRAM(0-0xFF) IROM(0-0x3FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
           <FlashUtilSpec>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</FlashUtilSpec>
           <StartupFile>"LIB\START900.A51" ("Philips LPC900 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId></DeviceId>
-          <RegisterFile>REG932.H</RegisterFile>
+          <DeviceId>3836</DeviceId>
+          <RegisterFile>REG935.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -29,12 +29,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿPhilips\</RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <RegisterFilePath>Philips\</RegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -60,6 +62,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -68,6 +72,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -94,17 +100,18 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>0</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DLPC.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC932</SimDlgDllArguments>
+          <SimDlgDllArguments>-pLPC935</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TLPC.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC932</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC935</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -123,7 +130,8 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>0</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
@@ -134,9 +142,12 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>0</RestoreSysVw>
+            <UsePdscDebugDescription>0</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>8</TargetSelection>
+          <TargetSelection>3</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -160,23 +171,28 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>0</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
           <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
             <MemoryModel>0</MemoryModel>
             <RTOS>0</RTOS>
-            <RomSize>0</RomSize>
+            <RomSize>1</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
-            <UseOnchipRom>0</UseOnchipRom>
+            <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
-            <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>0</UseOnchipXram>
+            <UseMultipleDPTR>1</UseMultipleDPTR>
+            <UseOnchipXram>1</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -187,8 +203,8 @@
             <Mod517au>0</Mod517au>
             <Mode2>0</Mode2>
             <useCB>0</useCB>
-            <useXB>0</useXB>
-            <useL251>0</useL251>
+            <useXB>1</useXB>
+            <useL251>1</useL251>
             <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
@@ -253,7 +269,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x4000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -284,7 +300,7 @@
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
-            <Optimize>8</Optimize>
+            <Optimize>7</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
@@ -312,7 +328,7 @@
           <Lx51>
             <useFile>0</useFile>
             <linkonly>0</linkonly>
-            <UseMemoryFromTarget>1</UseMemoryFromTarget>
+            <UseMemoryFromTarget>0</UseMemoryFromTarget>
             <CaseSensitiveSymbols>0</CaseSensitiveSymbols>
             <WarningLevel>2</WarningLevel>
             <DataOverlaying>1</DataOverlaying>
@@ -323,9 +339,10 @@
             <Assign></Assign>
             <ReserveString></ReserveString>
             <CClasses></CClasses>
-            <UserClasses></UserClasses>
+            <UserClasses>XDATA (X:0x0-X:0x1FF), HDATA (X:0x0-X:0x1FF), CODE (C:0x0-C:0x0FFF), CONST (C:0x1000-C:0x3FFF), 
+ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <CSection></CSection>
-            <UserSection></UserSection>
+            <UserSection>?CO?SONG(C:0x1000)</UserSection>
             <CodeBaseAddress></CodeBaseAddress>
             <XDataBaseAddress></XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
@@ -351,6 +368,26 @@
               <FileType>1</FileType>
               <FilePath>.\Blinky.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>LUTFreq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTFreq.c</FilePath>
+            </File>
+            <File>
+              <FileName>riff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\riff.c</FilePath>
+            </File>
+            <File>
+              <FileName>song.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\song.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -374,32 +411,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>test</GroupName>
+          <GroupName>ISP</GroupName>
           <Files>
             <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\adc.c</FilePath>
+              <FileName>LPC_ISP_16K_V04.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\LPC_ISP_16K_V04.a51</FilePath>
             </File>
             <File>
-              <FileName>comparators.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\comparators.c</FilePath>
-            </File>
-            <File>
-              <FileName>osc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\osc.c</FilePath>
-            </File>
-            <File>
-              <FileName>power.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\power.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\timers.c</FilePath>
+              <FileName>no_touch.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\no_touch.a51</FilePath>
             </File>
           </Files>
         </Group>
@@ -428,12 +450,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿPhilips\</RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <RegisterFilePath>Philips\</RegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -459,6 +483,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -467,6 +493,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -493,6 +521,7 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>0</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
@@ -523,6 +552,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>0</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>0</UseTarget>
@@ -533,6 +563,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>0</RestoreSysVw>
+            <UsePdscDebugDescription>0</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>-1</TargetSelection>
@@ -561,9 +594,14 @@
             <Capability>1</Capability>
             <DriverSelection>0</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
           <Flash3>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
@@ -750,6 +788,26 @@
               <FileType>1</FileType>
               <FilePath>.\Blinky.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>LUTFreq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTFreq.c</FilePath>
+            </File>
+            <File>
+              <FileName>riff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\riff.c</FilePath>
+            </File>
+            <File>
+              <FileName>song.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\song.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -773,32 +831,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>test</GroupName>
+          <GroupName>ISP</GroupName>
           <Files>
             <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\adc.c</FilePath>
+              <FileName>LPC_ISP_16K_V04.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\LPC_ISP_16K_V04.a51</FilePath>
             </File>
             <File>
-              <FileName>comparators.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\comparators.c</FilePath>
-            </File>
-            <File>
-              <FileName>osc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\osc.c</FilePath>
-            </File>
-            <File>
-              <FileName>power.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\power.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\timers.c</FilePath>
+              <FileName>no_touch.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\no_touch.a51</FilePath>
             </File>
           </Files>
         </Group>
@@ -827,12 +870,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
+          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath>C:\Keil\C51\BIN\</BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
           <RegisterFilePath></RegisterFilePath>
-          <DBRegisterFilePath>ÿPhilips\</DBRegisterFilePath>
+          <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -858,6 +903,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -866,6 +913,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -892,6 +941,7 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>0</ComprImg>
           <BankNo>65535</BankNo>
         </CommonProperty>
         <DllOption>
@@ -922,6 +972,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>0</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -932,6 +983,9 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>0</RestoreSysVw>
+            <UsePdscDebugDescription>0</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>3</TargetSelection>
@@ -956,13 +1010,18 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
-          <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
+          <Flash3>"C:\Program Files\Flash Magic\FM.EXE" ("DEVICE($D, 0.0, 0) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(6,9600)")</Flash3>
           <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
         </Utilities>
         <Target51>
           <Target51Misc>
@@ -971,10 +1030,10 @@
             <RomSize>1</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
-            <UseOnchipRom>0</UseOnchipRom>
+            <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
-            <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>0</UseOnchipXram>
+            <UseMultipleDPTR>1</UseMultipleDPTR>
+            <UseOnchipXram>1</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -986,7 +1045,7 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>0</useL251>
+            <useL251>1</useL251>
             <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
@@ -1092,7 +1151,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>C:\Keil_v5\C51\INC\Philips</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -1110,7 +1169,7 @@
           <Lx51>
             <useFile>0</useFile>
             <linkonly>0</linkonly>
-            <UseMemoryFromTarget>1</UseMemoryFromTarget>
+            <UseMemoryFromTarget>0</UseMemoryFromTarget>
             <CaseSensitiveSymbols>0</CaseSensitiveSymbols>
             <WarningLevel>2</WarningLevel>
             <DataOverlaying>1</DataOverlaying>
@@ -1121,9 +1180,10 @@
             <Assign></Assign>
             <ReserveString></ReserveString>
             <CClasses></CClasses>
-            <UserClasses></UserClasses>
+            <UserClasses>XDATA (X:0x0-X:0x1FF), HDATA (X:0x0-X:0x1FF), CODE (C:0x0-C:0x13FF), CONST (C:0x1400-C:0x3FFF), 
+ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <CSection></CSection>
-            <UserSection></UserSection>
+            <UserSection>?CO?SONG(C:0x1000)</UserSection>
             <CodeBaseAddress></CodeBaseAddress>
             <XDataBaseAddress></XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
@@ -1149,6 +1209,26 @@
               <FileType>1</FileType>
               <FilePath>.\Blinky.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>LUTFreq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTFreq.c</FilePath>
+            </File>
+            <File>
+              <FileName>riff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\riff.c</FilePath>
+            </File>
+            <File>
+              <FileName>song.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\song.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1172,32 +1252,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>test</GroupName>
+          <GroupName>ISP</GroupName>
           <Files>
             <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\adc.c</FilePath>
+              <FileName>LPC_ISP_16K_V04.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\LPC_ISP_16K_V04.a51</FilePath>
             </File>
             <File>
-              <FileName>comparators.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\comparators.c</FilePath>
-            </File>
-            <File>
-              <FileName>osc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\osc.c</FilePath>
-            </File>
-            <File>
-              <FileName>power.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\power.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test\timers.c</FilePath>
+              <FileName>no_touch.a51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\no_touch.a51</FilePath>
             </File>
           </Files>
         </Group>

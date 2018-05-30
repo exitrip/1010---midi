@@ -669,6 +669,7 @@ void setup() {
 #endif				 
 
 	  // configure timers
+
 	TMOD &= 0x00;	 //clear conf for timers
 	TAMOD &= 0xEE;	 //clear conf for timers
 	TMOD |= 0x11;	 //16bit mode for both
