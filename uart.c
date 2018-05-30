@@ -11,11 +11,8 @@
 static bit mtxbusy;
 static volatile bit LnotV; //local flag of which channel to touch
 static volatile m_in_t midiMsg; 
-
-extern volatile word LPeriod;
-extern volatile word VPeriod;
-extern volatile bit deltaLUp;
-extern volatile bit deltaTxUp;
+extern volatile byte LNote;
+extern volatile byte VNote;
 
 void uart_init (void) {
   // configure UART
@@ -77,11 +74,16 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	if (dataByte & 0x80) {   //status byte
 		if (dataByte < 0xf0) {	//voice mesg
 			if (OMNI == 1) {
-				midiMsg.typeChan = (byte)(dataByte & 0xf0) + MY_V_CHAN; //trigger note commands in OMNI mode 
-			} else if ((byte)(dataByte & 0x0f) == MY_L_CHAN || (byte)(dataByte & 0x0f) == MY_V_CHAN) {
-				midiMsg.typeChan = dataByte; 
+				midiMsg.typeChan = (byte)(dataByte & 0xf0); //trigger note commands in OMNI mode 
+			} else if ((byte)(dataByte & 0x0f) == myLChan) {	//if this is talking to one of my chans
+				midiMsg.typeChan = dataByte & 0xf0;			//go ahead and store with stripped chan info
+				LnotV = 1;
+			} else if ((byte)(dataByte & 0x0f) == myVChan) {
+				midiMsg.typeChan = dataByte & 0xf0;
+				LnotV = 0; 
 			} else {
 				midiMsg.typeChan = 0; //clear midiMsg
+				LnotV = 0;
 				goto IGNORE_MIDI;
 			}
 			switch (midiMsg.typeChan & 0xf0) {
@@ -106,11 +108,6 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
 					midiMsg.typeChan = dataByte;
 			  		sysIx = 0;
-					//stop what youre doing and listen
-					PLAYING = 0;
-					TR0 = 0;
-					TR1 = 0;
-					BUTT_EN = 0;
 				break;
 	
 	        	case SONG_POSITION:
@@ -126,24 +123,40 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 	        	case TUNE_REQUEST:
 	          	break;
 	
-	        	case EOX: // system exclusive terminator 
-					//do stuff - everbody who heard the SYS_EX stopped playing and their timers 
-					//parse teh sysIx for data... playback rupts should be halted and sysEx full to sysIx
-					//check manuId [010e0d], ignore myDevId, Universal sysEx header for file transfers
-					if (sysEx[0] == 0x01 && sysEx[1] == 0x0e && sysEx[2] == 0x0d && 
-						sysEx[5] == NON_REAL_TIME_ID && sysEx[6] == 0x07 && sysEx[7] == 0x02) {
-						//we should only be here on purpose...
-						//my devID?
-						if (sysEx[3] == MY_ID_H && sysEx[4] == MY_ID_L) {
-							//we are going to use this as a reboot into bootloader CMD
-							LED = 1;
-							delay(50000);
-							no_touch();
-						} else {
-							//somebody is getting programmed, so ... just freak out... ihex is all ascii
-							//the further progBaud is away the safer this is
+	        	case EOX: // system exclusive terminator
+					//check manuId [010e0d]
+					if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {;
+						//ignore myDevId, Universal sysEx header for file transfers 
+						if (sysEx[0] == NON_REAL_TIME_ID) {
+							//stop what youre doing and listen
+							PLAYING = 0;
+//							if (STATE_1 == 1) {
+//								TR0 = 0; //TODO try to leave it going...
+//								TR1 = 0;
+//							}
+							BUTT_EN = 0; 
+							if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
+								//we should only be here on purpose...
+								//my devID?
+								if (sysIx == 8 && sysEx[6] == (30 + (myLChan/10)) && 
+									sysEx[7] == (30 + (myLChan/10))) {
+									//we are going to use this as a reboot into bootloader CMD
+									LED = 1;
+									delay(50000);
+									no_touch();
+								} else {
+									//somebody is getting programmed, so ... just freak out... ihex is all ascii
+									//the further progBaud is away the safer this is
+								}
+							}
+						} else if (sysEx[0] == REAL_TIME_ID) {
+							if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT) {
+								STATE_0 = 0;
+							} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT) {
+								STATE_0 = 1;
+							}
 						}
-					} else { //sysEx flying around by not a programming instruction						
+					} else { //sysEx flying around by not for 0x01ed					
 					}
 					//erase sysEx buffer
 					while(sysIx > 0) {
@@ -334,13 +347,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				}
         	break;
 
-
-      		case (NOTE_OFF + MY_L_CHAN):
-				LnotV = 1;
-			case (NOTE_OFF + MY_V_CHAN):
+			case (NOTE_OFF):
 				#ifdef COORD
 				#else
 	        		if(midiMsg.count == 2) {// pitch
+						midiMsg.pitch = dataByte - LUT_MIDI_NOTE_SHIFT;
 					//commentint this out to keep noteOff from fiddling with up/down!!!
 //						if (dataByte >= LUT_NUM_NOTES || dataByte <	LUT_MIDI_NOTE_SHIFT) {  //treat as a special CMD
 //							//do nothing for now.... 
@@ -364,10 +375,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						  	TX_VCC_ON = 0;
 						  	AUDIO_L_ON = 0;
 						} else {
-						  	if (LnotV == 0) {
+						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  	  	//turn off txVCC
 								TX_VCC_ON = 0;
-						  	} else {
+						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {
 						  		//turn off Left channel
 								AUDIO_L_ON = 0;
 						  	}
@@ -376,13 +387,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				#endif
 	  		break;
 
-      
-		  	case (NOTE_ON + MY_L_CHAN):
-				LnotV = 1;
-		  	case (NOTE_ON + MY_V_CHAN):
+		  	case (NOTE_ON):
 				#ifdef COORD
 				#else
-		        	if(midiMsg.count == 2) {// pitch		 //todo test
+		        	if(midiMsg.count == 2) {// pitch
 						word thisDelta = 0;
 						bit thisUp = 0;
 						midiMsg.pitch = dataByte;
@@ -391,11 +399,17 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							case TX_OFF:
 								LED = 0;
 								txOffSwitch = 1;	//	TX off
+								enableTxCVGate = 0;
 							break;
 							
 							case TX_ON:
 								LED = 1;
 								txOffSwitch = 0;	//	TX on
+								enableTxCVGate = 1;
+							break;
+							
+							case STEREO_TOG_MEM: 
+								STEREO ^= 1;
 							break;
 							
 							case UP1:
@@ -464,9 +478,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							case STATION_DOWN:
 								setFreq(--station);
 							break;
-							
-							case HOLD1:
-							case HOLD2:
+
+							case SET_DAC:
+								//todo
 							break;
 											
 							default:
@@ -475,11 +489,13 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 									VPeriod = LUTFreq[dataByte];
 									LPeriod = VPeriod;
 								} else {
-								  	if (LnotV == 0) {	   //why not???  
+								  	if (LnotV == 0) {	   //why not???
+										VNote = dataByte;  
 								  		VPeriod = LUTFreq[dataByte];
 //										thisDelta = txDelta;
 //										thisUp = deltaTxUp;
 								  	} else {
+										LNote = dataByte;
 								  		LPeriod = LUTFreq[dataByte];
 //										thisDelta = lDelta;
 //										thisUp = deltaLUp;
@@ -521,9 +537,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							  	}
 							}
 						} else {   //turn off cause Velocity = 0
-						  	if (LnotV == 0) {
+						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  		TX_VCC_ON = 0;
-						  	} else {	
+						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {	
 						  		AUDIO_L_ON = 0;
 					  		}
 						}
@@ -533,11 +549,9 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 
       		case KEY_PRESSURE:
-        	break;
-
-      		case CONTROL + MY_L_CHAN:
-				LnotV = 1;
-			case CONTROL + MY_V_CHAN:
+        	break;  
+			
+			case CONTROL: //TODO: pick an endpoint and SET_DAC
 		        if(midiMsg.count == 2) {
 		          midiMsg.controller = dataByte; // controller number
 		        } else {// setting 
@@ -566,9 +580,11 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							if (dataByte >= 64) {
 								LED = 1;
 								txOffSwitch = 0;
+								enableTxCVGate = 1;
 							} else {
 								LED = 0;
 								txOffSwitch = 1; //tx off
+								enableTxCVGate = 0;
 							}
 						break;
 
@@ -660,10 +676,10 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							#ifdef COORD
 							#else
 	//							midiFlags &= (BUTT_EN + PLAYING + STEREO);
-								if(dataByte >= MY_L_CHAN) {
+								if(dataByte >= myLChan) {
 									TR1 = 1;
 									periodH1 = 0x10;
-									if(dataByte >= MY_V_CHAN) {
+									if(dataByte >= myVChan) {
 										TR0 = 1;
 										periodH0 = 0x10;
 									} else {
@@ -698,9 +714,8 @@ void uart_rx_isr (void) interrupt 4 using 0 {
     midiMsg.count ^= 3; // toggle between 1 and 2 (MSB and LSB for 14 bit values)
 	}
 IGNORE_MIDI:
-  // clear interrupt flag
-  //RI = 0;
-  LnotV = 0;		
+  _nop_();
+  //LnotV = 0;		
   } // uart_rx_isr
 }
 void uart_tx_isr (void) interrupt 13 using 1 {

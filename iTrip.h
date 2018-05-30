@@ -11,7 +11,7 @@ itrip HEADERZ v1e-9
 typedef unsigned char byte;
 typedef unsigned int word; // 16 bits (is short)
 
-#define SYS_LEN	512
+#define SYS_LEN	256
 
 typedef struct Riff_s {
 	word rAddy; //the physical address of riff
@@ -25,21 +25,33 @@ typedef struct Riff_s {
 #define BASIC_TX
 //#define DEBUG_SIM
 
-//KEIL!!!!  you get the point!!!
-//#ifdef (COORD && BASIC_TX)
-//	#error "DUMB!!! L00K UP!!!"
-//#endif
+//DAC/ADC stuff
+#define DAC1_OUT_AUDIO
+//#define DAC1_OUT_VCC
+#define LUTSIN	LUTSIN64
+#define LUTSINMASK	0x3f
+//#define LUTSIN	LUTSIN128
+//#define LUTSINMASK	0x7f
+//#define ADC_IN
+//#define UNIT_11
+//#define UNIT_XII
 
 ///MIDI STUFF
-#define MY_L_CHAN   4	//[0-15] //base channel
-#define MY_V_CHAN	(MY_L_CHAN+1) //always Lchan++
-#ifdef COORD
-	#define MY_ID_H		'C'
-	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
-#else //convert to decimal ascii no.
-	#define MY_ID_H		(30 + (MY_L_CHAN/10))
-	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
-#endif
+//fall back channels
+#define MY_L_CHAN   0  //FIXME to keep song.c and riff.c compiling
+#define MY_V_CHAN	5
+
+//#ifdef COORD
+//	#define MY_ID_H		'C'
+//	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+//#else //convert to decimal ascii no.
+//	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+//	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+//#endif
+
+//SYS_EX_MAGIC
+#define SYS_EX_MODE_1_UNIT	0x01
+#define SYS_EX_MODE_2_UNIT	'!'
 
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
@@ -51,32 +63,33 @@ typedef struct Riff_s {
 enum {
 	TX_OFF = 0,	//npc
 	TX_ON = 1,  //npc
-	UPDOWN_OFF = 2,
-	STATION_UP = 3,
-	STATION_DOWN = 4,
-	DOWN1 = 5,  //todo make relative...   align with pitch wheel
-	DOWN2 = 6,	
-	DOWN3 = 7,	
-	DOWN4 = 8,
-	DOWN5 = 9,
-	STEREO_TOG_MEM = 109,
-	UP1 = 110,
-	UP2 = 111,
-	UP3 = 112,
-	UP4 = 113,
-	UP5 = 114,
-	STATION_UP2 = 115,			//npc
-	STATION_DOWN2 = 116,			 //npc//npc
-	STATION_UP3 = 117,
-	STATION_DOWN3 = 18,					  //npc
-	STATION_UP4 = 119,							  //npc
-	STATION_DOWN4 = 120,							  //npc
-	STATION_UP5 = 121,	//npc
-	STATION_DOWN5 = 122,	 //npc
-	STATION_UP6 = 123,			 //npc
-	STATION_DOWN6 = 124,				  //npc
-	HOLD1 = 125,
-	HOLD2 = 126,
+	STEREO_TOG_MEM = 2,
+	UPDOWN_OFF = 3,
+	DOWN1 = 4,  //todo make relative...   align with pitch wheel
+	DOWN2 = 5,	
+	DOWN3 = 6,	
+	DOWN4 = 7,
+	DOWN5 = 8,
+	//notes 10-107
+	UP1 = 108,
+	UP2 = 109,
+	UP3 = 110,
+	UP4 = 111,
+	UP5 = 112,
+	RESERVED = 113,
+	STATION_UP = 114,
+	STATION_DOWN = 115,
+	STATION_UP2 = 116,			//npc
+	STATION_DOWN2 = 117,			 //npc//npc
+	STATION_UP3 = 118,
+	STATION_DOWN3 = 119,					  //npc
+	STATION_UP4 = 120,							  //npc
+	STATION_DOWN4 = 121,							  //npc
+	STATION_UP5 = 122,	//npc
+	STATION_DOWN5 = 123,	 //npc
+	STATION_UP6 = 124,			 //npc
+	STATION_DOWN6 = 125,				  //npc
+	SET_DAC = 126,
 	NOTE_OFF_MEM = 127
 };
 
@@ -88,13 +101,18 @@ extern volatile byte xdata sysEx[SYS_LEN];
 extern volatile word sysIx;
 
 extern volatile RIFF_T* curSong;
-extern volatile word nextRiff;
-extern volatile byte curRiffCnt;
-extern volatile word numRiffs;
+extern volatile word xdata nextRiff;
+extern volatile byte xdata curRiffCnt;
+extern volatile word xdata numRiffs;
 extern volatile byte code* riff;
 extern volatile word deltaPos;
 extern volatile byte numNotes;
 extern volatile byte nextNote;
+
+#ifdef ADC_IN
+extern volatile byte newADC0;
+extern volatile byte newADC1;
+#endif
 
 extern volatile byte bdata midiFlags;
 //state flags -- maybe change to sbit????
@@ -108,12 +126,21 @@ extern bit OMNI;
 //extern bit SYS_EX_DONE;
 
 extern volatile byte bdata SongFlags;
-//state flags -- maybe change to sbit????		
+//state flags -- maybe change to sbit????
+extern bit STATE_0;
+extern bit STATE_1;		
 extern bit SONG_DONE;
 extern bit LOOP_SONGS;
 //flags for repeat section of first riff in song
 #define LOOP_SONG_F	(0x01)
 
+extern byte data myLChan;
+extern byte data myVChan;
+extern const byte code myLChanFlash;
+extern const byte code myVChanFlash;
+
+extern volatile word LPeriod;
+extern volatile word VPeriod;
 extern volatile byte periodH0;
 extern volatile byte periodL0;
 extern volatile byte periodH1;
@@ -128,6 +155,7 @@ extern volatile bit deltaTxUp;
 //extern volatile byte deltaTxMount;
 
 extern volatile bit txOffSwitch;
+extern volatile bit enableTxCVGate;
 extern word station;
 
 /****************************PROTOS*********************/

@@ -11,16 +11,16 @@ void* const code songBook[NUM_SONGS] = {
 	//testS1,//testSCo1,////	  
 	//testS2,//testSCo1,//testSCo2,////
 	silentSong,
-	//vexations,
 	busySong,
 	happySong,
+	vexations,
+	TeFFSong,
 	peaceSong,
 	minorSong,
 	wholeToneSong,									 
 	bodySong,
 	statSong,
 	dmbSong,
-	TeFFSong,
 	shepStatSong
 };
 
@@ -813,6 +813,6 @@ void* const code songBook[NUM_SONGS] = {
 //
 //RIFF_T const code testSCo2[3] = {
 //	{3, 0},
-//	{testCo4, 3-1},
-//	{testCo2, 3-1}
+//	{testCo3b, 256-1},
+//	{testCo3b, 256-1}
 //};
