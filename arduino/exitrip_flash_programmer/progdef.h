@@ -30,8 +30,8 @@
 //*     Comment OVERWRITE_HEXFILE_CHANNELS to leave the channels as coded in
 //*     the hexfile.
 //***************************************************************************
-#define TARGET_L_CHAN   10
-#define TARGET_V_CHAN   8
+#define TARGET_L_CHAN   1
+#define TARGET_V_CHAN   2
 
 #define OVERWRITE_HEXFILE_CHANNELS
 
