@@ -21,8 +21,8 @@ byte data myLChan;
 byte data myVChan;
 //this must align with the final linker script to work....
 //song is at (C:0x1802)
-const byte code myLChanFlash _at_ 0x1800;// = MY_L_CHAN;
-const byte code myVChanFlash _at_ 0x1801;// = MY_L_CHAN+1;
+const byte code myLChanFlash = MY_L_CHAN;//_at_ 0x1800;//
+const byte code myVChanFlash = MY_V_CHAN;//_at_ 0x1801;// 
 
 volatile byte xdata sysEx[SYS_LEN];
 volatile word sysIx = 0;

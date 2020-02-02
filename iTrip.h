@@ -34,20 +34,20 @@ typedef struct Riff_s {
 //#define LUTSINMASK	0x7f
 //#define ADC_IN
 //#define UNIT_11
-//#define UNIT_XII
+#define UNIT_XII
 
 ///MIDI STUFF
 //fall back channels
 #define MY_L_CHAN   0  //FIXME to keep song.c and riff.c compiling
 #define MY_V_CHAN	  (MY_L_CHAN+1)
 
-//#ifdef COORD
-//	#define MY_ID_H		'C'
-//	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
-//#else //convert to decimal ascii no.
-//	#define MY_ID_H		(30 + (MY_L_CHAN/10))
-//	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
-//#endif
+#ifdef COORD
+	#define MY_ID_H		'C'
+	#define MY_ID_L		'o'	  //stick to ascii ex: "Co" or "14"
+#else //convert to decimal ascii no.
+	#define MY_ID_H		(30 + (MY_L_CHAN/10))
+	#define MY_ID_L		(30 + (MY_L_CHAN%10))	  
+#endif
 
 //SYS_EX_MAGIC
 #define SYS_EX_MODE_1_UNIT	0x01
@@ -56,6 +56,9 @@ typedef struct Riff_s {
 #define MAX_FREQ	1200
 #define	MIN_FREQ	700
 #define NUM_NOTE_CMDS	(127-LUT_NUM_NOTES) //28
+
+#define VEL_EQUIV_OFF	16  //velocity below which a note on is a note off
+
 //we can either stuff cmds in 0-9 and 110-127 or rewrite storage...
 //seems tricky to rewrite, we just map low and hi notes to cmds
 //woah!!!  we could double these if we teamed up with NOTE_OFF...

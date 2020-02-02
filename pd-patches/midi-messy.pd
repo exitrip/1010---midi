@@ -36,7 +36,7 @@
 #X text 831 527 length;
 #X obj 652 516 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 348 205 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 348 205 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 692 201 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -514,6 +514,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 1;
 #X obj 241 342 metro 50;
 #X floatatom 241 364 5 0 0 0 - - -, f 5;
+#X obj 23 568 midiin;
+#X obj 98 681 midiout;
 #X connect 4 0 54 0;
 #X connect 4 0 55 0;
 #X connect 4 0 12 0;
@@ -918,3 +920,5 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 442 0 443 0;
 #X connect 443 0 444 0;
 #X connect 444 0 440 0;
+#X connect 445 0 446 0;
+#X connect 445 1 446 1;

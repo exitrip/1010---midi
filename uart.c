@@ -105,73 +105,73 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 		} else {
 		      // system messages
 	    	switch (dataByte) {
-				case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
-					midiMsg.typeChan = dataByte;
-			  		sysIx = 0;
-				break;
+					case SYSTEM_EXCLUSIVE: // variable length until terminated by an EOX or any status byte
+						midiMsg.typeChan = dataByte;
+							sysIx = 0;
+					break;
+		
+					case SONG_POSITION:
+						midiMsg.typeChan = dataByte;
+						midiMsg.count = 2;
+					break;
+		
+					case SONG_SELECT:
+						midiMsg.typeChan = dataByte;
+						midiMsg.count = 1;
+					break;
 	
-	        	case SONG_POSITION:
-			  		midiMsg.typeChan = dataByte;
-			  		midiMsg.count = 2;
-			  	break;
+	        case TUNE_REQUEST:
+	        break;
 	
-	        	case SONG_SELECT:
-			  		midiMsg.typeChan = dataByte;
-			  		midiMsg.count = 1;
-				break;
-	
-	        	case TUNE_REQUEST:
-	          	break;
-	
-	        	case EOX: // system exclusive terminator
+	        case EOX: // system exclusive terminator
 					//check manuId [010e0d]
-					if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {;
+						if (sysIx >= 4 && sysEx[1] == 0x01 && sysEx[2] == 0x0e && sysEx[3] == 0x0d) {
 						//ignore myDevId, Universal sysEx header for file transfers 
-						if (sysEx[0] == NON_REAL_TIME_ID) {
+							if (sysEx[0] == NON_REAL_TIME_ID) {
 							//stop what youre doing and listen
-							PLAYING = 0;
+								PLAYING = 0;
 //							if (STATE_1 == 1) {
 //								TR0 = 0; //TODO try to leave it going...
 //								TR1 = 0;
 //							}
-							BUTT_EN = 0; 
-							if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
+								BUTT_EN = 0; 
+								if (sysIx >= 6 && sysEx[4] == 0x07 && sysEx[5] == 0x02) {
 								//we should only be here on purpose...
 								//my devID?
-								if (sysIx == 8 && sysEx[6] == (30 + (myLChan/10)) && 
-									sysEx[7] == (30 + (myLChan/10))) {
-									//we are going to use this as a reboot into bootloader CMD
-									LED = 1;
-									delay(50000);
-									no_touch();
-								} else {
+									if (sysIx == 8 && sysEx[6] == MY_ID_H && 
+										sysEx[7] == MY_ID_L) {
+										//we are going to use this as a reboot into bootloader CMD
+										LED = 1;
+										delay(50000);
+										no_touch();
+									} else {
 									//somebody is getting programmed, so ... just freak out... ihex is all ascii
 									//the further progBaud is away the safer this is
+									}
+								}
+							} else if (sysEx[0] == REAL_TIME_ID) {
+								if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT) {
+									STATE_0 = 0;
+								} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT) {
+									STATE_0 = 1;
 								}
 							}
-						} else if (sysEx[0] == REAL_TIME_ID) {
-							if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_1_UNIT) {
-								STATE_0 = 0;
-							} else if (sysIx == 5 && sysEx[4] == SYS_EX_MODE_2_UNIT) {
-								STATE_0 = 1;
-							}
+						} else { //sysEx flying around by not for 0x01ed					
 						}
-					} else { //sysEx flying around by not for 0x01ed					
-					}
-					//erase sysEx buffer
-					while(sysIx > 0) {
-						sysEx[sysIx--] = 0;
-					}
-	          	break;
+						//erase sysEx buffer
+						while(sysIx > 0) {
+							sysEx[sysIx--] = 0;
+						}
+	        break;
 	
-	        	case TIMING_CLOCK:
+	        case TIMING_CLOCK:
 			  		//if (PLAYING) {
-					#ifdef COORD
+#ifdef COORD
 //						midiClk++;
 //						if (deltaPos > 0) {
 //							deltaPos--; 										  
 //						}
-					#else
+#else
 						midiClk++;
 						if (PLAYING) {
 							if (deltaPos == 0) {
@@ -217,85 +217,12 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							periodH0 = ((byte)(VPeriod >> 8));
 							periodL0 = (0xff & VPeriod);							
 						}
-					#endif
+#endif
 					//}
-	          	break;
+					break;
 	
-	        	case START:	 //from the beginning
-			  		midiClk = 0;
-					deltaPos = 0;
-					nextRiff = 0;
-					numRiffs = (curSong[nextRiff]).rAddy;
-					if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
-						LOOP_SONGS = 1;
-					} else {
-						LOOP_SONGS = 0;
-					}
-					curRiffCnt = 0;
-					numNotes = 0;
-					nextNote = 0;
-			  		PLAYING = 1;
-					txDelta = 0;
-					deltaTxUp = 0;
-					lDelta = 0;
-					deltaLUp = 0;
-					updateNote();
-	          	break;
-	
-	        	case STOP:
-			  		PLAYING = 0;
-	          	break;
-	
-	        	case CONTINUE:
-			  		PLAYING = 1;
-			  	break;
-	
-	        	case ACTIVE_SENSING:
-	          	break;
-	 
-	        	case SYSTEM_RESET:
-					//Goodbye, See you!
-					AUXR1 |= 0x08; //soft reset
-	          	break;
-			
-				default:
-			  	break;
-			}
-		} 
-	} else { //databyte
-    	switch (midiMsg.typeChan) {
-
-      		case SYSTEM_EXCLUSIVE:
-        		if(sysIx < SYS_LEN) {// discard data if the buffer is full
-          			sysEx[sysIx++] = dataByte;
-				} else { //buffer full!!!
-					//reset??  something is real bad...
-				}
-        	break;
-
-	      	
-			case SONG_SELECT:
-	      		//midiMsg.song = dataByte;
-				SONG_DONE = 0;
-				songNum = dataByte;
-				midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
-	        break;
-
-      		
-			case SONG_POSITION: 
-				if(midiMsg.count == 2) { //LSB
-					midiMsg.position = dataByte;
-				} else {
-					bit tempBit = PLAYING;
-					PLAYING = 0;
-					if (dataByte) {
-						midiMsg.position += (word) (dataByte << 7);
-					}
-					//This algorithm's worst case is ~20ms per 140 beats, with completely
-					//non repetitive storage...  1.5ms per 5040 beats with uniformly repetitive test song 
-					//todo good enough to just scan forward for every search!
-					if (midiClk > midiMsg.position || midiMsg.position == 0) {
-				  		midiClk = 0;
+	        case START:	 //from the beginning
+						midiClk = 0;
 						deltaPos = 0;
 						nextRiff = 0;
 						numRiffs = (curSong[nextRiff]).rAddy;
@@ -303,55 +230,128 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							LOOP_SONGS = 1;
 						} else {
 							LOOP_SONGS = 0;
-						} 
+						}
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
+							PLAYING = 1;
+						txDelta = 0;
+						deltaTxUp = 0;
+						lDelta = 0;
+						deltaLUp = 0;
+						updateNote();
+					break;
+
+					case STOP:
+						PLAYING = 0;
+					break;
+	
+					case CONTINUE:
+						PLAYING = 1;
+			  	break;
+	
+					case ACTIVE_SENSING:
+					break;
+	 
+	        case SYSTEM_RESET:
+					//Goodbye, See you!
+						AUXR1 |= 0x08; //soft reset
+	        break;
+			
+					default:
+						break;
+			}
+		} 
+	} else { //databyte
+    	switch (midiMsg.typeChan) {
+
+      	case SYSTEM_EXCLUSIVE:
+       		if(sysIx < SYS_LEN) {// discard data if the buffer is full
+									sysEx[sysIx++] = dataByte;
+					} else { //buffer full!!!
+						//reset??  something is real bad...
 					}
-					//midiClk is gauranteed to be less than position
-					if (midiClk == 0) {															
-						updateNote(); //grab first note if we are uninit'd
-						riffClks += deltaPos;
-						riffCntGotReset = 1; //we know we are at the beginning of a riff
-					}
-					while (!SONG_DONE && midiClk != midiMsg.position) {
-						++midiClk;
-						if (--deltaPos == 0) { //scan up to edge of note
-							updateNote();
-							while (!SONG_DONE && midiClk + deltaPos < midiMsg.position) { //loop through notes until we get close
-								riffClks += deltaPos; //accumulate!
-								midiClk += deltaPos;  //skip forward past this note
-								updateNote();
-								if (nextNote == 3) { //are we at the start of a riff?
-									if (riffCntGotReset == 0) {	//for the very first time?
-										riffCntGotReset = 1;
-									} else {  //then i know how many clks are in this whole riff!!!
-										while (midiClk + riffClks < midiMsg.position && curRiffCnt != 0) {
-											midiClk += riffClks; //and how many times it repeats!!!
-											--curRiffCnt;
-										}
-										//skip to next riff
-										numNotes = 0;
-										nextNote = 0;
-										updateNote();
-									}
-									riffClks = 0; //we are out of that riffLoop
-								}
+       	break;
+
+	      	
+				case SONG_SELECT:
+							//midiMsg.song = dataByte;
+					SONG_DONE = 0;
+					songNum = dataByte;
+					midiClk = 0;  //myabe not, would be very usefully weird, sysex or switch
+				break;
+
+      		
+				case SONG_POSITION: 
+					if(midiMsg.count == 2) { //LSB
+						midiMsg.position = dataByte;
+					} else {
+						bit tempBit = PLAYING;
+						PLAYING = 0;
+						if (dataByte) {
+							midiMsg.position += (word) (dataByte << 7);
+						}
+						//This algorithm's worst case is ~20ms per 140 beats, with completely
+						//non repetitive storage...  1.5ms per 5040 beats with uniformly repetitive test song 
+						//todo good enough to just scan forward for every search!
+						if (midiClk > midiMsg.position || midiMsg.position == 0) {
+								midiClk = 0;
+							deltaPos = 0;
+							nextRiff = 0;
+							numRiffs = (curSong[nextRiff]).rAddy;
+							if ((curSong[nextRiff]).repeats & LOOP_SONG_F) {
+								LOOP_SONGS = 1;
+							} else {
+								LOOP_SONGS = 0;
 							} 
-						}		
-					}  // todo Q: maybe i should just maintain riffClks through normal opssss......
-					//A: only when scanning in reverse is important does it even matter much....
-					if (!SONG_DONE) {
-						PLAYING = tempBit;
+							curRiffCnt = 0;
+							numNotes = 0;
+							nextNote = 0;
+						}
+						//midiClk is gauranteed to be less than position
+						if (midiClk == 0) {															
+							updateNote(); //grab first note if we are uninit'd
+							riffClks += deltaPos;
+							riffCntGotReset = 1; //we know we are at the beginning of a riff
+						}
+						while (!SONG_DONE && midiClk != midiMsg.position) {
+							++midiClk;
+							if (--deltaPos == 0) { //scan up to edge of note
+								updateNote();
+								while (!SONG_DONE && midiClk + deltaPos < midiMsg.position) { //loop through notes until we get close
+									riffClks += deltaPos; //accumulate!
+									midiClk += deltaPos;  //skip forward past this note
+									updateNote();
+									if (nextNote == 3) { //are we at the start of a riff?
+										if (riffCntGotReset == 0) {	//for the very first time?
+											riffCntGotReset = 1;
+										} else {  //then i know how many clks are in this whole riff!!!
+											while (midiClk + riffClks < midiMsg.position && curRiffCnt != 0) {
+												midiClk += riffClks; //and how many times it repeats!!!
+												--curRiffCnt;
+											}
+											//skip to next riff
+											numNotes = 0;
+											nextNote = 0;
+											updateNote();
+										}
+										riffClks = 0; //we are out of that riffLoop
+									}
+								} 
+							}		
+						}  // todo Q: maybe i should just maintain riffClks through normal opssss......
+						//A: only when scanning in reverse is important does it even matter much....
+						if (!SONG_DONE) {
+							PLAYING = tempBit;
+						}
 					}
-				}
-        	break;
+				break;
 
 			case (NOTE_OFF):
 				#ifdef COORD
 				#else
-	        		if(midiMsg.count == 2) {// pitch
-						midiMsg.pitch = dataByte - LUT_MIDI_NOTE_SHIFT;
+	        if(midiMsg.count == 2) {// pitch
+						midiMsg.pitch = dataByte;
 					//commentint this out to keep noteOff from fiddling with up/down!!!
 //						if (dataByte >= LUT_NUM_NOTES || dataByte <	LUT_MIDI_NOTE_SHIFT) {  //treat as a special CMD
 //							//do nothing for now.... 
@@ -368,29 +368,29 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 //						  		}
 //							}
 //						}
-			        } else {// velocity 
-						LED = 0;
-						if (OMNI == 1) {
-						  //midiFlags &= ~(TX_VCC_ON + AUDIO_L_ON);
-						  	TX_VCC_ON = 0;
-						  	AUDIO_L_ON = 0;
-						} else {
-						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
-						  	  	//turn off txVCC
-								TX_VCC_ON = 0;
-						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {
-						  		//turn off Left channel
-								AUDIO_L_ON = 0;
-						  	}
+			      } else {// velocity 
+							LED = 0;
+							if (OMNI == 1) {
+								//midiFlags &= ~(TX_VCC_ON + AUDIO_L_ON);
+									TX_VCC_ON = 0;
+									AUDIO_L_ON = 0;
+							} else {
+								if (LnotV == 0 && midiMsg.pitch == VNote) {
+										//turn off txVCC
+									TX_VCC_ON = 0;
+								} else if (LnotV == 1 && midiMsg.pitch == LNote) {
+									//turn off Left channel
+									AUDIO_L_ON = 0;
+								}
+							}
 						}
-					}
 				#endif
 	  		break;
 
 		  	case (NOTE_ON):
 				#ifdef COORD
 				#else
-		        	if(midiMsg.count == 2) {// pitch
+		      if(midiMsg.count == 2) {// pitch
 						word thisDelta = 0;
 						bit thisUp = 0;
 						midiMsg.pitch = dataByte;
@@ -489,14 +489,14 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 									VPeriod = LUTFreq[dataByte];
 									LPeriod = VPeriod;
 								} else {
-								  	if (LnotV == 0) {	   //why not???
-										VNote = dataByte;  
-								  		VPeriod = LUTFreq[dataByte];
+									if (LnotV == 0) {	   //why not???
+										VNote = dataByte + LUT_MIDI_NOTE_SHIFT;  
+										VPeriod = LUTFreq[dataByte];
 //										thisDelta = txDelta;
 //										thisUp = deltaTxUp;
-								  	} else {
-										LNote = dataByte;
-								  		LPeriod = LUTFreq[dataByte];
+									} else {
+										LNote = dataByte + LUT_MIDI_NOTE_SHIFT;
+										LPeriod = LUTFreq[dataByte];
 //										thisDelta = lDelta;
 //										thisUp = deltaLUp;
 									}
@@ -512,8 +512,8 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								deltaLUp = thisUp;
 							}
 						}
-					} else if (midiMsg.pitch >= LUT_MIDI_NOTE_SHIFT && midiMsg.pitch < LUT_NOTE_LIMIT) {   //glitchy!!!!
-						if(dataByte != 0) {
+					} else if (midiMsg.pitch >= (byte) LUT_MIDI_NOTE_SHIFT && midiMsg.pitch < (byte) LUT_NOTE_LIMIT) {   //glitchy!!!!
+						if(dataByte > (byte) VEL_EQUIV_OFF) {
 							LED = 1;
 							if (OMNI) {	
 								AUDIO_L_ON = 1;
@@ -527,16 +527,17 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 								periodL1 = periodL0;
 							} else {
 								if (LnotV == 0) {
-								  	TX_VCC_ON = 1;
+								  TX_VCC_ON = 1;
 									periodH0 = (0xff & (VPeriod >> 8));
 									periodL0 = (0xff & VPeriod);
 								} else {
-								  	AUDIO_L_ON = 1;
+								  AUDIO_L_ON = 1;
 									periodH1 = (0xff & (LPeriod >> 8));
 									periodL1 = (0xff & LPeriod);
-							  	}
+							  }
 							}
 						} else {   //turn off cause Velocity = 0
+								LED = 0;
 						  	if (LnotV == 0 && midiMsg.pitch == VNote) {
 						  		TX_VCC_ON = 0;
 						  	} else if (LnotV == 1 && midiMsg.pitch == LNote) {	
@@ -544,19 +545,19 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 					  		}
 						}
 					}
-				#endif
-	        break;
+#endif
+			break;
 
 
-      		case KEY_PRESSURE:
-        	break;  
-			
+			case KEY_PRESSURE:
+			break;  
+	
 			case CONTROL: //TODO: pick an endpoint and SET_DAC
-		        if(midiMsg.count == 2) {
-		          midiMsg.controller = dataByte; // controller number
-		        } else {// setting 
-		        	switch (midiMsg.controller) {
- //todo maybe COORD listens to station!!!
+				if(midiMsg.count == 2) {
+					midiMsg.controller = dataByte; // controller number
+				} else {// setting 
+					switch (midiMsg.controller) {
+//todo maybe COORD listens to station!!!
  						case GENERAL_SLIDER_1_hi:
 							if (((station - MIN_FREQ) >> 2) != dataByte) {
 								station &= ~(0xFFFC);
@@ -604,7 +605,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 //            case BALANCE_lo: load_14bit_value(&c->balance, dataByte, LSB); break;
 
-            			case PAN_POSN_hi:
+          	case PAN_POSN_hi:
 							if (dataByte >= 64) {
 								STEREO = 1;
 							} else {
@@ -634,17 +635,17 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 
 //              break;
 
-			            case ALL_SOUND_OFF:
-						  	AUDIO_L_ON = 0;
+			      case ALL_SOUND_OFF:
+					  	AUDIO_L_ON = 0;
 							TX_VCC_ON = 0;
-			            break;
+			      break;
 
 			            
 						case ALL_CONTROLLERS_OFF:
-			            break;
+			      break;
 
 
-			            case LOCAL_KEYBOARD_on: //most useful with a saved state...  maybe just a choas source.. todo
+			      case LOCAL_KEYBOARD_on: //most useful with a saved state...  maybe just a choas source.. todo
 							if (dataByte & 0x7f) {
 						  		BUTT_EN = 1;
 						  	} else {
@@ -653,7 +654,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 			            break;
 //COORD does not care about voicing/channel states, but never touches the pins...
 
-			            case ALL_NOTES_OFF:
+			      case ALL_NOTES_OFF:
 //				            midiFlags &= (BUTT_EN + PLAYING + STEREO);
 							TX_VCC_ON = 0;
 							AUDIO_L_ON = 0;

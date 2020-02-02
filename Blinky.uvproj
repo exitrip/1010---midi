@@ -388,6 +388,11 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
               <FileType>1</FileType>
               <FilePath>.\song.c</FilePath>
             </File>
+            <File>
+              <FileName>LUTsin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTsin.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -808,6 +813,11 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
               <FileType>1</FileType>
               <FilePath>.\song.c</FilePath>
             </File>
+            <File>
+              <FileName>LUTsin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTsin.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1027,7 +1037,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
           <Target51Misc>
             <MemoryModel>0</MemoryModel>
             <RTOS>0</RTOS>
-            <RomSize>1</RomSize>
+            <RomSize>2</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
             <UseOnchipRom>1</UseOnchipRom>
@@ -1183,7 +1193,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <UserClasses>XDATA (X:0x0-X:0x1FF), HDATA (X:0x0-X:0x1FF), CODE (C:0x0-C:0x13FF), CONST (C:0x1400-C:0x3FFF), 
 ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <CSection></CSection>
-            <UserSection>?CO?SONG(C:0x1000)</UserSection>
+            <UserSection>?CO?SONG(C:0x1400)</UserSection>
             <CodeBaseAddress></CodeBaseAddress>
             <XDataBaseAddress></XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
@@ -1228,6 +1238,11 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
               <FileName>song.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\song.c</FilePath>
+            </File>
+            <File>
+              <FileName>LUTsin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LUTsin.c</FilePath>
             </File>
           </Files>
         </Group>
