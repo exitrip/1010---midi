@@ -60,8 +60,66 @@ enum
 
 };
 
+//Why not have a nice thing... flats...
+#define Db0	Cs0
+#define Db1	Cs1
+#define Db2	Cs2
+#define Db3	Cs3
+#define Db4	Cs4
+#define Db5	Cs5
+#define Db6	Cs6
+#define Db7	Cs7
+#define Db8	Cs8
+#define Db9	Cs9
+#define Db10	Cs10
 
+#define Eb0	Ds0
+#define Eb1	Ds1
+#define Eb2	Ds2
+#define Eb3	Ds3
+#define Eb4	Ds4
+#define Eb5	Ds5
+#define Eb6	Ds6
+#define Eb7	Ds7
+#define Eb8	Ds8
+#define Eb9	Ds9
+#define Eb10	Ds10
 
+#define Gb0	Fs0
+#define Gb1	Fs1
+#define Gb2	Fs2
+#define Gb3	Fs3
+#define Gb4	Fs4
+#define Gb5	Fs5
+#define Gb6	Fs6
+#define Gb7	Fs7
+#define Gb8	Fs8
+#define Gb9	Fs9
+#define Gb10	Fs10
+
+#define Ab0	Gs0
+#define Ab1	Gs1
+#define Ab2	Gs2
+#define Ab3	Gs3
+#define Ab4	Gs4
+#define Ab5	Gs5
+#define Ab6	Gs6
+#define Ab7	Gs7
+#define Ab8	Gs8
+#define Ab9	Gs9
+//#define Ab10	Gs10
+
+#define Bb0	As0
+#define Bb1	As1
+#define Bb2	As2
+#define Bb3	As3
+#define Bb4	As4
+#define Bb5	As5
+#define Bb6	As6
+#define Bb7	As7
+#define Bb8	As8
+#define Bb9	As9
+//#define Bb10	As10
 
 // Voice messages. (bits 0..3 are the channel number)
 

@@ -18,6 +18,7 @@ typedef struct m_in_s {
 //    pressure,      // key pressure      )
   unsigned short
     position;      // song position
+	short bend;      // pitch bend
 } m_in_t;
 
 

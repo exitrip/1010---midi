@@ -144,6 +144,11 @@ extern const byte code myVChanFlash;
 
 extern volatile word LPeriod;
 extern volatile word VPeriod;
+extern volatile byte LNote;
+extern volatile byte VNote;
+extern volatile word LBend;
+extern volatile word VBend;
+
 extern volatile byte periodH0;
 extern volatile byte periodL0;
 extern volatile byte periodH1;

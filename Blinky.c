@@ -92,6 +92,8 @@ volatile word LPeriod;
 volatile word VPeriod;
 volatile byte LNote;
 volatile byte VNote;
+volatile word LBend = 0;
+volatile word VBend = 0;
 
 volatile word lDelta = 0;
 volatile word txDelta = 0;
@@ -1132,16 +1134,16 @@ UPDATE_NOTE:
 				temp -= LUT_MIDI_NOTE_SHIFT;
 				if (VnotL == 1) {
 					TX_VCC_ON = 1;
-					VNote = temp;
-					VPeriod = LUTFreq[temp];
-					periodH0 = (0xff & (LUTFreq[temp] >> 8));
-					periodL0 = (0xff & LUTFreq[temp]);
+					VNote = temp + LUT_MIDI_NOTE_SHIFT;
+					VPeriod = LUTFreq[temp] + VBend;
+					periodH0 = (0xff & (VPeriod >> 8));
+					periodL0 = (0xff & VPeriod);
 				} else {
 					AUDIO_L_ON = 1;
-					LNote = temp;
-					LPeriod = LUTFreq[temp];
-					periodH1 = (0xff & (LUTFreq[temp] >> 8));
-					periodL1 = (0xff & LUTFreq[temp]);
+					LNote = temp + LUT_MIDI_NOTE_SHIFT;
+					LPeriod = LUTFreq[temp] + LBend;
+					periodH1 = (0xff & (LPeriod >> 8));
+					periodL1 = (0xff & LPeriod);
 				}
 			break;
 		}

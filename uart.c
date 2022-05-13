@@ -11,8 +11,9 @@
 static bit mtxbusy;
 static volatile bit LnotV; //local flag of which channel to touch
 static volatile m_in_t midiMsg; 
-extern volatile byte LNote;
-extern volatile byte VNote;
+//extern volatile byte LNote;
+//extern volatile byte VNote;
+	
 
 void uart_init (void) {
   // configure UART
@@ -87,15 +88,15 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				goto IGNORE_MIDI;
 			}
 			switch (midiMsg.typeChan & 0xf0) {
-		        case NOTE_OFF:
-		        case NOTE_ON:
-		        case CONTROL:
-		          midiMsg.count = 2;
-		          break;
-		        case PROGRAM:
-		          midiMsg.count = 1;
-		          break;
-				case PITCH_WHEEL: //todo
+				case NOTE_OFF:
+				case NOTE_ON:
+				case CONTROL:
+				case PITCH_WHEEL:
+					midiMsg.count = 2;
+					break;
+				case PROGRAM:
+					midiMsg.count = 1;
+					break;
 				case CHAN_PRESSURE:
 				case KEY_PRESSURE:																	
 				default:
@@ -234,7 +235,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						curRiffCnt = 0;
 						numNotes = 0;
 						nextNote = 0;
-							PLAYING = 1;
+						PLAYING = 1;
 						txDelta = 0;
 						deltaTxUp = 0;
 						lDelta = 0;
@@ -295,7 +296,7 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 						//non repetitive storage...  1.5ms per 5040 beats with uniformly repetitive test song 
 						//todo good enough to just scan forward for every search!
 						if (midiClk > midiMsg.position || midiMsg.position == 0) {
-								midiClk = 0;
+							midiClk = 0;
 							deltaPos = 0;
 							nextRiff = 0;
 							numRiffs = (curSong[nextRiff]).rAddy;
@@ -486,19 +487,15 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 							default:
 								dataByte -= LUT_MIDI_NOTE_SHIFT;
 								if (OMNI == 1) {
-									VPeriod = LUTFreq[dataByte];
-									LPeriod = VPeriod;
+									VPeriod = LUTFreq[dataByte] + VBend;
+									LPeriod = VPeriod + LBend;
 								} else {
 									if (LnotV == 0) {	   //why not???
 										VNote = dataByte + LUT_MIDI_NOTE_SHIFT;  
-										VPeriod = LUTFreq[dataByte];
-//										thisDelta = txDelta;
-//										thisUp = deltaTxUp;
+										VPeriod = LUTFreq[dataByte] + VBend;
 									} else {
 										LNote = dataByte + LUT_MIDI_NOTE_SHIFT;
-										LPeriod = LUTFreq[dataByte];
-//										thisDelta = lDelta;
-//										thisUp = deltaLUp;
+										LPeriod = LUTFreq[dataByte] + LBend;
 									}
 								}
 							break;
@@ -548,6 +545,27 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 #endif
 			break;
 
+			case PITCH_WHEEL:
+			#ifdef COORD
+			#else
+				if(midiMsg.count == 2) {
+					midiMsg.bend = dataByte; // controller number
+				} else {
+					midiMsg.bend += (word) (dataByte << 7) - 0x2000;
+					if (LnotV == 0) {
+						VBend = midiMsg.bend;
+						VPeriod = LUTFreq[VNote] + VBend;;
+						periodH0 = (0xff & (VPeriod >> 8));
+						periodL0 = (0xff & VPeriod);
+					} else {
+						LBend = midiMsg.bend;
+						LPeriod = LUTFreq[LNote] + LBend;
+						periodH1 = (0xff & (LPeriod >> 8));
+						periodL1 = (0xff & LPeriod);
+					}
+				}
+			#endif
+			break;
 
 			case KEY_PRESSURE:
 			break;  
