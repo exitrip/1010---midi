@@ -333,27 +333,22 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>0</CpuCode>
+      <CpuCode>1</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>Add on databooks</Title>
-          <Path>DATASHTS\ADDBOOKS.PDF</Path>
-        </Book>
-        <Book>
-          <Number>1</Number>
           <Title>80C51 Family Programmer's Guide</Title>
           <Path>DATASHTS\PHILIPS\P51_PG.PDF</Path>
         </Book>
         <Book>
-          <Number>2</Number>
+          <Number>1</Number>
           <Title>Data Sheet</Title>
-          <Path>DATASHTS\PHILIPS\P89LPC932_DS.PDF</Path>
+          <Path>DATASHTS\PHILIPS\p89lpc933_934_935_936.pdf</Path>
         </Book>
         <Book>
-          <Number>3</Number>
+          <Number>2</Number>
           <Title>User's Manual</Title>
-          <Path>DATASHTS\PHILIPS\P89LPC932_UM.PDF</Path>
+          <Path>DATASHTS\PHILIPS\user_manual_P89LPC933_934_935_936.PDF</Path>
         </Book>
       </Books>
       <DebugOpt>
@@ -390,7 +385,7 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>BIN\LPC2EMP.DLL</pMon>
+        <pMon></pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
@@ -499,7 +494,7 @@
     <ToolsetNumber>0x0</ToolsetNumber>
     <ToolsetName>MCS-51</ToolsetName>
     <TargetOption>
-      <CLK51>7372800</CLK51>
+      <CLK51>12000000</CLK51>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -554,22 +549,17 @@
         <Book>
           <Number>0</Number>
           <Title>80C51 Family Programmer's Guide</Title>
-          <Path>C:\Documents and Settings\Research\My Documents\EdBear\21DA17B1d01.pdf</Path>
+          <Path>DATASHTS\PHILIPS\P51_PG.PDF</Path>
         </Book>
         <Book>
           <Number>1</Number>
           <Title>Data Sheet</Title>
-          <Path>C:\Documents and Settings\Research\My Documents\EdBear\F4564748d01.pdf</Path>
+          <Path>DATASHTS\PHILIPS\p89lpc933_934_935_936.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
           <Title>User's Manual</Title>
-          <Path>C:\Documents and Settings\Research\My Documents\EdBear\F0711667d01.pdf</Path>
-        </Book>
-        <Book>
-          <Number>3</Number>
-          <Title>iTripSchema</Title>
-          <Path>C:\Documents and Settings\Research\My Documents\EdBear\schemrev.PDF</Path>
+          <Path>DATASHTS\PHILIPS\user_manual_P89LPC933_934_935_936.PDF</Path>
         </Book>
       </Books>
       <DebugOpt>

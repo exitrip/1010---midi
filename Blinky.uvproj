@@ -438,14 +438,14 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
       <ToolsetName>MCS-51</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>P89LPC932</Device>
-          <Vendor>Philips</Vendor>
-          <Cpu>IRAM(0-0xFF) IROM(0-0x1FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
+          <Device>P89LPC936</Device>
+          <Vendor>NXP</Vendor>
+          <Cpu>IRAM(0-0xFF) IROM(0-0x3FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
           <FlashUtilSpec>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</FlashUtilSpec>
           <StartupFile>"LIB\START900.A51" ("Philips LPC900 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId></DeviceId>
-          <RegisterFile>REG932.H</RegisterFile>
+          <DeviceId>3836</DeviceId>
+          <RegisterFile>REG935.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -533,11 +533,11 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DLPC.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC932</SimDlgDllArguments>
+          <SimDlgDllArguments>-pLPC935</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TLPC.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC932</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC935</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -587,7 +587,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\LPC2EMP.DLL</Driver>
+            <Driver></Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -601,7 +601,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
-          <Flash3>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
+          <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -630,7 +630,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>0</useL251>
+            <useL251>1</useL251>
             <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
@@ -695,7 +695,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x4000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -864,7 +864,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
       <TargetOption>
         <TargetCommonOption>
           <Device>P89LPC936</Device>
-          <Vendor>NXP (founded by Philips)</Vendor>
+          <Vendor>NXP</Vendor>
           <Cpu>IRAM(0-0xFF) IROM(0-0x3FFF) XRAM (0-0x1FF) CLOCK(12000000) MODP2</Cpu>
           <FlashUtilSpec>FM.EXE ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</FlashUtilSpec>
           <StartupFile>"LIB\START900.A51" ("Philips LPC900 Startup Code")</StartupFile>
@@ -886,7 +886,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
           <BinPath>C:\Keil\C51\BIN\</BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath></RegisterFilePath>
+          <RegisterFilePath>Philips\</RegisterFilePath>
           <DBRegisterFilePath>Philips\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
@@ -1026,7 +1026,7 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2>BIN\LPC2EMP.DLL</Flash2>
-          <Flash3>"C:\Program Files\Flash Magic\FM.EXE" ("DEVICE($D, 0.0, 0) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(6,9600)")</Flash3>
+          <Flash3>"FM.EXE" ("DEVICE($D,$X) ERASE(DEVICE,PROTECTISP) HEXFILE("#H",NOCHECKSUMS,NOFILL,PROTECTISP) COM(1,9600) HARDWARE(KEILMCB900)")</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -1040,10 +1040,10 @@ ECODE (C:0x0-C:0x3FFF), HCONST (C:0x0-C:0x3FFF)</UserClasses>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
-            <UseOnchipRom>1</UseOnchipRom>
+            <UseOnchipRom>0</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
-            <UseMultipleDPTR>1</UseMultipleDPTR>
-            <UseOnchipXram>1</UseOnchipXram>
+            <UseMultipleDPTR>0</UseMultipleDPTR>
+            <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>

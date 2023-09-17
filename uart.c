@@ -553,13 +553,25 @@ void uart_rx_isr (void) interrupt 4 using 0 {
 				} else {
 					midiMsg.bend += (word) (dataByte << 7) - 0x2000;
 					if (LnotV == 0) {
+						//ignore bend messages that roll over 0 or 65361, the max note
+						if (midiMsg.bend > 0 && (65361 - LUTFreq[VNote - LUT_MIDI_NOTE_SHIFT]) < midiMsg.bend) {
+							goto IGNORE_MIDI;
+						} else if (midiMsg.bend < 0 && LUTFreq[VNote - LUT_MIDI_NOTE_SHIFT] < (-1* midiMsg.bend)) {
+							goto IGNORE_MIDI;
+						}
 						VBend = midiMsg.bend;
-						VPeriod = LUTFreq[VNote] + VBend;;
+						VPeriod = LUTFreq[VNote - LUT_MIDI_NOTE_SHIFT] + VBend;;
 						periodH0 = (0xff & (VPeriod >> 8));
 						periodL0 = (0xff & VPeriod);
 					} else {
+						//ignore bend messages that roll over 0 or UINT_MAX
+						if (midiMsg.bend > 0 && (65361 - LUTFreq[LNote - LUT_MIDI_NOTE_SHIFT]) < midiMsg.bend) {
+							goto IGNORE_MIDI;
+						} else if (midiMsg.bend < 0 && LUTFreq[LNote - LUT_MIDI_NOTE_SHIFT] < (-1* midiMsg.bend)) {
+							goto IGNORE_MIDI;
+						}
 						LBend = midiMsg.bend;
-						LPeriod = LUTFreq[LNote] + LBend;
+						LPeriod = LUTFreq[LNote - LUT_MIDI_NOTE_SHIFT] + LBend;
 						periodH1 = (0xff & (LPeriod >> 8));
 						periodL1 = (0xff & LPeriod);
 					}

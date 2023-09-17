@@ -1,69 +1,69 @@
-#N canvas 78 84 840 894 10;
+#N canvas 77 45 840 903 10;
 #X obj 55 63 notein;
-#X floatatom 66 122 0 0 0 0 - - -;
-#X floatatom 25 122 0 0 0 0 - - -;
-#X floatatom 189 114 5 0 0 0 - - -, f 5;
+#X floatatom 66 122 0 0 0 0 - - - 0 0 1;
+#X floatatom 25 122 0 0 0 0 - - - 0 0 1;
+#X floatatom 189 114 5 0 0 0 - - - 0 0 1, f 5;
 #X msg 75 146 stop;
 #X msg 113 146 clear;
 #X obj 53 227 pack 0 0 0;
 #X obj 61 311 noteout;
 #X obj 57 257 list-rot 1;
-#X obj 288 64 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 -258049
--1 -258049 0;
-#X floatatom 289 298 5 0 0 0 - - -, f 5;
+#X obj 288 64 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 #fc0000
+#000000 #fc0000 0 1;
+#X floatatom 289 298 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 156 138 - 1;
-#X obj 183 137 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 183 137 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 156 160 spigot;
-#X obj 173 4 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
-;
+#X obj 173 4 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
+0 1 1;
 #X obj 173 -66 key;
 #X obj 197 -151 key;
-#X obj 177 -114 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144
--1 -1;
-#X floatatom 197 -114 5 0 0 0 - - -, f 5;
+#X obj 177 -114 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc
+#000000 #000000 1;
+#X floatatom 197 -114 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 54 285 mux 0 1;
 #X obj 13 144 pack 0 0;
 #X obj 44 182 poly 5 0;
 #X obj 58 339 notein;
-#X floatatom 63 402 0 0 0 0 - - -;
-#X floatatom 26 396 0 0 0 0 - - -;
-#X floatatom 145 372 5 0 0 0 - - -, f 5;
+#X floatatom 63 402 0 0 0 0 - - - 0 0 1;
+#X floatatom 26 396 0 0 0 0 - - - 0 0 1;
+#X floatatom 145 372 5 0 0 0 - - - 0 0 1, f 5;
 #X msg 78 422 stop;
 #X msg 116 422 clear;
 #X obj 56 503 pack 0 0 0;
 #X obj 64 587 noteout;
 #X obj 60 533 list-rot 1;
-#X obj 299 340 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 -258049
--1 -258049 5;
-#X floatatom 292 574 5 0 0 0 - - -, f 5;
+#X obj 299 340 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 #fc0000
+#000000 #fc0000 5 1;
+#X floatatom 292 574 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 159 414 - 1;
-#X obj 186 417 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 186 417 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 159 436 spigot;
-#X obj 214 461 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
+#X obj 214 461 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 214 391 key;
 #X obj 57 561 mux 0 1;
 #X obj 47 458 poly 5 0;
 #X obj 58 613 notein;
-#X floatatom 63 668 0 0 0 0 - - -;
-#X floatatom 24 666 0 0 0 0 - - -;
-#X floatatom 133 640 5 0 0 0 - - -, f 5;
+#X floatatom 63 668 0 0 0 0 - - - 0 0 1;
+#X floatatom 24 666 0 0 0 0 - - - 0 0 1;
+#X floatatom 133 640 5 0 0 0 - - - 0 0 1, f 5;
 #X msg 78 696 stop;
 #X msg 116 696 clear;
 #X obj 56 777 pack 0 0 0;
 #X obj 64 861 noteout;
 #X obj 60 807 list-rot 1;
-#X obj 291 614 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 -258049
--1 -258049 10;
-#X floatatom 292 848 5 0 0 0 - - -, f 5;
+#X obj 291 614 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 #fc0000
+#000000 #fc0000 10 1;
+#X floatatom 292 848 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 159 688 - 1;
-#X obj 188 679 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 188 679 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 159 710 spigot;
-#X obj 214 735 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
+#X obj 214 735 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 214 665 key;
 #X obj 57 835 mux 0 1;
 #X obj 47 732 poly 5 0;
@@ -78,24 +78,24 @@
 #X obj 10 98 moses 1;
 #X obj 6 422 pack 0 0;
 #X obj 2 700 pack 0 0;
-#X obj 266 448 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 266 448 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 133 490 +;
 #X obj 135 760 +;
 #X obj 140 220 +;
 #X obj 58 374 moses;
-#X obj 200 9 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
+#X obj 200 9 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
+0 1 1;
 #X obj 68 94 moses;
-#X obj 238 736 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 238 736 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1 1;
 #X obj 74 640 moses;
 #X obj 135 464 + 0;
 #X obj 132 188 + 0, f 5;
 #X obj 135 738 + 0;
-#X floatatom 135 782 5 0 0 0 - - -, f 5;
-#X floatatom 133 512 5 0 0 0 - - -, f 5;
-#X floatatom 140 242 5 0 0 0 - - -, f 5;
+#X floatatom 135 782 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 133 512 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 140 242 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 360 97 ctlin;
 #X obj 477 96 bendin;
 #X obj 535 97 pgmin;
@@ -105,17 +105,17 @@
 #X obj 352 153 ctlout;
 #X obj 545 151 pgmout;
 #X obj 624 150 touchout;
-#X floatatom 469 129 5 0 0 0 - - -, f 5;
-#X floatatom 508 129 5 0 0 0 - - -, f 5;
-#X floatatom 351 129 5 0 0 0 - - -, f 5;
-#X floatatom 390 129 5 0 0 0 - - -, f 5;
-#X floatatom 430 129 5 0 0 0 - - -, f 5;
-#X floatatom 545 127 5 0 0 0 - - -, f 5;
-#X floatatom 584 127 5 0 0 0 - - -, f 5;
-#X floatatom 624 126 5 0 0 0 - - -, f 5;
-#X floatatom 669 126 5 0 0 0 - - -, f 5;
-#X floatatom 722 126 5 0 0 0 - - -, f 5;
-#X floatatom 762 124 5 0 0 0 - - -, f 5;
+#X floatatom 469 129 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 508 129 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 351 129 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 390 129 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 430 129 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 545 127 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 584 127 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 624 126 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 669 126 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 722 126 5 0 0 0 - - - 0 0 1, f 5;
+#X floatatom 762 124 5 0 0 0 - - - 0 0 1, f 5;
 #X obj 201 38 s clearPoly;
 #X obj 110 114 r clearPoly;
 #X obj 111 397 r clearPoly;
@@ -128,6 +128,17 @@
 #X obj 214 413 route 115 119;
 #X obj 173 -44 route 97 113 99;
 #X text 268 -24 'c' clear poly;
+#X obj 472 -50 hsl 128 15 -8192 8191 0 0 empty empty empty -2 -8 0
+10 #fcfcfc #000000 #000000 2797 1 0 1;
+#X floatatom 473 -1 12 0 0 0 - - - 0 0 1, f 12;
+#X obj 472 -27 i;
+#X obj 474 -120 loadbang;
+#X msg 474 -95 0;
+#X obj 448 -186 vradio 15 0 0 15 empty empty Base\ Chan 0 -8 0 10 #fc0000
+#000000 #fc0000 4 1;
+#X floatatom 449 48 5 0 0 0 - - - 0 0 1, f 5;
+#X obj 444 -241 loadbang;
+#X msg 444 -219 0;
 #X connect 0 0 66 0;
 #X connect 0 1 75 0;
 #X connect 0 2 3 0;
@@ -254,3 +265,12 @@
 #X connect 114 0 14 0;
 #X connect 114 1 74 0;
 #X connect 114 2 108 0;
+#X connect 116 0 118 0;
+#X connect 117 0 93 0;
+#X connect 118 0 117 0;
+#X connect 119 0 120 0;
+#X connect 120 0 116 0;
+#X connect 121 0 122 0;
+#X connect 122 0 94 0;
+#X connect 123 0 124 0;
+#X connect 124 0 121 0;
