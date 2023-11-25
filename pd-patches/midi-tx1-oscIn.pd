@@ -1,4 +1,4 @@
-#N canvas 135 42 1679 895 10;
+#N canvas 136 34 1679 895 10;
 #X obj 432 1158 noteout;
 #X obj 453 937 loadbang;
 #X obj 431 1049 metro;
@@ -20,9 +20,9 @@
 #X obj 596 247 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 236 122 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 4295 1;
 #X obj 671 116 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 5234 1;
 #X obj 744 158 i;
 #X obj 794 157 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 #fcfcfc
 #000000 #000000 0 1;
@@ -32,16 +32,16 @@
 #X msg 440 980 1255;
 #X msg 472 980 14;
 #X obj 1069 132 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 5726 1;
 #X obj 1483 146 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 7397 1;
 #X obj 1887 163 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 7692 1;
 #X floatatom 2296 452 5 0 0 0 - - -, f 5;
 #X obj 2270 185 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 7692 1;
 #X obj 2647 165 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
-#fcfcfc #000000 #000000 0 1;
+#fcfcfc #000000 #000000 9627 1;
 #X obj 2999 179 hsl 128 15 879 1080 0 0 empty empty empty -2 -8 0 10
 #fcfcfc #000000 #000000 0 1;
 #X msg 575 980 100;
@@ -303,8 +303,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X floatatom 8 463 5 0 0 0 - - -, f 5;
 #X obj 112 232 metro 666;
 #X obj 44 178 r \$0-txMetroEn1;
-#X obj 160 70 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 100 1;
+#X obj 160 70 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 12700 1;
 #X floatatom 178 231 5 0 0 0 - - -, f 5;
 #X obj 134 -153 r \$0-stat1;
 #X obj 70 -10 r \$0-globalTxMetro;
@@ -347,8 +347,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 510 714 s \$0-txMetroEn8;
 #X obj 520 292 r &0-globalTxMetroEn;
 #X obj 540 312 r \$0-txMetroEn2;
-#X obj 560 100 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 560 100 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 12700 1;
 #X obj 278 560 routeOSC /1 /2 /3 /4 /5 /6 /7 /8;
 #X obj 278 582 s \$0-txMetroRel1;
 #X obj 278 604 s \$0-txMetroRel2;
@@ -411,15 +411,15 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 1029 275 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 953 320 r &0-globalTxMetroEn;
-#X obj 989 130 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
-#000000 #000000 0 1;
+#X obj 989 130 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 12700 1;
 #X obj 974 80 r \$0-globalTxMetro;
 #X obj 973 340 r \$0-txMetroEn3;
 #X obj 1460 289 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 1384 334 r &0-globalTxMetroEn;
-#X obj 1420 144 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
-#fcfcfc #000000 #000000 0 1;
+#X obj 1420 144 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
+#fcfcfc #000000 #000000 12700 1;
 #X obj 1405 94 r \$0-globalTxMetro;
 #X obj 1404 354 r \$0-txMetroEn4;
 #X obj 644 249 metro 666;
@@ -431,24 +431,24 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 1848 319 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 1772 364 r &0-globalTxMetroEn;
-#X obj 1810 170 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
-#fcfcfc #000000 #000000 0 1;
+#X obj 1810 170 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
+#fcfcfc #000000 #000000 12700 1;
 #X obj 1793 124 r \$0-globalTxMetro;
 #X obj 1874 309 metro 666;
 #X floatatom 1808 312 5 0 0 0 - - -, f 5;
 #X obj 2234 335 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 2158 380 r &0-globalTxMetroEn;
-#X obj 2194 190 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
-#fcfcfc #000000 #000000 0 1;
+#X obj 2194 190 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
+#fcfcfc #000000 #000000 12700 1;
 #X obj 2179 140 r \$0-globalTxMetro;
 #X obj 2259 321 metro 666;
 #X floatatom 2194 328 5 0 0 0 - - -, f 5;
 #X obj 2619 321 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 2543 366 r &0-globalTxMetroEn;
-#X obj 2580 180 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
-#fcfcfc #000000 #000000 0 1;
+#X obj 2580 180 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
+#fcfcfc #000000 #000000 12700 1;
 #X obj 2564 126 r \$0-globalTxMetro;
 #X obj 2645 311 metro 666;
 #X floatatom 2579 314 5 0 0 0 - - -, f 5;
@@ -461,8 +461,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 2995 321 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 0 1;
 #X obj 2919 366 r &0-globalTxMetroEn;
-#X obj 2955 176 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
-#fcfcfc #000000 #000000 0 1;
+#X obj 2955 176 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
+#fcfcfc #000000 #000000 12700 1;
 #X obj 2940 126 r \$0-globalTxMetro;
 #X obj 2939 386 r \$0-txMetroEn4;
 #X obj 3021 311 metro 666;
@@ -772,7 +772,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg 1263 834 send /txMetroScale \$1;
 #X msg 1183 522 flush;
 #X obj 1260 638 != 1;
-#X obj 1595 499 vsl 15 128 20 2000 0 0 empty empty empty 0 -9 0 10
+#X obj 1595 499 vsl 15 128 20 5000 0 0 empty empty empty 0 -9 0 10
 #fcfcfc #000000 #000000 0 1;
 #X obj 1541 669 s \$0-globalTxMetro;
 #X floatatom 1595 640 5 0 0 0 - - -, f 5;
@@ -843,6 +843,15 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 2517 -19 + 1;
 #X msg 2530 32 send /txMetro/\$1/7 \$2;
 #X msg 1590 460 range 20 5000;
+#X obj 90 -40 t b;
+#X obj 600 -30 t b;
+#X obj 1103 -33 t b;
+#X obj 1580 -77 t b;
+#X obj 1964 -39 t b;
+#X obj 2330 -45 t b;
+#X obj 2741 -38 t b;
+#X obj 3267 -40 t b;
+#X msg 640 450 send /statScale \$1;
 #X connect 1 0 23 0;
 #X connect 1 0 24 0;
 #X connect 1 0 9 0;
@@ -1123,6 +1132,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 312 0 258 0;
 #X connect 313 0 315 0;
 #X connect 315 0 312 1;
+#X connect 315 0 772 0;
 #X connect 316 0 428 0;
 #X connect 316 0 441 1;
 #X connect 318 0 198 0;
@@ -1273,6 +1283,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 461 0 301 0;
 #X connect 462 0 463 0;
 #X connect 463 0 461 1;
+#X connect 463 0 773 0;
 #X connect 464 0 475 0;
 #X connect 464 0 480 1;
 #X connect 465 0 469 0;
@@ -1307,6 +1318,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 491 0 357 0;
 #X connect 492 0 493 0;
 #X connect 493 0 491 1;
+#X connect 493 0 774 0;
 #X connect 494 0 505 0;
 #X connect 494 0 510 1;
 #X connect 495 0 499 0;
@@ -1341,6 +1353,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 521 0 397 0;
 #X connect 522 0 523 0;
 #X connect 523 0 521 1;
+#X connect 523 0 779 0;
 #X connect 524 0 535 0;
 #X connect 524 0 540 1;
 #X connect 525 0 529 0;
@@ -1375,6 +1388,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 552 0 385 0;
 #X connect 553 0 554 0;
 #X connect 554 0 552 1;
+#X connect 554 0 778 0;
 #X connect 555 0 566 0;
 #X connect 555 0 571 1;
 #X connect 556 0 560 0;
@@ -1409,6 +1423,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 582 0 379 0;
 #X connect 583 0 584 0;
 #X connect 584 0 582 1;
+#X connect 584 0 777 0;
 #X connect 585 0 596 0;
 #X connect 585 0 601 1;
 #X connect 586 0 590 0;
@@ -1443,6 +1458,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 612 0 373 0;
 #X connect 613 0 614 0;
 #X connect 614 0 612 1;
+#X connect 614 0 776 0;
 #X connect 615 0 626 0;
 #X connect 615 0 631 1;
 #X connect 616 0 620 0;
@@ -1476,6 +1492,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 641 0 362 0;
 #X connect 642 0 643 0;
 #X connect 643 0 641 1;
+#X connect 643 0 775 0;
 #X connect 644 0 655 0;
 #X connect 644 0 660 1;
 #X connect 645 0 649 0;
@@ -1538,6 +1555,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 686 3 317 0;
 #X connect 686 4 319 0;
 #X connect 686 5 328 0;
+#X connect 686 5 780 0;
 #X connect 686 6 334 0;
 #X connect 686 6 458 0;
 #X connect 686 7 342 0;
@@ -1622,4 +1640,13 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 770 0 766 0;
 #X connect 771 0 704 0;
 #X connect 771 0 703 0;
+#X connect 772 0 438 0;
+#X connect 773 0 478 0;
+#X connect 774 0 508 0;
+#X connect 775 0 658 0;
+#X connect 776 0 629 0;
+#X connect 777 0 599 0;
+#X connect 778 0 569 0;
+#X connect 779 0 538 0;
+#X connect 780 0 720 0;
 #X coords 0 0 1 1 12 30 0;
