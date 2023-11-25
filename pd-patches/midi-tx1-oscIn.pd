@@ -361,7 +361,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj -80 -154 r \$0-txMetroRel1;
 #X obj 26 -21 *;
 #X obj 43 -73 r \$0-txMetroScale;
-#X obj 486 453 s \$0-txMetroScale;
+#X obj 490 420 s \$0-txMetroScale;
 #X floatatom 46 -48 5 0 0 0 - - -, f 5;
 #X floatatom -81 -124 5 0 1 0 - - -, f 5;
 #X obj 416 543 s \$0-globalPowerIn;
@@ -793,7 +793,7 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg 2000 500 range 0 3;
 #X msg 1590 460 range 20 2000;
 #X obj 1588 438 loadbang;
-#X obj 510 480 s \$0-udpout;
+#X obj 560 470 s \$0-udpout;
 #X msg 21 272 send /txMillis1 \$2;
 #X msg 490 340 send /txMillis2 \$2;
 #X msg 934 367 send /txMillis3 \$2;
@@ -1486,7 +1486,6 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X connect 686 1 302 0;
 #X connect 686 2 314 0;
 #X connect 686 2 435 0;
-#X connect 686 2 722 0;
 #X connect 686 3 317 0;
 #X connect 686 4 319 0;
 #X connect 686 5 328 0;
