@@ -1,0 +1,12 @@
+[Unit]
+Description=create ttymidi to serial bridge 
+
+[Service]
+Type=simple
+#User=exitrip
+#Group=
+ExecStart=/usr/local/bin/ttymidi 
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

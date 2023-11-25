@@ -1,4 +1,4 @@
-#N canvas 1403 156 450 328 10;
+#N canvas 1049 164 450 328 10;
 #X obj 110 109 udpreceive;
 #X obj 111 64 loadbang;
 #X obj 110 132 unpackOSC;
@@ -19,18 +19,18 @@
 #X obj 221 103 r udpout;
 #X obj 210 151 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
 #000000 1 1;
-#X msg 204 56 disconnect;
-#X obj 120 240 print;
+#X msg 190 10 disconnect;
 #X obj 110 180 routeOSC /tx1 /tx2 /tx3 /tx4 /accxyz /vidPlay /vidSetup
 ;
 #X obj 350 220 s vidSig;
-#X msg 210 80 connect localhost 9000;
+#X msg 220 70 connect 10.42.0.140 9000;
+#X obj 220 40 delay 10000;
 #X connect 0 0 2 0;
 #X connect 1 0 4 0;
 #X connect 1 0 23 0;
 #X connect 2 0 3 0;
 #X connect 2 1 3 1;
-#X connect 3 0 21 0;
+#X connect 3 0 20 0;
 #X connect 4 0 0 0;
 #X connect 5 0 6 0;
 #X connect 5 1 8 0;
@@ -41,12 +41,12 @@
 #X connect 16 0 18 0;
 #X connect 17 0 16 0;
 #X connect 19 0 16 0;
-#X connect 21 0 12 0;
-#X connect 21 0 20 0;
-#X connect 21 1 13 0;
-#X connect 21 2 14 0;
-#X connect 21 3 15 0;
-#X connect 21 4 5 0;
-#X connect 21 5 22 0;
-#X connect 21 6 22 0;
-#X connect 23 0 16 0;
+#X connect 20 0 12 0;
+#X connect 20 1 13 0;
+#X connect 20 2 14 0;
+#X connect 20 3 15 0;
+#X connect 20 4 5 0;
+#X connect 20 5 21 0;
+#X connect 20 6 21 0;
+#X connect 22 0 16 0;
+#X connect 23 0 22 0;

@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="usb", TAG+="systemd", ENV{SYSTEMD_WANTS}="midi-usbserial.service"

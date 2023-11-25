@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=eXiTripPD
+Comment=Purr-Data Iteration of Pure-Data Interactive DSP Environment
+Comment[de]=Purr-Data-Iteration der interaktiven DSP-Umgebung Pure-Data
+Comment[fr]=Itération Purr-Data de l'environnement DSP interactif Pure-Data
+Exec=/home/exitrip/1010---midi/pd-patches/startPD.sh
+Terminal=false
+Type=Application
+Icon=purr-data.png
+Categories=AudioVideo;Audio;
+MimeType=application/x-puredata;
