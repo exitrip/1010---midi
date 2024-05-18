@@ -1,4 +1,4 @@
-#N canvas -8 -8 1694 908 10;
+#N canvas 105 54 1694 908 10;
 #X obj 432 1158 noteout;
 #X obj 453 937 loadbang;
 #X obj 431 1049 metro;
@@ -13,40 +13,40 @@
 #X text 522 1010 pitch;
 #X text 563 1008 vel;
 #X text 603 1011 length;
-#X obj 424 1000 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
-#X obj 111 205 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 596 247 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X obj 424 1000 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X obj 111 205 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X obj 596 247 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 236 122 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 17254 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 671 116 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 18704 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 744 158 i;
-#X obj 794 157 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj 286 175 hsl 128 15 0 3.75 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 794 157 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj 286 175 hsl 128 15 0 3.75 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X msg 529 980 1149;
 #X msg 440 980 1255;
 #X msg 472 980 14;
 #X obj 1069 132 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 13759 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 1483 146 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 13235 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 1887 163 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 7605 1;
+#fcfcfc #000000 #000000 0 1;
 #X floatatom 2296 452 5 0 0 0 - - -, f 5;
 #X obj 2270 185 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 12764 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 2647 165 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 10253 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 2999 179 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 12790 1;
+#fcfcfc #000000 #000000 0 1;
 #X msg 575 980 100;
-#X obj 384 1007 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
+#X obj 384 1007 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
 #X obj -129 753 expr 60000 / (24 * $f1);
 #X obj -246 746 t f f;
 #X msg -246 804 250;
@@ -54,8 +54,8 @@
 #X msg -174 805 248;
 #X obj -246 775 sel 1;
 #X floatatom -172 745 5 0 0 0 - - -, f 5;
-#X obj -245 693 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj -245 693 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X floatatom -158 855 5 0 0 0 - - -, f 5;
 #X obj -107 643 noteout;
 #X text -444 252 TX_OFF = 0 \, //npc TX_ON = 1 \, //npc UPDOWN_OFF
@@ -67,14 +67,14 @@ wise linear that way... DOWN4 = 8 \, DOWN5 = 9 \, UP1 = 110 \, UP2
 = 118 \, //npc STATION_UP4 = 119 \, //npc STATION_DOWN4 = 120 \, //npc
 STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 = 123 \, //npc STATION_DOWN6 = 124 //npc;
-#X obj -51 394 vradio 15 1 0 17 empty empty Channel 0 -8 0 10 -262144
--1 -1 0;
+#X obj -51 394 vradio 15 1 0 17 empty empty Channel 0 -8 0 10 #fcfcfc
+#000000 #000000 0;
 #X floatatom -49 652 5 1 16 0 - - -, f 5;
-#X obj -77 463 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj -77 463 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X floatatom -88 612 5 700 1200 0 - - -, f 5;
-#X obj -107 434 vsl 15 128 10 101 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj -107 434 vsl 15 128 10 101 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X floatatom -129 612 5 700 1200 0 - - -, f 5;
 #X obj -174 776 metro 25;
 #X msg -312 518 0;
@@ -109,8 +109,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X text -202 403 down;
 #X text -157 403 up;
 #X text -325 401 glissOff;
-#X obj -312 565 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj -312 565 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X text -320 492 TXOn;
 #X obj -48 878 r comctl;
 #X obj -37 895 r comtx;
@@ -120,12 +120,12 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg -111 221 close;
 #X obj -245 867 s comtx;
 #X obj -246 833 f;
-#X obj -182 708 hsl 128 15 1 300 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X obj -132 824 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj -213 678 tgl 21 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj -182 708 hsl 128 15 1 300 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
+#X obj -132 824 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
+#X obj -213 678 tgl 21 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X text -34 404 1;
 #X text -33 439 3;
 #X text -32 469 5;
@@ -144,15 +144,15 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg -142 140 devicename /dev/ttyUSB0;
 #X text -296 885 sysEx to reboot and flashMagic!;
 #X obj -294 938 s comtx;
-#X obj -305 866 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
+#X obj -305 866 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
 #X obj 17 910 print;
 #X obj -247 921 delay 1000;
 #X msg -174 937 close;
 #X obj -173 957 s comctl;
 #X msg -294 903 240 1 14 13 67 111 126 7 2 247;
-#X obj -314 623 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj -314 623 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj -310 645 * 127;
 #X obj -309 670 ctlout 10;
 #X text -294 622 Stereo;
@@ -166,48 +166,48 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg 862 238 3;
 #X obj 862 216 loadbang;
 #X obj 1119 196 i;
-#X obj 1169 195 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 1169 195 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1111 313 radioOrganCtrl;
 #X obj 1206 258 +;
 #X floatatom 1200 229 5 0 0 0 - - -, f 5;
 #X obj 1251 257 loadbang;
 #X msg 1251 279 5;
 #X obj 1584 204 i;
-#X obj 1634 203 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 1634 203 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1518 318 radioOrganCtrl;
 #X obj 1613 263 +;
 #X floatatom 1607 234 5 0 0 0 - - -, f 5;
 #X obj 1658 262 loadbang;
 #X msg 1658 284 7;
 #X obj 1972 223 i;
-#X obj 2022 222 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 2022 222 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1906 337 radioOrganCtrl;
 #X obj 2001 282 +;
 #X floatatom 1995 253 5 0 0 0 - - -, f 5;
 #X obj 2046 281 loadbang;
 #X msg 2046 303 9;
 #X obj 2361 246 i;
-#X obj 2411 245 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 2411 245 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 2295 360 radioOrganCtrl;
 #X obj 2389 307 +;
 #X floatatom 2384 276 5 0 0 0 - - -, f 5;
 #X obj 2435 304 loadbang;
 #X msg 2435 326 11;
 #X obj 2747 232 i;
-#X obj 2767 210 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 2767 210 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 2681 346 radioOrganCtrl;
 #X obj 2776 291 +;
 #X floatatom 2770 262 5 0 0 0 - - -, f 5;
 #X obj 2821 290 loadbang;
 #X msg 2820 312 13;
 #X obj 3117 224 i;
-#X obj 3167 223 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 3167 223 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 3051 338 radioOrganCtrl;
 #X obj 3108 276 +;
 #X floatatom 3102 247 5 0 0 0 - - -, f 5;
@@ -220,14 +220,14 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X floatatom 1906 426 5 0 0 0 - - -, f 5;
 #X floatatom 2681 435 5 0 0 0 - - -, f 5;
 #X floatatom 3051 427 5 0 0 0 - - -, f 5;
-#X obj 331 469 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
--1 -1 1;
+#X obj 331 469 hradio 15 1 0 8 empty empty empty 0 -8 0 10 #fcfcfc
+#000000 #000000 1;
 #X msg 429 225 1;
 #X obj 1987 561 hsl 256 30 700 1200 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 0 1;
+#fcfcfc #000000 #000000 0 1;
 #X obj 1943 536 i;
-#X obj 1993 535 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
+#X obj 1993 535 hsl 128 15 0 3 0 0 empty empty empty -2 -8 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1934 588 +;
 #X floatatom 1928 559 5 0 0 0 - - -, f 5;
 #X msg 1686 536 888;
@@ -239,8 +239,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg 1827 551 878;
 #X msg 1857 530 773;
 #X msg 1858 550 818;
-#X obj 1456 530 tgl 54 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 1456 530 tgl 54 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 719 201 r \$0-globalPower;
 #X obj 1089 242 r \$0-globalPower;
 #X obj 1519 241 r \$0-globalPower;
@@ -277,12 +277,12 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 1251 301 r \$0-globalChan;
 #X obj 862 260 r \$0-globalChan;
 #X obj 428 251 r \$0-globalChan;
-#X obj 826 427 hradio 15 0 0 16 empty empty empty 0 -8 0 10 -262144
--1 -1 0;
+#X obj 826 427 hradio 15 0 0 16 empty empty empty 0 -8 0 10 #fcfcfc
+#000000 #000000 0;
 #X text 947 442 8;
 #X obj 826 447 s \$0-globalChan;
-#X obj 778 427 bng 30 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
+#X obj 778 427 bng 30 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
 #X obj 779 469 s rstChan;
 #X obj 461 207 r rstChan;
 #X obj 895 238 r rstChan;
@@ -296,16 +296,16 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X msg 653 1025 21;
 #X msg 726 1022 14;
 #X obj 85 475 ctlout 123 1;
-#X obj 78 423 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 8 416 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
+#X obj 78 423 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000;
+#X obj 8 416 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000
+0 1;
 #X obj 8 441 metro 50;
 #X floatatom 8 463 5 0 0 0 - - -, f 5;
 #X obj 112 232 metro 666;
 #X obj 44 178 r \$0-txMetroEn1;
-#X obj 153 88 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 153 88 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X floatatom 178 231 5 0 0 0 - - -, f 5;
 #X obj 134 -153 r \$0-stat1;
 #X obj 48 3 r \$0-globalTxMetro;
@@ -348,8 +348,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 510 714 s \$0-txMetroEn8;
 #X obj 520 292 r &0-globalTxMetroEn;
 #X obj 540 312 r \$0-txMetroEn2;
-#X obj 556 102 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 556 102 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 278 560 routeOSC /1 /2 /3 /4 /5 /6 /7 /8;
 #X obj 278 582 s \$0-txMetroRel1;
 #X obj 278 604 s \$0-txMetroRel2;
@@ -409,18 +409,18 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 928 678 symbol;
 #X msg 969 650 symbol \$0-directStat\$1;
 #X obj 731 87 r \$0-directStat3;
-#X obj 1029 275 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 1029 275 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 953 320 r &0-globalTxMetroEn;
-#X obj 989 130 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 989 130 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 974 80 r \$0-globalTxMetro;
 #X obj 973 340 r \$0-txMetroEn3;
-#X obj 1460 289 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 1460 289 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 1384 334 r &0-globalTxMetroEn;
-#X obj 1420 144 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 1420 144 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1405 94 r \$0-globalTxMetro;
 #X obj 1404 354 r \$0-txMetroEn4;
 #X obj 644 249 metro 666;
@@ -429,27 +429,27 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X floatatom 1420 282 5 0 0 0 - - -, f 5;
 #X floatatom 989 268 5 0 0 0 - - -, f 5;
 #X floatatom 556 240 5 0 0 0 - - -, f 5;
-#X obj 1848 319 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 1848 319 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 1772 364 r &0-globalTxMetroEn;
-#X obj 1808 174 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 1808 174 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 1793 124 r \$0-globalTxMetro;
 #X obj 1874 309 metro 666;
 #X floatatom 1808 312 5 0 0 0 - - -, f 5;
-#X obj 2234 335 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 2234 335 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 2158 380 r &0-globalTxMetroEn;
-#X obj 2194 190 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 2194 190 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 2179 140 r \$0-globalTxMetro;
 #X obj 2259 321 metro 666;
 #X floatatom 2194 328 5 0 0 0 - - -, f 5;
-#X obj 2619 321 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 2619 321 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 2543 366 r &0-globalTxMetroEn;
-#X obj 2579 176 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 2579 176 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 2564 126 r \$0-globalTxMetro;
 #X obj 2645 311 metro 666;
 #X floatatom 2579 314 5 0 0 0 - - -, f 5;
@@ -459,11 +459,11 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X obj 2178 400 r \$0-txMetroEn6;
 #X obj 2554 106 r \$0-txMetro7;
 #X obj 2563 386 r \$0-txMetroEn7;
-#X obj 2995 321 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj 2995 321 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 2919 366 r &0-globalTxMetroEn;
-#X obj 2955 176 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 2955 176 vsl 15 128 5 5000 0 0 empty empty empty 0 -9 0 10 #fcfcfc
+#000000 #000000 0 1;
 #X obj 2940 126 r \$0-globalTxMetro;
 #X obj 2939 386 r \$0-txMetroEn4;
 #X obj 3021 311 metro 666;
@@ -486,8 +486,8 @@ STATION_UP5 = 121 \, //npc STATION_DOWN5 = 122 \, //npc STATION_UP6
 #X floatatom 507 1123 5 0 0 0 - - -, f 5;
 #X obj -284 131 midiin;
 #X obj -284 153 spigot;
-#X obj -226 130 tgl 42 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+#X obj -226 130 tgl 42 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj -284 175 midiout;
 #X obj 136 568 r \$0-udpout;
 #X obj 26 526 loadbang;
