@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "itrope-serial-v05-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/itrope-serial-v05-eagle-import.kicad_sym")(options "")(descr ""))
+)
