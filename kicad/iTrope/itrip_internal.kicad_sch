@@ -9643,7 +9643,7 @@
 		(uuid 16ea7700-8811-4c53-b3ec-d8b605c5d91d)
 	)
 	(image
-		(at 111.76 350.52)
+		(at 509.27 163.83)
 		(uuid "afc39120-8ef0-4f71-97f4-a1edb1d515d5")
 		(data "iVBORw0KGgoAAAANSUhEUgAAAawAAAHtCAYAAABFzEplAAAAAXNSR0IArs4c6QAAAARnQU1BAACx"
 			"jwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAIgjSURBVHhe7Z0JfBRF9sd/KGu4VgwKeKAi4gY3"
@@ -10262,8 +10262,8 @@
 		)
 	)
 	(image
-		(at 448.31 132.08)
-		(scale 1.43354)
+		(at 389.89 160.02)
+		(scale 0.754091)
 		(uuid "fdf77fba-1c4d-408d-bd88-04919df22f62")
 		(data "iVBORw0KGgoAAAANSUhEUgAAAsEAAAIFCAIAAAC8qreBAAAAA3NCSVQICAjb4U/gAAAACXBIWXMA"
 			"ABJcAAASXAFoxDaJAAAgAElEQVR4nOydfVwTV7r4x0ioMYJDamTDsDalZq0kq+wusbtSkb4AW/EK"
@@ -12107,6 +12107,26 @@
 			(justify left top)
 		)
 		(uuid "d471469b-9406-479a-a6ce-3324536cf693")
+	)
+	(text_box "From BH1417 datasheet"
+		(exclude_from_sim no)
+		(at 320.04 109.22 0)
+		(size 259.08 109.22)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "e1e8d6bb-f9a9-4dfc-bcd0-260ca8c13c90")
 	)
 	(text "JAE 30 pin connector on breakout board is connected via J203."
 		(exclude_from_sim no)
