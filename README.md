@@ -22,7 +22,7 @@ A quick note about the FTDI chip:  Seating this chip will allow you to send and 
 Another note about firmware:  The LPC936 firmware programmed by the Arduino is stored in the Arduino firmware directly.  Recompiling new firmware unfortunately requires a licensed copy of KEIL uVision Cx51, which is thousands of dollars last I checked.  The "free" versions of uVision have a prohibitively small size limit, and cannot build the code as is.  I'm still investigating if I can strip the project enough...
 
 ### Setting up the programmer
-See [README](arduino\exitrip_flash_programmer\README.md) in arduino folder.
+See [README](arduino/exitrip_flash_programmer/README.md) in arduino folder.
 
 ## Steps for the hack
 - Open up the iTrip.  Easiest way is to slip a flat head above the button and pry the plastic case open like an oyster.  Be a bit careful with the button though.
