@@ -13,6 +13,32 @@
 //#define LITTLEBITS  //TODO test
 
 //***************************************************************************
+//* Pin Definitions, ported to Arduino pin numbers on boards
+//***************************************************************************
+#if  defined(PRO_MINI)
+#define PDA     5           // define PDA pin
+#define PCL     4           // define PCL pin
+#define RESET   6           // define RESET control pin
+#define VDD     3           // define VDD control pin
+
+#elif defined(UNO)          
+#define PDA     10					// define PDA pin
+#define PCL     11 					// define PCL pin
+#define RESET   9  				// define RESET control pin
+#define VDD     12					// define VDD control pin
+
+#elif defined(LITTLEBITS)   // needs testing TODO
+#define PDA     10          // define PDA pin
+#define PCL     11          // define PCL pin
+#define RESET   9           // needs to be broken out from bottom output
+                            // for more mA... should test with ICSP outs
+#define VDD     13          // define VDD control pin
+#define LED_BUILTIN 1       //use the output 1 pin
+#else
+#error "Define board used as programmer!!!!"
+#endif
+
+//***************************************************************************
 //* Assign the targets MIDI channels
 //* These two channels should not be the same and must be between 1 and 16
 //*   targetLChan [left channel] will create synth tones on the left [mono] 
@@ -61,9 +87,7 @@
 //* by including one and only one of the following header files 
 //*
 //* If EXCLUDE_SONGS is defined, the arduino will skip programming "songs" included in 
-//*   the hexfile.  See www.exitrip.org/howto/songs for more information.
-//*   You will always be able to include songs later.  This option is most useful
-//    if you are writing your own firmware.
+//*   the hexfile.
 //*
 //* Only modify CHANNEL_MAGIC_ADDR if you have created custom firmware
 //***************************************************************************
@@ -79,31 +103,6 @@
   #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
 #endif
 
-//***************************************************************************
-//* Pin Definitions, ported to Arduino pin numbers on boards
-//***************************************************************************
-#if  defined(PRO_MINI)
-#define PDA     5           // define PDA pin
-#define PCL     4           // define PCL pin
-#define RESET   6           // define RESET control pin
-#define VDD     3           // define VDD control pin
-
-#elif defined(UNO)          
-#define PDA     10					// define PDA pin
-#define PCL     11 					// define PCL pin
-#define RESET   9  				// define RESET control pin
-#define VDD     12					// define VDD control pin
-
-#elif defined(LITTLEBITS)   // needs testing TODO
-#define PDA     10          // define PDA pin
-#define PCL     11          // define PCL pin
-#define RESET   9           // needs to be broken out from bottom output
-                            // for more mA... should test with ICSP outs
-#define VDD     13          // define VDD control pin
-#define LED_BUILTIN 1       //use the output 1 pin
-#else
-#error "Define board used as programmer!!!!"
-#endif
 //***************************************************************************
 //* Programmer Opcodes
 //***************************************************************************
