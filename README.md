@@ -42,4 +42,4 @@ See [README](arduino/exitrip_flash_programmer/README.md) in arduino folder.
 
   ## Suggestions about workshops
   - FM radios are not as common as they used to be.  BRING SOME, otherwise there's a big sad trombone at the end of the build
-  - Have an SDR reciever setup on a laptop to visualize the transmissions.  It will also double as a reciever.  These turnkey[RTL-SDR kits](https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongles/) are awesome for the price.
+  - Have an SDR reciever setup on a laptop to visualize the transmissions.  It will also double as a reciever.  These turnkey [RTL-SDR kits](https://www.rtl-sdr.com/buy-rtl-sdr-dvb-t-dongles/) are awesome for the price.

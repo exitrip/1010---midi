@@ -44,7 +44,7 @@ The only trick is to make sure that the programming cable correctly maps 5 pins 
 - PDA to PDA (data)
 - PCL to PCL (clock)
 - RESET to nRST
-![Programming Port Pinout](/progPortPinout.png "Programming Port Pinout")
+![Programming Port Pinout](/arduino/exitrip_flash_programmer/progPortPinout.png "Programming Port Pinout")
 
 If I was gonna use an "UNO" instead of a "PRO MINI", I'd just uncomment the line `#define UNO`, comment the line `//#define PRO_MINI`, and plug the wires of the custom programming cable into the UNO's pins 9 - 12 (plus GND).
 
