@@ -78,6 +78,7 @@ new_record:
   record_type = get2();						// get record type
 
 #ifdef HEADLESS
+#ifndef BASIC_HEX
 //check for channel hardcoded address magic
   if (channelsAreProg == 0 &&
       address_high == CHANNEL_MAGIC_ADDR_HI && 
@@ -122,6 +123,7 @@ new_record:
     //skip the checksum and point iterator to previous hex record
     hexIter -=  9;   
   } else
+#endif
 #endif 
   {
     for(index=0; index < nbytes; index++)		// read record data to buffer

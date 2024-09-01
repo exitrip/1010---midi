@@ -8,8 +8,8 @@
 //***************************************************************************
 //* What board are we programming with?
 //***************************************************************************
-#define PRO_MINI
-//#define UNO
+// #define PRO_MINI
+#define UNO
 //#define LITTLEBITS  //TODO test
 
 //***************************************************************************
@@ -59,7 +59,7 @@
 #define TARGET_L_CHAN   1
 #define TARGET_V_CHAN   2
 
-#define OVERWRITE_HEXFILE_CHANNELS
+// #define OVERWRITE_HEXFILE_CHANNELS
 
 //channel error checking
 #if ((TARGET_L_CHAN > 16) || (TARGET_L_CHAN < 1) || (TARGET_V_CHAN > 16) || (TARGET_V_CHAN < 1))
@@ -93,14 +93,15 @@
 //***************************************************************************
 #ifdef HEADLESS
   #include "Blinky_hex_basic.h"
+  #define BASIC_HEX
   //#include "Blinky_hex_unitXII_0.h"
 
-#define EXCLUDE_SONGS
+// #define EXCLUDE_SONGS
 
-//must sync with firmware version....
-  #define CHANNEL_MAGIC_ADDR    0x1800
-  #define CHANNEL_MAGIC_ADDR_HI ((char)(CHANNEL_MAGIC_ADDR >> 8))
-  #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
+// //must sync with firmware version....
+//   #define CHANNEL_MAGIC_ADDR    0x1800
+//   #define CHANNEL_MAGIC_ADDR_HI ((char)(CHANNEL_MAGIC_ADDR >> 8))
+//   #define CHANNEL_MAGIC_ADDR_LO ((char)(CHANNEL_MAGIC_ADDR & 0xff))
 #endif
 
 //***************************************************************************
